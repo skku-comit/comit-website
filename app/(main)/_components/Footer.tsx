@@ -2,13 +2,18 @@
 import { FaInstagram, FaGithub, FaRegCopyright } from 'react-icons/fa'
 import { RiKakaoTalkFill } from 'react-icons/ri'
 import { usePathname } from 'next/navigation'
+import { cn } from '@/lib/utils'
 
 export default function Footer() {
   const pathname = usePathname()
 
   return (
     <footer
-      className={`h-24 w-full p-4 ${pathname === '/' ? 'bg-gray-800' : 'bg-black'}`}
+      className={cn(
+        'h-24 w-full p-4',
+        pathname === '/' ? 'bg-gray-800' : 'bg-black'
+      )}
+      // className={`h-24 w-full p-4 ${pathname === '/' ? 'bg-gray-800' : 'bg-black'}`}
     >
       <div className="flex h-full w-full flex-col items-center justify-around">
         <div className="flex items-center gap-1 text-center text-sm font-light text-white">
