@@ -1,3 +1,3 @@
 export default function Study() {
-  return <>Study</>
+  return <h1>Study</h1>
 }
