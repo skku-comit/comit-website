@@ -11,7 +11,7 @@ export default function Header() {
 
   return (
     <header className="absolute h-[80px] w-full">
-      <nav className="flex items-center justify-around">
+      <nav className="flex h-full items-center justify-around">
         <Link href="/">
           <div className=" flex">
             <Image
@@ -36,10 +36,10 @@ export default function Header() {
             <p className="font-medium">Clubroom</p>
           </Link>
         </nav>
-        <div className="flex h-[40px] w-[15vw] justify-between">
-          <Button className="h-[30px] w-[140px]">Log in</Button>
+        <div className="flex h-[40px] w-[310px] justify-between">
+          <Button className="h-[30px] w-[140px]">Sign up</Button>
           <Button className="h-[30px] w-[140px]" variant={'outline'}>
-            Sign up
+            Log in
           </Button>
         </div>
       </nav>
