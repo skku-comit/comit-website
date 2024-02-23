@@ -1,3 +1,3 @@
 export default function Room() {
-  return <h1>Room</h1>
+  return <h1>Clubroom</h1>
 }
