@@ -37,9 +37,11 @@ export default function Header() {
           </Link>
         </nav>
         <div className="flex h-[40px] w-[310px] justify-between">
-          <Button className="h-[30px] w-[140px]">Sign up</Button>
+          <Button className="h-[30px] w-[140px]">
+            <Link href="/signup">Sign up</Link>
+          </Button>
           <Button className="h-[30px] w-[140px]" variant={'outline'}>
-            Log in
+            <Link href="/login">Log in</Link>
           </Button>
         </div>
       </nav>
