@@ -13,7 +13,6 @@ export default function Footer() {
         'h-24 w-full p-4',
         pathname === '/' ? 'bg-gray-800' : 'bg-black'
       )}
-      // className={`h-24 w-full p-4 ${pathname === '/' ? 'bg-gray-800' : 'bg-black'}`}
     >
       <div className="flex h-full w-full flex-col items-center justify-around">
         <div className="flex items-center gap-1 text-center text-sm font-light text-white">
