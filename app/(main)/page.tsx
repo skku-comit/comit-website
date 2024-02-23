@@ -37,6 +37,25 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <div className="mt-[26.4%] flex justify-center">
+        <div className="w-[60%]">
+          <p className="items-start text-[70px] font-semibold">About</p>
+          <div className="flex justify-between font-semibold">
+            <div>
+              <p className="text-[40px]">누적 스터디 개설</p>
+              <p className="text-[90px]">50+</p>
+            </div>
+            <div>
+              <p className="text-[40px]">평균 신규 지원</p>
+              <p className="text-[90px]">120+</p>
+            </div>
+            <div>
+              <p className="text-[40px]">평균 스터디 개설</p>
+              <p className="text-[90px]">15+</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
