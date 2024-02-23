@@ -10,7 +10,7 @@ export default function Header() {
   const pathname = usePathname()
   return (
     <header
-      className={cn('absolute h-20 w-full', pathname === '/' && 'bg-black')}
+      className={cn('fixed top-0 h-20 w-full', pathname === '/' && 'bg-black')}
     >
       <nav className="flex h-full items-center justify-around">
         <Link href="/">
