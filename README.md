@@ -8,12 +8,9 @@ CoMit의 웹사이트를 만드는 것을 목표로 하며 주요 기능은 3가
 
 여름 방학 중에는 스터디 신청 및 동방 예약 기능을 구현할 계획입니다.
  
-#### 프론트엔드
+#### 사용하는 스택
 - Next.js
 - Tailwind CSS
-- TypeScript
-#### 백엔드
-- Express
 - TypeScript
 
 프로젝트의 디자인은
