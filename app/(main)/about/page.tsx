@@ -1,4 +1,4 @@
-import SectionBanner from '@/components/SectionBanner'
+import SectionBanner from '@/components/common/SectionBanner'
 
 export default function About() {
   return (
