@@ -9,6 +9,7 @@ import { useState } from 'react'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import Link from 'next/link'
 
 interface LoginForm {
   email: string
@@ -40,7 +41,7 @@ export default function Login() {
     <div className="flex max-h-lvh w-full justify-center bg-black pb-20 pt-8 text-white">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex w-[480px] flex-col items-center gap-4 rounded-[32px] bg-[#121212] p-16"
+        className="flex w-[480px] flex-col items-center gap-4 rounded-[32px] bg-[#121212] p-16 pb-8"
       >
         <Image src={ComitOwl} alt="comit_owl" width={164} />
         <p className="mb-12 text-center text-3xl font-semibold">
@@ -85,9 +86,15 @@ export default function Login() {
             <p className="text-sm text-red-500">{errors.password.message}</p>
           )}
         </div>
-        <Button className="mt-4 h-14 w-full rounded-xl text-xl font-semibold">
+        <Button className="my-4 h-14 w-full rounded-xl text-xl font-semibold">
           Log In
         </Button>
+        <div className="flex items-center justify-between">
+          <p>Don&apos;t have an account?</p>
+          <Button variant="link" className="text-white" asChild>
+            <Link href="/signup">Sign Up</Link>
+          </Button>
+        </div>
       </form>
     </div>
   )
