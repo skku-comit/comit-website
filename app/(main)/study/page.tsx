@@ -56,7 +56,9 @@ export default function Study() {
                   <RiStackOverflowLine />
                   {study.stack.join(', ')}
                 </div>
-                <pre>{study.description}</pre>
+                <pre style={{ fontFamily: 'Inter, sans-serif' }}>
+                  {study.description}
+                </pre>
               </div>
             </DialogContent>
           </Dialog>
