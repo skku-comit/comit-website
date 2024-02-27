@@ -12,6 +12,10 @@ import {
   DialogTitle,
   DialogTrigger
 } from '@/components/ui/dialog'
+import { IoPersonSharp } from 'react-icons/io5'
+import { FaSchoolFlag } from 'react-icons/fa6'
+import { RiStackOverflowLine } from 'react-icons/ri'
+import { MdOutlineSignalCellularAlt } from 'react-icons/md'
 
 export default function Study() {
   return (
@@ -26,11 +30,34 @@ export default function Study() {
             <DialogTrigger asChild>
               <StudyCard {...study} />
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
+            <DialogContent className="p-8 sm:max-w-[425px]">
               <DialogHeader>
-                <DialogTitle>{study.title}</DialogTitle>
-                <DialogDescription>{study.description}</DialogDescription>
+                <DialogTitle className="text-2xl">{study.title}</DialogTitle>
+                <DialogDescription className="text-lg">
+                  {study.day} {study.startTime} ~ {study.endTime}
+                </DialogDescription>
               </DialogHeader>
+              <div className="leading-snug">
+                <div className="flex gap-6">
+                  <div className="flex items-center gap-2">
+                    <IoPersonSharp />
+                    {study.mentor}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <MdOutlineSignalCellularAlt />
+                    {study.level}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <FaSchoolFlag />
+                    {study.campus}
+                  </div>
+                </div>
+                <div className="mb-4 flex items-center gap-2">
+                  <RiStackOverflowLine />
+                  {study.stack.join(', ')}
+                </div>
+                <pre>{study.description}</pre>
+              </div>
             </DialogContent>
           </Dialog>
         ))}
