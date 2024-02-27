@@ -1,3 +1,6 @@
+'use client'
+
+import { useRef } from 'react'
 import mainPicture from '@/public/mainPicture.svg'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -5,6 +8,7 @@ import { Button } from '@/components/ui/button'
 
 import { studyDummyData } from './study/page'
 import StudyCard from '@/components/main/StudyCard'
+import Autoplay from 'embla-carousel-autoplay'
 
 import {
   Carousel,
@@ -29,6 +33,7 @@ const dummyStackUrl: string[] = [
 ]
 
 export default function Home() {
+  const plugin = useRef(Autoplay({ delay: 2500 }))
   return (
     <div className="min-h-screen w-full bg-black text-center text-white">
       <div className="w-full">
@@ -44,7 +49,7 @@ export default function Home() {
               자유롭게 지식을 공유하고 개발할 수 있는
             </p>
             <p className="text-left text-[24px] font-semibold">
-              성균관대하교 중앙 코딩 동아리
+              성균관대학교 중앙 코딩 동아리
             </p>
             <div className="flex w-[70%] items-center justify-between">
               <p className="text-left text-[72px] font-extrabold text-primary">
@@ -92,6 +97,7 @@ export default function Home() {
             <Carousel
               className="flex w-full items-center justify-between"
               opts={{ align: 'start' }}
+              plugins={[plugin.current]}
             >
               <CarouselPrevious />
               <CarouselContent>

@@ -220,7 +220,13 @@ const CarouselPrevious = React.forwardRef<
     //   <ArrowLeft className="h-4 w-4" />
     //   <span className="sr-only">Previous slide</span>
     // </Button>
-    <SlArrowLeft className="h-[64px] w-[64px]" onClick={scrollPrev} />
+    <SlArrowLeft
+      className={cn(
+        'translate-transform h-[64px] w-[64px] cursor-pointer hover:scale-110',
+        !canScrollPrev && 'pointer-events-none text-slate-600'
+      )}
+      onClick={scrollPrev}
+    />
   )
 })
 CarouselPrevious.displayName = 'CarouselPrevious'
@@ -248,7 +254,13 @@ const CarouselNext = React.forwardRef<
     //   {...props}
     // >
 
-    <SlArrowRight className="h-[64px] w-[64px]" onClick={scrollNext} />
+    <SlArrowRight
+      className={cn(
+        'translate-transform h-[64px] w-[64px] cursor-pointer hover:scale-110',
+        !canScrollNext && 'pointer-events-none text-slate-600'
+      )}
+      onClick={scrollNext}
+    />
     // </Button>
   )
 })
