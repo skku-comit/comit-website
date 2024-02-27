@@ -2,6 +2,15 @@ import SectionBanner from '@/components/common/SectionBanner'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import StudyCard from '@/components/study/StudyCard'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger
+} from '@/components/ui/dialog'
 
 const studyDummyData = [
   {
@@ -69,10 +78,20 @@ export default function Study() {
       />
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
         {studyDummyData.map((study, index) => (
-          <StudyCard key={index} {...study} />
+          <Dialog key={index}>
+            <DialogTrigger asChild>
+              <StudyCard {...study} />
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px]">
+              <DialogHeader>
+                <DialogTitle>{study.title}</DialogTitle>
+                <DialogDescription>{study.description}</DialogDescription>
+              </DialogHeader>
+            </DialogContent>
+          </Dialog>
         ))}
       </div>
-      <Button asChild className='font-semibold my-8'>
+      <Button asChild className="my-8 font-semibold">
         <Link href="study/open">스터디 개설하기</Link>
       </Button>
     </>
