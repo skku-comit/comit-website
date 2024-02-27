@@ -12,7 +12,7 @@ import {
   DialogTrigger
 } from '@/components/ui/dialog'
 
-const studyDummyData = [
+export const studyDummyData = [
   {
     imageSrc: 'https://i.esdrop.com/d/f/rWQIyJ1wtg/Z2bQcFPLxZ.svg',
     title: '모바일 앱 프로젝트',
