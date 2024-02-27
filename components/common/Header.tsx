@@ -10,17 +10,15 @@ export default function Header() {
   const pathname = usePathname()
   return (
     <header
-      className={cn('fixed top-0 h-20 w-full', pathname === '/' && 'bg-black')}
+      className={cn(
+        'fixed top-0 h-20 w-full z-10',
+        pathname === '/' ? 'bg-black' : 'bg-white'
+      )}
     >
       <nav className="flex h-full items-center justify-around">
         <Link href="/">
           <div className="flex items-center gap-2">
-            <Image
-              src={ComitLogo}
-              alt="comit logo"
-              width={29}
-              height={34}
-            ></Image>
+            <Image src={ComitLogo} alt="comit_logo" width={29} height={34} />
             <p
               className={cn('font-semibold', pathname === '/' && 'text-white')}
             >
@@ -29,6 +27,7 @@ export default function Header() {
           </div>
         </Link>
         <div className="flex w-[21dvw] justify-between">
+          {/* TODO: 리펙토링 */}
           <Link
             href="/about"
             className={cn(
@@ -61,7 +60,14 @@ export default function Header() {
           <Button className="h-[30px] w-[140px]" asChild>
             <Link href="/signup">Sign up</Link>
           </Button>
-          <Button className={cn('h-[30px] w-[140px]', pathname === '/' && 'border-white')} variant="outline" asChild>
+          <Button
+            className={cn(
+              'h-[30px] w-[140px]',
+              pathname === '/' && 'border-white'
+            )}
+            variant="outline"
+            asChild
+          >
             <Link href="/login">Log in</Link>
           </Button>
         </div>
