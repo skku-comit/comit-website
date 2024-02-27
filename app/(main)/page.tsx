@@ -1,9 +1,10 @@
 import mainPicture from '@/public/mainPicture.svg'
 import Image from 'next/image'
+import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 
-import { SlArrowLeft } from 'react-icons/sl'
-import { SlArrowRight } from 'react-icons/sl'
+import { studyDummyData } from './study/page'
+import StudyCard from '@/components/main/StudyCard'
 
 import {
   Carousel,
@@ -87,7 +88,7 @@ export default function Home() {
           <p className="mt-[78px] items-start text-left text-[40px]">
             다뤄진 기술 스택
           </p>
-          <div className="flex h-[128px] w-full items-center">
+          <div className="mt-8 flex h-[128px] w-full items-center">
             <Carousel
               className="flex w-full items-center justify-between"
               opts={{ align: 'start' }}
@@ -113,6 +114,25 @@ export default function Home() {
               </CarouselContent>
               <CarouselNext />
             </Carousel>
+          </div>
+        </div>
+      </div>
+      <div className="mt-[9%] flex justify-center">
+        <div className="w-[65%] font-semibold">
+          <div className="flex items-center justify-between">
+            <p className="text-left text-[40px]">개설된 스터디</p>
+            <Button
+              variant="outline"
+              className="h-[30px] w-[100px] rounded-2xl border-none text-black"
+              asChild
+            >
+              <Link href="/study">더보기</Link>
+            </Button>
+          </div>
+          <div className="mb-8 mt-8 flex justify-between">
+            {studyDummyData.slice(0, 4).map((item, index) => {
+              return <StudyCard {...item} key={index} />
+            })}
           </div>
         </div>
       </div>
