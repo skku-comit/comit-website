@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import StudyCard from '@/components/study/StudyCard'
 
-const studyDummyData = [
+export const studyDummyData = [
   {
     imageSrc: 'https://i.esdrop.com/d/f/rWQIyJ1wtg/Z2bQcFPLxZ.svg',
     title: '모바일 앱 프로젝트',
@@ -72,7 +72,7 @@ export default function Study() {
           <StudyCard key={index} {...study} />
         ))}
       </div>
-      <Button asChild className='font-semibold my-8'>
+      <Button asChild className="my-8 font-semibold">
         <Link href="study/open">스터디 개설하기</Link>
       </Button>
     </>
