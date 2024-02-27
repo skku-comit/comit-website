@@ -11,7 +11,7 @@ export default function Header() {
   return (
     <header
       className={cn(
-        'fixed top-0 h-20 w-full z-10',
+        'fixed top-0 z-10 h-20 w-full',
         pathname === '/' ? 'bg-black' : 'bg-white'
       )}
     >
