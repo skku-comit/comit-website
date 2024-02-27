@@ -6,9 +6,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 
-import { studyDummyData } from './study/page'
+import { studyDummyData } from '@/lib/dummy'
 import StudyCard from '@/components/main/StudyCard'
 import Autoplay from 'embla-carousel-autoplay'
+import { dummyStackUrl } from '@/lib/dummy'
 
 import {
   Carousel,
@@ -17,20 +18,6 @@ import {
   CarouselNext,
   CarouselPrevious
 } from '@/components/ui/carousel'
-const dummyStackUrl: string[] = [
-  'https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg',
-  'https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg',
-  'https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg',
-  'https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg',
-  'https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg',
-  'https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg',
-  'https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg',
-  'https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg',
-  'https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg',
-  'https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg',
-  'https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg',
-  'https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg'
-]
 
 export default function Home() {
   const plugin = useRef(Autoplay({ delay: 2500 }))
