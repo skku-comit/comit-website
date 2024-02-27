@@ -16,6 +16,7 @@ interface LoginForm {
   password: string
 }
 
+// TODO: 백엔드와 논의 후 schema 수정
 const schema = z.object({
   email: z.string().email({ message: '올바른 이메일 주소를 입력해주세요' }),
   password: z.string().min(6, { message: '비밀번호는 6자 이상이어야 합니다' })
