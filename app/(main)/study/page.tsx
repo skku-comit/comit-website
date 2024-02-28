@@ -67,14 +67,16 @@ export default function Study() {
         title="Study"
         description="CoMit의 다양한 스터디 분반을 확인해보세요!"
       />
-      <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
-        {studyDummyData.map((study, index) => (
-          <StudyCard key={index} {...study} />
-        ))}
+      <div className="flex w-[1280px] flex-col items-center">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+          {studyDummyData.map((study, index) => (
+            <StudyCard key={index} {...study} />
+          ))}
+        </div>
+        <Button asChild className="my-8 font-semibold">
+          <Link href="study/open">스터디 개설하기</Link>
+        </Button>
       </div>
-      <Button asChild className="my-8 font-semibold">
-        <Link href="study/open">스터디 개설하기</Link>
-      </Button>
     </>
   )
 }

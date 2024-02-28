@@ -11,7 +11,9 @@ export default function Footer() {
     <footer
       className={cn(
         'h-24 w-full p-4',
-        pathname === '/' ? 'bg-gray-800' : 'bg-black'
+        ['/', '/signup', '/login'].includes(pathname)
+          ? 'bg-gray-800'
+          : 'bg-black'
       )}
     >
       <div className="flex h-full w-full flex-col items-center justify-around">
