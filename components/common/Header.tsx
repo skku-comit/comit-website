@@ -79,7 +79,7 @@ export default function Header() {
           </Button>
         </div>
       </nav>
-      <Drawer className="md:hidden">
+      <Drawer>
         <DrawerTrigger>
           <GiHamburgerMenu
             className={cn(
