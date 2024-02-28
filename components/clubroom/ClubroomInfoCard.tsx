@@ -24,15 +24,13 @@ export default function ClburoomInfoCard({
     <Card
       className={cn(
         'flex h-[108px] w-[384px] items-center justify-center rounded-[40px] bg-[#D9D9D9] bg-opacity-20 shadow-md',
-        align === Align.RIGHT && 'ml-20'
+        align === Align.RIGHT && 'ml-36'
       )}
     >
       <div className=" h-[70%] w-[80%]">
         <CardTitle className="text-left">{title}</CardTitle>
         <CardContent className="p-0 pt-2">
-          <CardDescription className="">
-            <p>{description}</p>
-          </CardDescription>
+          <CardDescription className="">{description}</CardDescription>
         </CardContent>
       </div>
     </Card>
