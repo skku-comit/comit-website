@@ -145,3 +145,62 @@ export const dummyStackUrl: string[] = [
   'https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg',
   'https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg'
 ]
+
+export const dummyPeopleData = [
+  {
+    name: '이현준',
+    description: '개인 코딩 동아리',
+    imageUrl:
+      'https://png.pngtree.com/thumb_back/fh260/background/20230615/pngtree-shinobi-dog-is-a-dog-breed-that-is-not-aggressive-at-image_2933750.jpg',
+    position: '회장'
+  },
+  {
+    name: '이현준',
+    description: '개인 코딩 동아리',
+    imageUrl:
+      'https://png.pngtree.com/thumb_back/fh260/background/20230615/pngtree-shinobi-dog-is-a-dog-breed-that-is-not-aggressive-at-image_2933750.jpg',
+    position: '회장'
+  },
+  {
+    name: '이현준',
+    description: '개인 코딩 동아리',
+    imageUrl:
+      'https://png.pngtree.com/thumb_back/fh260/background/20230615/pngtree-shinobi-dog-is-a-dog-breed-that-is-not-aggressive-at-image_2933750.jpg',
+    position: '회장'
+  },
+  {
+    name: '이현준',
+    description: '개인 코딩 동아리',
+    imageUrl:
+      'https://png.pngtree.com/thumb_back/fh260/background/20230615/pngtree-shinobi-dog-is-a-dog-breed-that-is-not-aggressive-at-image_2933750.jpg',
+    position: '회장'
+  },
+  {
+    name: '이현준',
+    description: '개인 코딩 동아리',
+    imageUrl:
+      'https://png.pngtree.com/thumb_back/fh260/background/20230615/pngtree-shinobi-dog-is-a-dog-breed-that-is-not-aggressive-at-image_2933750.jpg',
+    position: '회장'
+  },
+  {
+    name: '이현준',
+    description: '개인 코딩 동아리',
+    imageUrl:
+      'https://png.pngtree.com/thumb_back/fh260/background/20230615/pngtree-shinobi-dog-is-a-dog-breed-that-is-not-aggressive-at-image_2933750.jpg',
+    position: '회장'
+  },
+  {
+    name: '이현준',
+    description: '개인 코딩 동아리',
+    imageUrl:
+      'https://png.pngtree.com/thumb_back/fh260/background/20230615/pngtree-shinobi-dog-is-a-dog-breed-that-is-not-aggressive-at-image_2933750.jpg',
+    position: '회장'
+  },
+  {
+    name: '이현준',
+    description: '개인 코딩 동아리',
+    imageUrl:
+      'https://png.pngtree.com/thumb_back/fh260/background/20230615/pngtree-shinobi-dog-is-a-dog-breed-that-is-not-aggressive-at-image_2933750.jpg',
+    position: '회장'
+  }
+]

@@ -5,11 +5,9 @@ import mainPicture from '@/public/mainPicture.svg'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-
-import { studyDummyData } from '@/lib/dummy'
 import StudyCard from '@/components/main/StudyCard'
 import Autoplay from 'embla-carousel-autoplay'
-import { dummyStackUrl } from '@/lib/dummy'
+import { dummyStackUrl, studyDummyData } from '@/lib/dummy'
 
 import {
   Carousel,
