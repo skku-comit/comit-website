@@ -37,7 +37,7 @@ export default function About() {
           <SectionCard {...sectionCardData.seminar} />
           <SectionCard {...sectionCardData.event} />
         </div>
-        <div className="mb-24 mt-52 flex w-full items-center flex-col">
+        <div className="mb-24 mt-60 flex w-full items-center flex-col">
           <p className="mb-20 text-4xl font-semibold text-black">CoMit 임원진</p>
           <div className="grid grid-cols-1 gap-x-20 gap-y-12 lg:grid-cols-2">
             {dummyPeopleData.map((person, index) => (

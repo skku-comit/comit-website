@@ -25,16 +25,16 @@ export default function StudyCard({
 }: StudyCardProps) {
   const badges = [level, stack[0], campus]
   return (
-    <Card className="flex min-w-52 transform cursor-pointer flex-col items-center justify-center overflow-hidden px-4 py-8 transition-transform hover:scale-105 hover:bg-slate-50">
+    <Card className="flex min-w-60 transform cursor-pointer flex-col items-center justify-center overflow-hidden px-4 py-8 shadow-md transition-transform hover:scale-105  hover:shadow-2xl">
       <Image
         src={imageSrc}
         alt={title}
-        width={120}
-        height={120}
+        width={144}
+        height={144}
         className="mb-8 mt-4"
         unoptimized
       ></Image>
-      <CardTitle className="text-center text-base">{title}</CardTitle>
+      <CardTitle className="text-center text-lg">{title}</CardTitle>
       <CardDescription className="text-center">
         {day} {startTime} ~ {endTime}
       </CardDescription>
