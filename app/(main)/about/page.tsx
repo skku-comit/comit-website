@@ -13,7 +13,7 @@ const sectionCardData = {
   seminar: {
     title: '세미나 행사',
     description:
-      '외부 인사를 초청하거나 CoMit 선배님을 모시고 세미나를 진행합니다',
+      '외부 인사들을 초청하거나 COMIT 선배님들을 모시고 세미나를 진행합니다',
     image: 'seminar'
   },
   event: {
@@ -31,15 +31,15 @@ export default function About() {
         title="About"
         description="중앙 코딩 동아리 CoMit을 소개합니다!"
       />
-      <div className="w-[1280px]">
+      <div className="w-[1280px] pt-12">
         <div className="flex items-center justify-between">
           <SectionCard {...sectionCardData.class} />
           <SectionCard {...sectionCardData.seminar} />
           <SectionCard {...sectionCardData.event} />
         </div>
-        <div className="mb-[100px] mt-[200px] w-full">
-          <p className="mb-8 text-4xl font-semibold text-black">임원진 소개</p>
-          <div className="grid grid-cols-2 gap-4">
+        <div className="mb-24 mt-52 flex w-full items-center flex-col">
+          <p className="mb-20 text-4xl font-semibold text-black">CoMit 임원진</p>
+          <div className="grid grid-cols-1 gap-x-20 gap-y-12 lg:grid-cols-2">
             {dummyPeopleData.map((person, index) => (
               <IntroduceMemeberCard key={index} {...person} />
             ))}
