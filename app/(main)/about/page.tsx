@@ -1,6 +1,7 @@
 import IntroduceMemeberCard from '@/components/about/IntroduceMemberCard'
 import SectionCard from '@/components/about/SectionCard'
 import SectionBanner from '@/components/common/SectionBanner'
+import { dummyPeopleData } from '@/lib/dummy'
 
 const sectionCardData = {
   class: {
@@ -23,64 +24,6 @@ const sectionCardData = {
   }
 }
 
-const dummyPeopleData = [
-  {
-    name: '이현준',
-    description: '개인 코딩 동아리',
-    imageUrl:
-      'https://png.pngtree.com/thumb_back/fh260/background/20230615/pngtree-shinobi-dog-is-a-dog-breed-that-is-not-aggressive-at-image_2933750.jpg',
-    position: '회장'
-  },
-  {
-    name: '이현준',
-    description: '개인 코딩 동아리',
-    imageUrl:
-      'https://png.pngtree.com/thumb_back/fh260/background/20230615/pngtree-shinobi-dog-is-a-dog-breed-that-is-not-aggressive-at-image_2933750.jpg',
-    position: '회장'
-  },
-  {
-    name: '이현준',
-    description: '개인 코딩 동아리',
-    imageUrl:
-      'https://png.pngtree.com/thumb_back/fh260/background/20230615/pngtree-shinobi-dog-is-a-dog-breed-that-is-not-aggressive-at-image_2933750.jpg',
-    position: '회장'
-  },
-  {
-    name: '이현준',
-    description: '개인 코딩 동아리',
-    imageUrl:
-      'https://png.pngtree.com/thumb_back/fh260/background/20230615/pngtree-shinobi-dog-is-a-dog-breed-that-is-not-aggressive-at-image_2933750.jpg',
-    position: '회장'
-  },
-  {
-    name: '이현준',
-    description: '개인 코딩 동아리',
-    imageUrl:
-      'https://png.pngtree.com/thumb_back/fh260/background/20230615/pngtree-shinobi-dog-is-a-dog-breed-that-is-not-aggressive-at-image_2933750.jpg',
-    position: '회장'
-  },
-  {
-    name: '이현준',
-    description: '개인 코딩 동아리',
-    imageUrl:
-      'https://png.pngtree.com/thumb_back/fh260/background/20230615/pngtree-shinobi-dog-is-a-dog-breed-that-is-not-aggressive-at-image_2933750.jpg',
-    position: '회장'
-  },
-  {
-    name: '이현준',
-    description: '개인 코딩 동아리',
-    imageUrl:
-      'https://png.pngtree.com/thumb_back/fh260/background/20230615/pngtree-shinobi-dog-is-a-dog-breed-that-is-not-aggressive-at-image_2933750.jpg',
-    position: '회장'
-  },
-  {
-    name: '이현준',
-    description: '개인 코딩 동아리',
-    imageUrl:
-      'https://png.pngtree.com/thumb_back/fh260/background/20230615/pngtree-shinobi-dog-is-a-dog-breed-that-is-not-aggressive-at-image_2933750.jpg',
-    position: '회장'
-  }
-]
 export default function About() {
   return (
     <>
@@ -90,9 +33,9 @@ export default function About() {
       />
       <div className="w-[1280px]">
         <div className="flex items-center justify-between">
-          <SectionCard {...dummyCardData.class} />
-          <SectionCard {...dummyCardData.seminar} />
-          <SectionCard {...dummyCardData.event} />
+          <SectionCard {...sectionCardData.class} />
+          <SectionCard {...sectionCardData.seminar} />
+          <SectionCard {...sectionCardData.event} />
         </div>
         <div className="mb-[100px] mt-[200px] w-full">
           <p className="mb-8 text-4xl font-semibold text-black">임원진 소개</p>
