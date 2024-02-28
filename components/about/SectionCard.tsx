@@ -8,14 +8,11 @@ import eventImg from '@/public/about-image/event.svg'
 import seminarImg from '@/public/about-image/seminar.svg'
 
 type SectionCardProps = {
-  bgColor?: string
-  bgColorCode?: string
   title: string
   description: string
   image: string
 }
 export default function SectionCard({
-  bgColor,
   title,
   description,
   image
