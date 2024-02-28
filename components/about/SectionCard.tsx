@@ -56,7 +56,7 @@ export default function SectionCard({
       </div>
       {isHovered && (
         <div
-          className="absolute left-0 top-0 h-[360px] w-[360px] rounded-xl bg-[#000000] bg-opacity-70 text-white"
+          className="absolute left-0 top-0 h-[360px] w-[360px] rounded-xl bg-black bg-opacity-70 text-white"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
