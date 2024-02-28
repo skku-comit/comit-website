@@ -7,7 +7,6 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger
@@ -63,10 +62,11 @@ export default function Study() {
             </DialogContent>
           </Dialog>
         ))}
-      </div>
-      <Button asChild className="my-8 font-semibold">
-        <Link href="study/open">스터디 개설하기</Link>
-      </Button>
+        </div>
+
+        <Button asChild className="my-8 font-semibold">
+          <Link href="study/open">스터디 개설하기</Link>
+        </Button>
     </>
   )
 }

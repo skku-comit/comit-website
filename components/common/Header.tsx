@@ -6,13 +6,27 @@ import { Button } from '@/components/ui/button'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 
+export function NavLink({ href }: { href: string }) {
+  const pathname = usePathname()
+  return (
+    <Link
+      href={`/${href}`}
+      className={cn(
+        'flex items-center',
+        ['/', '/signup', '/login'].includes(pathname) && 'text-white'
+      )}
+    >
+      <p className="font-medium capitalize">{href}</p>
+    </Link>
+  )
+}
 export default function Header() {
   const pathname = usePathname()
   return (
     <header
       className={cn(
-        'fixed top-0 h-20 w-full z-10',
-        pathname === '/' ? 'bg-black' : 'bg-white'
+        'fixed top-0 z-10 h-20 w-full',
+        ['/', '/signup', '/login'].includes(pathname) ? 'bg-black' : 'bg-white'
       )}
     >
       <nav className="flex h-full items-center justify-around">
@@ -20,41 +34,19 @@ export default function Header() {
           <div className="flex items-center gap-2">
             <Image src={ComitLogo} alt="comit_logo" width={29} height={34} />
             <p
-              className={cn('font-semibold', pathname === '/' && 'text-white')}
+              className={cn(
+                'font-semibold',
+                ['/', '/signup', '/login'].includes(pathname) && 'text-white'
+              )}
             >
               CoMit
             </p>
           </div>
         </Link>
         <div className="flex w-[21dvw] justify-between">
-          {/* TODO: 리펙토링 */}
-          <Link
-            href="/about"
-            className={cn(
-              'flex items-center',
-              pathname === '/' && 'text-white'
-            )}
-          >
-            <p className="font-medium">About</p>
-          </Link>
-          <Link
-            href="/study"
-            className={cn(
-              'flex items-center',
-              pathname === '/' && 'text-white'
-            )}
-          >
-            <p className="font-medium">Study</p>
-          </Link>
-          <Link
-            href="/clubroom"
-            className={cn(
-              'flex items-center',
-              pathname === '/' && 'text-white'
-            )}
-          >
-            <p className="font-medium">Clubroom</p>
-          </Link>
+          <NavLink href="about" />
+          <NavLink href="study" />
+          <NavLink href="clubroom" />
         </div>
         <div className="flex h-[40px] w-[310px] items-center justify-between">
           <Button className="h-[30px] w-[140px]" asChild>
@@ -63,7 +55,7 @@ export default function Header() {
           <Button
             className={cn(
               'h-[30px] w-[140px]',
-              pathname === '/' && 'border-white'
+              ['/', '/signup', '/login'].includes(pathname) && 'border-white'
             )}
             variant="outline"
             asChild
