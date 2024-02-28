@@ -31,14 +31,16 @@ export default function About() {
         title="About"
         description="중앙 코딩 동아리 CoMit을 소개합니다!"
       />
-      <div className="w-[1280px] pt-12">
-        <div className="flex items-center justify-between">
+      <div className="flex w-[1280px] flex-col items-center pt-6 md:pt-12">
+        <div className="grid grid-cols-1 items-center gap-16 md:grid-cols-3">
           <SectionCard {...sectionCardData.class} />
           <SectionCard {...sectionCardData.seminar} />
           <SectionCard {...sectionCardData.event} />
         </div>
-        <div className="mb-24 mt-60 flex w-full items-center flex-col">
-          <p className="mb-20 text-4xl font-semibold text-black">CoMit 임원진</p>
+        <div className="mb-24 mt-60 flex w-full flex-col items-center">
+          <p className="mb-20 text-4xl font-semibold text-black">
+            CoMit 임원진
+          </p>
           <div className="grid grid-cols-1 gap-x-20 gap-y-12 lg:grid-cols-2">
             {dummyPeopleData.map((person, index) => (
               <IntroduceMemeberCard key={index} {...person} />

@@ -44,10 +44,12 @@ export default function Signup() {
     <div className="flex w-full justify-center bg-black pb-20 pt-8 text-white">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex w-[480px] flex-col items-center gap-4 rounded-[32px] bg-[#121212] p-16 pb-8"
+        className="flex w-[480px] flex-col items-center gap-4 rounded-[32px] bg-[#121212] p-8 pb-8 sm:p-16"
       >
         <Image src={ComitOwl} alt="comit_owl" width={164} />
-        <p className="mb-8 text-center text-3xl font-semibold">Sign Up</p>
+        <p className="mb-4 text-center text-2xl font-semibold sm:mb-8 sm:text-3xl">
+          Sign Up
+        </p>
         <div className="flex w-full flex-col gap-1">
           <p className="text-xl font-semibold">Full Name</p>
           <Input

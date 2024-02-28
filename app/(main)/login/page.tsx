@@ -42,10 +42,10 @@ export default function Login() {
     <div className="flex max-h-lvh w-full justify-center bg-black pb-20 pt-8 text-white">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex w-[480px] flex-col items-center gap-4 rounded-[32px] bg-[#121212] p-16 pb-8"
+        className="flex w-[480px] flex-col items-center gap-4 rounded-[32px] bg-[#121212] p-8 pb-8 sm:p-16"
       >
         <Image src={ComitOwl} alt="comit_owl" width={164} />
-        <p className="mb-12 text-center text-3xl font-semibold">
+        <p className="mb-6 text-center text-xl font-semibold sm:mb-12 sm:text-3xl">
           Log in to your account
         </p>
         <div className="flex w-full flex-col gap-1">
