@@ -6,6 +6,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'COMIT',
+  description: 'SKKU COMIT official website',
   icons: {
     icon: '/favicon.ico'
   }
