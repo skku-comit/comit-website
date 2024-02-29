@@ -12,18 +12,18 @@ export default function IntroduceMemeberCard({
   imageUrl
 }: IntroduceMemberCardProps) {
   return (
-    <div className="flex items-center gap-8">
-      <div className="relative h-[168px] w-[168px] rounded-[40px] shadow-md">
+    <div className="flex items-center gap-8 max-md:flex-col">
+      <div className="relative h-[168px] w-[168px] overflow-hidden rounded-[40px] shadow-md">
         <Image
           src={imageUrl}
           alt={name}
           width={168}
           height={168}
-          className="h-full w-full rounded-[40px] object-cover"
           unoptimized
+          className="object-cover w-full h-full"
         />
       </div>
-      <div className="flex h-full w-96 rounded-3xl border p-8 shadow-md">
+      <div className="flex h-44 w-96 rounded-3xl border p-8 shadow-md">
         <div className="flex flex-col gap-2">
           <p className="text-2xl font-semibold">
             {name} / {position}

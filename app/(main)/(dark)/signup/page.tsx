@@ -11,43 +11,57 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
 
-interface LoginForm {
+interface SignupForm {
+  name: string
   email: string
   password: string
 }
 
 // TODO: 백엔드와 논의 후 schema 수정
 const schema = z.object({
+  name: z.string().min(2, { message: '이름은 2자 이상이어야 합니다' }),
   email: z.string().email({ message: '올바른 이메일 주소를 입력해주세요' }),
   password: z.string().min(6, { message: '비밀번호는 6자 이상이어야 합니다' })
 })
 
-export default function Login() {
+export default function Signup() {
   const [showPassword, setShowPassword] = useState(false)
 
   const {
     handleSubmit,
     register,
     formState: { errors }
-  } = useForm<LoginForm>({
+  } = useForm<SignupForm>({
     resolver: zodResolver(schema)
   })
 
-  // TODO: login API 연결
-  const onSubmit = (data: LoginForm) => {
+  // TODO: signup API 연결
+  const onSubmit = (data: SignupForm) => {
     console.log(data)
   }
 
   return (
-    <div className="flex max-h-lvh w-full justify-center bg-black pb-20 pt-8 text-white">
+    <div className="flex w-full justify-center bg-black pt-8 text-white">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex w-[480px] flex-col items-center gap-4 rounded-[32px] bg-[#121212] p-16 pb-8"
+        className="flex w-[480px] flex-col items-center gap-4 rounded-[32px] bg-[#121212] p-8 pb-8 sm:p-16"
       >
         <Image src={ComitOwl} alt="comit_owl" width={164} />
-        <p className="mb-12 text-center text-3xl font-semibold">
-          Log in to your account
+        <p className="mb-4 text-center text-2xl font-semibold sm:mb-8 sm:text-3xl">
+          Sign Up
         </p>
+        <div className="flex w-full flex-col gap-1">
+          <p className="text-xl font-semibold">Full Name</p>
+          <Input
+            id="name"
+            {...register('name')}
+            className="h-14 rounded-xl border-2 border-[#494949] bg-transparent"
+            type="text"
+          />
+          {errors.name && (
+            <p className="text-sm text-red-500">{errors.name.message}</p>
+          )}
+        </div>
         <div className="flex w-full flex-col gap-1">
           <p className="text-xl font-semibold">Email</p>
           <Input
@@ -88,12 +102,12 @@ export default function Login() {
           )}
         </div>
         <Button className="my-4 h-14 w-full rounded-xl text-xl font-semibold">
-          Log In
+          Sign Up
         </Button>
         <div className="flex items-center justify-between">
-          <p>Don&apos;t have an account?</p>
+          <p>Already have an account?</p>
           <Button variant="link" className="text-white" asChild>
-            <Link href="/signup">Sign Up</Link>
+            <Link href="/login">Log In</Link>
           </Button>
         </div>
       </form>
