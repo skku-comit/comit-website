@@ -44,7 +44,7 @@ export default function Signup() {
     <div className="flex w-full justify-center bg-black pt-8 text-white">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex w-[480px] flex-col items-center gap-4 rounded-[32px] bg-[#121212] p-8 pb-8 sm:p-16"
+        className="flex w-[88%] max-w-[480px] flex-col items-center gap-4 rounded-[32px] bg-[#121212] p-8 pb-8 sm:p-16 md:w-[480px]"
       >
         <Image src={ComitOwl} alt="comit_owl" width={164} />
         <p className="mb-4 text-center text-2xl font-semibold sm:mb-8 sm:text-3xl">
@@ -55,7 +55,7 @@ export default function Signup() {
           <Input
             id="name"
             {...register('name')}
-            className="h-14 rounded-xl border-2 border-[#494949] bg-transparent"
+            className="h-12 rounded-xl border-2 border-[#494949] bg-transparent sm:h-14"
             type="text"
           />
           {errors.name && (
@@ -67,7 +67,7 @@ export default function Signup() {
           <Input
             id="email"
             {...register('email')}
-            className="h-14 rounded-xl border-2 border-[#494949] bg-transparent"
+            className="h-12 rounded-xl border-2 border-[#494949] bg-transparent sm:h-14"
             type="email"
           />
           {errors.email && (
@@ -80,7 +80,7 @@ export default function Signup() {
             <Input
               id="password"
               {...register('password')}
-              className="h-14 rounded-xl border-2 border-[#494949] bg-transparent"
+              className="h-12 rounded-xl border-2 border-[#494949] bg-transparent sm:h-14"
               type={showPassword ? 'text' : 'password'}
             />
             {!showPassword ? (
@@ -101,7 +101,7 @@ export default function Signup() {
             <p className="text-sm text-red-500">{errors.password.message}</p>
           )}
         </div>
-        <Button className="my-4 h-14 w-full rounded-xl text-xl font-semibold">
+        <Button className="my-4 h-12 w-full rounded-xl text-xl font-semibold sm:h-14">
           Sign Up
         </Button>
         <div className="flex items-center justify-between">

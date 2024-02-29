@@ -42,7 +42,7 @@ export default function Login() {
     <div className="flex max-h-lvh w-full justify-center bg-black pt-8 text-white">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex w-[480px] flex-col items-center gap-4 rounded-[32px] bg-[#121212] p-8 pb-8 sm:p-16"
+        className="flex w-[88%] max-w-[480px] flex-col items-center gap-4 rounded-[32px] bg-[#121212] p-8 pb-8 sm:p-16 md:w-[480px]"
       >
         <Image src={ComitOwl} alt="comit_owl" width={164} />
         <p className="mb-6 text-center text-xl font-semibold sm:mb-12 sm:text-3xl">
@@ -53,7 +53,7 @@ export default function Login() {
           <Input
             id="email"
             {...register('email')}
-            className="h-14 rounded-xl border-2 border-[#494949] bg-transparent"
+            className="h-12 rounded-xl border-2 border-[#494949] bg-transparent sm:h-14"
             type="email"
           />
           {errors.email && (
@@ -66,7 +66,7 @@ export default function Login() {
             <Input
               id="password"
               {...register('password')}
-              className="h-14 rounded-xl border-2 border-[#494949] bg-transparent"
+              className="h-12 rounded-xl border-2 border-[#494949] bg-transparent sm:h-14"
               type={showPassword ? 'text' : 'password'}
             />
             {!showPassword ? (
@@ -87,7 +87,7 @@ export default function Login() {
             <p className="text-sm text-red-500">{errors.password.message}</p>
           )}
         </div>
-        <Button className="my-4 h-14 w-full rounded-xl text-xl font-semibold">
+        <Button className="my-4 h-12 w-full rounded-xl text-xl font-semibold sm:h-14">
           Log In
         </Button>
         <div className="flex items-center justify-between">
