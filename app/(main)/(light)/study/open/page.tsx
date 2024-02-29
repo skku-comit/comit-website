@@ -2,16 +2,15 @@
 
 import SectionBanner from '@/components/common/SectionBanner'
 import Image from 'next/image'
-import ComitOwl from '@/public/comitOwl.png'
 import { Button } from '@/components/ui/button'
-import { BsEye, BsEyeSlash } from 'react-icons/bs'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-import { useRef, useState } from 'react'
+import { SetStateAction, useRef, useState } from 'react'
 import { z } from 'zod'
-import { useForm } from 'react-hook-form'
+import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import Link from 'next/link'
+import { Badge } from '@/components/ui/badge'
+import { GrPowerReset } from 'react-icons/gr'
 
 interface StudyForm {
   imageSrc: string
@@ -27,32 +26,49 @@ interface StudyForm {
 
 // TODO: 백엔드와 논의 후 schema 수정
 const schema = z.object({
-  imageSrc: z.string(),
-  title: z.string().min(2, { message: '제목은 2자 이상이어야 합니다' }),
-  day: z.string(),
-  startTime: z.string(),
-  endTime: z.string(),
-  campus: z.string(),
-  level: z.string(),
-  stack: z.array(z.string()),
-  description: z.string().min(10, { message: '설명은 10자 이상이어야 합니다' })
+  imageSrc: z.string({
+    required_error: '이미지를 업로드해주세요'
+  }),
+  title: z.string().min(1, { message: '스터디 제목을 입력해주세요' }),
+  day: z.enum(['월', '화', '수', '목', '금', '토', '일'], {
+    required_error: '요일을 선택해주세요'
+  }),
+  startTime: z.string().min(1, { message: '시작 시간을 입력해주세요' }),
+  endTime: z.string().min(1, { message: '종료 시간을 입력해주세요' }),
+  campus: z.enum(['율전', '명륜', '온라인'], {
+    required_error: '캠퍼스를 선택해주세요'
+  }),
+  level: z.enum(['입문', '초급', '중급', '고급'], {
+    required_error: '난이도를 선택해주세요'
+  }),
+  stack: z.array(z.string(), {
+    required_error: '스택을 입력해주세요'
+  }),
+  description: z.string().min(1, { message: '설명을 입력해주세요' })
 })
 
 export default function OpenStudy() {
   const {
     handleSubmit,
     register,
+    setValue,
+    control,
+    trigger,
     formState: { errors }
   } = useForm<StudyForm>({
     resolver: zodResolver(schema)
   })
 
-  // TODO: login API 연결
+  // TODO: study API 연결
   const onSubmit = (data: StudyForm) => {
     console.log(data)
   }
 
+  const [stacks, setStacks] = useState<string[]>([])
+  const [stackError, setStackError] = useState('')
+  const [currentStack, setCurrentStack] = useState('')
   const [image, setImage] = useState<string>('')
+
   const fileRef = useRef<HTMLInputElement>(null)
   const handleClick = () => {
     fileRef?.current?.click()
@@ -61,7 +77,27 @@ export default function OpenStudy() {
     const targetFiles = (e.target as HTMLInputElement).files as FileList
     const selectedFile = URL.createObjectURL(targetFiles[0])
     setImage(selectedFile)
-    console.log(image)
+    setValue('imageSrc', image)
+    trigger('imageSrc')
+  }
+
+  const handleInputChange = (e: {
+    target: { value: SetStateAction<string> }
+  }) => {
+    setCurrentStack(e.target.value)
+  }
+  const handleEnterPress = (e: { key: string }) => {
+    if (currentStack.trim() === '' || stacks.length >= 4) {
+      if (stacks.length >= 4)
+        setStackError('스택은 최대 4개까지만 입력 가능합니다')
+      return
+    }
+    if (e.key === 'Enter' && currentStack.trim() !== '') {
+      setStacks((prevStacks) => [...prevStacks, currentStack.trim()])
+      setCurrentStack('')
+      setValue('stack', stacks)
+      trigger('stack')
+    }
   }
   return (
     <>
@@ -69,7 +105,7 @@ export default function OpenStudy() {
         title="Open Study"
         description="새로운 스터디 분반을 개설합니다!"
       />
-      <form className="flex flex-col gap-2">
+      <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
         <div className="flex gap-8">
           <div className="flex flex-col gap-1">
             <p className="text-xl font-semibold">이미지</p>
@@ -96,70 +132,283 @@ export default function OpenStudy() {
               ref={fileRef}
               onChange={handleChange}
             />
+            {errors.imageSrc && (
+              <p className="text-sm text-red-500">{errors.imageSrc.message}</p>
+            )}
           </div>
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-1">
               <p className="text-xl font-semibold">스터디 제목</p>
               <Input
                 placeholder="스터디 제목을 입력해주세요"
                 id="title"
                 {...register('title')}
-                className="w-96 rounded-xl border border-slate-300"
+                className="w-full rounded-xl border border-slate-300"
               />
+              {errors.title && (
+                <p className="text-sm text-red-500">{errors.title.message}</p>
+              )}
             </div>
             <div className="flex flex-col gap-1">
               <p className="text-xl font-semibold">시간</p>
               <div className="flex justify-between">
-                <Input
-                  placeholder="시작 시간"
-                  id="startTime"
-                  {...register('startTime')}
-                  className="w-44 rounded-xl border border-slate-300"
-                />
-                <Input
-                  placeholder="종료 시간"
-                  id="endTime"
-                  {...register('endTime')}
-                  className="w-44 rounded-xl border border-slate-300"
-                />
+                <div className="flex flex-col gap-1">
+                  <Input
+                    placeholder="시작 시간"
+                    id="startTime"
+                    {...register('startTime')}
+                    className="w-48 rounded-xl border border-slate-300"
+                  />
+                  {errors.startTime && (
+                    <p className="text-sm text-red-500">
+                      {errors.startTime.message}
+                    </p>
+                  )}
+                </div>
+                <div className="flex flex-col gap-1">
+                  <Input
+                    placeholder="종료 시간"
+                    id="endTime"
+                    {...register('endTime')}
+                    className="w-48 rounded-xl border border-slate-300"
+                  />
+                  {errors.endTime && (
+                    <p className="text-sm text-red-500">
+                      {errors.endTime.message}
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
             <div className="flex flex-col gap-1">
               <p className="text-xl font-semibold">요일</p>
-              <Input
-                id="day"
-                {...register('day')}
-                className="w-96 rounded-xl border border-slate-300"
+              <Controller
+                control={control}
+                name="day"
+                render={({ field: { onChange, value } }) => (
+                  <div className="flex gap-6">
+                    <label className="flex gap-2">
+                      <input
+                        type="radio"
+                        onChange={() => onChange('월')}
+                        checked={value === '월'}
+                        className="accent-black"
+                      />
+                      월
+                    </label>
+                    <label className="flex gap-2">
+                      <input
+                        type="radio"
+                        onChange={() => onChange('화')}
+                        checked={value === '화'}
+                        className="accent-black"
+                      />
+                      화
+                    </label>
+                    <label className="flex gap-2">
+                      <input
+                        type="radio"
+                        onChange={() => onChange('수')}
+                        checked={value === '수'}
+                        className="accent-black"
+                      />
+                      수
+                    </label>
+                    <label className="flex gap-2">
+                      <input
+                        type="radio"
+                        onChange={() => onChange('목')}
+                        checked={value === '목'}
+                        className="accent-black"
+                      />
+                      목
+                    </label>
+                    <label className="flex gap-2">
+                      <input
+                        type="radio"
+                        onChange={() => onChange('금')}
+                        checked={value === '금'}
+                        className="accent-black"
+                      />
+                      금
+                    </label>
+                    <label className="flex gap-2">
+                      <input
+                        type="radio"
+                        onChange={() => onChange('토')}
+                        checked={value === '토'}
+                        className="accent-black"
+                      />
+                      토
+                    </label>
+                    <label className="flex gap-2">
+                      <input
+                        type="radio"
+                        onChange={() => onChange('일')}
+                        checked={value === '일'}
+                        className="accent-black"
+                      />
+                      일
+                    </label>
+                  </div>
+                )}
               />
+              {errors.day && (
+                <p className="text-sm text-red-500">{errors.day.message}</p>
+              )}
             </div>
           </div>
         </div>
         <div className="flex justify-between">
           <div className="flex flex-col gap-1">
-            <p className="text-xl font-semibold">장소</p>
-            <Input
-              id="campus"
-              {...register('campus')}
-              className="w-72 rounded-xl border border-slate-300"
+            <p className="text-xl font-semibold">캠퍼스</p>
+            <Controller
+              control={control}
+              name="campus"
+              render={({ field: { onChange, value } }) => (
+                <div className="flex gap-6">
+                  <label className="flex gap-2">
+                    <input
+                      type="radio"
+                      onChange={() => onChange('율전')}
+                      checked={value === '율전'}
+                      className="accent-black"
+                    />
+                    율전
+                  </label>
+                  <label className="flex gap-2">
+                    <input
+                      type="radio"
+                      onChange={() => onChange('명륜')}
+                      checked={value === '명륜'}
+                      className="accent-black"
+                    />
+                    명륜
+                  </label>
+                  <label className="flex gap-2">
+                    <input
+                      type="radio"
+                      onChange={() => onChange('온라인')}
+                      checked={value === '온라인'}
+                      className="accent-black"
+                    />
+                    온라인
+                  </label>
+                </div>
+              )}
             />
+            {errors.campus && (
+              <p className="text-sm text-red-500">{errors.campus.message}</p>
+            )}
           </div>
           <div className="flex flex-col gap-1">
             <p className="text-xl font-semibold">난이도</p>
-            <Input
-              id="level"
-              {...register('level')}
-              className="w-72 rounded-xl border border-slate-300"
+            <Controller
+              control={control}
+              name="level"
+              render={({ field: { onChange, value } }) => (
+                <div className="flex gap-6">
+                  <label className="flex gap-2">
+                    <input
+                      type="radio"
+                      onChange={() => onChange('입문')}
+                      checked={value === '입문'}
+                      className="accent-black"
+                    />
+                    입문
+                  </label>
+                  <label className="flex gap-2">
+                    <input
+                      type="radio"
+                      onChange={() => onChange('초급')}
+                      checked={value === '초급'}
+                      className="accent-black"
+                    />
+                    초급
+                  </label>
+                  <label className="flex gap-2">
+                    <input
+                      type="radio"
+                      onChange={() => onChange('중급')}
+                      checked={value === '중급'}
+                      className="accent-black"
+                    />
+                    중급
+                  </label>
+                  <label className="flex gap-2">
+                    <input
+                      type="radio"
+                      onChange={() => onChange('고급')}
+                      checked={value === '고급'}
+                      className="accent-black"
+                    />
+                    고급
+                  </label>
+                </div>
+              )}
             />
+            {errors.level && (
+              <p className="text-sm text-red-500">{errors.level.message}</p>
+            )}
           </div>
         </div>
         <div className="flex flex-col gap-1">
           <p className="text-xl font-semibold">주제 / 기술 스택</p>
-          <Input
-            placeholder="주제를 입력해주세요"
-            id="stack"
-            {...register('stack')}
-            className="w-72 rounded-xl border border-slate-300"
-          />
+          {stackError && <p className="text-sm text-red-500">{stackError}</p>}
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center gap-4">
+              <div className="relative">
+                <Input
+                  placeholder="주제를 입력해주세요"
+                  id="stack"
+                  value={currentStack}
+                  onChange={handleInputChange}
+                  onKeyDown={handleEnterPress}
+                  className="w-60 rounded-xl border border-slate-300"
+                />
+                <Button
+                  type="button"
+                  variant="secondary"
+                  className="absolute right-2 top-1/2 h-4 w-4 -translate-y-1/2 p-3 text-2xl text-gray-600"
+                  disabled={currentStack.trim() === '' || stacks.length >= 4}
+                  onClick={() => {
+                    setStacks((prevStacks) => [
+                      ...prevStacks,
+                      currentStack.trim()
+                    ])
+                    setCurrentStack('')
+                    setValue('stack', stacks)
+                    trigger('stack')
+                  }}
+                >
+                  +
+                </Button>
+              </div>
+              <Button
+                variant={'secondary'}
+                className="p-3"
+                type="button"
+                onClick={() => {
+                  setStackError('')
+                  setStacks([])
+                }}
+              >
+                Reset
+              </Button>
+            </div>
+            {errors.stack && (
+              <p className="-mt-2 text-sm text-red-500">
+                {errors.stack.message}
+              </p>
+            )}
+            <div className="flex gap-4 rounded-2xl">
+              {stacks.map((stack, index) => (
+                <Badge variant="secondary" key={index}>
+                  {stack}
+                </Badge>
+              ))}
+            </div>
+          </div>
         </div>
         <div className="flex flex-col gap-1">
           <p className="text-xl font-semibold">설명</p>
@@ -169,16 +418,15 @@ export default function OpenStudy() {
             {...register('description')}
             className="h-48 w-full rounded-xl border border-slate-300"
           />
+          {errors.description && (
+            <p className="text-sm text-red-500">{errors.description.message}</p>
+          )}
         </div>
         <div className="my-8 flex justify-between">
           <Button className="px-8 font-extrabold" variant="outline" disabled>
             미리 보기
           </Button>
-          <Button
-            type="submit"
-            className="px-8 font-extrabold"
-            onClick={handleSubmit(onSubmit)}
-          >
+          <Button type="submit" className="px-8 font-extrabold">
             제출하기
           </Button>
         </div>
