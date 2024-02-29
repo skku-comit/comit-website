@@ -13,10 +13,10 @@ import {
   DrawerClose
 } from '@/components/ui/drawer'
 import { IoMdInformationCircleOutline } from 'react-icons/io'
-import { FaLaptopCode } from 'react-icons/fa'
+import { IoHomeOutline, IoLaptopOutline } from 'react-icons/io5'
 import { BsDoorOpen } from 'react-icons/bs'
 import { MdLogin } from 'react-icons/md'
-import { PiNotePencilLight } from 'react-icons/pi'
+import { FaRegPenToSquare } from 'react-icons/fa6'
 
 export function NavLink({ href }: { href: string }) {
   const pathname = usePathname()
@@ -94,10 +94,21 @@ export default function Header() {
             <div
               className="flex items-center gap-4 text-3xl font-medium"
               onClick={() => {
+                router.push('/')
+              }}
+            >
+              <IoHomeOutline size={27} />
+              <p className="flex items-center text-xl">Home</p>
+            </div>
+          </DrawerClose>
+          <DrawerClose>
+            <div
+              className="flex items-center gap-4 text-3xl font-medium"
+              onClick={() => {
                 router.push('/about')
               }}
             >
-              <IoMdInformationCircleOutline />
+              <IoMdInformationCircleOutline size={27} />
               <p className="flex items-center text-xl">About</p>
             </div>
           </DrawerClose>
@@ -108,7 +119,7 @@ export default function Header() {
                 router.push('/study')
               }}
             >
-              <FaLaptopCode />
+              <IoLaptopOutline size={27} />
               <p className="flex items-center text-xl">Study</p>
             </div>
           </DrawerClose>
@@ -119,7 +130,7 @@ export default function Header() {
                 router.push('/clubroom')
               }}
             >
-              <BsDoorOpen />
+              <BsDoorOpen size={27} />
               <p className="flex items-center text-xl">Clubroom</p>
             </div>
           </DrawerClose>
@@ -130,7 +141,7 @@ export default function Header() {
                 router.push('/login')
               }}
             >
-              <MdLogin />
+              <MdLogin size={27} />
               <p className="flex items-center text-xl">Log in</p>
             </div>
           </DrawerClose>
@@ -141,7 +152,7 @@ export default function Header() {
                 router.push('/signup')
               }}
             >
-              <PiNotePencilLight />
+              <FaRegPenToSquare size={24} />
               <p className="flex items-center text-xl">Sign up</p>
             </div>
           </DrawerClose>
