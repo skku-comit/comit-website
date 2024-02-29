@@ -44,7 +44,7 @@ export default function Header() {
           : 'border-b border-b-gray-200 bg-white'
       )}
     >
-      <nav className="flex h-full w-[1280px] items-center justify-between">
+      <nav className="flex w-screen max-w-[1280px] h-full items-center justify-between">
         <Link href="/">
           <div className="flex items-center gap-2">
             <Image src={ComitLogo} alt="comit_logo" width={32} height={37} />
