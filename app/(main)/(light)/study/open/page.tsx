@@ -10,7 +10,8 @@ import { z } from 'zod'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Badge } from '@/components/ui/badge'
-import { GrPowerReset } from 'react-icons/gr'
+import StudyCard from '@/components/study/StudyCard'
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 
 interface StudyForm {
   imageSrc: string
@@ -52,19 +53,24 @@ export default function OpenStudy() {
     handleSubmit,
     register,
     setValue,
+    getValues,
+    watch,
     control,
     trigger,
-    formState: { errors }
+    formState: { errors, isValid }
   } = useForm<StudyForm>({
-    resolver: zodResolver(schema)
+    resolver: zodResolver(schema),
+    defaultValues: {
+      stack: []
+    }
   })
 
+  const watchedStacks = watch('stack')
   // TODO: study API 연결
   const onSubmit = (data: StudyForm) => {
     console.log(data)
   }
 
-  const [stacks, setStacks] = useState<string[]>([])
   const [stackError, setStackError] = useState('')
   const [currentStack, setCurrentStack] = useState('')
   const [image, setImage] = useState<string>('')
@@ -77,7 +83,7 @@ export default function OpenStudy() {
     const targetFiles = (e.target as HTMLInputElement).files as FileList
     const selectedFile = URL.createObjectURL(targetFiles[0])
     setImage(selectedFile)
-    setValue('imageSrc', image)
+    setValue('imageSrc', selectedFile)
     trigger('imageSrc')
   }
 
@@ -87,15 +93,22 @@ export default function OpenStudy() {
     setCurrentStack(e.target.value)
   }
   const handleEnterPress = (e: { key: string }) => {
-    if (currentStack.trim() === '' || stacks.length >= 4) {
-      if (stacks.length >= 4)
+    if (
+      currentStack.trim() === '' ||
+      (watchedStacks && watchedStacks.length >= 4)
+    ) {
+      if (watchedStacks && watchedStacks.length >= 4)
         setStackError('스택은 최대 4개까지만 입력 가능합니다')
       return
     }
     if (e.key === 'Enter' && currentStack.trim() !== '') {
-      setStacks((prevStacks) => [...prevStacks, currentStack.trim()])
+      setValue(
+        'stack',
+        getValues('stack')
+          ? getValues('stack').concat(currentStack)
+          : [currentStack]
+      )
       setCurrentStack('')
-      setValue('stack', stacks)
       trigger('stack')
     }
   }
@@ -370,14 +383,18 @@ export default function OpenStudy() {
                   type="button"
                   variant="secondary"
                   className="absolute right-2 top-1/2 h-4 w-4 -translate-y-1/2 p-3 text-2xl text-gray-600"
-                  disabled={currentStack.trim() === '' || stacks.length >= 4}
+                  disabled={
+                    currentStack.trim() === '' ||
+                    (watchedStacks && watchedStacks.length >= 4)
+                  }
                   onClick={() => {
-                    setStacks((prevStacks) => [
-                      ...prevStacks,
-                      currentStack.trim()
-                    ])
+                    setValue(
+                      'stack',
+                      getValues('stack')
+                        ? getValues('stack').concat(currentStack)
+                        : [currentStack]
+                    )
                     setCurrentStack('')
-                    setValue('stack', stacks)
                     trigger('stack')
                   }}
                 >
@@ -390,7 +407,7 @@ export default function OpenStudy() {
                 type="button"
                 onClick={() => {
                   setStackError('')
-                  setStacks([])
+                  setValue('stack', [])
                 }}
               >
                 Reset
@@ -402,11 +419,12 @@ export default function OpenStudy() {
               </p>
             )}
             <div className="flex gap-4 rounded-2xl">
-              {stacks.map((stack, index) => (
-                <Badge variant="secondary" key={index}>
-                  {stack}
-                </Badge>
-              ))}
+              {watchedStacks &&
+                watchedStacks.map((stack, index) => (
+                  <Badge variant="secondary" key={index}>
+                    {stack}
+                  </Badge>
+                ))}
             </div>
           </div>
         </div>
@@ -423,9 +441,30 @@ export default function OpenStudy() {
           )}
         </div>
         <div className="my-8 flex justify-between">
-          <Button className="px-8 font-extrabold" variant="outline" disabled>
-            미리 보기
-          </Button>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button
+                className="px-8 font-extrabold"
+                variant="outline"
+                disabled={!isValid}
+              >
+                미리 보기
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="flex justify-center p-8 sm:max-w-[425px]">
+              <StudyCard
+                campus={getValues('campus')}
+                day={getValues('day')}
+                imageSrc={getValues('imageSrc')}
+                endTime={getValues('endTime')}
+                level={getValues('level')}
+                stack={getValues('stack')}
+                startTime={getValues('startTime')}
+                title={getValues('title')}
+              />
+            </DialogContent>
+          </Dialog>
+
           <Button type="submit" className="px-8 font-extrabold">
             제출하기
           </Button>
