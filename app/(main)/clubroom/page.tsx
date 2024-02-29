@@ -2,7 +2,6 @@ import ClburoomInfoCard from '@/components/clubroom/ClubroomInfoCard'
 import SectionBanner from '@/components/common/SectionBanner'
 import { Align } from '@/components/clubroom/ClubroomInfoCard'
 import Image from 'next/image'
-
 import clubroomImg from '@/public/comit-clubroom.jpg'
 
 const clubroomInfoCardData = [
@@ -30,19 +29,19 @@ export default function Clubroom() {
         title="Clubroom"
         description="CoMit의 동아리방을 소개합니다!"
       />
-      <div className="flex w-[1096px] items-center justify-between">
-        <div className="flex h-[400px] w-[500px] flex-col items-center justify-center gap-8">
-          <ClburoomInfoCard {...clubroomInfoCardData[0]} />
-          <ClburoomInfoCard {...clubroomInfoCardData[1]} align={Align.RIGHT} />
-          <ClburoomInfoCard {...clubroomInfoCardData[2]} />
-        </div>
-        <div className="flex justify-center">
+      <div className="flex items-center gap-12 flex-row-reverse space-x-reverse max-md:flex-col mb-12">
+        <div className="flex justify-center max-md:w-[90%]">
           <Image
             src={clubroomImg}
             alt="comit-clubroom"
-            height={400}
-            className=" rounded-xl"
+            height={440}
+            className="rounded-xl object-contain"
           />
+        </div>
+        <div className="flex flex-col gap-8">
+          <ClburoomInfoCard {...clubroomInfoCardData[0]} />
+          <ClburoomInfoCard {...clubroomInfoCardData[1]} align={Align.RIGHT} />
+          <ClburoomInfoCard {...clubroomInfoCardData[2]} />
         </div>
       </div>
     </>
