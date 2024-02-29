@@ -44,7 +44,7 @@ export default function Header() {
           : 'border-b border-b-gray-200 bg-white'
       )}
     >
-      <nav className="flex w-screen max-w-[1280px] h-full items-center justify-between">
+      <nav className="flex h-full w-screen max-w-[1280px] items-center justify-between">
         <Link href="/">
           <div className="flex items-center gap-2">
             <Image src={ComitLogo} alt="comit_logo" width={32} height={37} />
@@ -89,7 +89,12 @@ export default function Header() {
             size={32}
           />
         </DrawerTrigger>
-        <DrawerContent className="flex flex-col gap-4 px-4 pb-6">
+        <DrawerContent
+          className={cn(
+            'flex flex-col gap-4 px-6 pb-6',
+            ['/', '/signup', '/login'].includes(pathname) && 'text-slate-200 bg-black border-gray-900'
+          )}
+        >
           <DrawerClose>
             <div
               className="flex items-center gap-4 text-3xl font-medium"
