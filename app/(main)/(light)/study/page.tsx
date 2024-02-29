@@ -62,11 +62,11 @@ export default function Study() {
             </DialogContent>
           </Dialog>
         ))}
-        </div>
+      </div>
 
-        <Button asChild className="my-8 font-semibold">
-          <Link href="study/open">스터디 개설하기</Link>
-        </Button>
+      <Button asChild className="my-12 w-60 py-6 text-lg font-semibold">
+        <Link href="study/open">스터디 개설하기</Link>
+      </Button>
     </>
   )
 }

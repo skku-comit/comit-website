@@ -29,7 +29,7 @@ export default function Clubroom() {
         title="Clubroom"
         description="CoMit의 동아리방을 소개합니다!"
       />
-      <div className="flex items-center gap-12 flex-row-reverse space-x-reverse max-md:flex-col mb-12">
+      <div className="mb-12 flex flex-row-reverse items-center gap-12 space-x-reverse max-md:flex-col">
         <div className="flex justify-center max-md:w-[90%]">
           <Image
             src={clubroomImg}

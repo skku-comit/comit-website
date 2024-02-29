@@ -7,11 +7,11 @@ export default function MainLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className="flex min-h-dvh flex-col items-center overflow-x-hidden">
+    <div className="flex min-h-dvh flex-col items-center">
       <Header />
-      <main className="mt-20 flex w-full flex-1 flex-col items-center">
+      <div className="mt-20 flex w-full justify-center">
         {children}
-      </main>
+      </div>
       <Footer />
     </div>
   )

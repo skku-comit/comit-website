@@ -16,6 +16,7 @@ import {
   CarouselNext,
   CarouselPrevious
 } from '@/components/ui/carousel'
+import { FaAngleRight } from 'react-icons/fa6'
 
 export default function Home() {
   const plugin = useRef(Autoplay({ delay: 2500 }))
@@ -134,10 +135,13 @@ export default function Home() {
             </div>
             <Button
               variant="outline"
-              className="my-8 px-8 rounded-2xl border-none text-black md:hidden"
+              className="relative my-12 w-64 border-none py-6 text-lg font-semibold text-gray-600 md:hidden"
               asChild
             >
-              <Link href="/study">스터디 더보기</Link>
+              <Link href="/study">
+                스터디 더보기
+                <FaAngleRight className='absolute right-12 text-gray-600'/>
+              </Link>
             </Button>
           </div>
         </div>
