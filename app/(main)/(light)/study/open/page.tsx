@@ -167,7 +167,7 @@ export default function OpenStudy() {
               <div className="flex justify-between">
                 <div className="flex flex-col gap-1">
                   <Input
-                    placeholder="시작 시간"
+                    placeholder="시작 시간 (HH:MM)"
                     id="startTime"
                     {...register('startTime')}
                     className="w-48 rounded-xl border border-slate-300"
@@ -180,7 +180,7 @@ export default function OpenStudy() {
                 </div>
                 <div className="flex flex-col gap-1">
                   <Input
-                    placeholder="종료 시간"
+                    placeholder="종료 시간 (HH:MM)"
                     id="endTime"
                     {...register('endTime')}
                     className="w-48 rounded-xl border border-slate-300"
