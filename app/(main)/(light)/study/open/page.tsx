@@ -42,9 +42,7 @@ const schema = z.object({
   level: z.enum(['입문', '초급', '중급', '고급'], {
     required_error: '난이도를 선택해주세요'
   }),
-  stack: z.array(z.string(), {
-    required_error: '스택을 입력해주세요'
-  }),
+  stack: z.array(z.string()).min(1, { message: '스택을 입력해주세요' }),
   description: z.string().min(1, { message: '설명을 입력해주세요' })
 })
 
@@ -119,7 +117,7 @@ export default function OpenStudy() {
         description="새로운 스터디 분반을 개설합니다!"
       />
       <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex gap-8">
+        <div className="flex gap-8 max-md:flex-col max-md:gap-4">
           <div className="flex flex-col gap-1">
             <p className="text-xl font-semibold">이미지</p>
             <div
@@ -164,13 +162,13 @@ export default function OpenStudy() {
             </div>
             <div className="flex flex-col gap-1">
               <p className="text-xl font-semibold">시간</p>
-              <div className="flex justify-between">
+              <div className="flex justify-between max-md:gap-4">
                 <div className="flex flex-col gap-1">
                   <Input
                     placeholder="시작 시간 (HH:MM)"
                     id="startTime"
                     {...register('startTime')}
-                    className="w-48 rounded-xl border border-slate-300"
+                    className="rounded-xl border border-slate-300 md:w-48"
                   />
                   {errors.startTime && (
                     <p className="text-sm text-red-500">
@@ -183,7 +181,7 @@ export default function OpenStudy() {
                     placeholder="종료 시간 (HH:MM)"
                     id="endTime"
                     {...register('endTime')}
-                    className="w-48 rounded-xl border border-slate-300"
+                    className="rounded-xl border border-slate-300 md:w-48"
                   />
                   {errors.endTime && (
                     <p className="text-sm text-red-500">
@@ -272,7 +270,7 @@ export default function OpenStudy() {
             </div>
           </div>
         </div>
-        <div className="flex justify-between">
+        <div className="flex justify-between max-md:flex-col max-md:gap-4">
           <div className="flex flex-col gap-1">
             <p className="text-xl font-semibold">캠퍼스</p>
             <Controller
