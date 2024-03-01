@@ -12,6 +12,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Badge } from '@/components/ui/badge'
 import StudyCard from '@/components/study/StudyCard'
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
+import type { Dayjs } from 'dayjs'
+import { TimePicker } from 'antd'
 
 interface StudyForm {
   imageSrc: string
@@ -34,8 +36,12 @@ const schema = z.object({
   day: z.enum(['월', '화', '수', '목', '금', '토', '일'], {
     required_error: '요일을 선택해주세요'
   }),
-  startTime: z.string().min(1, { message: '시작 시간을 입력해주세요' }),
-  endTime: z.string().min(1, { message: '종료 시간을 입력해주세요' }),
+  startTime: z.string({
+    required_error: '시작 시간을 입력해주세요'
+  }),
+  endTime: z.string({
+    required_error: '종료 시간을 입력해주세요'
+  }),
   campus: z.enum(['율전', '명륜', '온라인'], {
     required_error: '캠퍼스를 선택해주세요'
   }),
@@ -110,6 +116,19 @@ export default function OpenStudy() {
       trigger('stack')
     }
   }
+
+  const [startTime, setStartTime] = useState<Dayjs | null>(null)
+  const [endTime, setEndTime] = useState<Dayjs | null>(null)
+
+  const onChangeStartTime = (time: Dayjs) => {
+    setValue('startTime', time.format('HH:mm'))
+    setStartTime(time)
+  }
+  const onChangeEndTime = (time: Dayjs) => {
+    setValue('endTime', time.format('HH:mm'))
+    setEndTime(time)
+  }
+
   return (
     <>
       <SectionBanner
@@ -164,11 +183,15 @@ export default function OpenStudy() {
               <p className="text-xl font-semibold">시간</p>
               <div className="flex justify-between max-md:gap-4">
                 <div className="flex flex-col gap-1">
-                  <Input
-                    placeholder="시작 시간 (HH:MM)"
-                    id="startTime"
-                    {...register('startTime')}
-                    className="rounded-xl border border-slate-300 md:w-48"
+                  <TimePicker
+                    placeholder="시작 시간"
+                    value={startTime}
+                    onChange={onChangeStartTime}
+                    className="w-48 rounded-xl border border-slate-300"
+                    format="HH:mm"
+                    size="large"
+                    needConfirm={false}
+                    changeOnScroll
                   />
                   {errors.startTime && (
                     <p className="text-sm text-red-500">
@@ -177,11 +200,15 @@ export default function OpenStudy() {
                   )}
                 </div>
                 <div className="flex flex-col gap-1">
-                  <Input
-                    placeholder="종료 시간 (HH:MM)"
-                    id="endTime"
-                    {...register('endTime')}
-                    className="rounded-xl border border-slate-300 md:w-48"
+                  <TimePicker
+                    placeholder="종료 시간"
+                    value={endTime}
+                    onChange={onChangeEndTime}
+                    className="w-48 rounded-xl border border-slate-300"
+                    format="HH:mm"
+                    size="large"
+                    needConfirm={false}
+                    changeOnScroll
                   />
                   {errors.endTime && (
                     <p className="text-sm text-red-500">
