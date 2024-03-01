@@ -187,7 +187,7 @@ export default function OpenStudy() {
                     placeholder="시작 시간"
                     value={startTime}
                     onChange={onChangeStartTime}
-                    className="w-48 rounded-xl border border-slate-300"
+                    className="w-48 rounded-xl border border-slate-300 px-4"
                     format="HH:mm"
                     size="large"
                     needConfirm={false}
@@ -200,16 +200,16 @@ export default function OpenStudy() {
                   )}
                 </div>
                 <div className="flex flex-col gap-1">
-                  <TimePicker
-                    placeholder="종료 시간"
-                    value={endTime}
-                    onChange={onChangeEndTime}
-                    className="w-48 rounded-xl border border-slate-300"
-                    format="HH:mm"
-                    size="large"
-                    needConfirm={false}
-                    changeOnScroll
-                  />
+                    <TimePicker
+                      placeholder="종료 시간"
+                      value={endTime}
+                      onChange={onChangeEndTime}
+                      className="w-48 rounded-xl border border-slate-300 px-4"
+                      format="HH:mm"
+                      size="large"
+                      needConfirm={false}
+                      changeOnScroll
+                    />
                   {errors.endTime && (
                     <p className="text-sm text-red-500">
                       {errors.endTime.message}
