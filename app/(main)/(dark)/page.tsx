@@ -8,7 +8,8 @@ import { Button } from '@/components/ui/button'
 import StudyCard from '@/components/main/StudyCard'
 import Autoplay from 'embla-carousel-autoplay'
 import { dummyStackUrl, studyDummyData } from '@/lib/dummy'
-import { motion } from 'framer-motion'
+import { motion, useAnimation } from 'framer-motion'
+import { useInView } from 'react-intersection-observer'
 
 import {
   Carousel,
@@ -20,9 +21,26 @@ import {
 import { FaAngleRight } from 'react-icons/fa6'
 
 export default function Home() {
+  const controls = useAnimation()
+  const [ref, inView] = useInView({ triggerOnce: true })
+
   const plugin = useRef(Autoplay({ delay: 2500 }))
   const mainIntroduceTextFirstLine = ['개발자', '를 꿈꾸는']
   const mainIntroduceTextSecondLine = ['모든 ', '학생', '들을 ', '위해서']
+  const subIntroduceTextFirstLine = [
+    '자유롭게 ',
+    '지식을 ',
+    '공유하고 ',
+    '개발할 ',
+    '수 ',
+    '있는'
+  ]
+  const subIntroduceTextSecondLine = [
+    '성균관대학교 ',
+    '중앙 ',
+    '코딩 ',
+    '동아리'
+  ]
 
   const renderAnimatedText = (text: Array<string>) => {
     return text.map((item: string, index: number) => {
@@ -56,13 +74,19 @@ export default function Home() {
     <div className="flex min-h-screen w-[100%] flex-col items-center bg-black text-center text-white">
       <div className="w-[100%] lg:w-[1280px]">
         <div className="flex items-center justify-between max-xl:flex-col xl:mt-36 xl:flex-row-reverse">
-          <Image
-            src={mainPicture}
-            width={600}
-            height={600}
-            alt="mainPicture"
-            className="h-[600px] w-[600px] max-xl:h-[400px] max-xl:w-[400px]"
-          ></Image>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1 }}
+          >
+            <Image
+              src={mainPicture}
+              width={600}
+              height={600}
+              alt="mainPicture"
+              className="h-[600px] w-[600px] max-xl:h-[400px] max-xl:w-[400px]"
+            ></Image>
+          </motion.div>
           <div className="flex flex-col gap-6 xl:gap-8">
             <p className="text-left text-[40px] font-semibold leading-tight xl:text-[64px]">
               {renderAnimatedText(mainIntroduceTextFirstLine)}
@@ -70,44 +94,82 @@ export default function Home() {
               {renderAnimatedText(mainIntroduceTextSecondLine)}
             </p>
             <p className="text-left text-[24px] font-semibold max-xl:text-xl">
-              자유롭게 지식을 공유하고 개발할 수 있는
+              {renderAnimatedText(subIntroduceTextFirstLine)}
               <br />
-              성균관대학교 중앙 코딩 동아리
+              {renderAnimatedText(subIntroduceTextSecondLine)}
             </p>
             <div className="flex items-center max-xl:justify-between xl:gap-16">
               <p className="text-left text-4xl font-extrabold leading-[70px] text-primary xl:text-[70px]">
-                COMIT
+                {renderAnimatedText(['C', 'O', 'M', 'I', 'T'])}
               </p>
-              <Button
-                variant="secondary"
-                className="h-12 w-40 rounded-2xl text-xl font-semibold xl:h-[60px] xl:w-[190px] xl:text-[24px]"
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1 }}
               >
-                신규 지원
-              </Button>
+                <Button
+                  variant="secondary"
+                  className="h-12 w-40 rounded-2xl text-xl font-semibold xl:h-[60px] xl:w-[190px] xl:text-[24px]"
+                >
+                  신규 지원
+                </Button>
+              </motion.div>
             </div>
           </div>
         </div>
         <div className="mt-28 flex flex-col xl:mt-[330px]">
-          <p className="mb-8 text-left text-5xl text-[70px] font-semibold max-xl:hidden">
-            About
-          </p>
+          <motion.div
+            ref={ref}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: inView ? 1 : 0 }}
+            transition={{
+              duration: 0.25
+            }}
+          >
+            <p className="mb-8 text-left text-5xl text-[70px] font-semibold max-xl:hidden">
+              About
+            </p>
+          </motion.div>
           <div className="flex w-full justify-between font-semibold max-xl:flex-col">
-            <div>
+            <motion.div
+              ref={ref}
+              initial={{ opacity: 0, y: 100 }}
+              animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 100 }}
+              transition={{ duration: 1, ease: [0.6, -0.05, 0.01, 0.9] }}
+            >
               <p className="text-[40px]">누적 스터디 개설</p>
               <p className="text-left text-[90px] max-xl:mb-12 max-xl:text-center">
                 50+
               </p>
-            </div>
-            <div>
+            </motion.div>
+            <motion.div
+              ref={ref}
+              initial={{ opacity: 0, y: 100 }}
+              animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 100 }}
+              transition={{
+                duration: 1,
+                ease: [0.6, -0.05, 0.01, 0.9],
+                delay: 0.5
+              }}
+            >
               <p className="text-[40px]">평균 신규 지원</p>
               <p className="text-left text-[90px] max-xl:mb-12 max-xl:text-center">
                 120+
               </p>
-            </div>
-            <div>
+            </motion.div>
+            <motion.div
+              ref={ref}
+              initial={{ opacity: 0, y: 100 }}
+              animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 100 }}
+              transition={{
+                duration: 1,
+                ease: [0.6, -0.05, 0.01, 0.9],
+                delay: 1.0
+              }}
+            >
               <p className="text-[40px]">평균 스터디 개설</p>
               <p className="text-left text-[90px] max-xl:text-center">15+</p>
-            </div>
+            </motion.div>
           </div>
         </div>
         <div className="mt-24 flex justify-center xl:mt-[240px]">
