@@ -12,8 +12,20 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Badge } from '@/components/ui/badge'
 import StudyCard from '@/components/study/StudyCard'
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger
+} from '@/components/ui/alert-dialog'
 import type { Dayjs } from 'dayjs'
 import { TimePicker } from 'antd'
+import { DialogClose } from '@radix-ui/react-dialog'
 
 interface StudyForm {
   imageSrc: string
@@ -73,6 +85,7 @@ export default function OpenStudy() {
   // TODO: study API 연결
   const onSubmit = (data: StudyForm) => {
     console.log(data)
+    document.getElementById('closeDialog')?.click()
   }
 
   const [stackError, setStackError] = useState('')
@@ -200,16 +213,16 @@ export default function OpenStudy() {
                   )}
                 </div>
                 <div className="flex flex-col gap-1">
-                    <TimePicker
-                      placeholder="종료 시간"
-                      value={endTime}
-                      onChange={onChangeEndTime}
-                      className="w-48 rounded-xl border border-slate-300 px-4"
-                      format="HH:mm"
-                      size="large"
-                      needConfirm={false}
-                      changeOnScroll
-                    />
+                  <TimePicker
+                    placeholder="종료 시간"
+                    value={endTime}
+                    onChange={onChangeEndTime}
+                    className="w-48 rounded-xl border border-slate-300 px-4"
+                    format="HH:mm"
+                    size="large"
+                    needConfirm={false}
+                    changeOnScroll
+                  />
                   {errors.endTime && (
                     <p className="text-sm text-red-500">
                       {errors.endTime.message}
@@ -465,34 +478,54 @@ export default function OpenStudy() {
             <p className="text-sm text-red-500">{errors.description.message}</p>
           )}
         </div>
-        <div className="my-8 flex justify-between">
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button
-                className="px-8 font-extrabold"
-                variant="outline"
-                disabled={!isValid}
-              >
-                미리 보기
+        <div className="my-8 flex justify-end">
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button type="button" className="px-8 font-extrabold">
+                제출하기
               </Button>
-            </DialogTrigger>
-            <DialogContent className="flex justify-center p-8 sm:max-w-[425px]">
-              <StudyCard
-                campus={getValues('campus')}
-                day={getValues('day')}
-                imageSrc={getValues('imageSrc')}
-                endTime={getValues('endTime')}
-                level={getValues('level')}
-                stack={getValues('stack')}
-                startTime={getValues('startTime')}
-                title={getValues('title')}
-              />
-            </DialogContent>
-          </Dialog>
-
-          <Button type="submit" className="px-8 font-extrabold">
-            제출하기
-          </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent className="flex flex-col p-8 sm:max-w-[425px]">
+              <AlertDialogHeader>
+                <AlertDialogTitle>제출하시겠습니까?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  스터디 개설이 승인되기 전까지 내용 수정 및 삭제가 불가하며,
+                  반드시 내용을 수정하거나 삭제해야 하는 경우 관리자에게
+                  문의해주세요.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              {/* TODO: study dialog 추가 */}
+              <div className="flex justify-center">
+                <StudyCard
+                  campus={getValues('campus') || ''}
+                  day={getValues('day') || ''}
+                  imageSrc={
+                    getValues('imageSrc') ||
+                    // TODO: 다른 이미지 저장으로 대체
+                    'https://github.com/skku-comit/comit-website/assets/97675977/5ac14e32-87e6-40c0-9572-33cab7822abd'
+                  }
+                  endTime={getValues('endTime') || ''}
+                  level={getValues('level') || ''}
+                  stack={getValues('stack') || ''}
+                  startTime={getValues('startTime') || ''}
+                  title={getValues('title') || ''}
+                />
+              </div>
+              {!isValid && (
+                <p className="text-sm text-red-500">모든 항목을 입력해주세요</p>
+              )}
+              <AlertDialogFooter>
+                <AlertDialogCancel>취소</AlertDialogCancel>
+                <AlertDialogAction
+                  type="submit"
+                  onClick={handleSubmit(onSubmit)}
+                  disabled={!isValid}
+                >
+                  확인
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       </form>
     </>
