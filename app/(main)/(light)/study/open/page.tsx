@@ -11,7 +11,6 @@ import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Badge } from '@/components/ui/badge'
 import StudyCard from '@/components/study/StudyCard'
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -25,7 +24,6 @@ import {
 } from '@/components/ui/alert-dialog'
 import type { Dayjs } from 'dayjs'
 import { TimePicker } from 'antd'
-import { DialogClose } from '@radix-ui/react-dialog'
 
 interface StudyForm {
   imageSrc: string

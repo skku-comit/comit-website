@@ -25,8 +25,8 @@ export default function StudyCard({
 }: StudyCardProps) {
   const badges = [level, stack[0], campus]
   return (
-    <Card className="flex w-60 transform cursor-pointer flex-col items-center justify-center overflow-hidden px-4 py-8 shadow-md transition-transform hover:scale-105  hover:shadow-2xl">
-      <div className="mb-8 mt-4 h-36 w-36 overflow-hidden">
+    <Card className="flex w-44 transform cursor-pointer flex-col items-center justify-center overflow-hidden px-2 py-4 shadow-md transition-transform hover:scale-105 hover:shadow-2xl sm:w-60 sm:px-4 sm:py-8">
+      <div className="mb-8 mt-4 h-24 w-24 overflow-hidden sm:h-36 sm:w-36">
         <Image
           src={imageSrc}
           alt={title}
@@ -36,11 +36,13 @@ export default function StudyCard({
           unoptimized
         ></Image>
       </div>
-      <CardTitle className="text-center text-lg">{title}</CardTitle>
+      <CardTitle className="text-center text-base sm:text-lg">
+        {title}
+      </CardTitle>
       <CardDescription className="text-center">
         {day} {startTime} ~ {endTime}
       </CardDescription>
-      <div className="mt-2 flex w-48 flex-wrap justify-around gap-2">
+      <div className="mt-2 flex w-40 flex-wrap justify-around gap-2 sm:w-48">
         {badges.map((badge, index: number) => (
           <Badge key={index} variant="secondary">
             {badge}

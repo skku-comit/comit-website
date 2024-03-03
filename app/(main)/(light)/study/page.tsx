@@ -23,7 +23,7 @@ export default function Study() {
         title="Study"
         description="CoMit의 스터디 분반을 확인해보세요!"
       />
-      <div className="grid grid-cols-1 gap-x-16 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="max-sm:px-2 grid gap-6 sm:gap-x-16 sm:gap-y-12 grid-cols-2 lg:grid-cols-4">
         {studyDummyData.map((study, index) => (
           <Dialog key={index}>
             <DialogTrigger asChild>
