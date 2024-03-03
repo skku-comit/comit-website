@@ -78,7 +78,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="flex justify-center xl:mt-[240px] mt-24">
+        <div className="mt-24 flex justify-center xl:mt-[240px]">
           <div className="w-full font-semibold">
             <p className="text-left text-[70px] max-xl:hidden">Study</p>
             <p className="items-start text-left text-[40px] max-xl:text-center">
@@ -94,7 +94,10 @@ export default function Home() {
                 <CarouselContent>
                   {dummyStackUrl.map((item, index) => {
                     return (
-                      <CarouselItem key={index} className="basis-1/8">
+                      <CarouselItem
+                        key={index}
+                        className="basis-1/8 flex items-center"
+                      >
                         <div>
                           <Image
                             width={128}
