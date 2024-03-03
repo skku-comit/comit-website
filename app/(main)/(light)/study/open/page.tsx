@@ -24,6 +24,12 @@ import {
 } from '@/components/ui/alert-dialog'
 import type { Dayjs } from 'dayjs'
 import { TimePicker } from 'antd'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger
+} from '@/components/ui/popover'
+import { MdHelpOutline } from 'react-icons/md'
 
 interface StudyForm {
   imageSrc: string
@@ -405,7 +411,25 @@ export default function OpenStudy() {
           </div>
         </div>
         <div className="flex flex-col gap-1">
-          <p className="text-xl font-semibold">주제 / 기술 스택</p>
+          <div className="flex items-center gap-2">
+            <p className="text-xl font-semibold">주제 / 기술 스택</p>
+            <Popover>
+              <PopoverTrigger asChild>
+                <button>
+                  <MdHelpOutline className="hover:text-gray-600" />
+                </button>
+              </PopoverTrigger>
+              <PopoverContent
+                className="flex w-64 justify-center text-sm"
+                side="top"
+              >
+                <ul>
+                  <li>스택은 최대 4개까지 입력 가능하며</li>
+                  <li>첫번째 스택만 카드에 표시됩니다.</li>
+                </ul>
+              </PopoverContent>
+            </Popover>
+          </div>
           {stackError && <p className="text-sm text-red-500">{stackError}</p>}
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-4">

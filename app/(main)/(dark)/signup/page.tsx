@@ -13,6 +13,7 @@ import Link from 'next/link'
 
 interface SignupForm {
   name: string
+  studentID: number
   email: string
   password: string
 }
@@ -20,6 +21,7 @@ interface SignupForm {
 // TODO: 백엔드와 논의 후 schema 수정
 const schema = z.object({
   name: z.string().min(2, { message: '이름은 2자 이상이어야 합니다' }),
+  studentID: z.number({ required_error: '올바른 학번을 입력해주세요' }),
   email: z.string().email({ message: '올바른 이메일 주소를 입력해주세요' }),
   password: z.string().min(6, { message: '비밀번호는 6자 이상이어야 합니다' })
 })
@@ -60,6 +62,20 @@ export default function Signup() {
           />
           {errors.name && (
             <p className="text-sm text-red-500">{errors.name.message}</p>
+          )}
+        </div>
+        <div className="flex w-full flex-col gap-1">
+          <p className="text-xl font-semibold">Student ID</p>
+          <Input
+            id="studentID"
+            {...register('studentID', { valueAsNumber: true })}
+            className="h-12 rounded-xl border-2 border-[#494949] bg-transparent sm:h-14"
+            type="number"
+          />
+          {errors.studentID && (
+            <p className="text-sm text-red-500">
+              올바른 학번을 입력해주세요
+            </p>
           )}
         </div>
         <div className="flex w-full flex-col gap-1">
