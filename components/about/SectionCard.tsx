@@ -30,17 +30,15 @@ export default function SectionCard({
     }
   }
   const [isHovered, setIsHovered] = useState(false)
-  const [isClicked, setIsClicked] = useState(false)
   return (
     <Card
       className="relative h-[360px] w-[360px] rounded-3xl shadow-md"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      onClick={() => setIsClicked(!isClicked)}
     >
       <div
         className={cn(
-          'flex h-[280px] w-full items-center justify-center rounded-t-xl bg-opacity-40',
+          'flex h-[280px] w-full items-center justify-center rounded-t-3xl bg-opacity-40',
           image === 'studyClass'
             ? 'bg-[#FFE873]'
             : image === 'event'
@@ -53,12 +51,11 @@ export default function SectionCard({
       <div className="flex h-[80px] items-center justify-center">
         <p className="text-[24px] font-semibold">{title}</p>
       </div>
-      {(isHovered || isClicked) && (
+      {isHovered && (
         <div
-          className="absolute left-0 top-0 h-[360px] w-[360px] rounded-xl bg-black bg-opacity-70 text-white transition ease-in-out"
+          className="absolute left-0 top-0 h-[360px] w-[360px] rounded-3xl bg-black bg-opacity-70 text-white transition ease-in-out"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          onClick={() => setIsClicked(!isClicked)}
         >
           <div className="flex h-[30%] w-full items-center justify-center">
             <p className="text-[36px] font-semibold">{title}</p>
