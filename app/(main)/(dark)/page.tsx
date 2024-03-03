@@ -1,23 +1,22 @@
 'use client'
 
-import { useRef } from 'react'
-import mainPicture from '@/public/mainPicture.svg'
+import AutoScroll from 'embla-carousel-auto-scroll'
+import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Button } from '@/components/ui/button'
-import StudyCard from '@/components/main/StudyCard'
-import { dummyStackUrl, studyDummyData } from '@/lib/dummy'
-import { motion } from 'framer-motion'
+import { useRef } from 'react'
+import { FaAngleRight } from 'react-icons/fa6'
 import { useInView } from 'react-intersection-observer'
-import AutoScroll from 'embla-carousel-auto-scroll'
+
+import StudyCard from '@/components/main/StudyCard'
+import { Button } from '@/components/ui/button'
 import {
   Carousel,
-  CarouselItem,
   CarouselContent,
-  CarouselNext,
-  CarouselPrevious
+  CarouselItem
 } from '@/components/ui/carousel'
-import { FaAngleRight } from 'react-icons/fa6'
+import { dummyStackUrl, studyDummyData } from '@/lib/dummy'
+import mainPicture from '@/public/mainPicture.svg'
 
 export default function Home() {
   const [ref, inView] = useInView({ triggerOnce: true })

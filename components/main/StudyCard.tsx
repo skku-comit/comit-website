@@ -1,6 +1,7 @@
-import { Card, CardDescription, CardTitle } from '@/components/ui/card'
 import Image from 'next/image'
+
 import { Badge } from '@/components/ui/badge'
+import { Card, CardDescription, CardTitle } from '@/components/ui/card'
 
 interface StudyCardProps {
   imageSrc: string

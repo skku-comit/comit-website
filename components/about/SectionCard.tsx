@@ -1,11 +1,12 @@
 'use client'
+import Image from 'next/image'
+import { useState } from 'react'
+
 import { Card } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
-import { useState } from 'react'
-import Image from 'next/image'
-import studyClassImg from '@/public/about-image/studyClass.svg'
 import eventImg from '@/public/about-image/event.svg'
 import seminarImg from '@/public/about-image/seminar.svg'
+import studyClassImg from '@/public/about-image/studyClass.svg'
 
 type SectionCardProps = {
   title: string
