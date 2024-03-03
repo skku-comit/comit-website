@@ -6,11 +6,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import StudyCard from '@/components/main/StudyCard'
-import Autoplay from 'embla-carousel-autoplay'
 import { dummyStackUrl, studyDummyData } from '@/lib/dummy'
-import { motion, useAnimation } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-
+import AutoScroll from 'embla-carousel-auto-scroll'
 import {
   Carousel,
   CarouselItem,
@@ -21,10 +20,8 @@ import {
 import { FaAngleRight } from 'react-icons/fa6'
 
 export default function Home() {
-  const controls = useAnimation()
   const [ref, inView] = useInView({ triggerOnce: true })
-
-  const plugin = useRef(Autoplay({ delay: 2500 }))
+  const plugin = useRef(AutoScroll({ playOnInit: true }))
   const mainIntroduceTextFirstLine = ['개발자', '를 꿈꾸는']
   const mainIntroduceTextSecondLine = ['모든 ', '학생', '들을 ', '위해서']
   const subIntroduceTextFirstLine = [
@@ -132,7 +129,6 @@ export default function Home() {
           </motion.div>
           <div className="flex w-full justify-between font-semibold max-xl:flex-col">
             <motion.div
-              ref={ref}
               initial={{ opacity: 0, y: 100 }}
               animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 100 }}
               transition={{ duration: 1, ease: [0.6, -0.05, 0.01, 0.9] }}
@@ -143,7 +139,6 @@ export default function Home() {
               </p>
             </motion.div>
             <motion.div
-              ref={ref}
               initial={{ opacity: 0, y: 100 }}
               animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 100 }}
               transition={{
@@ -158,7 +153,6 @@ export default function Home() {
               </p>
             </motion.div>
             <motion.div
-              ref={ref}
               initial={{ opacity: 0, y: 100 }}
               animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 100 }}
               transition={{
@@ -180,11 +174,13 @@ export default function Home() {
             </p>
             <div className="mt-8 flex h-[128px] w-full items-center">
               <Carousel
-                className="flex w-full items-center justify-between"
-                opts={{ align: 'start' }}
+                className="pointer-events-none flex w-full items-center justify-between"
+                opts={{
+                  align: 'start',
+                  loop: true
+                }}
                 plugins={[plugin.current]}
               >
-                <CarouselPrevious />
                 <CarouselContent>
                   {dummyStackUrl.map((item, index) => {
                     return (
@@ -206,7 +202,6 @@ export default function Home() {
                     )
                   })}
                 </CarouselContent>
-                <CarouselNext />
               </Carousel>
             </div>
           </div>
@@ -225,7 +220,7 @@ export default function Home() {
                 <Link href="/study">더보기</Link>
               </Button>
             </div>
-            <div className="mt-8 grid xl:grid-cols-4 gap-4 sm:gap-12 grid-cols-2 xl:mb-32">
+            <div className="mt-8 grid grid-cols-2 gap-4 sm:gap-12 xl:mb-32 xl:grid-cols-4">
               {studyDummyData.slice(0, 4).map((item, index) => {
                 return <StudyCard {...item} key={index} />
               })}
