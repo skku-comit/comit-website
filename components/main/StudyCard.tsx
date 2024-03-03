@@ -48,7 +48,7 @@ export default function StudyCard({
           <Badge
             key={index}
             variant="secondary"
-            className="flex items-center justify-center sm:h-8 sm:w-16"
+            className="flex items-center justify-center sm:h-7 px-3"
           >
             {badge}
           </Badge>
