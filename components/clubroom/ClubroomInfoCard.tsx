@@ -18,7 +18,7 @@ export default function ClburoomInfoCard({
   return (
     <Card
       className={cn(
-        'flex h-[108px] w-[384px] items-center justify-center rounded-3xl bg-[#D9D9D9] bg-opacity-20 shadow-md lg:w-[400px] xl:w-[420px]',
+        'flex h-[108px] w-[344px] items-center justify-center rounded-3xl bg-[#D9D9D9] bg-opacity-20 shadow-md sm:w-[360px] lg:w-[400px] xl:w-[420px]',
         align === Align.RIGHT && 'lg:ml-20'
       )}
     >
