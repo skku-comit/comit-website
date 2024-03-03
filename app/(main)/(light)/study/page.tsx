@@ -23,7 +23,10 @@ export default function Study() {
         title="Study"
         description="CoMit의 스터디 분반을 확인해보세요!"
       />
-      <div className="grid grid-cols-2 gap-6 max-sm:px-2 sm:gap-x-16 sm:gap-y-12 lg:grid-cols-4">
+      <Button asChild className="w-60 py-6 text-lg font-semibold">
+        <Link href="study/open">2024-1 스터디 개설 신청</Link>
+      </Button>
+      <div className="my-12 grid grid-cols-2 gap-6 max-sm:px-2 sm:gap-x-16 sm:gap-y-12 lg:grid-cols-4">
         {studyDummyData.map((study, index) => (
           <Dialog key={index}>
             <DialogTrigger asChild>
@@ -66,10 +69,6 @@ export default function Study() {
           </Dialog>
         ))}
       </div>
-
-      <Button asChild className="my-12 w-60 py-6 text-lg font-semibold">
-        <Link href="study/open">스터디 개설하기</Link>
-      </Button>
     </>
   )
 }
