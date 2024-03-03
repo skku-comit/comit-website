@@ -32,13 +32,13 @@ export default function SectionCard({
   const [isHovered, setIsHovered] = useState(false)
   return (
     <Card
-      className="relative h-[360px] w-[360px] rounded-3xl shadow-md"
+      className="relative h-[300px] w-[300px] rounded-3xl shadow-md sm:h-[360px] sm:w-[360px]"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       <div
         className={cn(
-          'flex h-[280px] w-full items-center justify-center rounded-t-3xl bg-opacity-40',
+          'flex h-[230px] w-full items-center justify-center rounded-t-3xl bg-opacity-40 sm:h-[280px]',
           image === 'studyClass'
             ? 'bg-[#FFE873]'
             : image === 'event'
@@ -46,22 +46,26 @@ export default function SectionCard({
               : 'bg-[#C875FF]'
         )}
       >
-        {selectImg(image)}
+        <div className="flex h-[240px] w-[240px] items-center justify-center sm:h-[300px] sm:w-[300px]">
+          {selectImg(image)}
+        </div>
       </div>
-      <div className="flex h-[80px] items-center justify-center">
+      <div className="flex h-[70px] items-center justify-center sm:h-[80px]">
         <p className="text-[24px] font-semibold">{title}</p>
       </div>
       {isHovered && (
         <div
-          className="absolute left-0 top-0 h-[360px] w-[360px] rounded-3xl bg-black bg-opacity-70 text-white transition ease-in-out"
+          className="absolute left-0 top-0 h-[300px] w-[300px] rounded-3xl bg-black bg-opacity-70 text-white transition ease-in-out sm:h-[360px] sm:w-[360px]"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
           <div className="flex h-[30%] w-full items-center justify-center">
-            <p className="text-[36px] font-semibold">{title}</p>
+            <p className="text-3xl font-semibold sm:text-4xl ">{title}</p>
           </div>
           <div className="flex w-full items-center justify-center text-justify">
-            <p className="w-[290px] text-[25px] font-medium">{description}</p>
+            <p className="w-[240px] text-xl font-medium sm:w-[290px] sm:text-2xl">
+              {description}
+            </p>
           </div>
         </div>
       )}
