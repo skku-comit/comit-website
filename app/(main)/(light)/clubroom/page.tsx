@@ -44,7 +44,7 @@ export default function Clubroom() {
       />
       <div className="mb-12 flex flex-row-reverse items-center justify-center gap-12 space-x-reverse max-md:flex-col">
         <div className="flex w-[30%] flex-col items-center justify-center max-md:w-[90%]">
-          <Carousel className="w-full">
+          <Carousel className="pointer-events-none w-full">
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
