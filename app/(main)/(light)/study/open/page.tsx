@@ -146,7 +146,10 @@ export default function OpenStudy() {
         title="Open Study"
         description="새로운 스터디 분반을 개설합니다!"
       />
-      <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className="flex flex-col gap-4 max-sm:px-3"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <div className="flex gap-8 max-md:flex-col max-md:gap-4">
           <div className="flex flex-col gap-1">
             <p className="text-xl font-semibold">이미지</p>
@@ -198,7 +201,7 @@ export default function OpenStudy() {
                     placeholder="시작 시간"
                     value={startTime}
                     onChange={onChangeStartTime}
-                    className="w-48 rounded-xl border border-slate-300 px-4"
+                    className="w-36 rounded-xl border border-slate-300 px-4 sm:w-48"
                     format="HH:mm"
                     size="large"
                     needConfirm={false}
@@ -215,7 +218,7 @@ export default function OpenStudy() {
                     placeholder="종료 시간"
                     value={endTime}
                     onChange={onChangeEndTime}
-                    className="w-48 rounded-xl border border-slate-300 px-4"
+                    className="w-36 rounded-xl border border-slate-300 px-4 sm:w-48"
                     format="HH:mm"
                     size="large"
                     needConfirm={false}
@@ -235,8 +238,8 @@ export default function OpenStudy() {
                 control={control}
                 name="day"
                 render={({ field: { onChange, value } }) => (
-                  <div className="flex gap-6">
-                    <label className="flex gap-2">
+                  <div className="flex gap-3 sm:gap-6">
+                    <label className="flex gap-1 sm:gap-2">
                       <input
                         type="radio"
                         onChange={() => onChange('월')}
@@ -245,7 +248,7 @@ export default function OpenStudy() {
                       />
                       월
                     </label>
-                    <label className="flex gap-2">
+                    <label className="flex gap-1 sm:gap-2">
                       <input
                         type="radio"
                         onChange={() => onChange('화')}
@@ -254,7 +257,7 @@ export default function OpenStudy() {
                       />
                       화
                     </label>
-                    <label className="flex gap-2">
+                    <label className="flex gap-1 sm:gap-2">
                       <input
                         type="radio"
                         onChange={() => onChange('수')}
@@ -263,7 +266,7 @@ export default function OpenStudy() {
                       />
                       수
                     </label>
-                    <label className="flex gap-2">
+                    <label className="flex gap-1 sm:gap-2">
                       <input
                         type="radio"
                         onChange={() => onChange('목')}
@@ -272,7 +275,7 @@ export default function OpenStudy() {
                       />
                       목
                     </label>
-                    <label className="flex gap-2">
+                    <label className="flex gap-1 sm:gap-2">
                       <input
                         type="radio"
                         onChange={() => onChange('금')}
@@ -281,7 +284,7 @@ export default function OpenStudy() {
                       />
                       금
                     </label>
-                    <label className="flex gap-2">
+                    <label className="flex gap-1 sm:gap-2">
                       <input
                         type="radio"
                         onChange={() => onChange('토')}
@@ -290,7 +293,7 @@ export default function OpenStudy() {
                       />
                       토
                     </label>
-                    <label className="flex gap-2">
+                    <label className="flex gap-1 sm:gap-2">
                       <input
                         type="radio"
                         onChange={() => onChange('일')}
