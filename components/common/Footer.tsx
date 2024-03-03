@@ -1,7 +1,8 @@
 'use client'
-import { FaInstagram, FaGithub, FaRegCopyright } from 'react-icons/fa'
-import { RiKakaoTalkFill } from 'react-icons/ri'
 import { usePathname } from 'next/navigation'
+import { FaGithub, FaInstagram, FaRegCopyright } from 'react-icons/fa'
+import { RiKakaoTalkFill } from 'react-icons/ri'
+
 import { cn } from '@/lib/utils'
 
 export default function Footer() {

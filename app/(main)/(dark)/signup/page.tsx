@@ -1,15 +1,16 @@
 'use client'
 
-import Image from 'next/image'
-import ComitOwl from '@/public/comitOwl.png'
-import { Button } from '@/components/ui/button'
-import { BsEye, BsEyeSlash } from 'react-icons/bs'
-import { Input } from '@/components/ui/input'
-import { useState } from 'react'
-import { z } from 'zod'
-import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import Image from 'next/image'
 import Link from 'next/link'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { BsEye, BsEyeSlash } from 'react-icons/bs'
+import { z } from 'zod'
+
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import ComitOwl from '@/public/comitOwl.png'
 
 interface SignupForm {
   name: string
