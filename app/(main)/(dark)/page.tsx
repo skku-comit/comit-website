@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button'
 import StudyCard from '@/components/main/StudyCard'
 import Autoplay from 'embla-carousel-autoplay'
 import { dummyStackUrl, studyDummyData } from '@/lib/dummy'
-import { motion, useAnimation } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 
 import {
@@ -21,7 +21,6 @@ import {
 import { FaAngleRight } from 'react-icons/fa6'
 
 export default function Home() {
-  const controls = useAnimation()
   const [ref, inView] = useInView({ triggerOnce: true })
 
   const plugin = useRef(Autoplay({ delay: 2500 }))
@@ -132,7 +131,6 @@ export default function Home() {
           </motion.div>
           <div className="flex w-full justify-between font-semibold max-xl:flex-col">
             <motion.div
-              ref={ref}
               initial={{ opacity: 0, y: 100 }}
               animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 100 }}
               transition={{ duration: 1, ease: [0.6, -0.05, 0.01, 0.9] }}
@@ -143,7 +141,6 @@ export default function Home() {
               </p>
             </motion.div>
             <motion.div
-              ref={ref}
               initial={{ opacity: 0, y: 100 }}
               animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 100 }}
               transition={{
@@ -158,7 +155,6 @@ export default function Home() {
               </p>
             </motion.div>
             <motion.div
-              ref={ref}
               initial={{ opacity: 0, y: 100 }}
               animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 100 }}
               transition={{
