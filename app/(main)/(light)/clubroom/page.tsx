@@ -1,8 +1,17 @@
+'use client'
 import ClburoomInfoCard from '@/components/clubroom/ClubroomInfoCard'
 import SectionBanner from '@/components/common/SectionBanner'
 import { Align } from '@/components/clubroom/ClubroomInfoCard'
 import Image from 'next/image'
 import clubroomImg from '@/public/comit-clubroom.jpg'
+import { motion } from 'framer-motion'
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem
+} from '@/components/ui/carousel'
+import { useState } from 'react'
+import { cn } from '@/lib/utils'
 
 const clubroomInfoCardData = [
   {
@@ -22,26 +31,77 @@ const clubroomInfoCardData = [
   }
 ]
 
+const clubroomCarouselData = Array.from({ length: 6 }, (_, i) => i + 1)
 export default function Clubroom() {
+  const [activeIndex, setActiveIndex] = useState<number>(0)
+
   return (
     <>
       <SectionBanner
         title="Clubroom"
         description="CoMit의 동아리방을 소개합니다!"
       />
-      <div className="mb-12 flex flex-row-reverse items-center gap-12 space-x-reverse max-md:flex-col">
-        <div className="flex justify-center max-md:w-[90%]">
-          <Image
-            src={clubroomImg}
-            alt="comit-clubroom"
-            height={440}
-            className="rounded-xl object-contain"
-          />
+      <div className="mb-12 flex flex-row-reverse items-center justify-center gap-12 space-x-reverse max-md:flex-col">
+        <div className=" flex w-[30%] flex-col justify-center max-md:w-[90%]">
+          <Carousel className="w-full">
+            <CarouselContent
+              style={{
+                transform: `translateX(-${activeIndex * 100}%)`,
+                transition: 'transform 0.5s ease-in-out'
+              }}
+            >
+              {clubroomCarouselData.map((item) => (
+                <CarouselItem key={item} className="basis-1/1 w-full">
+                  <Image
+                    src={clubroomImg}
+                    alt="comit-clubroom"
+                    height={440}
+                    className="rounded-xl object-contain"
+                  />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
+          <div className="flex items-center justify-start">
+            <div className="mt-4 flex justify-center">
+              {clubroomCarouselData.map((_, index) => (
+                <span
+                  key={index}
+                  onClick={() => setActiveIndex(index)}
+                  className={cn(
+                    'mx-2 h-4 w-4 cursor-pointer rounded-full',
+                    index === activeIndex ? 'bg-primary' : 'bg-gray-400'
+                  )}
+                ></span>
+              ))}
+            </div>
+          </div>
         </div>
         <div className="flex flex-col gap-8">
-          <ClburoomInfoCard {...clubroomInfoCardData[0]} />
-          <ClburoomInfoCard {...clubroomInfoCardData[1]} align={Align.RIGHT} />
-          <ClburoomInfoCard {...clubroomInfoCardData[2]} />
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <ClburoomInfoCard {...clubroomInfoCardData[0]} />
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <ClburoomInfoCard
+              {...clubroomInfoCardData[1]}
+              align={Align.RIGHT}
+            />
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <ClburoomInfoCard {...clubroomInfoCardData[2]} />
+          </motion.div>
         </div>
       </div>
     </>
