@@ -10,7 +10,7 @@ export default function Footer() {
   return (
     <footer
       className={cn(
-        'h-24 w-full p-4',
+        'h-24 w-full py-4',
         ['/', '/signup', '/login'].includes(pathname)
           ? 'bg-gray-800'
           : 'bg-black'

@@ -24,7 +24,7 @@ export function NavLink({ href }: { href: string }) {
     <Link
       href={`/${href}`}
       className={cn(
-        'flex items-center text-xl',
+        'flex items-center text-xl hover:text-primary',
         ['/', '/signup', '/login'].includes(pathname) && 'text-white'
       )}
     >
@@ -92,7 +92,8 @@ export default function Header() {
         <DrawerContent
           className={cn(
             'flex flex-col gap-4 px-6 pb-6',
-            ['/', '/signup', '/login'].includes(pathname) && 'text-slate-200 bg-black border-gray-900'
+            ['/', '/signup', '/login'].includes(pathname) &&
+              'border-gray-900 bg-black text-slate-200'
           )}
         >
           <DrawerClose>
