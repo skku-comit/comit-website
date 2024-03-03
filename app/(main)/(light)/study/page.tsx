@@ -29,7 +29,7 @@ export default function Study() {
             <DialogTrigger asChild>
               <StudyCard {...study} />
             </DialogTrigger>
-            <DialogContent className="rounded-2xl w-[324px] p-6 sm:w-[480px] sm:p-8">
+            <DialogContent className="w-[324px] rounded-xl p-6 sm:w-[480px] sm:p-8">
               <div className="break-words text-2xl font-bold">
                 {study.title}
               </div>
@@ -55,7 +55,12 @@ export default function Study() {
                   <RiStackOverflowLine />
                   {study.stack.join(', ')}
                 </div>
-                <div className="break-words">{study.description}</div>
+                <pre
+                  style={{ fontFamily: 'Inter, sans-serif' }}
+                  className="whitespace-pre-line"
+                >
+                  {study.description}
+                </pre>
               </div>
             </DialogContent>
           </Dialog>
