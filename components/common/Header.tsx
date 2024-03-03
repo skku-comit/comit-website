@@ -1,22 +1,22 @@
 'use client'
-import Link from 'next/link'
 import Image from 'next/image'
-import ComitLogo from '@/public/comit.png'
-import { Button } from '@/components/ui/button'
+import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
+import { BsDoorOpen } from 'react-icons/bs'
+import { FaRegPenToSquare } from 'react-icons/fa6'
 import { GiHamburgerMenu } from 'react-icons/gi'
-import { cn } from '@/lib/utils'
-import {
-  Drawer,
-  DrawerContent,
-  DrawerTrigger,
-  DrawerClose
-} from '@/components/ui/drawer'
 import { IoMdInformationCircleOutline } from 'react-icons/io'
 import { IoHomeOutline, IoLaptopOutline } from 'react-icons/io5'
-import { BsDoorOpen } from 'react-icons/bs'
 import { MdLogin } from 'react-icons/md'
-import { FaRegPenToSquare } from 'react-icons/fa6'
+
+import { Button } from '@/components/ui/button'
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerTrigger} from '@/components/ui/drawer'
+import { cn } from '@/lib/utils'
+import ComitLogo from '@/public/comit.png'
 
 export function NavLink({ href }: { href: string }) {
   const pathname = usePathname()

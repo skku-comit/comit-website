@@ -1,17 +1,18 @@
 'use client'
-import ClburoomInfoCard from '@/components/clubroom/ClubroomInfoCard'
-import SectionBanner from '@/components/common/SectionBanner'
-import { Align } from '@/components/clubroom/ClubroomInfoCard'
-import Image from 'next/image'
-import clubroomImg from '@/public/comit-clubroom.jpg'
 import { motion } from 'framer-motion'
+import Image from 'next/image'
+import { useState } from 'react'
+
+import ClburoomInfoCard from '@/components/clubroom/ClubroomInfoCard'
+import { Align } from '@/components/clubroom/ClubroomInfoCard'
+import SectionBanner from '@/components/common/SectionBanner'
 import {
   Carousel,
   CarouselContent,
   CarouselItem
 } from '@/components/ui/carousel'
-import { useState } from 'react'
 import { cn } from '@/lib/utils'
+import clubroomImg from '@/public/comit-clubroom.jpg'
 
 const clubroomInfoCardData = [
   {
