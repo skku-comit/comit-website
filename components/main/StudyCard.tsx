@@ -26,17 +26,19 @@ export default function StudyCard({
   const badges = [level, stack[0], campus]
   return (
     <Card className="flex w-[268px] min-w-52 transform flex-col items-center justify-center overflow-hidden px-4 py-8">
-      <Image
-        src={imageSrc}
-        alt={title}
-        width={180}
-        height={180}
-        className="mb-8 mt-4"
-        unoptimized
-      ></Image>
+      <div className="mb-8 mt-4 h-44 w-44 overflow-hidden">
+        <Image
+          src={imageSrc}
+          alt={title}
+          width={176}
+          height={176}
+          className="h-full w-full object-cover"
+          unoptimized
+        ></Image>
+      </div>
       <CardTitle className="text-center text-lg">{title}</CardTitle>
       <CardDescription className="text-center text-base">
-      {day} {startTime} ~ {endTime}
+        {day} {startTime} ~ {endTime}
       </CardDescription>
       <div className="mt-2 flex w-52 flex-wrap justify-around gap-2">
         {badges.map((badge, index: number) => (
