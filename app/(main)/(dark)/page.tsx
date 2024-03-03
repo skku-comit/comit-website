@@ -78,7 +78,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="flex justify-center xl:mt-[240px] mt-24">
+        <div className="mt-24 flex justify-center xl:mt-[240px]">
           <div className="w-full font-semibold">
             <p className="text-left text-[70px] max-xl:hidden">Study</p>
             <p className="items-start text-left text-[40px] max-xl:text-center">
@@ -94,7 +94,10 @@ export default function Home() {
                 <CarouselContent>
                   {dummyStackUrl.map((item, index) => {
                     return (
-                      <CarouselItem key={index} className="basis-1/8">
+                      <CarouselItem
+                        key={index}
+                        className="basis-1/8 flex items-center"
+                      >
                         <div>
                           <Image
                             width={128}
@@ -128,7 +131,7 @@ export default function Home() {
                 <Link href="/study">더보기</Link>
               </Button>
             </div>
-            <div className="mt-8 grid xl:grid-cols-4 gap-12 md:grid-cols-2 grid-cols-1 xl:mb-32">
+            <div className="mt-8 grid grid-cols-1 gap-12 md:grid-cols-2 xl:mb-32 xl:grid-cols-4">
               {studyDummyData.slice(0, 4).map((item, index) => {
                 return <StudyCard {...item} key={index} />
               })}
