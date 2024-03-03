@@ -105,9 +105,12 @@ export default function Home() {
               >
                 <Button
                   variant="secondary"
-                  className="h-12 w-40 rounded-2xl text-xl font-semibold xl:h-[60px] xl:w-[190px] xl:text-[24px]"
+                  className="h-12 w-40 rounded-2xl bg-slate-50 text-xl font-semibold xl:h-[60px] xl:w-[190px] xl:text-[24px]"
+                  asChild
                 >
-                  신규 지원
+                  <Link href="https://docs.google.com/forms/d/1f7CI81EpjJ87A3lyOszSsZbcGz-zu9CAHLnubHdD-zA/viewform?edit_requested=true">
+                    신규 지원
+                  </Link>
                 </Button>
               </motion.div>
             </div>
