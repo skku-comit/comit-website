@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button'
 import StudyCard from '@/components/main/StudyCard'
 import Autoplay from 'embla-carousel-autoplay'
 import { dummyStackUrl, studyDummyData } from '@/lib/dummy'
+import { motion } from 'framer-motion'
 
 import {
   Carousel,
@@ -20,6 +21,37 @@ import { FaAngleRight } from 'react-icons/fa6'
 
 export default function Home() {
   const plugin = useRef(Autoplay({ delay: 2500 }))
+  const mainIntroduceTextFirstLine = ['개발자', '를 꿈꾸는']
+  const mainIntroduceTextSecondLine = ['모든 ', '학생', '들을 ', '위해서']
+
+  const renderAnimatedText = (text: Array<string>) => {
+    return text.map((item: string, index: number) => {
+      if (item === '개발자' || item === '학생') {
+        return (
+          <motion.span
+            key={index}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: index / 5 }}
+            className="text-primary"
+          >
+            {item}
+          </motion.span>
+        )
+      } else {
+        return (
+          <motion.span
+            key={index}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: index / 10 }}
+          >
+            {item}
+          </motion.span>
+        )
+      }
+    })
+  }
   return (
     <div className="flex min-h-screen w-[100%] flex-col items-center bg-black text-center text-white">
       <div className="w-[100%] lg:w-[1280px]">
@@ -33,9 +65,9 @@ export default function Home() {
           ></Image>
           <div className="flex flex-col gap-6 xl:gap-8">
             <p className="text-left text-[40px] font-semibold leading-tight xl:text-[64px]">
-              <span className="text-primary">개발자</span>를 꿈꾸는
+              {renderAnimatedText(mainIntroduceTextFirstLine)}
               <br />
-              모든 <span className="text-primary">학생</span>들을 위하여
+              {renderAnimatedText(mainIntroduceTextSecondLine)}
             </p>
             <p className="text-left text-[24px] font-semibold max-xl:text-xl">
               자유롭게 지식을 공유하고 개발할 수 있는
