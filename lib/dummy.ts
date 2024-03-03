@@ -153,53 +153,44 @@ export const dummyPeopleData = [
       'https://png.pngtree.com/thumb_back/fh260/background/20230615/pngtree-shinobi-dog-is-a-dog-breed-that-is-not-aggressive-at-image_2933750.jpg',
     position: '회장'
   },
+
   {
-    name: '이현준',
-    description: '개인 코딩 동아리',
+    name: '김수진',
+    description: '데이터 사이언스 연구소',
     imageUrl:
       'https://png.pngtree.com/thumb_back/fh260/background/20230615/pngtree-shinobi-dog-is-a-dog-breed-that-is-not-aggressive-at-image_2933750.jpg',
-    position: '회장'
+    position: '연구원'
   },
+
   {
-    name: '이현준',
-    description: '개인 코딩 동아리',
+    name: '박재민',
+    description: '로봇공학 동아리',
     imageUrl:
       'https://png.pngtree.com/thumb_back/fh260/background/20230615/pngtree-shinobi-dog-is-a-dog-breed-that-is-not-aggressive-at-image_2933750.jpg',
-    position: '회장'
+    position: '프로젝트 매니저'
   },
+
   {
-    name: '이현준',
-    description: '개인 코딩 동아리',
+    name: '송지우',
+    description: '디자인 스튜디오',
     imageUrl:
       'https://png.pngtree.com/thumb_back/fh260/background/20230615/pngtree-shinobi-dog-is-a-dog-breed-that-is-not-aggressive-at-image_2933750.jpg',
-    position: '회장'
+    position: '디자이너'
   },
+
   {
-    name: '이현준',
-    description: '개인 코딩 동아리',
+    name: '장성민',
+    description: '블록체인 연구회를 하지만 누구보다 코인을 사랑하는 사람이 바로 나',
     imageUrl:
       'https://png.pngtree.com/thumb_back/fh260/background/20230615/pngtree-shinobi-dog-is-a-dog-breed-that-is-not-aggressive-at-image_2933750.jpg',
-    position: '회장'
+    position: '리서처'
   },
+
   {
-    name: '이현준',
-    description: '개인 코딩 동아리',
+    name: '이지영',
+    description: '스타트업 프로젝트 팀',
     imageUrl:
       'https://png.pngtree.com/thumb_back/fh260/background/20230615/pngtree-shinobi-dog-is-a-dog-breed-that-is-not-aggressive-at-image_2933750.jpg',
-    position: '회장'
-  },
-  {
-    name: '이현준',
-    description: '개인 코딩 동아리',
-    imageUrl:
-      'https://png.pngtree.com/thumb_back/fh260/background/20230615/pngtree-shinobi-dog-is-a-dog-breed-that-is-not-aggressive-at-image_2933750.jpg',
-    position: '회장'
-  },
-  {
-    name: '이현준',
-    description: '개인 코딩 동아리',
-    imageUrl:
-      'https://png.pngtree.com/thumb_back/fh260/background/20230615/pngtree-shinobi-dog-is-a-dog-breed-that-is-not-aggressive-at-image_2933750.jpg',
-    position: '회장'
+    position: '개발자'
   }
 ]
