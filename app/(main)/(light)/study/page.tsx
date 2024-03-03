@@ -23,19 +23,19 @@ export default function Study() {
         title="Study"
         description="CoMit의 스터디 분반을 확인해보세요!"
       />
-      <div className="grid grid-cols-1 gap-x-16 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-2 gap-6 max-sm:px-2 sm:gap-x-16 sm:gap-y-12 lg:grid-cols-4">
         {studyDummyData.map((study, index) => (
           <Dialog key={index}>
             <DialogTrigger asChild>
               <StudyCard {...study} />
             </DialogTrigger>
-            <DialogContent className="p-8 sm:max-w-[425px]">
-              <DialogHeader>
-                <DialogTitle className="text-2xl">{study.title}</DialogTitle>
-                <DialogDescription className="text-lg">
-                  {study.day} {study.startTime} ~ {study.endTime}
-                </DialogDescription>
-              </DialogHeader>
+            <DialogContent className="w-[324px] rounded-xl p-6 sm:w-[480px] sm:p-8">
+              <div className="break-words text-2xl font-bold">
+                {study.title}
+              </div>
+              <div className="break-words text-lg text-gray-600">
+                {study.day} {study.startTime} ~ {study.endTime}
+              </div>
               <div className="leading-snug">
                 <div className="flex gap-6">
                   <div className="flex items-center gap-2">
@@ -51,11 +51,14 @@ export default function Study() {
                     {study.campus}
                   </div>
                 </div>
-                <div className="mb-4 flex items-center gap-2">
+                <div className="mb-4 mt-1 flex items-center gap-2 break-words">
                   <RiStackOverflowLine />
                   {study.stack.join(', ')}
                 </div>
-                <pre style={{ fontFamily: 'Inter, sans-serif' }}>
+                <pre
+                  style={{ fontFamily: 'Inter, sans-serif' }}
+                  className="whitespace-pre-line"
+                >
                   {study.description}
                 </pre>
               </div>

@@ -8,9 +8,9 @@ export default function SectionBanner({
   description
 }: SectionBannerProps) {
   return (
-    <div className="flex h-56 w-screen flex-col items-center justify-center gap-5">
-      <p className="text-6xl font-semibold">{title}</p>
-      <p className="text-xl font-bold">{description}</p>
+    <div className="flex h-48 w-screen flex-col items-center justify-center gap-5 sm:h-56">
+      <p className="text-5xl font-semibold sm:text-6xl">{title}</p>
+      <p className="text-lg font-bold sm:text-xl">{description}</p>
     </div>
   )
 }

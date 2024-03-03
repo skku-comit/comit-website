@@ -225,7 +225,7 @@ export default function Home() {
                 <Link href="/study">더보기</Link>
               </Button>
             </div>
-            <div className="mt-8 grid grid-cols-1 gap-12 md:grid-cols-2 xl:mb-32 xl:grid-cols-4">
+            <div className="mt-8 grid xl:grid-cols-4 gap-4 sm:gap-12 grid-cols-2 xl:mb-32">
               {studyDummyData.slice(0, 4).map((item, index) => {
                 return <StudyCard {...item} key={index} />
               })}

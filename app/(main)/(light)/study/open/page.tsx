@@ -11,7 +11,17 @@ import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Badge } from '@/components/ui/badge'
 import StudyCard from '@/components/study/StudyCard'
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger
+} from '@/components/ui/alert-dialog'
 import type { Dayjs } from 'dayjs'
 import { TimePicker } from 'antd'
 
@@ -73,6 +83,7 @@ export default function OpenStudy() {
   // TODO: study API 연결
   const onSubmit = (data: StudyForm) => {
     console.log(data)
+    document.getElementById('closeDialog')?.click()
   }
 
   const [stackError, setStackError] = useState('')
@@ -135,7 +146,10 @@ export default function OpenStudy() {
         title="Open Study"
         description="새로운 스터디 분반을 개설합니다!"
       />
-      <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className="flex flex-col gap-4 max-sm:px-3"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <div className="flex gap-8 max-md:flex-col max-md:gap-4">
           <div className="flex flex-col gap-1">
             <p className="text-xl font-semibold">이미지</p>
@@ -187,7 +201,7 @@ export default function OpenStudy() {
                     placeholder="시작 시간"
                     value={startTime}
                     onChange={onChangeStartTime}
-                    className="w-48 rounded-xl border border-slate-300 px-4"
+                    className="w-36 rounded-xl border border-slate-300 px-4 sm:w-48"
                     format="HH:mm"
                     size="large"
                     needConfirm={false}
@@ -200,16 +214,16 @@ export default function OpenStudy() {
                   )}
                 </div>
                 <div className="flex flex-col gap-1">
-                    <TimePicker
-                      placeholder="종료 시간"
-                      value={endTime}
-                      onChange={onChangeEndTime}
-                      className="w-48 rounded-xl border border-slate-300 px-4"
-                      format="HH:mm"
-                      size="large"
-                      needConfirm={false}
-                      changeOnScroll
-                    />
+                  <TimePicker
+                    placeholder="종료 시간"
+                    value={endTime}
+                    onChange={onChangeEndTime}
+                    className="w-36 rounded-xl border border-slate-300 px-4 sm:w-48"
+                    format="HH:mm"
+                    size="large"
+                    needConfirm={false}
+                    changeOnScroll
+                  />
                   {errors.endTime && (
                     <p className="text-sm text-red-500">
                       {errors.endTime.message}
@@ -224,8 +238,8 @@ export default function OpenStudy() {
                 control={control}
                 name="day"
                 render={({ field: { onChange, value } }) => (
-                  <div className="flex gap-6">
-                    <label className="flex gap-2">
+                  <div className="flex gap-3 sm:gap-6">
+                    <label className="flex gap-1 sm:gap-2">
                       <input
                         type="radio"
                         onChange={() => onChange('월')}
@@ -234,7 +248,7 @@ export default function OpenStudy() {
                       />
                       월
                     </label>
-                    <label className="flex gap-2">
+                    <label className="flex gap-1 sm:gap-2">
                       <input
                         type="radio"
                         onChange={() => onChange('화')}
@@ -243,7 +257,7 @@ export default function OpenStudy() {
                       />
                       화
                     </label>
-                    <label className="flex gap-2">
+                    <label className="flex gap-1 sm:gap-2">
                       <input
                         type="radio"
                         onChange={() => onChange('수')}
@@ -252,7 +266,7 @@ export default function OpenStudy() {
                       />
                       수
                     </label>
-                    <label className="flex gap-2">
+                    <label className="flex gap-1 sm:gap-2">
                       <input
                         type="radio"
                         onChange={() => onChange('목')}
@@ -261,7 +275,7 @@ export default function OpenStudy() {
                       />
                       목
                     </label>
-                    <label className="flex gap-2">
+                    <label className="flex gap-1 sm:gap-2">
                       <input
                         type="radio"
                         onChange={() => onChange('금')}
@@ -270,7 +284,7 @@ export default function OpenStudy() {
                       />
                       금
                     </label>
-                    <label className="flex gap-2">
+                    <label className="flex gap-1 sm:gap-2">
                       <input
                         type="radio"
                         onChange={() => onChange('토')}
@@ -279,7 +293,7 @@ export default function OpenStudy() {
                       />
                       토
                     </label>
-                    <label className="flex gap-2">
+                    <label className="flex gap-1 sm:gap-2">
                       <input
                         type="radio"
                         onChange={() => onChange('일')}
@@ -465,34 +479,54 @@ export default function OpenStudy() {
             <p className="text-sm text-red-500">{errors.description.message}</p>
           )}
         </div>
-        <div className="my-8 flex justify-between">
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button
-                className="px-8 font-extrabold"
-                variant="outline"
-                disabled={!isValid}
-              >
-                미리 보기
+        <div className="my-8 flex justify-end">
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button type="button" className="px-8 font-extrabold">
+                제출하기
               </Button>
-            </DialogTrigger>
-            <DialogContent className="flex justify-center p-8 sm:max-w-[425px]">
-              <StudyCard
-                campus={getValues('campus')}
-                day={getValues('day')}
-                imageSrc={getValues('imageSrc')}
-                endTime={getValues('endTime')}
-                level={getValues('level')}
-                stack={getValues('stack')}
-                startTime={getValues('startTime')}
-                title={getValues('title')}
-              />
-            </DialogContent>
-          </Dialog>
-
-          <Button type="submit" className="px-8 font-extrabold">
-            제출하기
-          </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent className="flex flex-col p-8 sm:max-w-[425px]">
+              <AlertDialogHeader>
+                <AlertDialogTitle>제출하시겠습니까?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  스터디 개설이 승인되기 전까지 내용 수정 및 삭제가 불가하며,
+                  반드시 내용을 수정하거나 삭제해야 하는 경우 관리자에게
+                  문의해주세요.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              {/* TODO: study dialog 추가 */}
+              <div className="flex justify-center">
+                <StudyCard
+                  campus={getValues('campus') || ''}
+                  day={getValues('day') || ''}
+                  imageSrc={
+                    getValues('imageSrc') ||
+                    // TODO: 다른 이미지 저장으로 대체
+                    'https://github.com/skku-comit/comit-website/assets/97675977/5ac14e32-87e6-40c0-9572-33cab7822abd'
+                  }
+                  endTime={getValues('endTime') || ''}
+                  level={getValues('level') || ''}
+                  stack={getValues('stack') || ''}
+                  startTime={getValues('startTime') || ''}
+                  title={getValues('title') || ''}
+                />
+              </div>
+              {!isValid && (
+                <p className="text-sm text-red-500">모든 항목을 입력해주세요</p>
+              )}
+              <AlertDialogFooter>
+                <AlertDialogCancel>취소</AlertDialogCancel>
+                <AlertDialogAction
+                  type="submit"
+                  onClick={handleSubmit(onSubmit)}
+                  disabled={!isValid}
+                >
+                  확인
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       </form>
     </>
