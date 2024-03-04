@@ -14,7 +14,8 @@ import {
   Drawer,
   DrawerClose,
   DrawerContent,
-  DrawerTrigger} from '@/components/ui/drawer'
+  DrawerTrigger
+} from '@/components/ui/drawer'
 import { cn } from '@/lib/utils'
 import ComitLogo from '@/public/comit.png'
 
