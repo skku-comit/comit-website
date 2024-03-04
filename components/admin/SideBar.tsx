@@ -24,7 +24,7 @@ export default function SideBar() {
           href="/admin"
           className={cn(
             'flex items-center justify-start hover:text-primary',
-            path === '/admin/dashboard' ? 'text-primary' : 'text-black'
+            path === '/admin' ? 'text-primary' : 'text-black'
           )}
         >
           <IoHomeSharp size={28} />
