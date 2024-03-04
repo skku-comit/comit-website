@@ -1,0 +1,22 @@
+'use client'
+import Link from 'next/link'
+import Image from 'next/image'
+import ComitLogo from '@/public/comit.png'
+import DropdownMenuCheckboxes from './Dropdown'
+export default function Header() {
+  return (
+    <header className="fixed top-0 z-10 flex h-20 w-full justify-center border-b border-b-gray-200 bg-white">
+      <nav className="flex h-full w-[96vw] items-center justify-between">
+        <Link href="/">
+          <div className="flex items-center gap-2">
+            <Image src={ComitLogo} alt="comit_logo" width={32} height={37} />
+            <p className="text-xl font-semibold text-black">CoMit</p>
+          </div>
+        </Link>
+        <div className="flex h-[40px] items-center justify-between">
+          <DropdownMenuCheckboxes />
+        </div>
+      </nav>
+    </header>
+  )
+}
