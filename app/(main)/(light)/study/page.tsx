@@ -7,11 +7,7 @@ import { RiStackOverflowLine } from 'react-icons/ri'
 import SectionBanner from '@/components/common/SectionBanner'
 import StudyCard from '@/components/study/StudyCard'
 import { Button } from '@/components/ui/button'
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger
-} from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 import { studyDummyData } from '@/lib/dummy'
 
 export default function Study() {
