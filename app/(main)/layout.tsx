@@ -9,11 +9,11 @@ export default function MainLayout({
   return (
     <div
       className="h-screen w-screen overflow-x-hidden overflow-y-scroll"
-      style={{ webkitOverflowScrolling: 'touch' }}
+      style={{ WebkitOverflowScrolling: 'touch' }}
     >
       <div className="flex min-h-dvh flex-col items-center">
         <Header />
-        <div className="mt-20 flex w-full justify-center">{children}</div>
+        <div className="flex w-full justify-center pt-20">{children}</div>
         <Footer />
       </div>
     </div>

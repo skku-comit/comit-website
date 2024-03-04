@@ -71,10 +71,15 @@
     @apply border-border;
     margin: 0;
     padding: 0;
+    -ms-overflow-style: none;
   }
   body {
     position: fixed;
     overflow: hidden;
+    -ms-overflow-style: none;
     @apply bg-background text-foreground;
+  }
+  ::-webkit-scrollbar {
+    display: none;
   }
 }
