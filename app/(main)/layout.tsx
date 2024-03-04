@@ -7,12 +7,15 @@ export default function MainLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className="flex min-h-dvh flex-col items-center">
-      <Header />
-      <div className="mt-20 flex w-full justify-center">
-        {children}
+    <div
+      className="h-screen w-screen overflow-x-hidden overflow-y-scroll"
+      style={{ webkitOverflowScrolling: 'touch' }}
+    >
+      <div className="flex min-h-dvh flex-col items-center">
+        <Header />
+        <div className="mt-20 flex w-full justify-center">{children}</div>
+        <Footer />
       </div>
-      <Footer />
     </div>
   )
 }
