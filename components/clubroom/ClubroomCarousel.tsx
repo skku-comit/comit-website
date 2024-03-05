@@ -1,9 +1,14 @@
 import Autoplay from 'embla-carousel-autoplay'
-import { EmblaOptionsType,useEmblaCarousel } from 'embla-carousel-react'
+import useEmblaCarousel from 'embla-carousel-react'
 import React, { ReactNode, useCallback, useEffect, useState } from 'react'
 
 type PropType = {
-  options?: EmblaOptionsType
+  options?: {
+    align?: 'start' | 'center' | 'end'
+    loop?: boolean
+    skipSnaps?: boolean
+    inViewThreshold?: number
+  }
   slides: ReactNode[]
 }
 
