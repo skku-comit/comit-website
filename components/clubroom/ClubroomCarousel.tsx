@@ -1,5 +1,5 @@
 import Autoplay from 'embla-carousel-autoplay'
-import useEmblaCarousel, { EmblaOptionsType } from 'embla-carousel-react'
+import { EmblaOptionsType,useEmblaCarousel } from 'embla-carousel-react'
 import React, { ReactNode, useCallback, useEffect, useState } from 'react'
 
 type PropType = {
@@ -10,7 +10,7 @@ type PropType = {
 export const ClubroomCarousel = (props: PropType) => {
   const { options, slides } = props
   const [emblaRef, embla] = useEmblaCarousel(options, [
-    Autoplay({ playOnInit: true, delay: 4000 })
+    Autoplay({ playOnInit: true, delay: 3600, stopOnInteraction: false })
   ])
   const [selectedIndex, setSelectedindex] = useState(0)
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([])
