@@ -1,6 +1,7 @@
-import { Card, CardDescription, CardTitle } from '@/components/ui/card'
 import Image from 'next/image'
+
 import { Badge } from '@/components/ui/badge'
+import { Card, CardDescription, CardTitle } from '@/components/ui/card'
 
 interface StudyCardProps {
   imageSrc: string
@@ -47,7 +48,7 @@ export default function StudyCard({
           <Badge
             key={index}
             variant="secondary"
-            className="flex items-center justify-center sm:h-8 sm:w-16"
+            className="flex items-center justify-center px-3 sm:h-7"
           >
             {badge}
           </Badge>

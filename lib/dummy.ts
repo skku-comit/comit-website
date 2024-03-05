@@ -180,7 +180,8 @@ export const dummyPeopleData = [
 
   {
     name: '장성민',
-    description: '블록체인 연구회를 하지만 누구보다 코인을 사랑하는 사람이 바로 나',
+    description:
+      '블록체인 연구회를 하지만 누구보다 코인을 사랑하는 사람이 바로 나',
     imageUrl:
       'https://png.pngtree.com/thumb_back/fh260/background/20230615/pngtree-shinobi-dog-is-a-dog-breed-that-is-not-aggressive-at-image_2933750.jpg',
     position: '리서처'
@@ -192,5 +193,62 @@ export const dummyPeopleData = [
     imageUrl:
       'https://png.pngtree.com/thumb_back/fh260/background/20230615/pngtree-shinobi-dog-is-a-dog-breed-that-is-not-aggressive-at-image_2933750.jpg',
     position: '개발자'
+  }
+]
+
+export const adminStudyDummyData = [
+  {
+    id: '1',
+    title: '웹개발 스터디(초급)',
+    mentor: '박태곤',
+    createDate: '2024-02-16 22:29'
+  },
+  {
+    id: '2',
+    title: '웹개발 스터디(중급)',
+    mentor: '김지호',
+    createDate: '2024-02-16 22:29'
+  },
+  {
+    id: '3',
+    title: '모바일 앱 프로젝트',
+    mentor: '김동한',
+    createDate: '2024-02-16 22:29'
+  },
+  {
+    id: '4',
+    title: '웹 프로젝트',
+    mentor: '강동윤',
+    createDate: '2024-02-16 22:29'
+  },
+  {
+    id: '5',
+    title: '알고리즘 (율전/중급)',
+    mentor: '김유현',
+    createDate: '2024-02-16 22:29'
+  },
+  {
+    id: '6',
+    title: '웹개발 스터디(율전/상급)',
+    mentor: '박지은',
+    createDate: '2024-02-16 22:29'
+  },
+  {
+    id: '7',
+    title: '백엔드 프로젝트',
+    mentor: '박지환',
+    createDate: '2024-02-16 22:29'
+  },
+  {
+    id: '8',
+    title: '알고리즘 스터디(명륜/초급)',
+    mentor: '박찬서',
+    createDate: '2024-02-16 22:29'
+  },
+  {
+    id: '9',
+    title: '알고리즘 스터디(명륜/초급)',
+    mentor: '박태곤',
+    createDate: '2024-02-16 22:29'
   }
 ]

@@ -1,23 +1,22 @@
 'use client'
 
-import { useRef } from 'react'
-import mainPicture from '@/public/mainPicture.svg'
+import AutoScroll from 'embla-carousel-auto-scroll'
+import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Button } from '@/components/ui/button'
-import StudyCard from '@/components/main/StudyCard'
-import { dummyStackUrl, studyDummyData } from '@/lib/dummy'
-import { motion } from 'framer-motion'
+import { useRef } from 'react'
+import { FaAngleRight } from 'react-icons/fa6'
 import { useInView } from 'react-intersection-observer'
-import AutoScroll from 'embla-carousel-auto-scroll'
+
+import StudyCard from '@/components/main/StudyCard'
+import { Button } from '@/components/ui/button'
 import {
   Carousel,
-  CarouselItem,
   CarouselContent,
-  CarouselNext,
-  CarouselPrevious
+  CarouselItem
 } from '@/components/ui/carousel'
-import { FaAngleRight } from 'react-icons/fa6'
+import { dummyStackUrl, studyDummyData } from '@/lib/dummy'
+import mainPicture from '@/public/mainPicture.svg'
 
 export default function Home() {
   const [ref, inView] = useInView({ triggerOnce: true })
@@ -106,9 +105,12 @@ export default function Home() {
               >
                 <Button
                   variant="secondary"
-                  className="h-12 w-40 rounded-2xl text-xl font-semibold xl:h-[60px] xl:w-[190px] xl:text-[24px]"
+                  className="h-12 w-40 rounded-2xl bg-slate-50 text-xl font-semibold xl:h-[60px] xl:w-[190px] xl:text-[24px]"
+                  asChild
                 >
-                  신규 지원
+                  <Link href="https://docs.google.com/forms/d/1f7CI81EpjJ87A3lyOszSsZbcGz-zu9CAHLnubHdD-zA/viewform?edit_requested=true">
+                    신규 지원
+                  </Link>
                 </Button>
               </motion.div>
             </div>

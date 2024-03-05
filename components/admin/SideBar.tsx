@@ -1,8 +1,9 @@
 'use client'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { BiBookBookmark } from 'react-icons/bi'
 import { IoHomeSharp } from 'react-icons/io5'
-import { usePathname } from 'next/navigation'
+
 import { cn } from '@/lib/utils'
 
 function NavLink({ href, buttonName }: { href: string; buttonName: string }) {

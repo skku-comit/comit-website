@@ -1,6 +1,7 @@
-import { Card, CardDescription, CardTitle } from '@/components/ui/card'
 import Image from 'next/image'
+
 import { Badge } from '@/components/ui/badge'
+import { Card, CardDescription, CardTitle } from '@/components/ui/card'
 
 interface StudyCardProps {
   imageSrc: string
@@ -42,7 +43,7 @@ export default function StudyCard({
       <CardDescription className="text-center">
         {day} {startTime} ~ {endTime}
       </CardDescription>
-      <div className="mt-2 flex w-40 flex-wrap justify-around gap-2 sm:w-48">
+      <div className="mt-2 flex w-40 flex-wrap justify-around gap-y-2 sm:w-48">
         {badges.map((badge, index: number) => (
           <Badge key={index} variant="secondary">
             {badge}

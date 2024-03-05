@@ -1,23 +1,24 @@
 'use client'
 
-import * as React from 'react'
 import { DropdownMenuCheckboxItemProps } from '@radix-ui/react-dropdown-menu'
 import Link from 'next/link'
+import { useState } from 'react'
+import { FaCaretDown } from 'react-icons/fa'
+import { FaCaretUp } from 'react-icons/fa'
+
 import {
   DropdownMenu,
-  DropdownMenuItem,
   DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
-import { FaCaretDown } from 'react-icons/fa'
-import { FaCaretUp } from 'react-icons/fa'
 
 type Checked = DropdownMenuCheckboxItemProps['checked']
 
 export default function DropdownMenuCheckboxes() {
-  const [isDropdownOpen, setIsDropdownOpen] = React.useState(false)
+  const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false)
   return (
     <DropdownMenu
       onOpenChange={(open) => {

@@ -32,7 +32,7 @@ export default function About() {
         description="중앙 코딩 동아리 CoMit을 소개합니다!"
       />
       <div className="flex flex-col items-center pt-6 md:pt-12">
-        <div className="grid grid-cols-1 items-center gap-20 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="grid grid-cols-1 items-center gap-12 sm:grid-cols-2 md:gap-20 xl:grid-cols-3">
           <SectionCard {...sectionCardData.class} />
           <SectionCard {...sectionCardData.seminar} />
           <SectionCard {...sectionCardData.event} />

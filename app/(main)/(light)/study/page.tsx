@@ -1,20 +1,14 @@
-import SectionBanner from '@/components/common/SectionBanner'
-import { Button } from '@/components/ui/button'
 import Link from 'next/link'
-import StudyCard from '@/components/study/StudyCard'
-import { studyDummyData } from '@/lib/dummy'
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger
-} from '@/components/ui/dialog'
-import { IoPersonSharp } from 'react-icons/io5'
 import { FaSchoolFlag } from 'react-icons/fa6'
-import { RiStackOverflowLine } from 'react-icons/ri'
+import { IoPersonSharp } from 'react-icons/io5'
 import { MdOutlineSignalCellularAlt } from 'react-icons/md'
+import { RiStackOverflowLine } from 'react-icons/ri'
+
+import SectionBanner from '@/components/common/SectionBanner'
+import StudyCard from '@/components/study/StudyCard'
+import { Button } from '@/components/ui/button'
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
+import { studyDummyData } from '@/lib/dummy'
 
 export default function Study() {
   return (

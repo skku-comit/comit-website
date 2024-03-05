@@ -1,15 +1,16 @@
 'use client'
 
-import Image from 'next/image'
-import ComitOwl from '@/public/comitOwl.png'
-import { Button } from '@/components/ui/button'
-import { BsEye, BsEyeSlash } from 'react-icons/bs'
-import { Input } from '@/components/ui/input'
-import { useState } from 'react'
-import { z } from 'zod'
-import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import Image from 'next/image'
 import Link from 'next/link'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { BsEye, BsEyeSlash } from 'react-icons/bs'
+import { z } from 'zod'
+
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import ComitOwl from '@/public/comitOwl.png'
 
 interface SignupForm {
   name: string
@@ -46,7 +47,7 @@ export default function Signup() {
     <div className="flex w-full justify-center bg-black pt-8 text-white">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex w-[88%] max-w-[480px] flex-col items-center gap-4 rounded-[32px] bg-[#121212] p-8 pb-8 sm:p-16 md:w-[480px]"
+        className="flex w-[88%] max-w-[480px] flex-col items-center gap-2 rounded-[32px] bg-[#121212] p-8 pb-8 sm:gap-4 sm:p-16 md:w-[480px]"
       >
         <Image src={ComitOwl} alt="comit_owl" width={164} />
         <p className="mb-4 text-center text-2xl font-semibold sm:mb-8 sm:text-3xl">
@@ -73,9 +74,7 @@ export default function Signup() {
             type="number"
           />
           {errors.studentID && (
-            <p className="text-sm text-red-500">
-              올바른 학번을 입력해주세요
-            </p>
+            <p className="text-sm text-red-500">올바른 학번을 입력해주세요</p>
           )}
         </div>
         <div className="flex w-full flex-col gap-1">
