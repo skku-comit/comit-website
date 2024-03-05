@@ -1,10 +1,11 @@
 'use client'
 
-import AutoScroll from 'embla-carousel-auto-scroll'
-import { motion } from 'framer-motion'
+import Autoplay from 'embla-carousel-autoplay'
+import { motion, useAnimation } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRef } from 'react'
+import { BsChevronCompactDown } from 'react-icons/bs'
 import { FaAngleRight } from 'react-icons/fa6'
 import { useInView } from 'react-intersection-observer'
 
@@ -13,14 +14,18 @@ import { Button } from '@/components/ui/button'
 import {
   Carousel,
   CarouselContent,
-  CarouselItem
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious
 } from '@/components/ui/carousel'
 import { dummyStackUrl, studyDummyData } from '@/lib/dummy'
 import mainPicture from '@/public/mainPicture.svg'
 
 export default function Home() {
+  const controls = useAnimation()
   const [ref, inView] = useInView({ triggerOnce: true })
-  const plugin = useRef(AutoScroll({ playOnInit: true }))
+
+  const plugin = useRef(Autoplay({ delay: 2500 }))
   const mainIntroduceTextFirstLine = ['개발자', '를 꿈꾸는']
   const mainIntroduceTextSecondLine = ['모든 ', '학생', '들을 ', '위해서']
   const subIntroduceTextFirstLine = [
@@ -69,57 +74,71 @@ export default function Home() {
   return (
     <div className="flex min-h-screen w-[100%] flex-col items-center bg-black text-center text-white">
       <div className="w-[100%] lg:w-[1280px]">
-        <div className="flex items-center justify-between max-xl:flex-col xl:mt-36 xl:flex-row-reverse">
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1 }}
-          >
-            <Image
-              src={mainPicture}
-              width={600}
-              height={600}
-              alt="mainPicture"
-              className="h-[600px] w-[600px] max-xl:h-[400px] max-xl:w-[400px]"
-            ></Image>
-          </motion.div>
-          <div className="flex flex-col gap-6 xl:gap-8">
-            <p className="text-left text-[40px] font-semibold leading-tight xl:text-[64px]">
-              {renderAnimatedText(mainIntroduceTextFirstLine)}
-              <br />
-              {renderAnimatedText(mainIntroduceTextSecondLine)}
-            </p>
-            <p className="text-left text-[24px] font-semibold max-xl:text-xl">
-              {renderAnimatedText(subIntroduceTextFirstLine)}
-              <br />
-              {renderAnimatedText(subIntroduceTextSecondLine)}
-            </p>
-            <div className="flex items-center max-xl:justify-between xl:gap-16">
-              <p className="text-left text-4xl font-extrabold leading-[70px] text-primary xl:text-[70px]">
-                {renderAnimatedText(['C', 'O', 'M', 'I', 'T'])}
+        <div className="relative flex h-[90vh] items-center justify-center">
+          <div className="flex items-center justify-between max-xl:flex-col xl:flex-row-reverse">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1 }}
+            >
+              <Image
+                src={mainPicture}
+                width={600}
+                height={600}
+                alt="mainPicture"
+                className="h-[600px] w-[600px] max-xl:h-[400px] max-xl:w-[400px]"
+              ></Image>
+            </motion.div>
+            <div className="flex flex-col gap-6 xl:gap-8">
+              <p className="text-left text-[40px] font-semibold leading-tight xl:text-[64px]">
+                {renderAnimatedText(mainIntroduceTextFirstLine)}
+                <br />
+                {renderAnimatedText(mainIntroduceTextSecondLine)}
               </p>
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 1 }}
-              >
-                <Button
-                  variant="secondary"
-                  className="h-12 w-40 rounded-2xl bg-slate-50 text-xl font-semibold xl:h-[60px] xl:w-[190px] xl:text-[24px]"
-                  asChild
+              <p className="text-left text-[24px] font-semibold max-xl:text-xl">
+                {renderAnimatedText(subIntroduceTextFirstLine)}
+                <br />
+                {renderAnimatedText(subIntroduceTextSecondLine)}
+              </p>
+              <div className="flex items-center max-xl:justify-between xl:gap-16">
+                <p className="text-left text-4xl font-extrabold leading-[70px] text-primary xl:text-[70px]">
+                  {renderAnimatedText(['C', 'O', 'M', 'I', 'T'])}
+                </p>
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 1 }}
                 >
-                  <Link href="https://docs.google.com/forms/d/1f7CI81EpjJ87A3lyOszSsZbcGz-zu9CAHLnubHdD-zA/viewform?edit_requested=true">
+                  <Button
+                    variant="secondary"
+                    className="h-12 w-40 rounded-2xl text-xl font-semibold xl:h-[60px] xl:w-[190px] xl:text-[24px]"
+                  >
                     신규 지원
-                  </Link>
-                </Button>
-              </motion.div>
+                  </Button>
+                </motion.div>
+              </div>
             </div>
           </div>
+          <div className=" absolute bottom-0 flex w-full justify-center">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: [1, 0.6, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            >
+              <motion.div
+                initial={{ opacity: 1 }}
+                animate={{ opacity: inView ? 0 : 1 }}
+                transition={{ duration: 0.25 }}
+              >
+                <BsChevronCompactDown size={84} className="text-white " />
+              </motion.div>
+            </motion.div>
+          </div>
         </div>
-        <div className="mt-28 flex flex-col xl:mt-[330px]">
+        <div className="mt-20 flex flex-col xl:mt-[330px]">
           <motion.div
             ref={ref}
-            initial={{ opacity: 0 }}
+            initial={{ opacity: 0, y: 100 }}
             animate={{ opacity: inView ? 1 : 0 }}
             transition={{
               duration: 0.25
@@ -131,8 +150,9 @@ export default function Home() {
           </motion.div>
           <div className="flex w-full justify-between font-semibold max-xl:flex-col">
             <motion.div
+              ref={ref}
               initial={{ opacity: 0, y: 100 }}
-              animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 100 }}
+              animate={{ opacity: inView ? 1 : 0, y: inView ? 100 : 0 }}
               transition={{ duration: 1, ease: [0.6, -0.05, 0.01, 0.9] }}
             >
               <p className="text-[40px]">누적 스터디 개설</p>
@@ -141,8 +161,9 @@ export default function Home() {
               </p>
             </motion.div>
             <motion.div
+              ref={ref}
               initial={{ opacity: 0, y: 100 }}
-              animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 100 }}
+              animate={{ opacity: inView ? 1 : 0, y: inView ? 100 : 0 }}
               transition={{
                 duration: 1,
                 ease: [0.6, -0.05, 0.01, 0.9],
@@ -155,8 +176,9 @@ export default function Home() {
               </p>
             </motion.div>
             <motion.div
+              ref={ref}
               initial={{ opacity: 0, y: 100 }}
-              animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 100 }}
+              animate={{ opacity: inView ? 1 : 0, y: inView ? 100 : 0 }}
               transition={{
                 duration: 1,
                 ease: [0.6, -0.05, 0.01, 0.9],
@@ -176,13 +198,11 @@ export default function Home() {
             </p>
             <div className="mt-8 flex h-[128px] w-full items-center">
               <Carousel
-                className="pointer-events-none flex w-full items-center justify-between"
-                opts={{
-                  align: 'start',
-                  loop: true
-                }}
+                className="flex w-full items-center justify-between"
+                opts={{ align: 'start' }}
                 plugins={[plugin.current]}
               >
+                <CarouselPrevious />
                 <CarouselContent>
                   {dummyStackUrl.map((item, index) => {
                     return (
@@ -204,6 +224,7 @@ export default function Home() {
                     )
                   })}
                 </CarouselContent>
+                <CarouselNext />
               </Carousel>
             </div>
           </div>
@@ -222,7 +243,7 @@ export default function Home() {
                 <Link href="/study">더보기</Link>
               </Button>
             </div>
-            <div className="mt-8 grid grid-cols-2 gap-4 sm:gap-12 xl:mb-32 xl:grid-cols-4">
+            <div className="mt-8 grid grid-cols-1 gap-12 md:grid-cols-2 xl:mb-32 xl:grid-cols-4">
               {studyDummyData.slice(0, 4).map((item, index) => {
                 return <StudyCard {...item} key={index} />
               })}
