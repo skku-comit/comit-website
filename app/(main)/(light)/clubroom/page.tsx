@@ -3,15 +3,10 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { useState } from 'react'
 
+import { ClubroomCarousel } from '@/components/clubroom/ClubroomCarousel'
 import ClburoomInfoCard from '@/components/clubroom/ClubroomInfoCard'
 import { Align } from '@/components/clubroom/ClubroomInfoCard'
 import SectionBanner from '@/components/common/SectionBanner'
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem
-} from '@/components/ui/carousel'
-import { cn } from '@/lib/utils'
 import clubroomImg from '@/public/comit-clubroom.jpg'
 
 const clubroomInfoCardData = [
@@ -42,57 +37,33 @@ export default function Clubroom() {
         title="Clubroom"
         description="CoMit의 동아리방을 소개합니다!"
       />
-      <div className="mb-12 flex flex-row-reverse items-center justify-center gap-12 space-x-reverse max-md:flex-col">
-        <div className="flex w-[30%] flex-col items-center justify-center max-md:w-[90%]">
-          <Carousel className="pointer-events-none w-full">
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <CarouselContent
-                style={{
-                  transform: `translateX(-${activeIndex * 100}%)`,
-                  transition: 'transform 0.5s ease-in-out'
-                }}
-              >
-                {clubroomCarouselData.map((item) => (
-                  <CarouselItem
-                    key={item}
-                    className="basis-1/1 flex w-full justify-center"
-                  >
-                    <Image
-                      src={clubroomImg}
-                      alt="comit-clubroom"
-                      height={440}
-                      className="rounded-xl object-contain"
-                    />
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-            </motion.div>
-          </Carousel>
-          <motion.div
-            initial={{ opacity: 0, x: 0 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <div className="flex items-center justify-start">
-              <div className="mt-4 flex justify-center">
-                {clubroomCarouselData.map((_, index) => (
-                  <span
-                    key={index}
-                    onClick={() => setActiveIndex(index)}
-                    className={cn(
-                      'mx-2 h-4 w-4 cursor-pointer rounded-full',
-                      index === activeIndex ? 'bg-primary' : 'bg-gray-400'
-                    )}
-                  ></span>
-                ))}
-              </div>
-            </div>
-          </motion.div>
-        </div>
+      <div className="mb-12 flex flex-row-reverse items-center justify-center gap-8 space-x-reverse max-md:flex-col xl:gap-12">
+        <motion.div
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+          className="h-[270px] w-[360px] md:h-[300px] md:w-[400px] lg:h-[360px] lg:w-[480px]"
+        >
+          <ClubroomCarousel
+            slides={clubroomCarouselData.map((item) => {
+              return (
+                <Image
+                  key={item}
+                  src={clubroomImg}
+                  alt="clubroom"
+                  className="h-full w-full object-cover"
+                  objectFit="cover"
+                />
+              )
+            })}
+            options={{
+              align: 'start',
+              loop: true,
+              skipSnaps: false,
+              inViewThreshold: 0.7
+            }}
+          />
+        </motion.div>
         <div className="flex flex-col gap-8">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
