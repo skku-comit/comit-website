@@ -1,7 +1,9 @@
 'use client'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { AiOutlineFileSearch } from 'react-icons/ai'
 import { BiBookBookmark } from 'react-icons/bi'
+import { IoMdBook } from 'react-icons/io'
 import { IoHomeSharp } from 'react-icons/io5'
 
 import { cn } from '@/lib/utils'
@@ -25,21 +27,41 @@ export default function SideBar() {
           href="/admin"
           className={cn(
             'flex items-center justify-start hover:text-primary',
-            path === '/admin/dashboard' ? 'text-primary' : 'text-black'
+            path === '/admin' ? 'text-primary' : 'text-black'
           )}
         >
           <IoHomeSharp size={28} />
           <p className="pl-[17px] text-[20px] font-medium">Dashboard</p>
         </Link>
         <Link
-          href="/admin/studies"
+          href="/admin/reviewing"
           className={cn(
             'flex items-center justify-start hover:text-primary',
-            path === '/admin/studies' ? 'text-primary' : 'text-black'
+            path === '/admin/reviewing' ? 'text-primary' : 'text-black'
+          )}
+        >
+          <AiOutlineFileSearch size={28} />
+          <p className="pl-[17px] text-[20px] font-medium">Reviewing</p>
+        </Link>
+        <Link
+          href="/admin/opened"
+          className={cn(
+            'flex items-center justify-start hover:text-primary',
+            path === '/admin/opened' ? 'text-primary' : 'text-black'
+          )}
+        >
+          <IoMdBook size={28} />
+          <p className="pl-[17px] text-[20px] font-medium">Opened</p>
+        </Link>
+        <Link
+          href="/admin/closed"
+          className={cn(
+            'flex items-center justify-start hover:text-primary',
+            path === '/admin/closed' ? 'text-primary' : 'text-black'
           )}
         >
           <BiBookBookmark size={28} />
-          <p className="pl-[17px] text-[20px] font-medium">Studies</p>
+          <p className="pl-[17px] text-[20px] font-medium">Closed</p>
         </Link>
       </div>
     </div>
