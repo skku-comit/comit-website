@@ -6,7 +6,7 @@ export default function MainLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className="flex min-h-dvh flex-col items-center">
+    <div className="flex min-h-dvh w-screen flex-col items-center">
       <Header />
       <SideBar />
       <div className="mt-20 flex w-full justify-center">{children}</div>
