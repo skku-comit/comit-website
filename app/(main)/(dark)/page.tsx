@@ -83,41 +83,45 @@ export default function Home() {
                 width={600}
                 height={600}
                 alt="mainPicture"
-                className="h-[600px] w-[600px] max-xl:h-[400px] max-xl:w-[400px] max-sm:h-[90vw] max-sm:w-[100%]"
+                className="h-[600px] w-[600px] max-xl:h-[400px] max-xl:w-[400px] max-sm:mb-6 max-sm:h-[76vw] max-sm:w-[100%]"
               ></Image>
             </motion.div>
-            <div className="flex flex-col gap-6 xl:gap-8">
-              <p className="break-keep text-center text-[9vw] font-semibold leading-tight sm:text-left sm:text-[40px] lg:text-[44px] xl:text-[64px]">
+            <div className="flex flex-col gap-6 max-sm:items-center xl:gap-8">
+              <span className="break-keep text-left text-[9vw] font-semibold leading-tight sm:text-[40px] lg:text-[44px] xl:text-[64px]">
                 {renderAnimatedText(mainIntroduceTextFirstLine)}
                 <br />
                 {renderAnimatedText(mainIntroduceTextSecondLine)}
-              </p>
-              <p className="break-keep text-center text-[6vw] font-semibold max-xl:text-xl sm:text-left sm:text-[24px]">
-                {renderAnimatedText(subIntroduceTextFirstLine)}
+              </span>
+              <span className="break-keep text-center text-[6vw] font-semibold sm:text-left sm:text-[24px]">
+                <span className="leading-10 max-sm:hidden">
+                  {renderAnimatedText(subIntroduceTextFirstLine)}
+                </span>
                 <span className="sm:hidden"> </span>
                 <br className="max-sm:hidden" />
                 {renderAnimatedText(subIntroduceTextSecondLine)}
-              </p>
-              <div className="flex items-center max-lg:justify-between max-sm:justify-around lg:gap-16">
-                <p className="text-left text-4xl font-extrabold leading-[70px] text-primary xl:text-[70px]">
-                  {renderAnimatedText(['C', 'O', 'M', 'I', 'T'])}
-                </p>
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 1 }}
-                >
-                  <Button
-                    variant="secondary"
-                    className="h-12 w-40 rounded-2xl text-xl font-semibold xl:h-[60px] xl:w-[190px] xl:text-[24px]"
+              </span>
+              <div className="w-full">
+                <div className="flex items-center justify-between sm:justify-between lg:justify-normal lg:gap-16">
+                  <p className="text-left text-4xl font-extrabold leading-[70px] text-primary xl:text-[70px]">
+                    {renderAnimatedText(['C', 'O', 'M', 'I', 'T'])}
+                  </p>
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 1 }}
                   >
-                    신규 지원
-                  </Button>
-                </motion.div>
+                    <Button
+                      variant="secondary"
+                      className="h-12 w-40 rounded-2xl text-xl font-semibold max-sm:h-10 max-sm:w-32 max-sm:text-lg xl:h-[60px] xl:w-[190px] xl:text-[24px]"
+                    >
+                      신규 지원
+                    </Button>
+                  </motion.div>
+                </div>
               </div>
             </div>
           </div>
-          <div className="absolute bottom-0 flex w-full justify-center">
+          <div className="absolute bottom-4 flex w-full justify-center sm:bottom-0">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: [1, 0.6, 1] }}
@@ -133,7 +137,7 @@ export default function Home() {
             </motion.div>
           </div>
         </div>
-        <div className="flex flex-col">
+        <div className="flex flex-col max-sm:-mt-16">
           <motion.div
             ref={ref}
             initial={{ opacity: 0, y: 100 }}
@@ -225,7 +229,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="mt-[50px] flex justify-between">
+        <div className="mt-[50px] flex justify-between xl:mt-32">
           <div className="flex w-full flex-col font-semibold max-xl:items-center">
             <div className="flex items-center justify-between">
               <p className="text-left text-[40px] max-xl:text-center">
