@@ -7,7 +7,11 @@ import { ClubroomCarousel } from '@/components/clubroom/ClubroomCarousel'
 import ClburoomInfoCard from '@/components/clubroom/ClubroomInfoCard'
 import { Align } from '@/components/clubroom/ClubroomInfoCard'
 import SectionBanner from '@/components/common/SectionBanner'
-import clubroomImg from '@/public/comit-clubroom.jpg'
+import clubroomImage1 from '@/public/clubroom-image/clubroom1.jpg'
+import clubroomImage2 from '@/public/clubroom-image/clubroom2.jpg'
+import clubroomImage3 from '@/public/clubroom-image/clubroom3.jpg'
+import clubroomImage4 from '@/public/clubroom-image/clubroom4.jpg'
+import clubroomImage5 from '@/public/clubroom-image/clubroom5.jpg'
 
 const clubroomInfoCardData = [
   {
@@ -18,16 +22,22 @@ const clubroomInfoCardData = [
   {
     title: '간식 및 도서 제공',
     description:
-      '대충 트렌드에 맞는 개발 서적과 존맛탱구리 간식을 제공한다는 글'
+      '전공, 교양, 프로그래밍 서적 다수 보유 중입니다. 마음껏 먹을 수 있는 간식도 있어요!'
   },
   {
     title: '모두의 휴식 공간',
     description:
-      '바쁜 일상 속 한 줄기 빛 같은 동방의 소파.. 모두 함께해요~~ 뭐라 쓰면 좋지!'
+      '학생회관 3층에 위치한 쾌적하고 넓은 동아리방입니다. 자주 이용해주세요!'
   }
 ]
 
-const clubroomCarouselData = Array.from({ length: 6 }, (_, i) => i + 1)
+const clubroomCarouselData = [
+  clubroomImage1,
+  clubroomImage2,
+  clubroomImage3,
+  clubroomImage4,
+  clubroomImage5
+]
 export default function Clubroom() {
   const [activeIndex, setActiveIndex] = useState<number>(0)
 
@@ -45,11 +55,11 @@ export default function Clubroom() {
           className="h-[270px] w-[360px] md:h-[300px] md:w-[400px] lg:h-[360px] lg:w-[480px]"
         >
           <ClubroomCarousel
-            slides={clubroomCarouselData.map((item) => {
+            slides={clubroomCarouselData.map((image, index) => {
               return (
                 <Image
-                  key={item}
-                  src={clubroomImg}
+                  key={index}
+                  src={image}
                   alt="clubroom"
                   className="h-full w-full object-cover"
                   objectFit="cover"
