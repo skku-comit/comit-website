@@ -14,7 +14,7 @@ export default function UnderConstructionDialog() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="w-84 sm:w-[480px]">
+      <DialogContent className="w-84 border-none bg-black text-white sm:w-[480px]">
         <div className="flex flex-col items-center gap-4">
           <div className="flex justify-center">
             <Image
@@ -23,7 +23,7 @@ export default function UnderConstructionDialog() {
               alt="under_construction"
             />
           </div>
-          <p className="text-center text-[4vw] font-bold sm:text-4xl">
+          <p className="text-center text-[4vw] font-bold text-white sm:text-4xl">
             COMING SOON!
           </p>
         </div>
