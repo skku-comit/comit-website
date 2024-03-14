@@ -1,6 +1,6 @@
 'use client'
 import Image from 'next/image'
-import { useEffect,useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { Dialog, DialogContent } from '@/components/ui/dialog'
 import UnderConstruction from '@/public/under_construction.png'
@@ -14,7 +14,7 @@ export default function UnderConstructionDialog() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="w-84">
+      <DialogContent className="w-84 sm:w-[480px]">
         <div className="flex flex-col items-center gap-4">
           <div className="flex justify-center">
             <Image

@@ -7,11 +7,11 @@ import { ClubroomCarousel } from '@/components/clubroom/ClubroomCarousel'
 import ClburoomInfoCard from '@/components/clubroom/ClubroomInfoCard'
 import { Align } from '@/components/clubroom/ClubroomInfoCard'
 import SectionBanner from '@/components/common/SectionBanner'
-import clubroomImage1 from '@/public/clubroom-image/clubroom1.jpg'
-import clubroomImage2 from '@/public/clubroom-image/clubroom2.jpg'
-import clubroomImage3 from '@/public/clubroom-image/clubroom3.jpg'
-import clubroomImage4 from '@/public/clubroom-image/clubroom4.jpg'
-import clubroomImage5 from '@/public/clubroom-image/clubroom5.jpg'
+import clubroomImage1 from '@/public/clubroom-image/clubroom1.webp'
+import clubroomImage2 from '@/public/clubroom-image/clubroom2.webp'
+import clubroomImage3 from '@/public/clubroom-image/clubroom3.webp'
+import clubroomImage4 from '@/public/clubroom-image/clubroom4.webp'
+import clubroomImage5 from '@/public/clubroom-image/clubroom5.webp'
 
 const clubroomInfoCardData = [
   {
