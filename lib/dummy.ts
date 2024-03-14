@@ -147,11 +147,12 @@ export const dummyStackUrl: string[] = [
 
 export const dummyPeopleData = [
   {
-    name: '이현준',
-    description: '개인 코딩 동아리',
+    name: '권서진',
+    description:
+      '성균관대학교 수학과/소프트웨어 복수전공 중인 권서진입니다. 웹개발, 앱개발, 알고리즘 등에 관심이 많습니다~',
     imageUrl:
       'https://png.pngtree.com/thumb_back/fh260/background/20230615/pngtree-shinobi-dog-is-a-dog-breed-that-is-not-aggressive-at-image_2933750.jpg',
-    position: '회장'
+    position: '개발팀장'
   },
 
   {

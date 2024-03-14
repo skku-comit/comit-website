@@ -10,6 +10,7 @@ import { MdHelpOutline } from 'react-icons/md'
 import { z } from 'zod'
 
 import SectionBanner from '@/components/common/SectionBanner'
+import UnderConstructionDialog from '@/components/common/UnderConstructionDialog'
 import StudyCard from '@/components/study/StudyCard'
 import {
   AlertDialog,
@@ -157,6 +158,7 @@ export default function OpenStudy() {
         className="flex flex-col gap-4 max-sm:px-3"
         onSubmit={handleSubmit(onSubmit)}
       >
+        <UnderConstructionDialog />
         <div className="flex gap-8 max-md:flex-col max-md:gap-4">
           <div className="flex flex-col gap-1">
             <p className="text-xl font-semibold">이미지</p>
