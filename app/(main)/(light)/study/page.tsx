@@ -17,7 +17,8 @@ export default function Study() {
         title="Study"
         description="CoMit의 스터디 분반을 확인해보세요!"
       />
-      <Button asChild className="w-60 py-6 text-lg font-semibold">
+      {/* TODO: Study API 연결되면 hidden 해제하기 */}
+      <Button asChild className="hidden w-60 py-6 text-lg font-semibold">
         <Link href="study/open">2024-1 스터디 개설 신청</Link>
       </Button>
       <div className="my-12 grid grid-cols-2 gap-6 max-sm:px-2 sm:gap-x-16 sm:gap-y-12 lg:grid-cols-4">
