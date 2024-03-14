@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form'
 import { BsEye, BsEyeSlash } from 'react-icons/bs'
 import { z } from 'zod'
 
+import UnderConstructionDialog from '@/components/common/UnderConstructionDialog'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import ComitOwl from '@/public/comitOwl.png'
@@ -45,6 +46,7 @@ export default function Signup() {
 
   return (
     <div className="flex w-full justify-center bg-black pt-8 text-white">
+      <UnderConstructionDialog />
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex w-[88%] max-w-[480px] flex-col items-center gap-2 rounded-[32px] bg-[#121212] p-8 pb-8 sm:gap-4 sm:p-16 md:w-[480px]"
