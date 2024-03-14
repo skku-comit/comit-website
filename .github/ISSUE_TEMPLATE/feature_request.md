@@ -6,6 +6,6 @@ labels: ''
 assignees: ''
 ---
 
-### Describe the feaure
+### Describe the feature
 
 ### Additional context
