@@ -147,53 +147,57 @@ export const dummyStackUrl: string[] = [
 
 export const dummyPeopleData = [
   {
+    name: '박태곤',
+    description:
+      '안녕하세요~ 코밋 회장 박태곤입니다! 코밋에 대해 문의하고 싶다면 자유롭게 연락해주세요!',
+    imageUrl:
+      'https://github.com/skku-comit/comit-website/assets/97675977/37403351-4da2-4d38-88ee-368defbfb2b2',
+    position: '회장'
+  },
+  {
+    name: '박상혁',
+    description: '회장하고 싶어요',
+    imageUrl:
+      'https://png.pngtree.com/thumb_back/fh260/background/20230615/pngtree-shinobi-dog-is-a-dog-breed-that-is-not-aggressive-at-image_2933750.jpg',
+    position: '부회장'
+  },
+  {
+    name: '이주형',
+    description:
+      '화학과 소프트웨어학과를 전공중인 기획팀장 이주형이라고 합니다!',
+    imageUrl:
+      'https://github.com/skku-comit/comit-website/assets/97675977/18a0ba19-9689-444a-9b10-8e12577c9717',
+    position: '기획팀장'
+  },
+  {
+    name: '박지현',
+    description: '코딩 좋아합니다',
+    imageUrl:
+      'https://png.pngtree.com/thumb_back/fh260/background/20230615/pngtree-shinobi-dog-is-a-dog-breed-that-is-not-aggressive-at-image_2933750.jpg',
+    position: '홍보팀장'
+  },
+  {
+    name: '이건주',
+    description:
+      '수학과/데이터사이언스 복수전공 중인 이건주입니다. 데이터 분석 및 의료 인공지능 관련 연구에 관심이 있습니다.',
+    imageUrl:
+      'https://github.com/skku-comit/comit-website/assets/97675977/af8e58f0-f6bf-4bbe-9423-0f7c62ba4e47',
+    position: '인사팀장'
+  },
+  {
+    name: '김성중',
+    description: '간식 필요하면 연락주세요',
+    imageUrl:
+      'https://png.pngtree.com/thumb_back/fh260/background/20230615/pngtree-shinobi-dog-is-a-dog-breed-that-is-not-aggressive-at-image_2933750.jpg',
+    position: '재무팀장'
+  },
+  {
     name: '권서진',
     description:
-      '성균관대학교 수학과/소프트웨어 복수전공 중인 권서진입니다. 웹개발, 앱개발, 알고리즘 등에 관심이 많습니다~',
+      '안녕하세요! 코딩 잘하고 싶은 권서진입니다. 코밋에 가장 많이 커밋하는 것을 목표로 열심히 달려보겠습니다.',
     imageUrl:
-      'https://png.pngtree.com/thumb_back/fh260/background/20230615/pngtree-shinobi-dog-is-a-dog-breed-that-is-not-aggressive-at-image_2933750.jpg',
+      'https://github.com/skku-comit/comit-website/assets/97675977/44136781-209a-4356-8434-2c645f408aef',
     position: '개발팀장'
-  },
-
-  {
-    name: '김수진',
-    description: '데이터 사이언스 연구소',
-    imageUrl:
-      'https://png.pngtree.com/thumb_back/fh260/background/20230615/pngtree-shinobi-dog-is-a-dog-breed-that-is-not-aggressive-at-image_2933750.jpg',
-    position: '연구원'
-  },
-
-  {
-    name: '박재민',
-    description: '로봇공학 동아리',
-    imageUrl:
-      'https://png.pngtree.com/thumb_back/fh260/background/20230615/pngtree-shinobi-dog-is-a-dog-breed-that-is-not-aggressive-at-image_2933750.jpg',
-    position: '프로젝트 매니저'
-  },
-
-  {
-    name: '송지우',
-    description: '디자인 스튜디오',
-    imageUrl:
-      'https://png.pngtree.com/thumb_back/fh260/background/20230615/pngtree-shinobi-dog-is-a-dog-breed-that-is-not-aggressive-at-image_2933750.jpg',
-    position: '디자이너'
-  },
-
-  {
-    name: '장성민',
-    description:
-      '블록체인 연구회를 하지만 누구보다 코인을 사랑하는 사람이 바로 나',
-    imageUrl:
-      'https://png.pngtree.com/thumb_back/fh260/background/20230615/pngtree-shinobi-dog-is-a-dog-breed-that-is-not-aggressive-at-image_2933750.jpg',
-    position: '리서처'
-  },
-
-  {
-    name: '이지영',
-    description: '스타트업 프로젝트 팀',
-    imageUrl:
-      'https://png.pngtree.com/thumb_back/fh260/background/20230615/pngtree-shinobi-dog-is-a-dog-breed-that-is-not-aggressive-at-image_2933750.jpg',
-    position: '개발자'
   }
 ]
 
