@@ -94,7 +94,7 @@ export const studyDummyData = [
       'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/thealgorithms/thealgorithms-plain-wordmark.svg',
     title: '알고리즘',
     mentor: '문준원',
-    day: '월 OR 목',
+    day: '월',
     startTime: '',
     endTime: '',
     level: '초급',
@@ -193,21 +193,60 @@ export const studyDummyData = [
     description:
       '하버드 기초 cs강좌 cs50 한글 번역 강의와 Udemy의 c언어 강의를 기반으로 자료구조 공부를 목표로 한다. 백준 실버 1을 목표로 하며 파이썬은 거의 안다고 가정한다.',
     isRecruiting: true
+  },
+  // {
+  //   imageSrc:
+  //     'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg',
+  //   title: 'AWS',
+  //   mentor: '박지환',
+  //   day: '수',
+  //   startTime: '13:30',
+  //   endTime: '15:00',
+  //   level: '중급',
+  //   stack: ['aws'],
+  //   campus: '율전',
+  //   description:
+  //     'AWS의 기초부터 심화까지 학습하고 실습하는 스터디입니다. AWS에 대한 기본적인 지식이 있는 분들에게 권장드립니다.',
+  //   isRecruiting: false
+  // },
+  {
+    imageSrc:
+      'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/readthedocs/readthedocs-original.svg',
+    title: '코테준비반',
+    mentor: '조준형',
+    day: '화',
+    startTime: '20:00',
+    endTime: '21:30',
+    level: '중급',
+    stack: ['PS', '알고리즘'],
+    campus: '온라인',
+    description:
+      '코딩테스트를 준비하여 꾸준히 일정량의 문제를 푸는 것을 목적으로 합니다. 효율을 위해 개념에 대한 공부는 각자 하도록 하며,  각자의 난이도와 수준에 맞게 문제를 풀고 인증을 하는 방식으로 이루어집니다. 지금 당장 코딩테스트를 위해 준비를 하시는 분들, 꾸준한 문제풀이를 원하시는 분들에게 추천드립니다.',
+    isRecruiting: false
   }
 ]
 
 export const dummyStackUrl: string[] = [
-  'https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg',
-  'https://i.namu.wiki/i/KcqDuQYTxNpUcLIMZTg28QXse0XiWx1G7K68kYYCo1GuhoHmhB_V8Qe9odGGt0BH9-0nQZTN53WXTNpDmwVfWQ.svg',
-  'https://cdn-images-1.medium.com/max/1200/1*5-aoK8IBmXve5whBQM90GA.png',
-  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTi8iA3ERV3WZ-Y_OFuQJ80Pz1tLJJkWNW7nYGsP_Vlkw&s',
-  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZeab83jLxJNlqggbc0T40gUZ9D2VGLUg6cI2BNJ6Fwg&s',
-  'https://i.namu.wiki/i/Rv7cLGvX03Y-IX85VC6HXqtKuAhofMYJdodeW2v38Ghm6eCgDCqAhjXWcAWb0MB5UdvweeYI8QLNalwMevPplw.svg',
-  'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png',
-  'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Node.js_logo.svg/2560px-Node.js_logo.svg.png',
-  'https://global.discourse-cdn.com/auth0/optimized/2X/a/ae35edce19e64c53e5d455b22e8a2c82d093d4c9_2_1024x919.png',
-  'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Typescript_logo_2020.svg/512px-Typescript_logo_2020.svg.png?20221110153201',
-  'https://ih1.redbubble.net/image.3917587429.0371/st,small,845x845-pad,1000x1000,f8f8f8.jpg'
+  'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg',
+  'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg',
+  'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg',
+  'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg',
+  'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original-wordmark.svg',
+  'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-plain-wordmark.svg',
+  'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg',
+  'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg',
+  'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg',
+  'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-original.svg',
+  'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg',
+  'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/csharp/csharp-original.svg',
+  'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg',
+  'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg',
+  'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/spring/spring-original-wordmark.svg',
+  'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/unity/unity-original.svg',
+  'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/dart/dart-original.svg',
+  'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/flutter/flutter-original.svg',
+  'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kotlin/kotlin-original.svg',
+  'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg'
 ]
 
 export const dummyPeopleData = [
@@ -255,7 +294,7 @@ export const dummyPeopleData = [
     description:
       '소프트웨어를 전공하고 있는 김성중입니다. 앱개발 및 시스템보안에 관심이 있습니다.',
     imageUrl:
-      'https://github.com/skku-comit/comit-website/assets/97675977/5274f982-2493-4db5-b37d-561274613c63',
+      'https://github.com/skku-comit/comit-website/assets/97675977/452f4f2a-6090-4400-bb64-20580aa0841e',
     position: '재무팀장'
   },
   {
