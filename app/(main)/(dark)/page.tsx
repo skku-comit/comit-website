@@ -84,6 +84,7 @@ export default function Home() {
                 height={600}
                 alt="mainPicture"
                 className="h-[600px] w-[600px] max-xl:h-[400px] max-xl:w-[400px] max-sm:mb-6 max-sm:h-[76vw] max-sm:w-[100%]"
+                priority
               ></Image>
             </motion.div>
             <div className="flex flex-col gap-6 max-sm:items-center xl:gap-8">

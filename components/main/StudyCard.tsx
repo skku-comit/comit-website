@@ -1,7 +1,7 @@
 import Image from 'next/image'
 
 import { Badge } from '@/components/ui/badge'
-import { Card, CardDescription, CardTitle } from '@/components/ui/card'
+import { Card } from '@/components/ui/card'
 
 interface StudyCardProps {
   imageSrc: string
@@ -37,12 +37,16 @@ export default function StudyCard({
           unoptimized
         ></Image>
       </div>
-      <CardTitle className="text-center text-base sm:text-lg">
-        {title}
-      </CardTitle>
-      <CardDescription className="text-center text-base">
-        {day} {startTime} ~ {endTime}
-      </CardDescription>
+      <p className="text-center text-base font-bold sm:text-lg">{title}</p>
+      {day === '' ? null : startTime === '' ? (
+        <p className="text-center text-base text-gray-500">
+          {day}요일 <span className="text-red-500">(시간 미정)</span>
+        </p>
+      ) : (
+        <p className="text-center text-base text-gray-500">
+          {day} {startTime} ~ {endTime}
+        </p>
+      )}
       <div className="mt-2 flex w-40 flex-wrap justify-around gap-2 sm:w-52">
         {badges.map((badge, index: number) => (
           <Badge
