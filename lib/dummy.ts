@@ -164,6 +164,21 @@ export const studyDummyData = [
       '공식문서와 각종 온라인 자료들을 활용하여 React, Typescript, Tailwind를 학습하고 실습합니다. 주마다 Git Issue에 공부해야 할 내용과 실습을 올릴 예정입니다. 오프라인으로 만나서는 서로 코드를 리뷰하고 공부한 내용을 공유합니다. HTML, CSS, JS에 대한 사전지식이 있으면서 Git으로 commit, push 해보신 분들 대상으로 진행합니다.',
     isRecruiting: true
   }
+  // {
+  //   imageSrc:
+  //     'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/spack/spack-original.svg',
+  //   title: '알고리즘',
+  //   mentor: '박상혁',
+  //   day: '화',
+  //   startTime: '19:30',
+  //   endTime: '21:00',
+  //   level: '중급',
+  //   stack: ['React', 'Typescript', 'Tailwind', 'Git'],
+  //   campus: '율전',
+  //   description:
+  //     '공식문서와 각종 온라인 자료들을 활용하여 React, Typescript, Tailwind를 학습하고 실습합니다. 주마다 Git Issue에 공부해야 할 내용과 실습을 올릴 예정입니다. 오프라인으로 만나서는 서로 코드를 리뷰하고 공부한 내용을 공유합니다. HTML, CSS, JS에 대한 사전지식이 있으면서 Git으로 commit, push 해보신 분들 대상으로 진행합니다.',
+  //   isRecruiting: true
+  // }
 ]
 
 export const dummyStackUrl: string[] = [
