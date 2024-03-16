@@ -31,9 +31,16 @@ export default function Study() {
               <div className="break-words text-2xl font-bold">
                 {study.title}
               </div>
-              <div className="break-words text-lg text-gray-600">
-                {study.day} {study.startTime} ~ {study.endTime}
-              </div>
+              {study.day === '' ? null : study.startTime === '' ? (
+                <div className="break-words text-lg text-gray-600">
+                  {study.day}요일{' '}
+                  <span className="text-red-500">(시간 미정)</span>
+                </div>
+              ) : (
+                <div className="break-words text-lg text-gray-600">
+                  {study.day} {study.startTime} ~ {study.endTime}
+                </div>
+              )}
               <div className="leading-snug">
                 <div className="flex gap-6">
                   <div className="flex items-center gap-2">
