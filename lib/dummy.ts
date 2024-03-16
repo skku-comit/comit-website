@@ -163,22 +163,37 @@ export const studyDummyData = [
     description:
       '공식문서와 각종 온라인 자료들을 활용하여 React, Typescript, Tailwind를 학습하고 실습합니다. 주마다 Git Issue에 공부해야 할 내용과 실습을 올릴 예정입니다. 오프라인으로 만나서는 서로 코드를 리뷰하고 공부한 내용을 공유합니다. HTML, CSS, JS에 대한 사전지식이 있으면서 Git으로 commit, push 해보신 분들 대상으로 진행합니다.',
     isRecruiting: true
+  },
+  {
+    imageSrc:
+      'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/spack/spack-original.svg',
+    title: '알고리즘',
+    mentor: '박상혁',
+    day: '월',
+    startTime: '20:00',
+    endTime: '21:30',
+    level: '중급',
+    stack: ['알고리즘', '자료구조'],
+    campus: '율전',
+    description:
+      '백준 등의 온라인 저지 사이트에 있는 다양한 문제들을 통해 자료구조와 알고리즘을 적용하는 연습을 하는 스터디입니다. 풀 문제들을 정해서 일주일 동안 각자 고민하고 해결할 시간을 가진 다음 스터디 시간에 풀이 방법 등을 공유하는 방식으로 진행할 예정입니다. 기본적으로 자료구조와 알고리즘을 어느 정도 알고 있는 분들께 권장드립니다.',
+    isRecruiting: true
+  },
+  {
+    imageSrc:
+      'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-plain.svg',
+    title: 'C언어 초급',
+    mentor: '김남준',
+    day: '수',
+    startTime: '13:30',
+    endTime: '15:00',
+    level: '초급',
+    stack: ['C'],
+    campus: '명륜',
+    description:
+      '하버드 기초 cs강좌 cs50 한글 번역 강의와 Udemy의 c언어 강의를 기반으로 자료구조 공부를 목표로 한다. 백준 실버 1을 목표로 하며 파이썬은 거의 안다고 가정한다.',
+    isRecruiting: true
   }
-  // {
-  //   imageSrc:
-  //     'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/spack/spack-original.svg',
-  //   title: '알고리즘',
-  //   mentor: '박상혁',
-  //   day: '화',
-  //   startTime: '19:30',
-  //   endTime: '21:00',
-  //   level: '중급',
-  //   stack: ['React', 'Typescript', 'Tailwind', 'Git'],
-  //   campus: '율전',
-  //   description:
-  //     '공식문서와 각종 온라인 자료들을 활용하여 React, Typescript, Tailwind를 학습하고 실습합니다. 주마다 Git Issue에 공부해야 할 내용과 실습을 올릴 예정입니다. 오프라인으로 만나서는 서로 코드를 리뷰하고 공부한 내용을 공유합니다. HTML, CSS, JS에 대한 사전지식이 있으면서 Git으로 commit, push 해보신 분들 대상으로 진행합니다.',
-  //   isRecruiting: true
-  // }
 ]
 
 export const dummyStackUrl: string[] = [
