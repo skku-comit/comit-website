@@ -61,7 +61,7 @@ export default function Study() {
                   {study.stack.join(', ')}
                 </div>
                 <div
-                  className="whitespace-pre-line"
+                  className="whitespace-pre-line break-keep"
                   dangerouslySetInnerHTML={{ __html: study.description }}
                 />
               </div>

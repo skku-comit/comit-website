@@ -29,8 +29,12 @@ export default function StudyCard({
   const badges = [level, stack[0], campus]
   return (
     <Card className="relative flex w-44 transform cursor-pointer flex-col items-center justify-center overflow-hidden px-2 py-4 shadow-md transition-transform hover:scale-105 hover:shadow-2xl sm:w-60 sm:px-4 sm:py-8">
-      {isRecruiting && (
+      {isRecruiting ? (
         <Badge className="absolute right-2 top-2 font-normal">모집 중</Badge>
+      ) : (
+        <Badge className="absolute right-2 top-2 bg-slate-400 font-normal">
+          모집 마감
+        </Badge>
       )}
       <div className="mb-8 mt-4 h-24 w-24 overflow-hidden sm:h-36 sm:w-36">
         <Image

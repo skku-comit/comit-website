@@ -194,21 +194,21 @@ export const studyDummyData = [
       '하버드 기초 cs강좌 cs50 한글 번역 강의와 Udemy의 c언어 강의를 기반으로 자료구조 공부를 목표로 한다. 백준 실버 1을 목표로 하며 파이썬은 거의 안다고 가정한다.',
     isRecruiting: true
   },
-  // {
-  //   imageSrc:
-  //     'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg',
-  //   title: 'AWS',
-  //   mentor: '박지환',
-  //   day: '수',
-  //   startTime: '13:30',
-  //   endTime: '15:00',
-  //   level: '중급',
-  //   stack: ['aws'],
-  //   campus: '율전',
-  //   description:
-  //     'AWS의 기초부터 심화까지 학습하고 실습하는 스터디입니다. AWS에 대한 기본적인 지식이 있는 분들에게 권장드립니다.',
-  //   isRecruiting: false
-  // },
+  {
+    imageSrc:
+      'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg',
+    title: 'AWS Developer Associate',
+    mentor: '박지환',
+    day: '월',
+    startTime: '21:00',
+    endTime: '22:00',
+    level: '상급',
+    stack: ['AWS'],
+    campus: '온라인',
+    description:
+      '스터디 목표:\n* AWS Certified Developer Associate 자격증 취득 (~2024.07).\n* AWS 서비스에 대한 이해와 활용 능력 향상.\n스터디 대상:\n* AWS 클라우드 서비스를 최소 3개 이상 사용해보신 분 혹은 기타 AWS 자격증 보유자.',
+    isRecruiting: false
+  },
   {
     imageSrc:
       'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/readthedocs/readthedocs-original.svg',
