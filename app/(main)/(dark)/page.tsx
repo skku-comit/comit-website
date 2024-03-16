@@ -176,7 +176,7 @@ export default function Home() {
             >
               <p className="text-[40px]">평균 신규 지원</p>
               <p className="text-left text-[90px] max-lg:mb-12 max-lg:text-center">
-                120+
+                150+
               </p>
             </motion.div>
             <motion.div
