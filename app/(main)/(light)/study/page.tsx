@@ -18,10 +18,10 @@ export default function Study() {
         description="CoMit의 스터디 분반을 확인해보세요!"
       />
       {/* TODO: Study API 연결되면 hidden 해제하기 */}
-      <Button asChild className="hidden w-60 py-6 text-lg font-semibold">
+      <Button asChild className="mb-12 hidden w-60 py-6 text-lg font-semibold">
         <Link href="study/open">2024-1 스터디 개설 신청</Link>
       </Button>
-      <div className="my-12 grid grid-cols-2 gap-6 max-sm:px-2 sm:gap-x-16 sm:gap-y-12 lg:grid-cols-4">
+      <div className="mb-12 grid grid-cols-2 gap-6 max-sm:px-2 sm:gap-x-16 sm:gap-y-12 lg:grid-cols-4">
         {studyDummyData.map((study, index) => (
           <Dialog key={index}>
             <DialogTrigger asChild>
@@ -32,9 +32,9 @@ export default function Study() {
                 {study.title}
               </div>
               {study.day === '' ? null : study.startTime === '' ? (
-                <div className="break-words text-lg text-gray-600">
+                <div className="flex gap-3 break-words text-lg text-gray-600">
                   {study.day}요일{' '}
-                  <span className="text-red-500">(시간 미정)</span>
+                  <span className="text-base text-red-500">(시간 미정)</span>
                 </div>
               ) : (
                 <div className="break-words text-lg text-gray-600">

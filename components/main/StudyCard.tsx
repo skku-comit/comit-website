@@ -1,4 +1,7 @@
+'use client'
+
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 
 import { Badge } from '@/components/ui/badge'
 import { Card } from '@/components/ui/card'
@@ -25,8 +28,14 @@ export default function StudyCard({
   level
 }: StudyCardProps) {
   const badges = [level, stack[0], campus]
+  const router = useRouter()
   return (
-    <Card className="flex w-44 transform flex-col items-center justify-center overflow-hidden px-2 py-4 sm:w-64 sm:px-4 sm:py-8">
+    <Card
+      className="flex w-44 transform cursor-pointer flex-col items-center justify-center overflow-hidden px-2 py-4 transition-opacity hover:opacity-90 sm:w-64 sm:px-4 sm:py-8"
+      onClick={() => {
+        router.push('/study')
+      }}
+    >
       <div className="mb-8 mt-4 h-24 w-24 overflow-hidden sm:h-44 sm:w-44">
         <Image
           src={imageSrc}
@@ -39,11 +48,11 @@ export default function StudyCard({
       </div>
       <p className="text-center text-base font-bold sm:text-lg">{title}</p>
       {day === '' ? null : startTime === '' ? (
-        <p className="text-center text-base text-gray-500">
-          {day}요일 <span className="text-red-500">(시간 미정)</span>
-        </p>
+        <div className="flex items-center gap-2 text-center text-sm text-gray-500 sm:text-base">
+          {day}요일 <span className="text-xs text-red-500">(시간 미정)</span>
+        </div>
       ) : (
-        <p className="text-center text-base text-gray-500">
+        <p className="text-center text-sm text-gray-500 sm:text-base">
           {day} {startTime} ~ {endTime}
         </p>
       )}
@@ -52,7 +61,7 @@ export default function StudyCard({
           <Badge
             key={index}
             variant="secondary"
-            className="flex items-center justify-center px-3 sm:h-7"
+            className="flex items-center justify-center px-2.5 sm:h-7 sm:px-3"
           >
             {badge}
           </Badge>

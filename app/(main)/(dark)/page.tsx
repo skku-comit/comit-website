@@ -77,15 +77,16 @@ export default function Home() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1 }}
+              className="flex justify-center"
             >
               <Image
                 src={mainPicture}
                 width={600}
                 height={600}
                 alt="mainPicture"
-                className="h-[600px] w-[600px] max-xl:h-[400px] max-xl:w-[400px] max-sm:mb-6 max-sm:h-[76vw] max-sm:w-[100%]"
+                className="h-[600px] w-[600px] max-xl:h-[400px] max-xl:w-[400px] max-sm:mb-6 max-sm:h-[76vw] max-sm:w-[90%]"
                 priority
-              ></Image>
+              />
             </motion.div>
             <div className="flex flex-col gap-6 max-sm:items-center xl:gap-8">
               <span className="break-keep text-left text-[9vw] font-semibold leading-tight sm:text-[40px] lg:text-[44px] xl:text-[64px]">
@@ -112,8 +113,8 @@ export default function Home() {
                     transition={{ duration: 1 }}
                   >
                     <Button
-                      variant="secondary"
-                      className="h-12 w-40 rounded-2xl text-xl font-semibold max-sm:h-10 max-sm:w-32 max-sm:text-lg xl:h-[60px] xl:w-[190px] xl:text-[24px]"
+                      variant="outline"
+                      className="h-12 w-40 rounded-2xl border-none text-xl font-semibold text-black max-sm:h-10 max-sm:w-32 max-sm:text-lg xl:h-[60px] xl:w-[190px] xl:text-[24px]"
                       asChild
                     >
                       <Link href="https://docs.google.com/forms/d/1f7CI81EpjJ87A3lyOszSsZbcGz-zu9CAHLnubHdD-zA/viewform?edit_requested=true">
@@ -215,13 +216,14 @@ export default function Home() {
                         key={index}
                         className="basis-1/8 flex items-center"
                       >
-                        <div>
+                        <div className="h-28 w-28 sm:h-32 sm:w-32">
                           <Image
                             width={128}
                             height={128}
                             src={item}
                             unoptimized
                             alt="stack"
+                            className="h-full w-full object-cover"
                             key={index}
                           ></Image>
                         </div>
@@ -241,7 +243,7 @@ export default function Home() {
               </p>
               <Button
                 variant="outline"
-                className="h-[30px] w-[100px] rounded-2xl border-none text-black max-xl:hidden"
+                className="h-9 w-28 rounded-xl border-none text-base text-black max-xl:hidden"
                 asChild
               >
                 <Link href="/study">더보기</Link>

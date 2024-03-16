@@ -30,7 +30,7 @@ export default function StudyCard({
   return (
     <Card className="relative flex w-44 transform cursor-pointer flex-col items-center justify-center overflow-hidden px-2 py-4 shadow-md transition-transform hover:scale-105 hover:shadow-2xl sm:w-60 sm:px-4 sm:py-8">
       {isRecruiting ? (
-        <Badge className="absolute right-2 top-2 font-normal">모집 중</Badge>
+        <Badge className="absolute right-2 top-2 font-bold">모집 중</Badge>
       ) : (
         <Badge className="absolute right-2 top-2 bg-slate-400 font-normal">
           모집 마감
@@ -48,9 +48,9 @@ export default function StudyCard({
       </div>
       <p className="text-center text-base font-bold sm:text-lg">{title}</p>
       {day === '' ? null : startTime === '' ? (
-        <p className="text-center text-sm text-gray-500">
-          {day}요일 <span className="text-red-500">(시간 미정)</span>
-        </p>
+        <div className="flex items-center gap-2 text-center text-sm text-gray-500">
+          {day}요일 <span className="text-xs text-red-500">(시간 미정)</span>
+        </div>
       ) : (
         <p className="text-center text-sm text-gray-500">
           {day} {startTime} ~ {endTime}
