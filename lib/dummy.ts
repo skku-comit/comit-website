@@ -156,9 +156,10 @@ export const dummyPeopleData = [
   },
   {
     name: '박상혁',
-    description: '회장하고 싶어요',
+    description:
+      '안녕하세요! 코밋 부회장 박상혁입니다. 비전공자에서 Be전공자가 될 수 있도록 최선을 다하겠습니다.',
     imageUrl:
-      'https://png.pngtree.com/thumb_back/fh260/background/20230615/pngtree-shinobi-dog-is-a-dog-breed-that-is-not-aggressive-at-image_2933750.jpg',
+      'https://github.com/skku-comit/comit-website/assets/97675977/4ce7e085-2967-4897-9484-b6bf0988d26a',
     position: '부회장'
   },
   {
@@ -171,9 +172,9 @@ export const dummyPeopleData = [
   },
   {
     name: '박지현',
-    description: '코딩 좋아합니다',
+    description: '안녕하세요 소비자학과 전공중인 홍보팀장 박지현입니다!',
     imageUrl:
-      'https://png.pngtree.com/thumb_back/fh260/background/20230615/pngtree-shinobi-dog-is-a-dog-breed-that-is-not-aggressive-at-image_2933750.jpg',
+      'https://github.com/skku-comit/comit-website/assets/97675977/a0cd7229-9f86-4d39-b529-7c41ffffd330',
     position: '홍보팀장'
   },
   {
@@ -186,9 +187,10 @@ export const dummyPeopleData = [
   },
   {
     name: '김성중',
-    description: '간식 필요하면 연락주세요',
+    description:
+      '소프트웨어를 전공하고 있는 김성중입니다. 앱개발 및 시스템보안에 관심이 있습니다.',
     imageUrl:
-      'https://png.pngtree.com/thumb_back/fh260/background/20230615/pngtree-shinobi-dog-is-a-dog-breed-that-is-not-aggressive-at-image_2933750.jpg',
+      'https://github.com/skku-comit/comit-website/assets/97675977/5274f982-2493-4db5-b37d-561274613c63',
     position: '재무팀장'
   },
   {
