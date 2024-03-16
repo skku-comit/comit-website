@@ -12,7 +12,7 @@ interface StudyCardProps {
   campus: string
   stack: string[]
   level: string
-  isRecruiting: boolean
+  isRecruiting?: boolean
 }
 
 export default function StudyCard({
