@@ -60,12 +60,10 @@ export default function Study() {
                   <RiStackOverflowLine />
                   {study.stack.join(', ')}
                 </div>
-                <pre
-                  style={{ fontFamily: 'Inter, sans-serif' }}
+                <div
                   className="whitespace-pre-line"
-                >
-                  {study.description}
-                </pre>
+                  dangerouslySetInnerHTML={{ __html: study.description }}
+                />
               </div>
             </DialogContent>
           </Dialog>
