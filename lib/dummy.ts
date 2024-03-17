@@ -48,7 +48,7 @@ export const studyDummyData = [
     imageSrc:
       'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg',
     title: '백엔드 node.js',
-    mentor: '권서진',
+    mentor: '박지은',
     day: '금',
     startTime: '19:30',
     endTime: '21:00',
