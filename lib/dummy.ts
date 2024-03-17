@@ -192,7 +192,7 @@ export const studyDummyData = [
     campus: '명륜',
     description:
       '하버드 기초 cs강좌 cs50 한글 번역 강의와 Udemy의 c언어 강의를 기반으로 자료구조 공부를 목표로 한다. 백준 실버 1을 목표로 하며 파이썬은 거의 안다고 가정한다.',
-    isRecruiting: true
+    isRecruiting: false
   },
   {
     imageSrc:
