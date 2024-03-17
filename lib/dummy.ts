@@ -154,7 +154,7 @@ export const studyDummyData = [
       'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original-wordmark.svg',
     title: '웹 프론트엔드',
     mentor: '권서진',
-    day: '화',
+    day: '월',
     startTime: '19:30',
     endTime: '21:00',
     level: '중급',
