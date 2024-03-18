@@ -37,7 +37,7 @@ export const ClubroomCarousel = (props: PropType) => {
   }, [embla, setScrollSnaps, onSelect])
 
   return (
-    <div className="relative w-full rounded-md ">
+    <div className="relative w-full cursor-pointer rounded-md">
       <div className="relative overflow-hidden rounded-md" ref={emblaRef}>
         <div className="flex h-[270px] flex-none flex-col flex-wrap md:h-[300px] lg:h-[360px]">
           {slides.map((slide, index) => (

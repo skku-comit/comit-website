@@ -62,7 +62,6 @@ export default function Clubroom() {
                   src={image}
                   alt="clubroom"
                   className="h-full w-full object-cover"
-                  objectFit="cover"
                 />
               )
             })}
