@@ -115,11 +115,16 @@ export default function Home() {
                     <Button
                       variant="outline"
                       className="h-12 w-40 rounded-2xl border-none text-xl font-semibold text-black max-sm:h-10 max-sm:w-32 max-sm:text-lg xl:h-[60px] xl:w-[190px] xl:text-[24px]"
-                      asChild
+                      onClick={() => {
+                        alert(
+                          '구글폼을 통한 모집이 종료되었습니다.\n동아리 신규 가입을 원하시면 페이지 최하단의 오픈 카카오톡 채널 링크를 통해 문의부탁드립니다.'
+                        )
+                      }}
                     >
-                      <Link href="https://docs.google.com/forms/d/1f7CI81EpjJ87A3lyOszSsZbcGz-zu9CAHLnubHdD-zA/viewform?edit_requested=true">
+                      {/* <Link href="https://docs.google.com/forms/d/1f7CI81EpjJ87A3lyOszSsZbcGz-zu9CAHLnubHdD-zA/viewform?edit_requested=true">
                         신규 지원
-                      </Link>
+                      </Link> */}
+                      신규 지원
                     </Button>
                   </motion.div>
                 </div>
