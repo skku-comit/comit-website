@@ -57,7 +57,7 @@ export const studyDummyData = [
     campus: '율전',
     description:
       'Udemy 강의 [NodeJS - The Complete Guide] 를 들으면서 Node, Express, Typescript를 학습하는 스터디입니다. Javascript에 능숙하고 웹 동작 원리에 대한 이해가 있는 분들께 권장드립니다. 세부적인 스터디 진행 방식은 모집 후 토의를 통해 결정할 예정입니다. 강의 런타임이 38.5시간으로 긴 편인데 학기 중에 시간 투자해서 같이 완강까지 달릴 분들 신청해주세요!\n\n<a href="https://www.udemy.com/course/nodejs-the-complete-guide/" target="_blank" style="color: blue">[유데미 강의 링크]</a>',
-    isRecruiting: true
+    isRecruiting: false
   },
   {
     imageSrc:
@@ -72,7 +72,7 @@ export const studyDummyData = [
     campus: '율전',
     description:
       'Udemy의 C#강의와 Unity 2d게임 개발 강의를 기반으로 C#문법을 몇주동안 빠르게 공부한 뒤, 유니티 엔진 공부로 넘어가 학기말에 공동 게임 프로젝트를 하나 만드는 것이 목표입니다. unity엔진이 큰 개발 능력을 요구하지는 않기에 초보거나 게임 개발에 관심있으신분들이라면 환영입니다. 다만 c#을 다루기에 어느정도 c언어를 다룰 수 있는 분들에게 권장됩니다.',
-    isRecruiting: true
+    isRecruiting: false
   },
   {
     imageSrc:
@@ -87,7 +87,7 @@ export const studyDummyData = [
     campus: '율전',
     description:
       '공식문서를 기반으로 모두가 스터디 동안 각자 하나의 앱을 만들고 배포하는 것을 목표로 스터디를 진행합니다. 매주마다 배운 내용을 적용하여 progress를 발표하고, 서로 피드백하는 과정이 주가 됩니다. 개발경험이 없어도 괜찮지만, 기본적인 알고리즘, 프론트/백엔드,git 등에 대한 지식은 스스로 학습하며 따라오실 수 있는 분들에게 권장됩니다.',
-    isRecruiting: true
+    isRecruiting: false
   },
   {
     imageSrc:
@@ -102,7 +102,7 @@ export const studyDummyData = [
     campus: '율전',
     description:
       '백준사이트를 통해 알고리즘 문제풀이 오프라인 스터디를 진행합니다. c언어의 기본문법을 배우신분들을 대상으로 진행하며 제일낮은단계인 새싹문제들과 클래스1단계 문제들부터 진행합니다. 매주 진행 예정이며 시간대및 세부사항은 모집후 정할예정입니다.',
-    isRecruiting: true
+    isRecruiting: false
   },
   {
     imageSrc:
@@ -117,7 +117,7 @@ export const studyDummyData = [
     campus: '율전',
     description:
       'Udemy 강의 [Spring Boot3 & Spring Framework 6 마스터하기!]를 들으면서 spring의 기초부터 학습할 계획입니다. 추가로 필요한 개념이 있다면 온라인 자료를 활용하여 학습할 계획입니다. 주마다 공부한 내용을 공유하고 Git을 활용하여 작은 웹 사이트를 만드는 프로젝트를 기획 중에 있습니다. (세부 계획은 토의를 통해 결정해요!) / 부가적으로 필요한 JAVA, Git, 백엔드와 프론트엔드 기초 지식 등은 미리 학습되어 있으신 분들이 신청하시면 좋을 것 같습니다 :)\n\n공통 공강시간으로 조정 가능\n\n<a href="https://www.udemy.com/course/spring-boot-and-spring-framework-korean/" target="_blank" style="color: blue">[유데미 강의 링크]</a>',
-    isRecruiting: true
+    isRecruiting: false
   },
   {
     imageSrc:
@@ -132,7 +132,7 @@ export const studyDummyData = [
     campus: '명륜',
     description:
       '유데미 "알고리즘 코딩 테스트 입문부터 합격까지" 특강을 같이 들으면서 python 알고리즘 기초를 같이 배우고, 백준 문제도 같이 풀어볼 예정입니다. 수준 및 인원, 여건에 따라 유동적으로 운영할 계획입니다.\n\n<a href="https://url.kr/jodhyx/" target="_blank" style="color: blue">[유데미 강의 링크]</a>',
-    isRecruiting: true
+    isRecruiting: false
   },
   {
     imageSrc:
@@ -147,7 +147,7 @@ export const studyDummyData = [
     campus: '율전',
     description:
       '여러 온라인 자료를 활용하여 먼저 자바스크립트에 대해 학습하고, 실습합니다. 그 후 node.js의 기초를 학습하고, 간단한 백엔드를 구축해보는 활동을 할 예정입니다. (세부계획과 일정은 모집 후 정할 예정입니다)',
-    isRecruiting: true
+    isRecruiting: false
   },
   {
     imageSrc:
@@ -162,7 +162,7 @@ export const studyDummyData = [
     campus: '율전',
     description:
       '공식문서와 각종 온라인 자료들을 활용하여 React, Typescript, Tailwind를 학습하고 실습합니다. 주마다 Git Issue에 공부해야 할 내용과 실습을 올릴 예정입니다. 오프라인으로 만나서는 서로 코드를 리뷰하고 공부한 내용을 공유합니다. HTML, CSS, JS에 대한 사전지식이 있으면서 Git으로 commit, push 해보신 분들 대상으로 진행합니다.',
-    isRecruiting: true
+    isRecruiting: false
   },
   {
     imageSrc:
@@ -177,7 +177,7 @@ export const studyDummyData = [
     campus: '율전',
     description:
       '백준 등의 온라인 저지 사이트에 있는 다양한 문제들을 통해 자료구조와 알고리즘을 적용하는 연습을 하는 스터디입니다. 풀 문제들을 정해서 일주일 동안 각자 고민하고 해결할 시간을 가진 다음 스터디 시간에 풀이 방법 등을 공유하는 방식으로 진행할 예정입니다. 기본적으로 자료구조와 알고리즘을 어느 정도 알고 있는 분들께 권장드립니다.',
-    isRecruiting: true
+    isRecruiting: false
   },
   {
     imageSrc:
