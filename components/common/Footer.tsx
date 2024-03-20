@@ -33,7 +33,7 @@ export default function Footer() {
           <a
             rel="noreferrer noopener"
             target="_blank"
-            href="https://open.kakao.com/o/sowtukag"
+            href="https://open.kakao.com/o/g8OGIihg"
           >
             <RiKakaoTalkFill className="text-xl text-white" />
           </a>
