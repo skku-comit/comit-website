@@ -8,7 +8,7 @@ export const hiddenStudy = [
     startTime: '18:30',
     endTime: '19:30',
     level: '초급',
-    stack: ['3 on 3'],
+    stack: ['3on3'],
     campus: '율전',
     description:
       '프로젝트를 진행할 때 중요한 것은 협업 능력입니다. 코밋 부원들 간의 팀워크를 기르기 위해 농구 스터디를 개설합니다. 농구를 좋아하시는 분들이라면 누구나 참여 가능합니다. 매주 수요일 18:30에 농구장에서 진행됩니다.',
@@ -23,7 +23,7 @@ export const hiddenStudy = [
     startTime: '18:00',
     endTime: '18:30',
     level: '초급',
-    stack: ['3km 뜀걸음'],
+    stack: ['뜀걸음'],
     campus: '율전',
     description:
       '개발자가 되기 위해 중요한 자산은 역시나 체력입니다. 굳건한 체력만이 훌륭한 개발자로 가는 길입니다. 매주 수요일 18:00에 율전 캠퍼스에서 런닝 스터디를 진행합니다. 3km를 뜁니다. 런닝을 좋아하시는 분들이라면 누구나 참여 가능합니다.',
