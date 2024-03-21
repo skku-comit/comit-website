@@ -15,6 +15,7 @@ interface StudyCardProps {
   campus: string
   stack: string[]
   level: string
+  showDialog: boolean
 }
 
 export default function StudyCard({
