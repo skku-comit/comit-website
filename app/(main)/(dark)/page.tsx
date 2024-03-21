@@ -4,9 +4,13 @@ import AutoScroll from 'embla-carousel-auto-scroll'
 import { motion, useAnimation } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { BsChevronCompactDown } from 'react-icons/bs'
 import { FaAngleRight } from 'react-icons/fa6'
+import { FaSchoolFlag } from 'react-icons/fa6'
+import { IoPersonSharp } from 'react-icons/io5'
+import { MdOutlineSignalCellularAlt } from 'react-icons/md'
+import { RiStackOverflowLine } from 'react-icons/ri'
 import { useInView } from 'react-intersection-observer'
 
 import StudyCard from '@/components/main/StudyCard'
@@ -16,10 +20,12 @@ import {
   CarouselContent,
   CarouselItem
 } from '@/components/ui/carousel'
-import { dummyStackUrl, studyDummyData } from '@/lib/dummy'
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
+import { dummyStackUrl, hiddenStudy,studyDummyData } from '@/lib/dummy'
 import mainPicture from '@/public/mainPicture.svg'
 
 export default function Home() {
+  const [password, setPassword] = useState('')
   const controls = useAnimation()
   const [ref, inView] = useInView({ triggerOnce: true })
   const plugin = useRef(AutoScroll({ playOnInit: true }))
@@ -166,7 +172,18 @@ export default function Home() {
               animate={{ opacity: inView ? 1 : 0, y: inView ? 100 : 0 }}
               transition={{ duration: 1, ease: [0.6, -0.05, 0.01, 0.9] }}
             >
-              <p className="text-[40px]">누적 스터디 개설</p>
+              <p className="text-[40px]">
+                누적 스터
+                <span
+                  onClick={() => {
+                    if (password.includes('디진다')) setPassword('')
+                    else setPassword(password + '디')
+                  }}
+                >
+                  디
+                </span>{' '}
+                개설
+              </p>
               <p className="text-left text-[90px] max-lg:mb-12 max-lg:text-center">
                 50+
               </p>
@@ -194,7 +211,18 @@ export default function Home() {
                 delay: 1.0
               }}
             >
-              <p className="text-[40px]">평균 스터디 개설</p>
+              <p className="text-[40px]">
+                평균 스터
+                <span
+                  onClick={() => {
+                    if (password.includes('디진다')) setPassword('')
+                    else setPassword(password + '디')
+                  }}
+                >
+                  디
+                </span>{' '}
+                개설
+              </p>
               <p className="text-left text-[90px] max-lg:text-center">15+</p>
             </motion.div>
           </div>
@@ -203,7 +231,24 @@ export default function Home() {
           <div className="w-full font-semibold">
             <p className="text-left text-[70px] max-xl:hidden">Study</p>
             <p className="items-start text-left text-[40px] max-xl:text-center">
-              다뤄진 기술 스택
+              <span
+                onClick={() => {
+                  if (password.includes('디진다')) setPassword('')
+                  else setPassword(password + '다')
+                }}
+              >
+                다
+              </span>
+              뤄
+              <span
+                onClick={() => {
+                  if (password.includes('디진다')) setPassword('')
+                  else setPassword(password + '진')
+                }}
+              >
+                진
+              </span>{' '}
+              기술 스택
             </p>
             <div className="mt-8 flex h-[128px] w-full items-center">
               <Carousel
@@ -244,7 +289,15 @@ export default function Home() {
           <div className="flex w-full flex-col font-semibold max-xl:items-center">
             <div className="flex items-center justify-between">
               <p className="text-left text-[40px] max-xl:text-center">
-                개설된 스터디
+                개설된 스터
+                <span
+                  onClick={() => {
+                    if (password.includes('디진다')) setPassword('')
+                    else setPassword(password + '디')
+                  }}
+                >
+                  디
+                </span>
               </p>
               <Button
                 variant="outline"
@@ -256,7 +309,7 @@ export default function Home() {
             </div>
             <div className="mt-8 grid grid-cols-2 gap-4 sm:gap-12 xl:mb-32 xl:grid-cols-4">
               {studyDummyData.slice(0, 4).map((item, index) => {
-                return <StudyCard {...item} key={index} />
+                return <StudyCard {...item} showDialog={false} key={index} />
               })}
             </div>
             <Button
@@ -269,6 +322,65 @@ export default function Home() {
                 <FaAngleRight className="absolute right-12 text-gray-600" />
               </Link>
             </Button>
+            {password.includes('디진다') && (
+              <div className="flex flex-col gap-2">
+                <p className="text-left text-[40px] max-xl:text-center">
+                  Hidden Study
+                </p>
+                <div className="my-8 grid grid-cols-2 gap-4 sm:gap-12 xl:mb-32 xl:grid-cols-4">
+                  {hiddenStudy.map((study, index) => (
+                    <Dialog key={index}>
+                      <DialogTrigger>
+                        <StudyCard {...study} showDialog={true} key={index} />
+                      </DialogTrigger>
+                      <DialogContent className="w-[324px] rounded-xl p-6 sm:w-[480px] sm:p-8">
+                        <div className="break-words text-2xl font-bold">
+                          {study.title}
+                        </div>
+                        {study.day === '' ? null : study.startTime === '' ? (
+                          <div className="flex gap-3 break-words text-lg text-gray-600">
+                            {study.day}요일{' '}
+                            <span className="text-base text-red-500">
+                              (시간 미정)
+                            </span>
+                          </div>
+                        ) : (
+                          <div className="break-words text-lg text-gray-600">
+                            {study.day} {study.startTime} ~ {study.endTime}
+                          </div>
+                        )}
+                        <div className="leading-snug">
+                          <div className="flex gap-6">
+                            <div className="flex items-center gap-2">
+                              <IoPersonSharp />
+                              {study.mentor}
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <MdOutlineSignalCellularAlt />
+                              {study.level}
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <FaSchoolFlag />
+                              {study.campus}
+                            </div>
+                          </div>
+                          <div className="mb-4 mt-1 flex items-center gap-2 break-words">
+                            <RiStackOverflowLine />
+                            {study.stack.join(', ')}
+                          </div>
+                          <div
+                            className="whitespace-pre-line break-keep"
+                            dangerouslySetInnerHTML={{
+                              __html: study.description
+                            }}
+                          />
+                        </div>
+                      </DialogContent>
+                    </Dialog>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

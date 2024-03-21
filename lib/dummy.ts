@@ -1,3 +1,66 @@
+export const hiddenStudy = [
+  {
+    imageSrc:
+      'https://github.com/skku-comit/comit-website/assets/97675977/d9846f8a-5f96-4889-bbeb-9c6f613b039f',
+    title: '농구 스터디',
+    mentor: '박찬서',
+    day: '수',
+    startTime: '18:30',
+    endTime: '19:30',
+    level: '초급',
+    stack: ['3 on 3'],
+    campus: '율전',
+    description:
+      '프로젝트를 진행할 때 중요한 것은 협업 능력입니다. 코밋 부원들 간의 팀워크를 기르기 위해 농구 스터디를 개설합니다. 농구를 좋아하시는 분들이라면 누구나 참여 가능합니다. 매주 수요일 18:30에 농구장에서 진행됩니다.',
+    isRecruiting: true
+  },
+  {
+    imageSrc:
+      'https://github.com/skku-comit/comit-website/assets/97675977/1fca352a-0f90-4a02-b101-56518caf7b0b',
+    title: '런닝 스터디',
+    mentor: '김동한',
+    day: '수',
+    startTime: '18:00',
+    endTime: '18:30',
+    level: '초급',
+    stack: ['3km 뜀걸음'],
+    campus: '율전',
+    description:
+      '개발자가 되기 위해 중요한 자산은 역시나 체력입니다. 굳건한 체력만이 훌륭한 개발자로 가는 길입니다. 매주 수요일 18:00에 율전 캠퍼스에서 런닝 스터디를 진행합니다. 3km를 뜁니다. 런닝을 좋아하시는 분들이라면 누구나 참여 가능합니다.',
+    isRecruiting: true
+  },
+  {
+    imageSrc:
+      'https://github.com/skku-comit/comit-website/assets/97675977/b785a748-0ff3-494a-96f6-67c0a78b2f48',
+    title: '김동한 기습숭배',
+    mentor: '김성중',
+    day: '매일',
+    startTime: '00:00',
+    endTime: '24:00',
+    level: '고급',
+    stack: ['Vim', '마제 스탠드', '담배'],
+    campus: '공통',
+    description:
+      '전 개발팀장님이신 김동한 선배님을 숭배하기 위해 김동한 기습숭배 스터디를 개설합니다. 매일 00:00 ~ 24:00까지 김동한 선배님을 숭배합니다. 김동한 선배님을 좋아하시는 분들이라면 누구나 참여 가능합니다. Vim, Vimium, 마제 스탠드, 담배를 준비해주세요.',
+    isRecruiting: true
+  },
+  {
+    imageSrc:
+      'https://github.com/skku-comit/comit-website/assets/97675977/4a47ed52-74b0-4f5f-ab94-6ed40a33cf7d',
+    title: 'kdy 기습숭배',
+    mentor: 'CoMit',
+    day: '매일',
+    startTime: '00:00',
+    endTime: '24:00',
+    level: '고급',
+    stack: ['swc', 'vercel'],
+    campus: '공통',
+    description:
+      'swc 개발자이자, CoMit의 대선배이자, 현존 성균관대학교 최고의 아웃풋이신 kdy님을 숭배하기 위해 kdy 기습숭배 스터디를 개설합니다. 매일 24시간 kdy님을 숭배합니다. kdy님을 좋아하시는 분들이라면 누구나 참여 가능합니다.',
+    isRecruiting: true
+  }
+]
+
 export const studyDummyData = [
   {
     imageSrc:

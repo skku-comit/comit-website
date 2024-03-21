@@ -25,7 +25,8 @@ export default function StudyCard({
   endTime,
   campus,
   stack,
-  level
+  level,
+  showDialog
 }: StudyCardProps) {
   const badges = [level, stack[0], campus]
   const router = useRouter()
@@ -33,7 +34,9 @@ export default function StudyCard({
     <Card
       className="flex w-44 transform cursor-pointer flex-col items-center justify-center overflow-hidden px-2 py-4 transition-opacity hover:opacity-90 sm:w-64 sm:px-4 sm:py-8"
       onClick={() => {
-        router.push('/study')
+        if (!showDialog) {
+          router.push('/study')
+        }
       }}
     >
       <div className="mb-8 mt-4 h-24 w-24 overflow-hidden sm:h-44 sm:w-44">
