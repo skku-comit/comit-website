@@ -75,7 +75,7 @@ export const studyDummyData = [
     campus: '공통',
     description:
       'Udemy의 Web 부트캠프 강의를 기반으로 초급 html/css부터 javascript 문법 공부를 통해 자신만의 랜딩 페이지를 만드는 것이 목표입니다. 웹개발에 관심이 있으며 처음 접해보는 분들에게 권장됩니다.',
-    isRecruiting: true
+    isRecruiting: false
   },
   {
     imageSrc:
@@ -90,7 +90,7 @@ export const studyDummyData = [
     campus: '공통',
     description:
       'Udemy의 파이썬 데이터분석 부트캠프 강의를 기반으로 기본 파이썬 문법을 정리해보고, 다양한 데이터분석 모듈과 기술의 사용법을 공부해 보는 것이 목표입니다. 초반에 파이썬 문법을 정리하는 섹션이 있지만, 조금은 파이썬 문법에 지식이 있는 분들에게 권장됩니다',
-    isRecruiting: true
+    isRecruiting: false
   },
   {
     imageSrc:
@@ -105,7 +105,7 @@ export const studyDummyData = [
     campus: '공통',
     description:
       'Udemy의 c언어 부트캠프 강의를 기반으로 개발환경 세팅과 c언어의 초급 문법부터 공부하여 학기말에 간단한 자유 프로젝트를 제작하는 것이 목표입니다. 프로그래밍이나 c에 대해 지식이 없는 분들에기 권장드립니다.',
-    isRecruiting: true
+    isRecruiting: false
   },
   {
     imageSrc:
