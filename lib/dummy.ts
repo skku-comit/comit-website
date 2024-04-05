@@ -73,6 +73,21 @@ export const hiddenStudy = [
     description:
       '매주 주제와 키워드를 정해 일본어로 이야기를 나누는 스터디입니다. 애니메이션도 함께 보면서 실생활에서 사용할 수 있는 표현들을 익히는 것을 목표로 합니다. 본 스터디는 일본어로 진행됩니다.',
     isRecruiting: true
+  },
+  {
+    imageSrc:
+      'https://github.com/skku-comit/comit-website/assets/97675977/0c993aa4-4be4-4f73-8736-45d6a4ce082a',
+    title: '틀니 밴드 (잠정 중단)',
+    mentor: '김동한',
+    day: '',
+    startTime: '',
+    endTime: '',
+    level: '고급',
+    stack: ['밴드', '음악', '낭만'],
+    campus: '율전',
+    description:
+      'CoMit의 원로급 인사들만 모아 밴드를 구성했습니다. 틀니들만 모여있지만 열정만은 정정합니다. 다들 현생에 치여 열심히 참여는 못하지만 그래도 뭔가 해보자는 마음으로 모인 밴드입니다.',
+    isRecruiting: false
   }
 ]
 
