@@ -58,6 +58,21 @@ export const hiddenStudy = [
     description:
       'swc 개발자이자, CoMit의 대선배이자, 현존 성균관대학교 최고의 아웃풋이신 kdy님을 숭배하기 위해 kdy 기습숭배 스터디를 개설합니다. 매일 24시간 kdy님을 숭배합니다. kdy님을 좋아하시는 분들이라면 누구나 참여 가능합니다.',
     isRecruiting: true
+  },
+  {
+    imageSrc:
+      'https://github.com/skku-comit/comit-website/assets/97675977/576e8049-cac4-49ca-a329-0c30836d43af',
+    title: '일본어 스터디',
+    mentor: '박찬서',
+    day: '금',
+    startTime: '20:30',
+    endTime: '21:30',
+    level: '입문',
+    stack: ['일본어', '애니메이션'],
+    campus: '율전',
+    description:
+      '매주 주제와 키워드를 정해 일본어로 이야기를 나누는 스터디입니다. 애니메이션도 함께 보면서 실생활에서 사용할 수 있는 표현들을 익히는 것을 목표로 합니다. 본 스터디는 일본어로 진행됩니다.',
+    isRecruiting: true
   }
 ]
 
