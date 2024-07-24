@@ -1,14 +1,9 @@
-'use client'
-
-import { useEffect, useState } from 'react'
-
-import IntroduceMemeberCard from '@/components/about/IntroduceMemberCard'
+import MemberList from '@/components/about/MemberList'
 import SectionCard, { SectionCardProps } from '@/components/about/SectionCard'
 import SectionBanner from '@/components/common/SectionBanner'
 import eventImg from '@/public/about-image/event.svg'
 import seminarImg from '@/public/about-image/seminar.svg'
 import studyClassImg from '@/public/about-image/studyClass.svg'
-import { Member } from '@/types/Member'
 
 const sectionCardData: SectionCardProps[] = [
   {
@@ -35,12 +30,6 @@ const sectionCardData: SectionCardProps[] = [
 ]
 
 export default function About() {
-  const [members, setMembers] = useState<Member[]>([])
-  useEffect(() => {
-    const res = fetch('api/members')
-    res.then((res) => res.json()).then((data) => setMembers(data))
-  }, [])
-
   return (
     <>
       <SectionBanner
@@ -57,14 +46,7 @@ export default function About() {
           <p className="mb-20 text-4xl font-semibold text-black">
             CoMit 임원진
           </p>
-          <div className="grid grid-cols-1 gap-x-[5vw] gap-y-12 xl:grid-cols-2">
-            {members.map(
-              (member, index) =>
-                member.displayAtAboutPage && (
-                  <IntroduceMemeberCard key={index} member={member} />
-                )
-            )}
-          </div>
+          <MemberList />
         </div>
       </div>
     </>

@@ -5,11 +5,13 @@ export enum Align {
   LEFT = 'left',
   RIGHT = 'right'
 }
-type ClburoomInfoCardType = {
+
+interface ClburoomInfoCardType {
   title: string
   description: string
   align?: Align
 }
+
 export default function ClburoomInfoCard({
   title,
   description,

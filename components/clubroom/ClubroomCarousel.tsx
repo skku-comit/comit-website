@@ -2,7 +2,7 @@ import Autoplay from 'embla-carousel-autoplay'
 import useEmblaCarousel from 'embla-carousel-react'
 import React, { ReactNode, useCallback, useEffect, useState } from 'react'
 
-type PropType = {
+interface PropType {
   options?: {
     align?: 'start' | 'center' | 'end'
     loop?: boolean
@@ -12,17 +12,11 @@ type PropType = {
   slides: ReactNode[]
 }
 
-export const ClubroomCarousel = (props: PropType) => {
-  const { options, slides } = props
+export const ClubroomCarousel = ({ options, slides }: PropType) => {
   const [emblaRef, embla] = useEmblaCarousel(options, [
     Autoplay({ playOnInit: true, delay: 3600, stopOnInteraction: false })
   ])
   const [selectedIndex, setSelectedindex] = useState(0)
-  const [scrollSnaps, setScrollSnaps] = useState<number[]>([])
-  const scrollTo = useCallback(
-    (index: number) => embla && embla.scrollTo(index),
-    [embla]
-  )
 
   const onSelect = useCallback(() => {
     if (!embla) return
@@ -32,9 +26,8 @@ export const ClubroomCarousel = (props: PropType) => {
   useEffect(() => {
     if (!embla) return
     onSelect()
-    setScrollSnaps(embla.scrollSnapList())
     embla.on('select', onSelect)
-  }, [embla, setScrollSnaps, onSelect])
+  }, [embla, onSelect])
 
   return (
     <div className="relative w-full cursor-pointer rounded-md">

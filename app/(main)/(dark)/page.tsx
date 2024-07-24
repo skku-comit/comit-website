@@ -4,12 +4,12 @@ import AutoScroll from 'embla-carousel-auto-scroll'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useEffect, useRef, useState } from 'react'
+import { useRef } from 'react'
 import { BsChevronCompactDown } from 'react-icons/bs'
 import { FaAngleRight } from 'react-icons/fa6'
 import { useInView } from 'react-intersection-observer'
 
-import StudyCard from '@/components/main/StudyCard'
+import ExampleStudyList from '@/components/main/ExampleStudyList'
 import { Button } from '@/components/ui/button'
 import {
   Carousel,
@@ -18,16 +18,8 @@ import {
 } from '@/components/ui/carousel'
 import { dummyStackUrl } from '@/lib/dummy'
 import mainPicture from '@/public/mainPicture.svg'
-import { Study } from '@/types/Study'
 
 export default function Home() {
-  const [studies, setStudies] = useState<Study[]>([])
-  useEffect(() => {
-    const res = fetch('api/studies')
-    res.then((res) => res.json()).then((data) => setStudies(data))
-  }, [])
-  const exampleStudies = studies.slice(0, 4)
-
   const [ref, inView] = useInView({ triggerOnce: true })
   const plugin = useRef(AutoScroll({ playOnInit: true }))
   const mainIntroduceTextFirstLine = ['개발자', '를 꿈꾸는']
@@ -75,6 +67,7 @@ export default function Home() {
       }
     })
   }
+
   return (
     <div className="flex min-h-screen w-[100%] flex-col items-center bg-black text-center text-white">
       <div className="w-[92%] lg:w-[1280px]">
@@ -258,11 +251,7 @@ export default function Home() {
                 <Link href="/study">더보기</Link>
               </Button>
             </div>
-            <div className="mt-8 grid grid-cols-2 gap-4 sm:gap-12 xl:mb-32 xl:grid-cols-4">
-              {exampleStudies.map((study, index) => (
-                <StudyCard key={index} study={study} />
-              ))}
-            </div>
+            <ExampleStudyList />
             <Button
               variant="outline"
               className="relative my-12 w-64 border-none py-6 text-lg font-semibold text-gray-600 xl:hidden"
