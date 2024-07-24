@@ -6,7 +6,7 @@ import { IoPersonSharp } from 'react-icons/io5'
 import { MdOutlineSignalCellularAlt } from 'react-icons/md'
 import { RiStackOverflowLine } from 'react-icons/ri'
 
-import StudyCard from '@/components/study/StudyCard'
+import StudyCard from '@/components/common/StudyCard'
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 import { Study } from '@/types/Study'
 
@@ -34,7 +34,12 @@ export default function StudyList() {
           {studies.map((study, index) => (
             <Dialog key={index}>
               <DialogTrigger>
-                <StudyCard study={study} />
+                <StudyCard
+                  study={study}
+                  imageSize={144}
+                  showStatus={true}
+                  imageWrapperClassName="mb-8 mt-4 h-24 w-24 overflow-hidden sm:h-36 sm:w-36"
+                />
               </DialogTrigger>
               <DialogContent className="w-[324px] rounded-xl p-6 sm:w-[480px] sm:p-8">
                 <div className="break-words text-2xl font-bold">
