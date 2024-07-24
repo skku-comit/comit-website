@@ -1,4 +1,7 @@
+'use client'
+
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
 import { FaSchoolFlag } from 'react-icons/fa6'
 import { IoPersonSharp } from 'react-icons/io5'
 import { MdOutlineSignalCellularAlt } from 'react-icons/md'
@@ -8,9 +11,15 @@ import SectionBanner from '@/components/common/SectionBanner'
 import StudyCard from '@/components/study/StudyCard'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
-import { studyDummyData } from '@/lib/dummy'
+import { Study as StudyType } from '@/types/Study'
 
 export default function Study() {
+  const [studies, setStudies] = useState<StudyType[]>([])
+  useEffect(() => {
+    const res = fetch('api/studies')
+    res.then((res) => res.json()).then((data) => setStudies(data))
+  }, [])
+
   return (
     <>
       <SectionBanner
@@ -22,9 +31,9 @@ export default function Study() {
         <Link href="study/open">2024-1 스터디 개설 신청</Link>
       </Button>
       <div className="mb-12 grid grid-cols-2 gap-6 max-sm:px-2 sm:gap-x-16 sm:gap-y-12 lg:grid-cols-4">
-        {studyDummyData.map((study, index) => (
+        {studies.map((study, index) => (
           <Dialog key={index}>
-            <DialogTrigger asChild>
+            <DialogTrigger>
               <StudyCard {...study} />
             </DialogTrigger>
             <DialogContent className="w-[324px] rounded-xl p-6 sm:w-[480px] sm:p-8">
@@ -45,7 +54,7 @@ export default function Study() {
                 <div className="flex gap-6">
                   <div className="flex items-center gap-2">
                     <IoPersonSharp />
-                    {study.mentor}
+                    {study.mentor.name}
                   </div>
                   <div className="flex items-center gap-2">
                     <MdOutlineSignalCellularAlt />

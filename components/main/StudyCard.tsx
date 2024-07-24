@@ -5,31 +5,15 @@ import { useRouter } from 'next/navigation'
 
 import { Badge } from '@/components/ui/badge'
 import { Card } from '@/components/ui/card'
+import { Study } from '@/types/Study'
 
 interface StudyCardProps {
-  imageSrc: string
-  title: string
-  day: string
-  startTime: string
-  endTime: string
-  campus: string
-  stack: string[]
-  level: string
+  study: Study
   showDialog: boolean
 }
 
-export default function StudyCard({
-  imageSrc,
-  title,
-  day,
-  startTime,
-  endTime,
-  campus,
-  stack,
-  level,
-  showDialog
-}: StudyCardProps) {
-  const badges = [level, stack[0], campus]
+export default function StudyCard({ study, showDialog }: StudyCardProps) {
+  const badges = [study.level, study.stack[0], study.campus]
   const router = useRouter()
   return (
     <Card
@@ -42,22 +26,25 @@ export default function StudyCard({
     >
       <div className="mb-8 mt-4 h-24 w-24 overflow-hidden sm:h-44 sm:w-44">
         <Image
-          src={imageSrc}
-          alt={title}
+          src={study.imageSrc}
+          alt={study.title}
           width={176}
           height={176}
           className="h-full w-full object-cover"
           unoptimized
         ></Image>
       </div>
-      <p className="text-center text-base font-bold sm:text-lg">{title}</p>
-      {day === '' ? null : startTime === '' ? (
+      <p className="text-center text-base font-bold sm:text-lg">
+        {study.title}
+      </p>
+      {study.day === '' ? null : study.startTime === '' ? (
         <div className="flex items-center gap-2 text-center text-sm text-gray-500 sm:text-base">
-          {day}요일 <span className="text-xs text-red-500">(시간 미정)</span>
+          {study.day}요일{' '}
+          <span className="text-xs text-red-500">(시간 미정)</span>
         </div>
       ) : (
         <p className="text-center text-sm text-gray-500 sm:text-base">
-          {day} {startTime} ~ {endTime}
+          {study.day} {study.startTime} ~ {study.endTime}
         </p>
       )}
       <div className="mt-2 flex w-40 flex-wrap justify-around gap-2 sm:w-52">
