@@ -9,7 +9,7 @@ import { BsChevronCompactDown } from 'react-icons/bs'
 import { FaAngleRight } from 'react-icons/fa6'
 import { useInView } from 'react-intersection-observer'
 
-import ExampleStudyList from '@/components/main/ExampleStudyList'
+import StudyList from '@/components/study/StudyList'
 import { Button } from '@/components/ui/button'
 import {
   Carousel,
@@ -251,7 +251,7 @@ export default function Home() {
                 <Link href="/study">더보기</Link>
               </Button>
             </div>
-            <ExampleStudyList />
+            <StudyList />
             <Button
               variant="outline"
               className="relative my-12 w-64 border-none py-6 text-lg font-semibold text-gray-600 xl:hidden"

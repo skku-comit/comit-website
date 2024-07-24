@@ -11,7 +11,6 @@ import { z } from 'zod'
 
 import SectionBanner from '@/components/common/SectionBanner'
 import UnderConstructionDialog from '@/components/common/UnderConstructionDialog'
-import StudyCard from '@/components/study/StudyCard'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -524,7 +523,8 @@ export default function OpenStudy() {
               </AlertDialogHeader>
               {/* TODO: study dialog 추가 */}
               <div className="flex justify-center">
-                <StudyCard
+                {/* TODO: study open에 맞게 StudyCard 수정 */}
+                {/* <StudyCard
                   campus={getValues('campus') || ''}
                   day={getValues('day') || ''}
                   imageSrc={
@@ -537,7 +537,7 @@ export default function OpenStudy() {
                   stack={getValues('stack') || ''}
                   startTime={getValues('startTime') || ''}
                   title={getValues('title') || ''}
-                />
+                /> */}
               </div>
               {!isValid && (
                 <p className="text-sm text-red-500">모든 항목을 입력해주세요</p>
