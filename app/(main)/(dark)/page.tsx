@@ -25,7 +25,8 @@ export default function Home() {
   useEffect(() => {
     const res = fetch('api/studies')
     res.then((res) => res.json()).then((data) => setStudies(data))
-  }, [studies])
+  }, [])
+  const exampleStudies = studies.slice(0, 4)
 
   const [ref, inView] = useInView({ triggerOnce: true })
   const plugin = useRef(AutoScroll({ playOnInit: true }))
@@ -258,13 +259,9 @@ export default function Home() {
               </Button>
             </div>
             <div className="mt-8 grid grid-cols-2 gap-4 sm:gap-12 xl:mb-32 xl:grid-cols-4">
-              {Object.values(studies)
-                .slice(0, 4)
-                .map((study, index) => {
-                  return (
-                    <StudyCard study={study} showDialog={false} key={index} />
-                  )
-                })}
+              {exampleStudies.map((study, index) => (
+                <StudyCard key={index} study={study} />
+              ))}
             </div>
             <Button
               variant="outline"

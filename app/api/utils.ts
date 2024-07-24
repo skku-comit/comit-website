@@ -20,13 +20,13 @@ function CreateFactory<E extends BaseEntity>() {
 function RetrieveFactory<E extends BaseEntity>(entities: E[]) {
   return (request: Request, { params }: { params: { id: string } }) => {
     return ReturnObjectAsJsonOr404(
-      entities.find((instance) => instance.id === instance.id)
+      entities.find((instance) => instance.id === params.id)
     )
   }
 }
 
 function ListFactory<E extends BaseEntity>(entities: E[]) {
-  return (request: Request, { params }: { params: { id: string } }) => {
+  return (request: Request) => {
     let searchResult = entities.slice()
 
     const url = new URL(request.url)
