@@ -9,7 +9,7 @@ import { StudyRecord } from '@/types/Study'
 export default function Closed() {
   const [studyRecords, setStudyRecords] = useState<StudyRecord[]>([])
   useEffect(() => {
-    const res = fetch('api/studyRecords?status=closed')
+    const res = fetch('api/study-records?status=closed')
     res.then((res) => res.json()).then((data) => setStudyRecords(data))
   }, [])
 

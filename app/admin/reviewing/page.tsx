@@ -10,7 +10,7 @@ import { StudyRecord } from '@/types/Study'
 export default function Reviewing() {
   const [studyRecords, setStudyRecords] = useState<StudyRecord[]>([])
   useEffect(() => {
-    const res = fetch('api/studyRecords?status=reviewing')
+    const res = fetch('api/study-records?status=reviewing')
     res.then((res) => res.json()).then((data) => setStudyRecords(data))
   }, [])
 
