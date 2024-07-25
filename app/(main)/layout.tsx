@@ -8,14 +8,12 @@ export default function MainLayout({
 }) {
   return (
     <div
-      className="h-screen w-screen overflow-x-hidden overflow-y-scroll"
+      className="flex h-screen w-screen flex-col items-center justify-start overflow-y-scroll"
       style={{ WebkitOverflowScrolling: 'touch' }}
     >
-      <div className="flex min-h-dvh flex-col items-center">
-        <Header />
-        <div className="flex w-full justify-center pt-20">{children}</div>
-        <Footer />
-      </div>
+      <Header />
+      {children}
+      <Footer />
     </div>
   )
 }
