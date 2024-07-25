@@ -31,6 +31,8 @@ export function DataTable<TData, TValue>({
     getCoreRowModel: getCoreRowModel()
   })
 
+  const hasAnyRecord = !!table.getRowModel().rows?.length
+
   return (
     <div className="rounded-md border-none">
       <Table>
@@ -53,7 +55,7 @@ export function DataTable<TData, TValue>({
           ))}
         </TableHeader>
         <TableBody>
-          {table.getRowModel().rows?.length ? (
+          {hasAnyRecord ? (
             table.getRowModel().rows.map((row) => (
               <TableRow
                 key={row.id}

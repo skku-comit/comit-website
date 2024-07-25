@@ -4,33 +4,22 @@ import { useState } from 'react'
 
 import { Card } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
-import eventImg from '@/public/about-image/event.svg'
-import seminarImg from '@/public/about-image/seminar.svg'
-import studyClassImg from '@/public/about-image/studyClass.svg'
 
-type SectionCardProps = {
+export interface SectionCardProps {
   title: string
   description: string
   image: string
+  backgroundColor?: string
 }
+
 export default function SectionCard({
   title,
   description,
-  image
+  image,
+  backgroundColor
 }: SectionCardProps) {
-  const selectImg = (image: string) => {
-    switch (image) {
-      case 'studyClass':
-        return (
-          <Image src={studyClassImg} alt={title} width={300} height={300} />
-        )
-      case 'event':
-        return <Image src={eventImg} alt={title} width={300} height={300} />
-      case 'seminar':
-        return <Image src={seminarImg} alt={title} width={300} height={300} />
-    }
-  }
   const [isHovered, setIsHovered] = useState(false)
+
   return (
     <Card
       className="relative h-[300px] w-[300px] rounded-3xl shadow-md md:h-[360px] md:w-[360px]"
@@ -40,15 +29,11 @@ export default function SectionCard({
       <div
         className={cn(
           'flex h-[230px] w-full items-center justify-center rounded-t-3xl bg-opacity-40 md:h-[280px]',
-          image === 'studyClass'
-            ? 'bg-[#FFE873]'
-            : image === 'event'
-              ? 'bg-[#6DD7B9]'
-              : 'bg-[#C875FF]'
+          backgroundColor
         )}
       >
         <div className="flex h-[240px] w-[240px] items-center justify-center md:h-[300px] md:w-[300px]">
-          {selectImg(image)}
+          <Image src={image} alt={title} width={300} />
         </div>
       </div>
       <div className="flex h-[70px] items-center justify-center md:h-[80px]">

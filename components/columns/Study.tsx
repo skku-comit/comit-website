@@ -2,14 +2,9 @@
 
 import { ColumnDef } from '@tanstack/react-table'
 
-export interface Study {
-  id: string
-  title: string
-  mentor: string
-  createDate: string
-}
+import { StudyRecord } from '@/types/Study'
 
-export const columns: ColumnDef<Study>[] = [
+export const columns: ColumnDef<StudyRecord>[] = [
   {
     accessorKey: 'id',
     header: () => <div className="ml-8 min-w-24 text-left text-base">ID</div>,
@@ -18,20 +13,24 @@ export const columns: ColumnDef<Study>[] = [
   {
     accessorKey: 'title',
     header: () => <div className="min-w-96 text-left text-base">Title</div>,
-    cell: ({ row }) => <div className="text-base">{row.original.title}</div>
+    cell: ({ row }) => (
+      <div className="text-base">{row.original.study.title}</div>
+    )
   },
   {
     accessorKey: 'mentor',
     header: () => <div className="min-w-48 text-base">Mentor</div>,
     cell: ({ row }) => (
-      <p className="text-center text-base">{row.original.mentor}</p>
+      <p className="text-center text-base">{row.original.study.mentor.name}</p>
     )
   },
   {
     accessorKey: 'createDate',
     header: () => <div className="mr-8 min-w-56 text-base">Mentor</div>,
     cell: ({ row }) => (
-      <p className="mr-8 text-center text-base">{row.original.createDate}</p>
+      <p className="mr-8 text-center text-base">
+        {row.original.createDate.toString()}
+      </p>
     )
   }
 ]
