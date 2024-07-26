@@ -69,8 +69,8 @@ export default function Home() {
   }
 
   return (
-    <div className="flex min-h-screen w-[100%] flex-col items-center bg-black text-center text-white">
-      <div className="w-[92%] lg:w-[1280px]">
+    <div className="flex w-full flex-grow flex-col items-center bg-black text-center text-white">
+      <div className="h-fit w-[92%] lg:w-[1280px]">
         <div className="relative flex h-[90vh] items-start justify-center md:items-center">
           <div className="flex items-center justify-between max-lg:flex-col lg:flex-row-reverse">
             <motion.div

@@ -8,7 +8,7 @@ export default function MainLayout({
 }) {
   return (
     <div
-      className="flex h-screen w-screen flex-col items-center justify-start overflow-y-scroll"
+      className="flex h-dvh w-screen flex-col items-center justify-start overflow-y-scroll"
       style={{ WebkitOverflowScrolling: 'touch' }}
     >
       <Header />

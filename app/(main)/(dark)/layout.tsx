@@ -4,7 +4,7 @@ export default function DarkLayout({
   children: React.ReactNode
 }) {
   return (
-    <main className="flex h-fit w-full flex-1 flex-col items-center bg-black">
+    <main className="relative flex h-auto min-h-dvh w-full flex-col items-center bg-black pt-20">
       {children}
     </main>
   )
