@@ -7,14 +7,12 @@ import { cn } from '@/lib/utils'
 
 export default function Footer() {
   const pathname = usePathname()
-
+  const isDarkMode = ['/', '/signup', '/login'].includes(pathname)
   return (
     <footer
       className={cn(
-        'h-24 w-full py-4',
-        ['/', '/signup', '/login'].includes(pathname)
-          ? 'bg-gray-800'
-          : 'bg-black'
+        'relative h-24 w-full py-4',
+        isDarkMode ? 'bg-gray-800' : 'bg-black'
       )}
     >
       <div className="flex h-full w-full flex-col items-center justify-around">

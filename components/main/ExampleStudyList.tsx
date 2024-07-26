@@ -30,7 +30,7 @@ export default function ExampleStudyList() {
       {!isLoading && (
         <div className="mt-8 grid grid-cols-2 gap-4 sm:gap-12 xl:mb-32 xl:grid-cols-4">
           {exampleStudies.map((study, index) => (
-            <Link key={index} href="study/">
+            <Link key={study.id} href="study/">
               <StudyCard
                 study={study}
                 imageSize={176}

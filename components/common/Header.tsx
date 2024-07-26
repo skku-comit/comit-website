@@ -21,13 +21,15 @@ import ComitLogo from '@/public/comit.png'
 
 export function NavLink({ href }: { href: string }) {
   const pathname = usePathname()
+  const isDarkMode = ['/', '/signup', '/login'].includes(pathname)
   return (
     <Link
       href={`/${href}`}
       className={cn(
         'flex items-center text-xl hover:text-primary',
-        ['/', '/signup', '/login'].includes(pathname) && 'text-white'
+        isDarkMode && 'text-white'
       )}
+      scroll={true}
     >
       <p className="font-medium capitalize">{href}</p>
     </Link>
@@ -35,14 +37,14 @@ export function NavLink({ href }: { href: string }) {
 }
 export default function Header() {
   const pathname = usePathname()
+  const isDarkMode = ['/', '/signup', '/login'].includes(pathname)
+
   const router = useRouter()
   return (
     <header
       className={cn(
         'fixed top-0 z-10 flex h-20 w-full justify-center px-4',
-        ['/', '/signup', '/login'].includes(pathname)
-          ? 'bg-black'
-          : 'border-b border-b-gray-200 bg-white'
+        isDarkMode ? 'bg-black' : 'border-b border-b-gray-200 bg-white'
       )}
     >
       <nav className="flex h-full w-screen max-w-[1280px] items-center justify-between">
@@ -52,7 +54,7 @@ export default function Header() {
             <p
               className={cn(
                 'text-xl font-semibold',
-                ['/', '/signup', '/login'].includes(pathname) && 'text-white'
+                isDarkMode && 'text-white'
               )}
             >
               CoMit
@@ -71,7 +73,7 @@ export default function Header() {
           <Button
             className={cn(
               'h-[36px] w-[120px] text-base lg:w-[140px]',
-              ['/', '/signup', '/login'].includes(pathname) && 'border-white'
+              isDarkMode && 'border-white'
             )}
             variant="outline"
             asChild
@@ -83,18 +85,14 @@ export default function Header() {
       <Drawer>
         <DrawerTrigger>
           <GiHamburgerMenu
-            className={cn(
-              'md:hidden',
-              ['/', '/signup', '/login'].includes(pathname) && 'text-white'
-            )}
+            className={cn('md:hidden', isDarkMode && 'text-white')}
             size={32}
           />
         </DrawerTrigger>
         <DrawerContent
           className={cn(
             'flex flex-col gap-4 px-6 pb-6',
-            ['/', '/signup', '/login'].includes(pathname) &&
-              'border-gray-900 bg-black text-slate-200'
+            isDarkMode && 'border-gray-900 bg-black text-slate-200'
           )}
         >
           <DrawerClose>
