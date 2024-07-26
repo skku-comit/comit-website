@@ -1,5 +1,8 @@
+import React, { Suspense } from 'react'
+
 import MemberList from '@/components/about/MemberList'
 import SectionCard, { SectionCardProps } from '@/components/about/SectionCard'
+import LoadingSpinner from '@/components/common/LoadingSpinner'
 import SectionBanner from '@/components/common/SectionBanner'
 import eventImg from '@/public/about-image/event.svg'
 import seminarImg from '@/public/about-image/seminar.svg'
@@ -29,7 +32,7 @@ const sectionCardData: SectionCardProps[] = [
   }
 ]
 
-export default function About() {
+const About = () => {
   return (
     <>
       <SectionBanner
@@ -46,9 +49,13 @@ export default function About() {
           <p className="mb-20 text-4xl font-semibold text-black">
             CoMit 임원진
           </p>
-          <MemberList />
+          <Suspense fallback={<LoadingSpinner />}>
+            <MemberList />
+          </Suspense>
         </div>
       </div>
     </>
   )
 }
+
+export default About
