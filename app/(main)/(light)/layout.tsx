@@ -4,7 +4,7 @@ export default function LightLayout({
   children: React.ReactNode
 }) {
   return (
-    <main className="mt-20 flex h-fit w-full flex-1 flex-col items-center">
+    <main className="flex min-h-dvh w-[1280px] flex-1 flex-col items-center">
       {children}
     </main>
   )
