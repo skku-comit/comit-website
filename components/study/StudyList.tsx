@@ -5,20 +5,12 @@ import { RiStackOverflowLine } from 'react-icons/ri'
 
 import StudyCard from '@/components/common/StudyCard'
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
-import { baseURL } from '@/types/baseURL'
+import { fetchDatas } from '@/lib/CRUD'
 import { Study } from '@/types/Study'
-
-async function fetchStudyList() {
-  const res = await fetch(`${baseURL}/api/studies`)
-  if (!res.ok) {
-    throw new Error('Failed to Fetch Studies')
-  }
-
-  return res.json()
-}
+import { Path } from '@/types/URL'
 
 const StudyList = async () => {
-  const studies: Study[] = await fetchStudyList()
+  const studies: Study[] = await fetchDatas('api/studies' as Path, 'Studies')
 
   return (
     <div className="mb-12 grid grid-cols-2 gap-6 max-sm:px-2 sm:gap-x-16 sm:gap-y-12 lg:grid-cols-4">

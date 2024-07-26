@@ -1,20 +1,12 @@
 import React from 'react'
 
 import IntroduceMemeberCard from '@/components/about/IntroduceMemberCard'
-import { baseURL } from '@/types/baseURL'
+import { fetchDatas } from '@/lib/CRUD'
 import { Member } from '@/types/Member'
-
-async function fetchMembers() {
-  const res = await fetch(`${baseURL}/api/members`)
-  if (!res.ok) {
-    throw new Error('Failed to Fetch Members')
-  }
-
-  return res.json()
-}
+import { Path } from '@/types/URL'
 
 const MemberList = async (): Promise<React.JSX.Element> => {
-  const members: Member[] = await fetchMembers()
+  const members: Member[] = await fetchDatas('api/members' as Path, 'members')
   return (
     <div className="grid grid-cols-1 gap-x-[5vw] gap-y-12 xl:grid-cols-2">
       {members.map(
