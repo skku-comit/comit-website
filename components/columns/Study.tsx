@@ -13,24 +13,16 @@ export const columns: ColumnDef<StudyRecord>[] = [
   {
     accessorKey: 'title',
     header: () => <div className="min-w-96 text-left text-base">Title</div>,
-    cell: ({ row }) => (
-      <div className="text-base">{row.original.study.title}</div>
-    )
+    cell: ({ row }) => <div className="text-base">{row.original.study.title}</div>
   },
   {
     accessorKey: 'mentor',
     header: () => <div className="min-w-48 text-base">Mentor</div>,
-    cell: ({ row }) => (
-      <p className="text-center text-base">{row.original.study.mentor.name}</p>
-    )
+    cell: ({ row }) => <p className="text-center text-base">{row.original.study.mentor.name}</p>
   },
   {
     accessorKey: 'createDate',
     header: () => <div className="mr-8 min-w-56 text-base">Mentor</div>,
-    cell: ({ row }) => (
-      <p className="mr-8 text-center text-base">
-        {row.original.createDate.toString()}
-      </p>
-    )
+    cell: ({ row }) => <p className="mr-8 text-center text-base">{row.original.createDate.toString()}</p>
   }
 ]

@@ -42,13 +42,10 @@ export default function StudyList() {
                 />
               </DialogTrigger>
               <DialogContent className="w-[324px] rounded-xl p-6 sm:w-[480px] sm:p-8">
-                <div className="break-words text-2xl font-bold">
-                  {study.title}
-                </div>
+                <div className="break-words text-2xl font-bold">{study.title}</div>
                 {study.day === '' ? null : study.startTime === '' ? (
                   <div className="flex gap-3 break-words text-lg text-gray-600">
-                    {study.day}요일{' '}
-                    <span className="text-base text-red-500">(시간 미정)</span>
+                    {study.day}요일 <span className="text-base text-red-500">(시간 미정)</span>
                   </div>
                 ) : (
                   <div className="break-words text-lg text-gray-600">

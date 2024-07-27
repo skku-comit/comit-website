@@ -27,10 +27,7 @@ export default function MemberList() {
       {!isLoading && (
         <div className="grid grid-cols-1 gap-x-[5vw] gap-y-12 xl:grid-cols-2">
           {members.map(
-            (member, index) =>
-              member.displayAtAboutPage && (
-                <IntroduceMemeberCard key={index} member={member} />
-              )
+            (member, index) => member.displayAtAboutPage && <IntroduceMemeberCard key={index} member={member} />
           )}
         </div>
       )}

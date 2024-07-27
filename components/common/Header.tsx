@@ -10,12 +10,7 @@ import { IoHomeOutline, IoLaptopOutline } from 'react-icons/io5'
 import { MdLogin } from 'react-icons/md'
 
 import { Button } from '@/components/ui/button'
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerTrigger
-} from '@/components/ui/drawer'
+import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from '@/components/ui/drawer'
 import { cn } from '@/lib/utils'
 import ComitLogo from '@/public/comit.png'
 
@@ -25,10 +20,7 @@ export function NavLink({ href }: { href: string }) {
   return (
     <Link
       href={`/${href}`}
-      className={cn(
-        'flex items-center text-xl hover:text-primary',
-        isDarkMode && 'text-white'
-      )}
+      className={cn('flex items-center text-xl hover:text-primary', isDarkMode && 'text-white')}
       scroll={true}
     >
       <p className="font-medium capitalize">{href}</p>
@@ -51,14 +43,7 @@ export default function Header() {
         <Link href="/">
           <div className="flex items-center gap-2">
             <Image src={ComitLogo} alt="comit_logo" width={32} height={37} />
-            <p
-              className={cn(
-                'text-xl font-semibold',
-                isDarkMode && 'text-white'
-              )}
-            >
-              CoMit
-            </p>
+            <p className={cn('text-xl font-semibold', isDarkMode && 'text-white')}>CoMit</p>
           </div>
         </Link>
         <div className="hidden md:flex md:gap-10 lg:gap-24">
@@ -71,10 +56,7 @@ export default function Header() {
             <Link href="/signup">Sign up</Link>
           </Button>
           <Button
-            className={cn(
-              'h-[36px] w-[120px] text-base lg:w-[140px]',
-              isDarkMode && 'border-white'
-            )}
+            className={cn('h-[36px] w-[120px] text-base lg:w-[140px]', isDarkMode && 'border-white')}
             variant="outline"
             asChild
           >
@@ -84,16 +66,10 @@ export default function Header() {
       </nav>
       <Drawer>
         <DrawerTrigger>
-          <GiHamburgerMenu
-            className={cn('md:hidden', isDarkMode && 'text-white')}
-            size={32}
-          />
+          <GiHamburgerMenu className={cn('md:hidden', isDarkMode && 'text-white')} size={32} />
         </DrawerTrigger>
         <DrawerContent
-          className={cn(
-            'flex flex-col gap-4 px-6 pb-6',
-            isDarkMode && 'border-gray-900 bg-black text-slate-200'
-          )}
+          className={cn('flex flex-col gap-4 px-6 pb-6', isDarkMode && 'border-gray-900 bg-black text-slate-200')}
         >
           <DrawerClose>
             <div
