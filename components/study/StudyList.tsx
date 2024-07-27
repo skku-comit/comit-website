@@ -14,8 +14,8 @@ const StudyList = async () => {
 
   return (
     <div className="mb-12 grid grid-cols-2 gap-6 max-sm:px-2 sm:gap-x-16 sm:gap-y-12 lg:grid-cols-4">
-      {studies.map((study, index) => (
-        <Dialog key={index}>
+      {studies.map((study) => (
+        <Dialog key={study.id}>
           <DialogTrigger>
             <StudyCard
               study={study}

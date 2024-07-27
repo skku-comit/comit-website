@@ -40,7 +40,31 @@ const clubroomCarouselData = [
 
 export default function ClubroomMainContent() {
   return (
-    <div className="mb-12 flex flex-row-reverse items-center justify-center gap-8 space-x-reverse max-md:flex-col xl:gap-12">
+    <div className="mb-12 flex items-center justify-center gap-8 space-x-reverse max-md:flex-col xl:gap-12">
+      <div className="flex flex-col gap-8">
+        <motion.div
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <ClburoomInfoCard {...clubroomInfoCardData[0]} />
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <ClburoomInfoCard {...clubroomInfoCardData[1]} align={Align.RIGHT} />
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <ClburoomInfoCard {...clubroomInfoCardData[2]} />
+        </motion.div>
+      </div>
+
       <motion.div
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
@@ -66,29 +90,6 @@ export default function ClubroomMainContent() {
           }}
         />
       </motion.div>
-      <div className="flex flex-col gap-8">
-        <motion.div
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <ClburoomInfoCard {...clubroomInfoCardData[0]} />
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0, x: 50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <ClburoomInfoCard {...clubroomInfoCardData[1]} align={Align.RIGHT} />
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <ClburoomInfoCard {...clubroomInfoCardData[2]} />
-        </motion.div>
-      </div>
     </div>
   )
 }
