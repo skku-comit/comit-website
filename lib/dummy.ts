@@ -400,55 +400,55 @@ const studyDict: { [key: string]: Study } = {
 const studyRecordDict: StudyRecord[] = [
   {
     id: '1',
-    study: studyDict['웹개발 스터디(초급)'],
+    study: studyDict['웹 개발 초급'],
     createDate: new Date('2024-02-16 22:29'),
     status: 'opened'
   },
   {
     id: '2',
-    study: studyDict['웹개발 스터디(중급)'],
+    study: studyDict['Python 데이터 분석'],
     createDate: new Date('2024-02-16 22:29'),
     status: 'opened'
   },
   {
     id: '3',
-    study: studyDict['모바일 앱 프로젝트'],
+    study: studyDict['C언어 초급1'],
     createDate: new Date('2024-02-16 22:29'),
     status: 'opened'
   },
   {
     id: '4',
-    study: studyDict['웹 프로젝트'],
+    study: studyDict['백엔드 node.js'],
     createDate: new Date('2024-02-16 22:29'),
     status: 'opened'
   },
   {
     id: '5',
-    study: studyDict['알고리즘 (율전/중급)'],
+    study: studyDict['Unity C# 게임 개발'],
     createDate: new Date('2024-02-16 22:29'),
     status: 'opened'
   },
   {
     id: '6',
-    study: studyDict['웹개발 스터디(율전/상급)'],
+    study: studyDict['알고리즘1'],
     createDate: new Date('2024-02-16 22:29'),
     status: 'opened'
   },
   {
     id: '7',
-    study: studyDict['백엔드 프로젝트'],
+    study: studyDict['백엔드 spring'],
     createDate: new Date('2024-02-16 22:29'),
     status: 'opened'
   },
   {
     id: '8',
-    study: studyDict['알고리즘 스터디(명륜/초급)'],
+    study: studyDict['알고리즘2'],
     createDate: new Date('2024-02-16 22:29'),
     status: 'opened'
   },
   {
     id: '9',
-    study: studyDict['알고리즘 스터디(명륜/초급)'],
+    study: studyDict['자바스크립트와 node.js'],
     createDate: new Date('2024-02-16 22:29'),
     status: 'opened'
   }
@@ -480,4 +480,5 @@ export const dummyStackUrl: string[] = [
 const members = Object.values(memberDict)
 const studies = Object.values(studyDict)
 const studyRecords = Object.values(studyRecordDict)
+
 export { members, studies, studyRecords }

@@ -6,6 +6,7 @@ import { Card } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
 
 export interface SectionCardProps {
+  id: number
   title: string
   description: string
   image: string
@@ -13,6 +14,7 @@ export interface SectionCardProps {
 }
 
 export default function SectionCard({
+  id,
   title,
   description,
   image,

@@ -30,6 +30,7 @@ function ListFactory<E extends BaseEntity>(entities: E[]) {
     let searchResult = entities.slice()
 
     const url = new URL(request.url)
+
     const queryParams = url.searchParams
     queryParams.forEach((key, value) => {
       searchResult = searchResult.filter((entity) => {
