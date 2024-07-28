@@ -90,7 +90,7 @@ export default function OpenStudy() {
     }
   })
   // TODO: study API 연결
-  const onSubmit = async (data: StudyForm) => {
+  const onSubmit = (data: StudyForm) => {
     console.log(data)
     document.getElementById('closeDialog')?.click()
   }
