@@ -6,13 +6,15 @@ import { Card } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
 
 export interface SectionCardProps {
+  id: number
   title: string
   description: string
   image: string
   backgroundColor?: string
 }
 
-export default function SectionCard({ title, description, image, backgroundColor }: SectionCardProps) {
+
+export default function SectionCard({ id, title, description, image, backgroundColor }: SectionCardProps) {
   const [isHovered, setIsHovered] = useState(false)
 
   return (
