@@ -104,9 +104,8 @@ export default function OpenStudy() {
   }
   const handleFileChange = (e: React.ChangeEvent) => {
     const targetFiles = (e.target as HTMLInputElement).files as FileList
-
+    // 예외 Case: 파일 입력 후 다시 닫을때
     if (targetFiles.length) {
-      console.log(targetFiles)
       const selectedFile = URL.createObjectURL(targetFiles[0])
       setImage(selectedFile)
       setValue('imageSrc', selectedFile)
@@ -117,7 +116,7 @@ export default function OpenStudy() {
   const [stackError, setStackError] = useState('')
   const [currentStack, setCurrentStack] = useState('')
 
-  const handleStackChange = async (e: {
+  const handleStackChange = (e: {
     target: { value: SetStateAction<string> }
   }) => {
     setCurrentStack(e.target.value)
@@ -172,7 +171,6 @@ export default function OpenStudy() {
         <UnderConstructionDialog />
         <div className="flex gap-8 max-md:flex-col max-md:gap-4">
           <div className="flex flex-col gap-1">
-            {/* 이미지 */}
             <p className="text-xl font-semibold">이미지</p>
             <div
               onClick={handleClick}
