@@ -19,9 +19,7 @@ function CreateFactory<E extends BaseEntity>() {
 
 function RetrieveFactory<E extends BaseEntity>(entities: E[]) {
   return (request: Request, { params }: { params: { id: string } }) => {
-    return ReturnObjectAsJsonOr404(
-      entities.find((instance) => instance.id === params.id)
-    )
+    return ReturnObjectAsJsonOr404(entities.find((instance) => instance.id === params.id))
   }
 }
 

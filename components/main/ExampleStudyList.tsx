@@ -14,7 +14,7 @@ export default function ExampleStudyList({ studyList }: ExampleStudyListProps) {
 
   return (
     <div className="mt-8 grid grid-cols-2 gap-4 sm:gap-12 xl:mb-32 xl:grid-cols-4">
-      {exampleStudies.map((study, index) => (
+      {exampleStudies.map((study) => (
         <Link key={study.id} href="study/">
           <StudyCard
             study={study}
