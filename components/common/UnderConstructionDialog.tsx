@@ -17,15 +17,9 @@ export default function UnderConstructionDialog() {
       <DialogContent className="w-84 border-none bg-black text-white sm:w-[480px]">
         <div className="flex flex-col items-center gap-4">
           <div className="flex justify-center">
-            <Image
-              src={UnderConstruction}
-              width={300}
-              alt="under_construction"
-            />
+            <Image src={UnderConstruction} width={300} alt="under_construction" />
           </div>
-          <p className="text-center text-[4vw] font-bold text-white sm:text-4xl">
-            COMING SOON!
-          </p>
+          <p className="text-center text-[4vw] font-bold text-white sm:text-4xl">COMING SOON!</p>
         </div>
       </DialogContent>
     </Dialog>

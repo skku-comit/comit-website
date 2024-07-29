@@ -8,18 +8,14 @@ import LoadingSpinner from '../LoadingSpinner'
 import StudyCard from '.'
 import { StudyCardProps } from '.'
 
-export interface LazyLoadingStudyCardProp
-  extends Omit<StudyCardProps, 'study'> {
+export interface LazyLoadingStudyCardProp extends Omit<StudyCardProps, 'study'> {
   id: string
 }
 
 /**
  * id만 주어지면 fetching부터 loading까지 해주는 StudyCard의 Wrapper
  */
-export default function LazyLoadingStudyCard({
-  id,
-  ...studyCardProps
-}: LazyLoadingStudyCardProp) {
+export default function LazyLoadingStudyCard({ id, ...studyCardProps }: LazyLoadingStudyCardProp) {
   const [study, setStudy] = useState<Study>()
 
   useEffect(() => {

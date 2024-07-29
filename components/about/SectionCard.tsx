@@ -13,13 +13,8 @@ export interface SectionCardProps {
   backgroundColor?: string
 }
 
-export default function SectionCard({
-  id,
-  title,
-  description,
-  image,
-  backgroundColor
-}: SectionCardProps) {
+
+export default function SectionCard({ id, title, description, image, backgroundColor }: SectionCardProps) {
   const [isHovered, setIsHovered] = useState(false)
 
   return (
@@ -53,9 +48,7 @@ export default function SectionCard({
             <p className="text-3xl font-semibold md:text-4xl ">{title}</p>
           </div>
           <div className="flex w-full items-center justify-center text-justify">
-            <p className="w-[240px] text-xl font-medium md:w-[290px] md:text-2xl">
-              {description}
-            </p>
+            <p className="w-[240px] text-xl font-medium md:w-[290px] md:text-2xl">{description}</p>
           </div>
         </div>
       )}

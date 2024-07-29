@@ -48,9 +48,7 @@ export default function Login() {
         className="flex w-[88%] max-w-[480px] flex-col items-center gap-4 rounded-[32px] bg-[#121212] p-8 pb-8 sm:p-16 md:w-[480px]"
       >
         <Image src={ComitOwl} alt="comit_owl" width={164} />
-        <p className="mb-6 text-center text-xl font-semibold sm:mb-12 sm:text-3xl">
-          Log in to your account
-        </p>
+        <p className="mb-6 text-center text-xl font-semibold sm:mb-12 sm:text-3xl">Log in to your account</p>
         <div className="flex w-full flex-col gap-1">
           <p className="text-xl font-semibold">Email</p>
           <Input
@@ -59,9 +57,7 @@ export default function Login() {
             className="h-12 rounded-xl border-2 border-[#494949] bg-transparent sm:h-14"
             type="email"
           />
-          {errors.email && (
-            <p className="text-sm text-red-500">{errors.email.message}</p>
-          )}
+          {errors.email && <p className="text-sm text-red-500">{errors.email.message}</p>}
         </div>
         <div className="flex w-full flex-col gap-1">
           <p className="text-xl font-semibold">Password</p>
@@ -86,13 +82,9 @@ export default function Login() {
               />
             )}
           </div>
-          {errors.password && (
-            <p className="text-sm text-red-500">{errors.password.message}</p>
-          )}
+          {errors.password && <p className="text-sm text-red-500">{errors.password.message}</p>}
         </div>
-        <Button className="my-4 h-12 w-full rounded-xl text-xl font-semibold sm:h-14">
-          Log In
-        </Button>
+        <Button className="my-4 h-12 w-full rounded-xl text-xl font-semibold sm:h-14">Log In</Button>
         <div className="flex items-center justify-between">
           <p>Don&apos;t have an account?</p>
           <Button variant="link" className="text-white" asChild>

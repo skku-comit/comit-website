@@ -15,28 +15,19 @@ import clubroomImage5 from '@/public/clubroom-image/clubroom5.webp'
 const clubroomInfoCardData = [
   {
     title: '스터디 진행',
-    description:
-      '스터디를 위한 번거로운 장소 대여 대신에 간편하게 동아리방을 예약해서 사용하세요!'
+    description: '스터디를 위한 번거로운 장소 대여 대신에 간편하게 동아리방을 예약해서 사용하세요!'
   },
   {
     title: '간식 및 도서 제공',
-    description:
-      '전공, 교양, 프로그래밍 서적 다수 보유 중입니다. 마음껏 먹을 수 있는 간식도 있어요!'
+    description: '전공, 교양, 프로그래밍 서적 다수 보유 중입니다. 마음껏 먹을 수 있는 간식도 있어요!'
   },
   {
     title: '모두의 휴식 공간',
-    description:
-      '학생회관 3층 03312에 위치한 쾌적하고 넓은 동아리방입니다. 자주 이용해주세요!'
+    description: '학생회관 3층 03312에 위치한 쾌적하고 넓은 동아리방입니다. 자주 이용해주세요!'
   }
 ]
 
-const clubroomCarouselData = [
-  clubroomImage1,
-  clubroomImage2,
-  clubroomImage3,
-  clubroomImage4,
-  clubroomImage5
-]
+const clubroomCarouselData = [clubroomImage1, clubroomImage2, clubroomImage3, clubroomImage4, clubroomImage5]
 
 export default function ClubroomMainContent() {
   return (
@@ -73,14 +64,7 @@ export default function ClubroomMainContent() {
       >
         <ClubroomCarousel
           slides={clubroomCarouselData.map((image, index) => {
-            return (
-              <Image
-                key={index}
-                src={image}
-                alt="clubroom"
-                className="h-full w-full object-cover"
-              />
-            )
+            return <Image key={index} src={image} alt="clubroom" className="h-full w-full object-cover" />
           })}
           options={{
             align: 'start',
