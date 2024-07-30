@@ -25,11 +25,7 @@ import {
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger
-} from '@/components/ui/popover'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Textarea } from '@/components/ui/textarea'
 
 interface StudyForm {
@@ -109,27 +105,16 @@ export default function OpenStudy() {
     trigger('imageSrc')
   }
 
-  const handleInputChange = (e: {
-    target: { value: SetStateAction<string> }
-  }) => {
+  const handleInputChange = (e: { target: { value: SetStateAction<string> } }) => {
     setCurrentStack(e.target.value)
   }
   const handleEnterPress = (e: { key: string }) => {
-    if (
-      currentStack.trim() === '' ||
-      (watchedStacks && watchedStacks.length >= 4)
-    ) {
-      if (watchedStacks && watchedStacks.length >= 4)
-        setStackError('스택은 최대 4개까지만 입력 가능합니다')
+    if (currentStack.trim() === '' || (watchedStacks && watchedStacks.length >= 4)) {
+      if (watchedStacks && watchedStacks.length >= 4) setStackError('스택은 최대 4개까지만 입력 가능합니다')
       return
     }
     if (e.key === 'Enter' && currentStack.trim() !== '') {
-      setValue(
-        'stack',
-        getValues('stack')
-          ? getValues('stack').concat(currentStack)
-          : [currentStack]
-      )
+      setValue('stack', getValues('stack') ? getValues('stack').concat(currentStack) : [currentStack])
       setCurrentStack('')
       trigger('stack')
     }
@@ -149,14 +134,8 @@ export default function OpenStudy() {
 
   return (
     <>
-      <SectionBanner
-        title="Open Study"
-        description="새로운 스터디 분반을 개설합니다!"
-      />
-      <form
-        className="flex flex-col gap-4 max-sm:px-3"
-        onSubmit={handleSubmit(onSubmit)}
-      >
+      <SectionBanner title="Open Study" description="새로운 스터디 분반을 개설합니다!" />
+      <form className="flex flex-col gap-4 max-sm:px-3" onSubmit={handleSubmit(onSubmit)}>
         <UnderConstructionDialog />
         <div className="flex gap-8 max-md:flex-col max-md:gap-4">
           <div className="flex flex-col gap-1">
@@ -168,25 +147,11 @@ export default function OpenStudy() {
               {!image ? (
                 <p className="text-5xl font-light text-slate-300">+</p>
               ) : (
-                <Image
-                  src={image}
-                  width={208}
-                  height={208}
-                  alt={image}
-                  className="h-full w-full object-cover"
-                />
+                <Image src={image} width={208} height={208} alt={image} className="h-full w-full object-cover" />
               )}
             </div>
-            <Input
-              className="hidden"
-              accept="image/*"
-              type="file"
-              ref={fileRef}
-              onChange={handleChange}
-            />
-            {errors.imageSrc && (
-              <p className="text-sm text-red-500">{errors.imageSrc.message}</p>
-            )}
+            <Input className="hidden" accept="image/*" type="file" ref={fileRef} onChange={handleChange} />
+            {errors.imageSrc && <p className="text-sm text-red-500">{errors.imageSrc.message}</p>}
           </div>
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-1">
@@ -197,9 +162,7 @@ export default function OpenStudy() {
                 {...register('title')}
                 className="w-full rounded-xl border border-slate-300"
               />
-              {errors.title && (
-                <p className="text-sm text-red-500">{errors.title.message}</p>
-              )}
+              {errors.title && <p className="text-sm text-red-500">{errors.title.message}</p>}
             </div>
             <div className="flex flex-col gap-1">
               <p className="text-xl font-semibold">시간</p>
@@ -215,11 +178,7 @@ export default function OpenStudy() {
                     needConfirm={false}
                     changeOnScroll
                   />
-                  {errors.startTime && (
-                    <p className="text-sm text-red-500">
-                      {errors.startTime.message}
-                    </p>
-                  )}
+                  {errors.startTime && <p className="text-sm text-red-500">{errors.startTime.message}</p>}
                 </div>
                 <div className="flex flex-col gap-1">
                   <TimePicker
@@ -232,11 +191,7 @@ export default function OpenStudy() {
                     needConfirm={false}
                     changeOnScroll
                   />
-                  {errors.endTime && (
-                    <p className="text-sm text-red-500">
-                      {errors.endTime.message}
-                    </p>
-                  )}
+                  {errors.endTime && <p className="text-sm text-red-500">{errors.endTime.message}</p>}
                 </div>
               </div>
             </div>
@@ -313,9 +268,7 @@ export default function OpenStudy() {
                   </div>
                 )}
               />
-              {errors.day && (
-                <p className="text-sm text-red-500">{errors.day.message}</p>
-              )}
+              {errors.day && <p className="text-sm text-red-500">{errors.day.message}</p>}
             </div>
           </div>
         </div>
@@ -357,9 +310,7 @@ export default function OpenStudy() {
                 </div>
               )}
             />
-            {errors.campus && (
-              <p className="text-sm text-red-500">{errors.campus.message}</p>
-            )}
+            {errors.campus && <p className="text-sm text-red-500">{errors.campus.message}</p>}
           </div>
           <div className="flex flex-col gap-1">
             <p className="text-xl font-semibold">난이도</p>
@@ -407,9 +358,7 @@ export default function OpenStudy() {
                 </div>
               )}
             />
-            {errors.level && (
-              <p className="text-sm text-red-500">{errors.level.message}</p>
-            )}
+            {errors.level && <p className="text-sm text-red-500">{errors.level.message}</p>}
           </div>
         </div>
         <div className="flex flex-col gap-1">
@@ -421,10 +370,7 @@ export default function OpenStudy() {
                   <MdHelpOutline className="hover:text-gray-600" />
                 </button>
               </PopoverTrigger>
-              <PopoverContent
-                className="flex w-64 justify-center text-sm"
-                side="top"
-              >
+              <PopoverContent className="flex w-64 justify-center text-sm" side="top">
                 <ul>
                   <li>스택은 최대 4개까지 입력 가능하며</li>
                   <li>첫번째 스택만 카드에 표시됩니다.</li>
@@ -448,17 +394,9 @@ export default function OpenStudy() {
                   type="button"
                   variant="secondary"
                   className="absolute right-2 top-1/2 h-4 w-4 -translate-y-1/2 p-3 text-2xl text-gray-600"
-                  disabled={
-                    currentStack.trim() === '' ||
-                    (watchedStacks && watchedStacks.length >= 4)
-                  }
+                  disabled={currentStack.trim() === '' || (watchedStacks && watchedStacks.length >= 4)}
                   onClick={() => {
-                    setValue(
-                      'stack',
-                      getValues('stack')
-                        ? getValues('stack').concat(currentStack)
-                        : [currentStack]
-                    )
+                    setValue('stack', getValues('stack') ? getValues('stack').concat(currentStack) : [currentStack])
                     setCurrentStack('')
                     trigger('stack')
                   }}
@@ -478,11 +416,7 @@ export default function OpenStudy() {
                 Reset
               </Button>
             </div>
-            {errors.stack && (
-              <p className="-mt-2 text-sm text-red-500">
-                {errors.stack.message}
-              </p>
-            )}
+            {errors.stack && <p className="-mt-2 text-sm text-red-500">{errors.stack.message}</p>}
             <div className="flex gap-4 rounded-2xl">
               {watchedStacks &&
                 watchedStacks.map((stack, index) => (
@@ -501,9 +435,7 @@ export default function OpenStudy() {
             {...register('description')}
             className="h-48 w-full rounded-xl border border-slate-300"
           />
-          {errors.description && (
-            <p className="text-sm text-red-500">{errors.description.message}</p>
-          )}
+          {errors.description && <p className="text-sm text-red-500">{errors.description.message}</p>}
         </div>
         <div className="my-8 flex justify-end">
           <AlertDialog>
@@ -516,9 +448,8 @@ export default function OpenStudy() {
               <AlertDialogHeader>
                 <AlertDialogTitle>제출하시겠습니까?</AlertDialogTitle>
                 <AlertDialogDescription>
-                  스터디 개설이 승인되기 전까지 내용 수정 및 삭제가 불가하며,
-                  반드시 내용을 수정하거나 삭제해야 하는 경우 관리자에게
-                  문의해주세요.
+                  스터디 개설이 승인되기 전까지 내용 수정 및 삭제가 불가하며, 반드시 내용을 수정하거나 삭제해야 하는
+                  경우 관리자에게 문의해주세요.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               {/* TODO: study dialog 추가 */}
@@ -539,16 +470,10 @@ export default function OpenStudy() {
                   title={getValues('title') || ''}
                 /> */}
               </div>
-              {!isValid && (
-                <p className="text-sm text-red-500">모든 항목을 입력해주세요</p>
-              )}
+              {!isValid && <p className="text-sm text-red-500">모든 항목을 입력해주세요</p>}
               <AlertDialogFooter>
                 <AlertDialogCancel>취소</AlertDialogCancel>
-                <AlertDialogAction
-                  type="submit"
-                  onClick={handleSubmit(onSubmit)}
-                  disabled={!isValid}
-                >
+                <AlertDialogAction type="submit" onClick={handleSubmit(onSubmit)} disabled={!isValid}>
                   확인
                 </AlertDialogAction>
               </AlertDialogFooter>

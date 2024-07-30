@@ -34,10 +34,7 @@ export const ClubroomCarousel = ({ options, slides }: PropType) => {
       <div className="relative overflow-hidden rounded-md" ref={emblaRef}>
         <div className="flex h-[270px] flex-none flex-col flex-wrap md:h-[300px] lg:h-[360px]">
           {slides.map((slide, index) => (
-            <div
-              className="relative mx-1 h-[270px] w-full md:h-[300px] lg:h-[360px]"
-              key={index}
-            >
+            <div className="relative mx-1 h-[270px] w-full md:h-[300px] lg:h-[360px]" key={index}>
               {slide}
             </div>
           ))}

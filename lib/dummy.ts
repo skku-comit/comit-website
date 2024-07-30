@@ -5,30 +5,24 @@ const memberDict: { [key: string]: Member } = {
   박태곤: {
     id: '1',
     name: '박태곤',
-    description:
-      '안녕하세요~ 코밋 회장 박태곤입니다! 코밋에 대해 문의하고 싶다면 자유롭게 연락해주세요!',
-    imageUrl:
-      'https://github.com/skku-comit/comit-website/assets/97675977/37403351-4da2-4d38-88ee-368defbfb2b2',
+    description: '안녕하세요~ 코밋 회장 박태곤입니다! 코밋에 대해 문의하고 싶다면 자유롭게 연락해주세요!',
+    imageUrl: 'https://github.com/skku-comit/comit-website/assets/97675977/37403351-4da2-4d38-88ee-368defbfb2b2',
     position: '회장',
     displayAtAboutPage: true
   },
   박상혁: {
     id: '2',
     name: '박상혁',
-    description:
-      '안녕하세요! 코밋 부회장 박상혁입니다. 비전공자에서 Be전공자가 될 수 있도록 최선을 다하겠습니다.',
-    imageUrl:
-      'https://github.com/skku-comit/comit-website/assets/97675977/4ce7e085-2967-4897-9484-b6bf0988d26a',
+    description: '안녕하세요! 코밋 부회장 박상혁입니다. 비전공자에서 Be전공자가 될 수 있도록 최선을 다하겠습니다.',
+    imageUrl: 'https://github.com/skku-comit/comit-website/assets/97675977/4ce7e085-2967-4897-9484-b6bf0988d26a',
     position: '부회장',
     displayAtAboutPage: true
   },
   이주형: {
     id: '3',
     name: '이주형',
-    description:
-      '화학과 소프트웨어학과를 전공중인 기획팀장 이주형이라고 합니다!',
-    imageUrl:
-      'https://github.com/skku-comit/comit-website/assets/97675977/18a0ba19-9689-444a-9b10-8e12577c9717',
+    description: '화학과 소프트웨어학과를 전공중인 기획팀장 이주형이라고 합니다!',
+    imageUrl: 'https://github.com/skku-comit/comit-website/assets/97675977/18a0ba19-9689-444a-9b10-8e12577c9717',
     position: '기획팀장',
     displayAtAboutPage: true
   },
@@ -36,8 +30,7 @@ const memberDict: { [key: string]: Member } = {
     id: '4',
     name: '박지현',
     description: '안녕하세요 소비자학과 전공중인 홍보팀장 박지현입니다!',
-    imageUrl:
-      'https://github.com/skku-comit/comit-website/assets/97675977/a0cd7229-9f86-4d39-b529-7c41ffffd330',
+    imageUrl: 'https://github.com/skku-comit/comit-website/assets/97675977/a0cd7229-9f86-4d39-b529-7c41ffffd330',
     position: '홍보팀장',
     displayAtAboutPage: true
   },
@@ -46,18 +39,15 @@ const memberDict: { [key: string]: Member } = {
     name: '이건주',
     description:
       '수학과/데이터사이언스 복수전공 중인 이건주입니다. 데이터 분석 및 의료 인공지능 관련 연구에 관심이 있습니다.',
-    imageUrl:
-      'https://github.com/skku-comit/comit-website/assets/97675977/af8e58f0-f6bf-4bbe-9423-0f7c62ba4e47',
+    imageUrl: 'https://github.com/skku-comit/comit-website/assets/97675977/af8e58f0-f6bf-4bbe-9423-0f7c62ba4e47',
     position: '인사팀장',
     displayAtAboutPage: true
   },
   김성중: {
     id: '6',
     name: '김성중',
-    description:
-      '소프트웨어를 전공하고 있는 김성중입니다. 앱개발 및 시스템보안에 관심이 있습니다.',
-    imageUrl:
-      'https://github.com/skku-comit/comit-website/assets/97675977/452f4f2a-6090-4400-bb64-20580aa0841e',
+    description: '소프트웨어를 전공하고 있는 김성중입니다. 앱개발 및 시스템보안에 관심이 있습니다.',
+    imageUrl: 'https://github.com/skku-comit/comit-website/assets/97675977/452f4f2a-6090-4400-bb64-20580aa0841e',
     position: '재무팀장',
     displayAtAboutPage: true
   },
@@ -66,8 +56,7 @@ const memberDict: { [key: string]: Member } = {
     name: '권서진',
     description:
       '안녕하세요! 코딩 잘하고 싶은 권서진입니다. 코밋에 가장 많이 커밋하는 것을 목표로 열심히 달려보겠습니다.',
-    imageUrl:
-      'https://github.com/skku-comit/comit-website/assets/97675977/44136781-209a-4356-8434-2c645f408aef',
+    imageUrl: 'https://github.com/skku-comit/comit-website/assets/97675977/44136781-209a-4356-8434-2c645f408aef',
     position: '개발팀장',
     displayAtAboutPage: true
   },
@@ -75,8 +64,7 @@ const memberDict: { [key: string]: Member } = {
     id: '8',
     name: 'Udemy 공통',
     description: '',
-    imageUrl:
-      'https://w7.pngwing.com/pngs/299/56/png-transparent-udemy-logo-thumbnail-tech-companies-thumbnail.png',
+    imageUrl: 'https://w7.pngwing.com/pngs/299/56/png-transparent-udemy-logo-thumbnail-tech-companies-thumbnail.png',
     position: '',
     displayAtAboutPage: false
   },
@@ -157,8 +145,7 @@ const memberDict: { [key: string]: Member } = {
 const studyDict: { [key: string]: Study } = {
   '웹 개발 초급': {
     id: '1',
-    imageSrc:
-      'https://p92.hu/binaries/content/gallery/p92website/technologies/htmlcssjs-overview.png',
+    imageSrc: 'https://p92.hu/binaries/content/gallery/p92website/technologies/htmlcssjs-overview.png',
     title: '웹 개발 초급',
     mentor: memberDict['Udemy 공통'],
     day: '',
@@ -173,8 +160,7 @@ const studyDict: { [key: string]: Study } = {
   },
   'Python 데이터 분석': {
     id: '2',
-    imageSrc:
-      'https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg',
+    imageSrc: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg',
     title: 'Python 데이터 분석',
     mentor: memberDict['Udemy 공통'],
     day: '',
@@ -189,8 +175,7 @@ const studyDict: { [key: string]: Study } = {
   },
   'C언어 초급1': {
     id: '3',
-    imageSrc:
-      'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-original.svg',
+    imageSrc: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-original.svg',
     title: 'C언어 초급',
     mentor: memberDict['Udemy 공통'],
     day: '',
@@ -205,8 +190,7 @@ const studyDict: { [key: string]: Study } = {
   },
   '백엔드 node.js': {
     id: '4',
-    imageSrc:
-      'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg',
+    imageSrc: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg',
     title: '백엔드 node.js',
     mentor: memberDict['박지은'],
     day: '금',
@@ -221,8 +205,7 @@ const studyDict: { [key: string]: Study } = {
   },
   'Unity C# 게임 개발': {
     id: '5',
-    imageSrc:
-      'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/unity/unity-original-wordmark.svg',
+    imageSrc: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/unity/unity-original-wordmark.svg',
     title: 'Unity C# 게임 개발',
     mentor: memberDict['박태곤'],
     day: '수',
@@ -237,8 +220,7 @@ const studyDict: { [key: string]: Study } = {
   },
   'Kotlin & Android app': {
     id: '6',
-    imageSrc:
-      'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kotlin/kotlin-original.svg',
+    imageSrc: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kotlin/kotlin-original.svg',
     title: 'Kotlin & Android app',
     mentor: memberDict['정정환'],
     day: '화',
@@ -269,8 +251,7 @@ const studyDict: { [key: string]: Study } = {
   },
   '백엔드 spring': {
     id: '8',
-    imageSrc:
-      'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/spring/spring-original-wordmark.svg',
+    imageSrc: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/spring/spring-original-wordmark.svg',
     title: '백엔드 spring',
     mentor: memberDict['김지훈'],
     day: '화',
@@ -301,8 +282,7 @@ const studyDict: { [key: string]: Study } = {
   },
   '자바스크립트와 node.js': {
     id: '10',
-    imageSrc:
-      'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original-wordmark.svg',
+    imageSrc: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original-wordmark.svg',
     title: '자바스크립트와 node.js',
     mentor: memberDict['한승현'],
     day: '월',
@@ -317,8 +297,7 @@ const studyDict: { [key: string]: Study } = {
   },
   '웹 프론트엔드': {
     id: '11',
-    imageSrc:
-      'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original-wordmark.svg',
+    imageSrc: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original-wordmark.svg',
     title: '웹 프론트엔드',
     mentor: memberDict['권서진'],
     day: '월',
@@ -333,8 +312,7 @@ const studyDict: { [key: string]: Study } = {
   },
   알고리즘: {
     id: '12',
-    imageSrc:
-      'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/spack/spack-original.svg',
+    imageSrc: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/spack/spack-original.svg',
     title: '알고리즘',
     mentor: memberDict['박상혁'],
     day: '월',
@@ -349,8 +327,7 @@ const studyDict: { [key: string]: Study } = {
   },
   'C언어 초급2': {
     id: '13',
-    imageSrc:
-      'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-plain.svg',
+    imageSrc: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-plain.svg',
     title: 'C언어 초급',
     mentor: memberDict['김남준'],
     day: '수',
@@ -381,8 +358,7 @@ const studyDict: { [key: string]: Study } = {
   },
   코테준비반: {
     id: '15',
-    imageSrc:
-      'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/readthedocs/readthedocs-original.svg',
+    imageSrc: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/readthedocs/readthedocs-original.svg',
     title: '코테준비반',
     mentor: memberDict['조준형'],
     day: '화',

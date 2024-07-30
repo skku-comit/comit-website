@@ -12,11 +12,7 @@ interface ClburoomInfoCardType {
   align?: Align
 }
 
-export default function ClburoomInfoCard({
-  title,
-  description,
-  align
-}: ClburoomInfoCardType) {
+export default function ClburoomInfoCard({ title, description, align }: ClburoomInfoCardType) {
   return (
     <Card
       className={cn(

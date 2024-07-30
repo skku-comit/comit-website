@@ -8,21 +8,11 @@ const RecruitingStatus = ({ isRecruiting }: { isRecruiting: boolean }) => {
   return isRecruiting ? (
     <Badge className="absolute right-2 top-2 font-bold">모집 중</Badge>
   ) : (
-    <Badge className="absolute right-2 top-2 bg-slate-400 font-normal">
-      모집 마감
-    </Badge>
+    <Badge className="absolute right-2 top-2 bg-slate-400 font-normal">모집 마감</Badge>
   )
 }
 
-const WeekDayAndDuration = ({
-  day,
-  startTime,
-  endTime
-}: {
-  day: string
-  startTime: string
-  endTime: string
-}) => {
+const WeekDayAndDuration = ({ day, startTime, endTime }: { day: string; startTime: string; endTime: string }) => {
   if (day && startTime && endTime) {
     return (
       <p className="text-center text-sm text-gray-500">
@@ -57,18 +47,11 @@ export interface StudyCardProps {
   imageWrapperClassName?: string
 }
 
-export default function StudyCard({
-  study,
-  imageSize,
-  showStatus,
-  imageWrapperClassName
-}: StudyCardProps) {
+export default function StudyCard({ study, imageSize, showStatus, imageWrapperClassName }: StudyCardProps) {
   // Set default for parameters
   imageSize = imageSize ?? 144
   showStatus = showStatus ?? true
-  imageWrapperClassName =
-    imageWrapperClassName ??
-    'mb-8 mt-4 h-24 w-24 overflow-hidden sm:h-36 sm:w-36'
+  imageWrapperClassName = imageWrapperClassName ?? 'mb-8 mt-4 h-24 w-24 overflow-hidden sm:h-36 sm:w-36'
 
   const badges = [study.level, study.stack[0], study.campus]
 
@@ -87,15 +70,9 @@ export default function StudyCard({
         />
       </div>
 
-      <p className="text-center text-base font-bold sm:text-lg">
-        {study.title}
-      </p>
+      <p className="text-center text-base font-bold sm:text-lg">{study.title}</p>
 
-      <WeekDayAndDuration
-        day={study.day}
-        startTime={study.startTime}
-        endTime={study.endTime}
-      />
+      <WeekDayAndDuration day={study.day} startTime={study.startTime} endTime={study.endTime} />
 
       <BadgeList badges={badges} />
     </Card>

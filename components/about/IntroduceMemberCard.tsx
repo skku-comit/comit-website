@@ -6,9 +6,7 @@ interface IntroduceMemberCardProps {
   member: Member
 }
 
-export default function IntroduceMemeberCard({
-  member
-}: IntroduceMemberCardProps) {
+export default function IntroduceMemeberCard({ member }: IntroduceMemberCardProps) {
   return (
     <div className="flex items-center gap-8 max-md:flex-col">
       <div className="relative h-[168px] w-[168px] transform overflow-hidden rounded-[40px] shadow-md transition-transform hover:scale-125">
@@ -26,9 +24,7 @@ export default function IntroduceMemeberCard({
           <p className="text-xl font-semibold sm:text-2xl">
             {member.name} / {member.position}
           </p>
-          <p className="w-full text-base font-medium sm:text-lg">
-            {member.description}
-          </p>
+          <p className="w-full text-base font-medium sm:text-lg">{member.description}</p>
         </div>
       </div>
     </div>
