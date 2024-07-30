@@ -52,9 +52,7 @@ export default function Signup() {
         className="flex w-[88%] max-w-[480px] flex-col items-center gap-2 rounded-[32px] bg-[#121212] p-8 pb-8 sm:gap-4 sm:p-16 md:w-[480px]"
       >
         <Image src={ComitOwl} alt="comit_owl" width={164} />
-        <p className="mb-4 text-center text-2xl font-semibold sm:mb-8 sm:text-3xl">
-          Sign Up
-        </p>
+        <p className="mb-4 text-center text-2xl font-semibold sm:mb-8 sm:text-3xl">Sign Up</p>
         <div className="flex w-full flex-col gap-1">
           <p className="text-xl font-semibold">Full Name</p>
           <Input
@@ -63,9 +61,7 @@ export default function Signup() {
             className="h-12 rounded-xl border-2 border-[#494949] bg-transparent sm:h-14"
             type="text"
           />
-          {errors.name && (
-            <p className="text-sm text-red-500">{errors.name.message}</p>
-          )}
+          {errors.name && <p className="text-sm text-red-500">{errors.name.message}</p>}
         </div>
         <div className="flex w-full flex-col gap-1">
           <p className="text-xl font-semibold">Student ID</p>
@@ -75,9 +71,7 @@ export default function Signup() {
             className="h-12 rounded-xl border-2 border-[#494949] bg-transparent sm:h-14"
             type="number"
           />
-          {errors.studentID && (
-            <p className="text-sm text-red-500">올바른 학번을 입력해주세요</p>
-          )}
+          {errors.studentID && <p className="text-sm text-red-500">올바른 학번을 입력해주세요</p>}
         </div>
         <div className="flex w-full flex-col gap-1">
           <p className="text-xl font-semibold">Email</p>
@@ -87,9 +81,7 @@ export default function Signup() {
             className="h-12 rounded-xl border-2 border-[#494949] bg-transparent sm:h-14"
             type="email"
           />
-          {errors.email && (
-            <p className="text-sm text-red-500">{errors.email.message}</p>
-          )}
+          {errors.email && <p className="text-sm text-red-500">{errors.email.message}</p>}
         </div>
         <div className="flex w-full flex-col gap-1">
           <p className="text-xl font-semibold">Password</p>
@@ -114,13 +106,9 @@ export default function Signup() {
               />
             )}
           </div>
-          {errors.password && (
-            <p className="text-sm text-red-500">{errors.password.message}</p>
-          )}
+          {errors.password && <p className="text-sm text-red-500">{errors.password.message}</p>}
         </div>
-        <Button className="my-4 h-12 w-full rounded-xl text-xl font-semibold sm:h-14">
-          Sign Up
-        </Button>
+        <Button className="my-4 h-12 w-full rounded-xl text-xl font-semibold sm:h-14">Sign Up</Button>
         <div className="flex items-center justify-between">
           <p>Already have an account?</p>
           <Button variant="link" className="text-white" asChild>

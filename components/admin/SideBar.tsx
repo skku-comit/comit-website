@@ -10,10 +10,7 @@ import { cn } from '@/lib/utils'
 
 function NavLink({ href, buttonName }: { href: string; buttonName: string }) {
   return (
-    <Link
-      href={`/${href}`}
-      className="flex items-center px-4 text-[20px] font-medium hover:text-primary"
-    >
+    <Link href={`/${href}`} className="flex items-center px-4 text-[20px] font-medium hover:text-primary">
       <p>{buttonName}</p>
     </Link>
   )
