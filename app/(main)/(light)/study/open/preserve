@@ -32,35 +32,20 @@ import {
 } from '@/components/ui/popover'
 import { Textarea } from '@/components/ui/textarea'
 
-// TODO: 백엔드와 논의 후 schema 수정
-const schema = z.object({
-  imageSrc: z.string({
-    required_error: '이미지를 업로드해주세요'
-  }),
-  title: z.string().min(1, { message: '스터디 제목을 입력해주세요' }),
-  day: z.enum(['월', '화', '수', '목', '금', '토', '일'], {
-    required_error: '요일을 선택해주세요'
-  }),
-  startTime: z.string({
-    required_error: '시작 시간을 입력해주세요'
-  }),
-  endTime: z.string({
-    required_error: '종료 시간을 입력해주세요'
-  }),
-  campus: z.enum(['율전', '명륜', '온라인'], {
-    required_error: '캠퍼스를 선택해주세요'
-  }),
-  level: z.enum(['입문', '초급', '중급', '고급'], {
-    required_error: '난이도를 선택해주세요'
-  }),
-  stack: z.array(z.string()).min(1, { message: '스택을 입력해주세요' }),
-  description: z.string().min(1, { message: '설명을 입력해주세요' })
+const dayEnum = z.enum(['월', '화', '수', '목', '금', '토', '일'], {
+  required_error: '요일을 선택해주세요'
 })
+type Day = z.infer<typeof dayEnum>
 
-// Types
-type Day = z.infer<typeof schema.shape.day>
-type Campus = z.infer<typeof schema.shape.campus>
-type Level = z.infer<typeof schema.shape.level>
+const campusEnum = z.enum(['율전', '명륜', '온라인'], {
+  required_error: '캠퍼스를 선택해주세요'
+})
+type Campus = z.infer<typeof campusEnum>
+
+const levelEnum = z.enum(['입문', '초급', '중급', '고급'], {
+  required_error: '난이도를 선택해주세요'
+})
+type Level = z.infer<typeof levelEnum>
 
 interface StudyForm {
   imageSrc: string
@@ -75,9 +60,28 @@ interface StudyForm {
 }
 
 // Iterators
-const dayOptions: Day[] = ['월', '화', '수', '목', '금', '토', '일']
-const campusOptions: Campus[] = ['율전', '명륜', '온라인']
-const levelOptions: Level[] = ['입문', '초급', '중급', '고급']
+const dayOptions: Day[] = dayEnum.options
+const campusOptions: Campus[] = campusEnum.options
+const levelOptions: Level[] = levelEnum.options
+
+// TODO: 백엔드와 논의 후 schema 수정
+const schema = z.object({
+  imageSrc: z.string({
+    required_error: '이미지를 업로드해주세요'
+  }),
+  title: z.string().min(1, { message: '스터디 제목을 입력해주세요' }),
+  day: dayEnum,
+  startTime: z.string({
+    required_error: '시작 시간을 입력해주세요'
+  }),
+  endTime: z.string({
+    required_error: '종료 시간을 입력해주세요'
+  }),
+  campus: campusEnum,
+  level: levelEnum,
+  stack: z.array(z.string()).min(1, { message: '스택을 입력해주세요' }),
+  description: z.string().min(1, { message: '설명을 입력해주세요' })
+})
 
 export default function OpenStudy() {
   const {
@@ -119,9 +123,9 @@ export default function OpenStudy() {
     }
   }
   // Stack
-  const watchedStacks: string[] = watch('stack')
-  const [stackError, setStackError] = useState<string>('')
-  const [currentStack, setCurrentStack] = useState<string>('')
+  const watchedStacks = watch('stack')
+  const [stackError, setStackError] = useState('')
+  const [currentStack, setCurrentStack] = useState('')
 
   const handleStackChange = (e: {
     target: { value: SetStateAction<string> }
