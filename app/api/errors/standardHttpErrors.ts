@@ -1,19 +1,5 @@
 import { HttpStatusCode, ServerError } from '.'
 
-// Successful responses(200 ~ )
-const OK: ServerError = {
-  errorType: 'OK',
-  status: HttpStatusCode.OK
-}
-const Created: ServerError = {
-  errorType: 'Created',
-  status: HttpStatusCode.Created
-}
-const NoContent: ServerError = {
-  errorType: 'NoContent',
-  status: HttpStatusCode.NoContent
-}
-
 // Client error responses(400 ~ )
 const BadRequest: ServerError = {
   errorType: 'BadRequest',
@@ -51,9 +37,6 @@ const NotImplemented: ServerError = {
 }
 
 const httpError = {
-  OK,
-  Created,
-  NoContent,
   BadRequest,
   UnAuthorized,
   Forbidden,
