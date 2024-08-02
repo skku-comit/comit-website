@@ -1,4 +1,5 @@
-import { HttpStatusCode, ServerError } from '.'
+import { HttpStatusCode } from '../utils/httpConsts'
+import { ServerError } from '.'
 
 export const EnrollmentPeriodExceeded: ServerError = {
   errorType: '',

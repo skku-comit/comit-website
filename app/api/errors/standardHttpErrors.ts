@@ -1,4 +1,5 @@
-import { HttpStatusCode, ServerError } from '.'
+import { HttpStatusCode } from '../utils/httpConsts'
+import { ServerError } from '.'
 
 // Client error responses(400 ~ )
 const BadRequest: ServerError = {
