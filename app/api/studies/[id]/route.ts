@@ -4,4 +4,6 @@ import { Study } from '@/types/Study'
 import { api } from '../../utils'
 
 const GET = api.RetrieveFactory<Study>(studies)
-export { GET }
+const PUT = api.PutFactory<Study>(studies)
+const DELETE = api.DeleteFactory<Study>(studies)
+export { DELETE, GET, PUT }

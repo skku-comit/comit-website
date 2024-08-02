@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
+import { NotImplementedError } from '@/errors'
 import BaseEntity from '@/types'
 
 function CreateFactory<E extends BaseEntity>() {
@@ -73,7 +74,7 @@ function PutFactory<E extends BaseEntity>(entities: E[]) {
 }
 
 function PatchFactory<E extends BaseEntity>(entities: E[]) {
-  return PutFactory(entities)
+  throw new NotImplementedError()
 }
 
 function DeleteFactory<E extends BaseEntity>(entities: E[]) {
