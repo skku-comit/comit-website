@@ -1,11 +1,12 @@
+import { HttpMethod } from '@/app/api/utils/httpConsts'
+
 const baseURL =
   process.env.NODE_ENV === 'development' ? process.env.NEXT_PUBLIC_LOCAL_URL : process.env.NEXT_PUBLIC_DEPLOY_URL
 
 const API_PREFIX = 'api'
-type HTTP_METHODS = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
 export interface Route {
   url: string
-  method: HTTP_METHODS
+  method: HttpMethod
 }
 
 interface StudyRoutes {
