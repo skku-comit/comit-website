@@ -13,13 +13,7 @@ import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from '@/components/
 import { cn } from '@/lib/utils'
 import ComitLogo from '@/public/comit.png'
 
-const NavLink = ({ href, isDarkMode }: { href: string; isDarkMode: boolean }) => {
-  return (
-    <Link href={`/${href}`} className={cn('flex items-center text-xl hover:text-primary', isDarkMode && 'text-white')}>
-      <p className="font-medium capitalize">{href}</p>
-    </Link>
-  )
-}
+import NavLink from './NavLink'
 
 const DrawerItem = ({ href, icon, text }: { href: string; icon: React.ReactNode; text: string }) => {
   return (
@@ -51,9 +45,9 @@ const Header = ({ isDarkMode }: { isDarkMode: boolean }) => {
 
         {/* Desktop: Links */}
         <div className="hidden md:flex md:gap-10 lg:gap-24">
-          <NavLink href="about" isDarkMode={isDarkMode} />
-          <NavLink href="study" isDarkMode={isDarkMode} />
-          <NavLink href="clubroom" isDarkMode={isDarkMode} />
+          <NavLink href="/study" isDarkMode={isDarkMode} text="Study" />
+          <NavLink href="/about" isDarkMode={isDarkMode} text="About" />
+          <NavLink href="/clubroom" isDarkMode={isDarkMode} text="Clubroom" />
         </div>
 
         {/* Desktop: Sign up / Log in */}
