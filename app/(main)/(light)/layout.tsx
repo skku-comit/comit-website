@@ -6,7 +6,7 @@ export default function LightLayout({ children }: { children: React.ReactNode })
     <>
       <Header isDarkMode={false} />
       <div
-        className="mt-20 h-screen w-screen overflow-x-hidden overflow-y-scroll"
+        className="mt-20 h-screen w-screen overflow-x-hidden overflow-y-scroll pb-20"
         style={{ WebkitOverflowScrolling: 'touch' }}
       >
         <div className="flex w-full justify-center">

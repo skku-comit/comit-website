@@ -6,7 +6,7 @@ export default function DarkLayout({ children }: { children: React.ReactNode }) 
     <>
       <Header isDarkMode={true} />
       <div
-        className="mt-20 h-screen w-screen overflow-x-hidden overflow-y-scroll"
+        className="mt-20 h-screen w-screen overflow-x-hidden overflow-y-scroll pb-20"
         style={{ WebkitOverflowScrolling: 'touch' }}
       >
         <div className="flex w-full justify-center">
