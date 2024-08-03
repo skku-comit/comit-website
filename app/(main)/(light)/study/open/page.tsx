@@ -9,6 +9,7 @@ import { Controller, useForm } from 'react-hook-form'
 import { MdHelpOutline } from 'react-icons/md'
 import { z } from 'zod'
 
+import ScrollToTopButton from '@/components/common/ScrollToTopButton'
 import SectionBanner from '@/components/common/SectionBanner'
 import UnderConstructionDialog from '@/components/common/UnderConstructionDialog'
 import {
@@ -481,6 +482,7 @@ export default function OpenStudy() {
           </AlertDialog>
         </div>
       </form>
+      <ScrollToTopButton />
     </>
   )
 }
