@@ -4,3 +4,6 @@
  */
 export class BaseError extends Error {}
 export class NotImplementedError extends BaseError {}
+
+export class ClientError extends BaseError {}
+export class FetchError extends ClientError {}

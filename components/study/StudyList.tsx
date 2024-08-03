@@ -5,12 +5,12 @@ import { RiStackOverflowLine } from 'react-icons/ri'
 
 import StudyCard from '@/components/common/StudyCard'
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
-import { fetchDatas } from '@/lib/CRUD'
+import { fetchData } from '@/lib/fetch'
 import { Study } from '@/types/Study'
-import { Path } from '@/types/URL'
+import { ROUTES } from '@/types/URL'
 
 const StudyList = async () => {
-  const studies: Study[] = await fetchDatas('api/studies' as Path, 'Studies')
+  const studies: Study[] = await fetchData(ROUTES.STUDY.LIST)
 
   return (
     <div className="mb-12 grid grid-cols-2 gap-6 max-sm:px-2 sm:gap-x-16 sm:gap-y-12 lg:grid-cols-4">
@@ -28,8 +28,7 @@ const StudyList = async () => {
             <div className="break-words text-2xl font-bold">{study.title}</div>
             {study.day === '' ? null : study.startTime === '' ? (
               <div className="flex gap-3 break-words text-lg text-gray-600">
-                {study.day}요일{' '}
-                <span className="text-base text-red-500">(시간 미정)</span>
+                {study.day}요일 <span className="text-base text-red-500">(시간 미정)</span>
               </div>
             ) : (
               <div className="break-words text-lg text-gray-600">
@@ -55,10 +54,7 @@ const StudyList = async () => {
                 <RiStackOverflowLine />
                 {study.stack.join(', ')}
               </div>
-              <div
-                className="whitespace-pre-line break-keep"
-                dangerouslySetInnerHTML={{ __html: study.description }}
-              />
+              <div className="whitespace-pre-line break-keep" dangerouslySetInnerHTML={{ __html: study.description }} />
             </div>
           </DialogContent>
         </Dialog>
