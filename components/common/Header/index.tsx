@@ -10,23 +10,34 @@ import { MdLogin } from 'react-icons/md'
 
 import { Button } from '@/components/ui/button'
 import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from '@/components/ui/drawer'
+import { Route, ROUTES } from '@/constants/routes'
 import { cn } from '@/lib/utils'
 import ComitLogo from '@/public/comit.png'
 
 import NavLink from './NavLink'
 
-const DrawerItem = ({ href, icon, text }: { href: string; icon: React.ReactNode; text: string }) => {
+const DrawerItem = ({ route, icon }: { route: Route; icon: React.ReactNode }) => {
   return (
     <DrawerClose asChild>
-      <Link className="flex items-center gap-4 text-3xl font-medium" href={href}>
+      <Link className="flex items-center gap-4 text-3xl font-medium" href={route.url}>
         {icon}
-        <p className="flex items-center text-xl">{text}</p>
+        <p className="flex items-center text-xl">{route.name}</p>
       </Link>
     </DrawerClose>
   )
 }
 
 const Header = ({ isDarkMode }: { isDarkMode: boolean }) => {
+  const NAVLINK_ROUTES = [ROUTES.ABOUT, ROUTES.STUDY, ROUTES.CLUBROOM]
+  const DRAWER_ITEMS_WITH_ICON = [
+    { route: ROUTES.HOME, icon: <IoHomeOutline size={27} /> },
+    { route: ROUTES.ABOUT, icon: <IoMdInformationCircleOutline size={27} /> },
+    { route: ROUTES.STUDY, icon: <IoLaptopOutline size={27} /> },
+    { route: ROUTES.CLUBROOM, icon: <BsDoorOpen size={27} /> },
+    { route: ROUTES.LOGIN, icon: <MdLogin size={27} /> },
+    { route: ROUTES.SIGNUP, icon: <FaRegPenToSquare size={24} /> }
+  ]
+
   return (
     <header
       className={cn(
@@ -45,9 +56,9 @@ const Header = ({ isDarkMode }: { isDarkMode: boolean }) => {
 
         {/* Desktop: Links */}
         <div className="hidden md:flex md:gap-10 lg:gap-24">
-          <NavLink href="/study" isDarkMode={isDarkMode} text="Study" />
-          <NavLink href="/about" isDarkMode={isDarkMode} text="About" />
-          <NavLink href="/clubroom" isDarkMode={isDarkMode} text="Clubroom" />
+          {NAVLINK_ROUTES.map((route) => (
+            <NavLink key={route.name} href={route.url} isDarkMode={isDarkMode} text={route.name} />
+          ))}
         </div>
 
         {/* Desktop: Sign up / Log in */}
@@ -76,12 +87,9 @@ const Header = ({ isDarkMode }: { isDarkMode: boolean }) => {
             isDarkMode && 'border-gray-900 bg-black text-slate-200'
           )}
         >
-          <DrawerItem href="/" text="Home" icon={<IoHomeOutline size={27} />} />
-          <DrawerItem href="/about" text="About" icon={<IoMdInformationCircleOutline size={27} />} />
-          <DrawerItem href="/study" text="Study" icon={<IoLaptopOutline size={27} />} />
-          <DrawerItem href="/clubroom" text="Clubroom" icon={<BsDoorOpen size={27} />} />
-          <DrawerItem href="/login" text="Log in" icon={<MdLogin size={27} />} />
-          <DrawerItem href="/signup" text="Sign up" icon={<FaRegPenToSquare size={24} />} />
+          {DRAWER_ITEMS_WITH_ICON.map((e) => (
+            <DrawerItem key={e.route.name} route={e.route} icon={e.icon} />
+          ))}
         </DrawerContent>
       </Drawer>
     </header>

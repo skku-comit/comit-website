@@ -4,44 +4,43 @@ const baseURL =
   process.env.NODE_ENV === 'development' ? process.env.NEXT_PUBLIC_LOCAL_URL : process.env.NEXT_PUBLIC_DEPLOY_URL
 
 const API_PREFIX = 'api'
-export interface Route {
+
+export interface ApiEndpoint {
   url: string
   method: HttpMethod
 }
 
 interface StudyRoutes {
-  CREATE: Route
-  RETRIEVE: (id: string) => Route
-  LIST: Route
-  UPDATE: (id: string) => Route
-  DELETE: (id: string) => Route
+  CREATE: ApiEndpoint
+  RETRIEVE: (id: string) => ApiEndpoint
+  LIST: ApiEndpoint
+  UPDATE: (id: string) => ApiEndpoint
+  DELETE: (id: string) => ApiEndpoint
 }
 
 interface MemberRoutes {
-  CREATE: Route
-  RETRIEVE: (id: string) => Route
-  LIST: Route
-  UPDATE: (id: string) => Route
-  DELETE: (id: string) => Route
+  CREATE: ApiEndpoint
+  RETRIEVE: (id: string) => ApiEndpoint
+  LIST: ApiEndpoint
+  UPDATE: (id: string) => ApiEndpoint
+  DELETE: (id: string) => ApiEndpoint
 }
 
 interface StudyRecordRoutes {
-  CREATE: Route
-  RETRIEVE: (id: string) => Route
-  LIST: Route
-  UPDATE: (id: string) => Route
-  DELETE: (id: string) => Route
+  CREATE: ApiEndpoint
+  RETRIEVE: (id: string) => ApiEndpoint
+  LIST: ApiEndpoint
+  UPDATE: (id: string) => ApiEndpoint
+  DELETE: (id: string) => ApiEndpoint
 }
 
 interface Routes {
-  ABOUT: Route
   STUDY: StudyRoutes
   MEMBER: MemberRoutes
   STUDY_RECORD: StudyRecordRoutes
 }
 
-export const ROUTES: Routes = {
-  ABOUT: { url: `${baseURL}/${API_PREFIX}/about`, method: 'GET' },
+export const API_ENDPOINTS: Routes = {
   STUDY: {
     CREATE: { url: `${baseURL}/${API_PREFIX}/studies`, method: 'POST' },
     RETRIEVE: (id: string) => ({ url: `${baseURL}/${API_PREFIX}/studies/${id}`, method: 'GET' }),
