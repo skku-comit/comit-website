@@ -15,7 +15,7 @@ const ScrollToTopButton: React.FC = () => {
 
   // Visibility Logic
   const VISIBILITY_LIMIT = 150
-  const [isVisible, setIsVisible] = useState(false)
+  const [isVisible, setIsVisible] = useState(true) // TODO: set default value to false when scroll bug is fixed
   const toggleVisibility = () => {
     if (window.scrollY > VISIBILITY_LIMIT) {
       setIsVisible(true)
