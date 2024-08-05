@@ -27,6 +27,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Textarea } from '@/components/ui/textarea'
+import { Campus, Day, Level, Study } from '@/types/Study'
 
 // TODO: 백엔드와 논의 후 schema 수정
 const schema = z.object({
@@ -53,27 +54,11 @@ const schema = z.object({
   description: z.string().min(1, { message: '설명을 입력해주세요' })
 })
 
-// Types
-type Day = z.infer<typeof schema.shape.day>
-type Campus = z.infer<typeof schema.shape.campus>
-type Level = z.infer<typeof schema.shape.level>
-
-interface StudyForm {
-  imageSrc: string
-  title: string
-  startTime: string
-  endTime: string
-  day: Day
-  campus: Campus
-  level: Level
-  stack: string[]
-  description: string
-}
-
 // Iterators
+type StudyForm = Omit<Study, 'id' | 'mentor' | 'isRecruiting'>
 const dayOptions: Day[] = ['월', '화', '수', '목', '금', '토', '일']
 const campusOptions: Campus[] = ['율전', '명륜', '온라인']
-const levelOptions: Level[] = ['입문', '초급', '중급', '고급']
+const levelOptions: Level[] = ['초급', '초중급', '중급', '중상급', '상급']
 
 export default function OpenStudy() {
   const {
@@ -330,10 +315,7 @@ export default function OpenStudy() {
                       })
                     } else {
                       clearErrors('stack')
-                      setValue(
-                        'stack',
-                        getValues('stack') ? newStack : [currentStack]
-                      )
+                      setValue('stack', getValues('stack') ? newStack : [currentStack])
                     }
                     setCurrentStack('')
                   }}
@@ -406,7 +388,7 @@ export default function OpenStudy() {
                   startTime={getValues('startTime') || ''}
                   title={getValues('title') || ''}
                 /> */}
-              </div>           
+              </div>
               {!isValid && <p className="text-sm text-red-500">모든 항목을 입력해주세요</p>}
               <AlertDialogFooter>
                 <AlertDialogCancel>취소</AlertDialogCancel>
