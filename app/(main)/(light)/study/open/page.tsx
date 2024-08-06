@@ -43,10 +43,10 @@ const schema = z.object({
     required_error: '요일을 선택해주세요'
   }),
   startTime: z.string({
-    required_error: '시작 시간을 입력해주세요'
+    required_error: '스터디 시간을 입력해주세요'
   }),
   endTime: z.string({
-    required_error: '종료 시간을 입력해주세요'
+    required_error: '스터디 시간을 입력해주세요'
   }),
   campus: z.enum(['율전', '명륜', '온라인'], {
     required_error: '캠퍼스를 선택해주세요'
@@ -174,34 +174,15 @@ export default function OpenStudy() {
               <div className="flex items-center justify-start gap-2 max-md:gap-4">
                 <div className="flex flex-col gap-1">
                   <TimePicker date={startTime} setDate={onChangeStartTime} />
-                  {/* <TimePicker
-                    placeholder="시작 시간"
-                    value={startTime}
-                    onChange={onChangeStartTime}
-                    className="w-36 rounded-xl border border-slate-300 px-4 sm:w-48"
-                    format="HH:mm"
-                    size="large"
-                    needConfirm={false}
-                    changeOnScroll
-                  /> */}
-                  {errors.startTime && <p className="text-sm text-red-500">{errors.startTime.message}</p>}
                 </div>
                 ~
                 <div className="flex flex-col gap-1">
                   <TimePicker date={endTime} setDate={onChangeEndTime} />
-                  {/* <TimePicker
-                    placeholder="종료 시간"
-                    value={endTime}
-                    onChange={onChangeEndTime}
-                    className="w-36 rounded-xl border border-slate-300 px-4 sm:w-48"
-                    format="HH:mm"
-                    size="large"
-                    needConfirm={false}
-                    changeOnScroll
-                  /> */}
-                  {errors.endTime && <p className="text-sm text-red-500">{errors.endTime.message}</p>}
                 </div>
               </div>
+              {(errors.startTime || errors.endTime) && (
+                <p className="text-sm text-red-500">{errors.startTime?.message}</p>
+              )}
             </div>
 
             <div className="flex flex-col gap-1">
@@ -291,8 +272,8 @@ export default function OpenStudy() {
               </PopoverTrigger>
               <PopoverContent className="mb-2 flex w-64 justify-center text-sm" side="top">
                 <ul>
-                  <li>스택은 최대 4개까지 입력 가능하며</li>
-                  <li>첫번째 스택만 카드에 표시됩니다.</li>
+                  <li>최대 4개까지 입력 가능하며</li>
+                  <li>첫번째 스택만 미리보기에 표시됩니다.</li>
                 </ul>
               </PopoverContent>
             </Popover>
