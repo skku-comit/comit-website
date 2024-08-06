@@ -186,3 +186,12 @@ export function display12HourValue(hours: number) {
   if (hours % 12 > 9) return `${hours}`
   return `0${hours % 12}`
 }
+
+/**
+ * convert date to HH:mm time format
+ */
+export function formatDateToTime(date: Date): string {
+  const hours = date.getHours().toString().padStart(2, '0')
+  const minutes = date.getMinutes().toString().padStart(2, '0')
+  return `${hours}:${minutes}`
+}

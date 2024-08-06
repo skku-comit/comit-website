@@ -1,8 +1,9 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { TimePicker } from 'antd'
-import type { Dayjs } from 'dayjs'
+import { Clock } from 'lucide-react'
+// import { TimePicker } from 'antd'
+// import type { Dayjs } from 'dayjs'
 import Image from 'next/image'
 import { SetStateAction, useRef, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
@@ -28,6 +29,8 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Textarea } from '@/components/ui/textarea'
+import { formatDateToTime } from '@/components/ui/time-picker-utils'
+import { TimePicker } from '@/components/ui/timepicker'
 import { Campus, Day, Level, Study } from '@/types/Study'
 
 // TODO: 백엔드와 논의 후 schema 수정
@@ -48,7 +51,7 @@ const schema = z.object({
   campus: z.enum(['율전', '명륜', '온라인'], {
     required_error: '캠퍼스를 선택해주세요'
   }),
-  level: z.enum(['입문', '초급', '중급', '고급'], {
+  level: z.enum(['초급', '초중급', '중급', '중상급', '상급'], {
     required_error: '난이도를 선택해주세요'
   }),
   stack: z.array(z.string()).min(1, { message: '스택을 입력해주세요' }),
@@ -64,6 +67,7 @@ const levelOptions: Level[] = ['초급', '초중급', '중급', '중상급', '�
 export default function OpenStudy() {
   const {
     handleSubmit,
+    trigger,
     register,
     setValue,
     getValues,
@@ -119,16 +123,17 @@ export default function OpenStudy() {
     }
   }
   // Time
-  const [startTime, setStartTime] = useState<Dayjs | null>(null)
-  const [endTime, setEndTime] = useState<Dayjs | null>(null)
+  const [startTime, setStartTime] = useState<Date | undefined>(undefined)
+  const [endTime, setEndTime] = useState<Date | undefined>(undefined)
 
-  const onChangeStartTime = (time: Dayjs) => {
-    setValue('startTime', time.format('HH:mm'))
-    setStartTime(time)
+  const onChangeStartTime = (date: Date | undefined) => {
+    setValue('startTime', formatDateToTime(date as Date))
+    setStartTime(date)
   }
-  const onChangeEndTime = (time: Dayjs) => {
-    setValue('endTime', time.format('HH:mm'))
-    setEndTime(time)
+
+  const onChangeEndTime = (date: Date | undefined) => {
+    setValue('endTime', formatDateToTime(date as Date))
+    setEndTime(date)
   }
 
   return (
@@ -166,10 +171,15 @@ export default function OpenStudy() {
             </div>
 
             <div className="flex flex-col gap-1">
-              <p className="text-xl font-semibold">시간</p>
-              <div className="flex justify-between max-md:gap-4">
+              <p className="flex items-center text-xl font-semibold">
+                시간
+                <Clock className="ml-2 h-4 w-4" />
+              </p>
+
+              <div className="flex items-center justify-start gap-2 max-md:gap-4">
                 <div className="flex flex-col gap-1">
-                  <TimePicker
+                  <TimePicker date={startTime} setDate={onChangeStartTime} />
+                  {/* <TimePicker
                     placeholder="시작 시간"
                     value={startTime}
                     onChange={onChangeStartTime}
@@ -178,11 +188,13 @@ export default function OpenStudy() {
                     size="large"
                     needConfirm={false}
                     changeOnScroll
-                  />
+                  /> */}
                   {errors.startTime && <p className="text-sm text-red-500">{errors.startTime.message}</p>}
                 </div>
+                ~
                 <div className="flex flex-col gap-1">
-                  <TimePicker
+                  <TimePicker date={endTime} setDate={onChangeEndTime} />
+                  {/* <TimePicker
                     placeholder="종료 시간"
                     value={endTime}
                     onChange={onChangeEndTime}
@@ -191,7 +203,7 @@ export default function OpenStudy() {
                     size="large"
                     needConfirm={false}
                     changeOnScroll
-                  />
+                  /> */}
                   {errors.endTime && <p className="text-sm text-red-500">{errors.endTime.message}</p>}
                 </div>
               </div>
@@ -309,6 +321,9 @@ export default function OpenStudy() {
                   disabled={currentStack.trim() === '' || (watchedStacks && watchedStacks.length >= 4)}
                   onClick={() => {
                     const newStack = getValues('stack').concat(currentStack)
+                    console.log(new Set(newStack).size) // 추가한거
+                    console.log(getValues('stack').length) // 기존
+
                     if (new Set(newStack).size === getValues('stack').length) {
                       setError('stack', {
                         type: 'Duplicate',
@@ -330,6 +345,8 @@ export default function OpenStudy() {
                 type="button"
                 onClick={() => {
                   setStackError('')
+                  clearErrors('stack')
+
                   setValue('stack', [])
                 }}
               >
@@ -360,7 +377,7 @@ export default function OpenStudy() {
         <div className="my-8 flex justify-end">
           <AlertDialog>
             <AlertDialogTrigger asChild>
-              <Button type="button" className="px-8 font-extrabold">
+              <Button type="button" className="px-8 font-extrabold" onClick={() => trigger()}>
                 제출하기
               </Button>
             </AlertDialogTrigger>

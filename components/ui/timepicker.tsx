@@ -1,52 +1,31 @@
 'use client'
 
-import { Clock } from 'lucide-react'
 import * as React from 'react'
 
-import { Label } from '@/components/ui/label'
+import { TimePickerInput, TimePickerInputProps } from '@/components/ui/time-picker-input'
 
-import { TimePickerInput } from './time-picker-input'
-
-interface TimePickerDemoProps {
-  date: Date | undefined
-  setDate: (date: Date | undefined) => void
+interface TimePickerProps extends Omit<TimePickerInputProps, 'picker'> {
+  className?: string
 }
 
-export function TimePicker({ date, setDate }: TimePickerDemoProps) {
-  const minuteRef = React.useRef<HTMLInputElement>(null)
+export function TimePicker({ className, ...props }: TimePickerProps) {
   const hourRef = React.useRef<HTMLInputElement>(null)
-  const secondRef = React.useRef<HTMLInputElement>(null)
+  const minuteRef = React.useRef<HTMLInputElement>(null)
 
   return (
-    <div className="flex items-end gap-2">
-      <div className="grid gap-1 text-center">
-        <Label htmlFor="hours" className="text-xs">
-          Hours
-        </Label>
-        <TimePickerInput
-          picker="hours"
-          date={date}
-          setDate={setDate}
-          ref={hourRef}
-          onRightFocus={() => minuteRef.current?.focus()}
-        />
+    <>
+      <div className="flex items-end gap-2">
+        <div className="grid gap-1 text-center">
+          <TimePickerInput {...props} picker="hours" ref={hourRef} onRightFocus={() => minuteRef.current?.focus()} />
+        </div>
+        <div className="grid gap-1 text-center">
+          <TimePickerInput {...props} picker="minutes" ref={minuteRef} onLeftFocus={() => hourRef.current?.focus()} />
+        </div>
+
+        {/* <div className="flex h-10 items-center">
+        
+      </div> */}
       </div>
-      <div className="grid gap-1 text-center">
-        <Label htmlFor="minutes" className="text-xs">
-          Minutes
-        </Label>
-        <TimePickerInput
-          picker="minutes"
-          date={date}
-          setDate={setDate}
-          ref={minuteRef}
-          onLeftFocus={() => hourRef.current?.focus()}
-          onRightFocus={() => secondRef.current?.focus()}
-        />
-      </div>
-      <div className="flex h-10 items-center">
-        <Clock className="ml-2 h-4 w-4" />
-      </div>
-    </div>
+    </>
   )
 }
