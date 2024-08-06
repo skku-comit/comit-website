@@ -2,8 +2,6 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Clock } from 'lucide-react'
-// import { TimePicker } from 'antd'
-// import type { Dayjs } from 'dayjs'
 import Image from 'next/image'
 import { SetStateAction, useRef, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
@@ -12,7 +10,7 @@ import { z } from 'zod'
 
 import ScrollToTopButton from '@/components/common/ScrollToTopButton'
 import SectionBanner from '@/components/common/SectionBanner'
-// import UnderConstructionDialog from '@/components/common/UnderConstructionDialog'
+import UnderConstructionDialog from '@/components/common/UnderConstructionDialog'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -156,7 +154,7 @@ export default function OpenStudy() {
     <>
       <SectionBanner title="Open Study" description="새로운 스터디 분반을 개설합니다!" />
       <form className="flex flex-col gap-4 max-sm:px-3" onSubmit={handleSubmit(onSubmit)}>
-        {/* <UnderConstructionDialog /> */}
+        <UnderConstructionDialog />
         <div className="flex gap-8 max-md:flex-col max-md:gap-4">
           <div className="flex flex-col gap-1">
             <p className="text-xl font-semibold">이미지</p>
