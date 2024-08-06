@@ -161,12 +161,7 @@ export default function OpenStudy() {
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-1">
               <p className="text-xl font-semibold">스터디 제목</p>
-              <Input
-                placeholder="스터디 제목을 입력해주세요"
-                id="title"
-                {...register('title')}
-                className="w-full rounded-xl border border-slate-300"
-              />
+              <Input placeholder="스터디 제목을 입력해주세요" id="title" {...register('title')} className="w-full" />
               {errors.title && <p className="text-sm text-red-500">{errors.title.message}</p>}
             </div>
 
@@ -312,7 +307,7 @@ export default function OpenStudy() {
                   value={currentStack}
                   onChange={handleStackChange}
                   onKeyDown={handleStackAdd}
-                  className="w-60 rounded-xl border border-slate-300"
+                  className="w-60"
                 />
                 <Button
                   type="button"
@@ -354,7 +349,7 @@ export default function OpenStudy() {
               </Button>
             </div>
             {errors.stack && <p className="-mt-2 text-sm text-red-500">{errors.stack.message}</p>}
-            <div className="flex gap-4 rounded-2xl">
+            <div className="flex gap-4">
               {watchedStacks &&
                 watchedStacks.map((stack, index) => (
                   <Badge variant="secondary" key={index}>
@@ -370,7 +365,7 @@ export default function OpenStudy() {
             placeholder="스터디 목표, 배우는 내용, 선행돼야 하는 지식 등을 구체적으로 작성해주세요"
             id="description"
             {...register('description')}
-            className="h-48 w-full rounded-xl border border-slate-300"
+            className="h-48 w-full"
           />
           {errors.description && <p className="text-sm text-red-500">{errors.description.message}</p>}
         </div>
