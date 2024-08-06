@@ -28,18 +28,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Textarea } from '@/components/ui/textarea'
-
-interface StudyForm {
-  imageSrc: string
-  title: string
-  day: string
-  startTime: string
-  endTime: string
-  campus: string
-  level: string
-  stack: string[]
-  description: string
-}
+import { Campus, Day, Level, Study } from '@/types/Study'
 
 // TODO: 백엔드와 논의 후 schema 수정
 const schema = z.object({
@@ -66,6 +55,12 @@ const schema = z.object({
   description: z.string().min(1, { message: '설명을 입력해주세요' })
 })
 
+// Iterators
+type StudyForm = Omit<Study, 'id' | 'mentor' | 'isRecruiting'>
+const dayOptions: Day[] = ['월', '화', '수', '목', '금', '토', '일']
+const campusOptions: Campus[] = ['율전', '명륜', '온라인']
+const levelOptions: Level[] = ['초급', '초중급', '중급', '중상급', '상급']
+
 export default function OpenStudy() {
   const {
     handleSubmit,
@@ -74,7 +69,8 @@ export default function OpenStudy() {
     getValues,
     watch,
     control,
-    trigger,
+    setError,
+    clearErrors,
     formState: { errors, isValid }
   } = useForm<StudyForm>({
     resolver: zodResolver(schema),
@@ -82,34 +78,37 @@ export default function OpenStudy() {
       stack: []
     }
   })
-
-  const watchedStacks = watch('stack')
   // TODO: study API 연결
   const onSubmit = (data: StudyForm) => {
     console.log(data)
     document.getElementById('closeDialog')?.click()
   }
 
-  const [stackError, setStackError] = useState('')
-  const [currentStack, setCurrentStack] = useState('')
+  // Image
   const [image, setImage] = useState<string>('')
 
   const fileRef = useRef<HTMLInputElement>(null)
   const handleClick = () => {
     fileRef?.current?.click()
   }
-  const handleChange = (e: React.ChangeEvent) => {
+  const handleFileChange = (e: React.ChangeEvent) => {
     const targetFiles = (e.target as HTMLInputElement).files as FileList
-    const selectedFile = URL.createObjectURL(targetFiles[0])
-    setImage(selectedFile)
-    setValue('imageSrc', selectedFile)
-    trigger('imageSrc')
+    // 예외 Case: 파일 입력 후 다시 닫을때
+    if (targetFiles.length) {
+      const selectedFile = URL.createObjectURL(targetFiles[0])
+      setImage(selectedFile)
+      setValue('imageSrc', selectedFile)
+    }
   }
+  // Stack
+  const watchedStacks: string[] = watch('stack')
+  const [stackError, setStackError] = useState<string>('')
+  const [currentStack, setCurrentStack] = useState<string>('')
 
-  const handleInputChange = (e: { target: { value: SetStateAction<string> } }) => {
+  const handleStackChange = (e: { target: { value: SetStateAction<string> } }) => {
     setCurrentStack(e.target.value)
   }
-  const handleEnterPress = (e: { key: string }) => {
+  const handleStackAdd = (e: { key: string }) => {
     if (currentStack.trim() === '' || (watchedStacks && watchedStacks.length >= 4)) {
       if (watchedStacks && watchedStacks.length >= 4) setStackError('스택은 최대 4개까지만 입력 가능합니다')
       return
@@ -117,10 +116,9 @@ export default function OpenStudy() {
     if (e.key === 'Enter' && currentStack.trim() !== '') {
       setValue('stack', getValues('stack') ? getValues('stack').concat(currentStack) : [currentStack])
       setCurrentStack('')
-      trigger('stack')
     }
   }
-
+  // Time
   const [startTime, setStartTime] = useState<Dayjs | null>(null)
   const [endTime, setEndTime] = useState<Dayjs | null>(null)
 
@@ -151,9 +149,10 @@ export default function OpenStudy() {
                 <Image src={image} width={208} height={208} alt={image} className="h-full w-full object-cover" />
               )}
             </div>
-            <Input className="hidden" accept="image/*" type="file" ref={fileRef} onChange={handleChange} />
+            <Input className="hidden" accept="image/*" type="file" ref={fileRef} onChange={handleFileChange} />
             {errors.imageSrc && <p className="text-sm text-red-500">{errors.imageSrc.message}</p>}
           </div>
+
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-1">
               <p className="text-xl font-semibold">스터디 제목</p>
@@ -165,6 +164,7 @@ export default function OpenStudy() {
               />
               {errors.title && <p className="text-sm text-red-500">{errors.title.message}</p>}
             </div>
+
             <div className="flex flex-col gap-1">
               <p className="text-xl font-semibold">시간</p>
               <div className="flex justify-between max-md:gap-4">
@@ -196,6 +196,7 @@ export default function OpenStudy() {
                 </div>
               </div>
             </div>
+
             <div className="flex flex-col gap-1">
               <p className="text-xl font-semibold">요일</p>
               <Controller
@@ -203,69 +204,17 @@ export default function OpenStudy() {
                 name="day"
                 render={({ field: { onChange, value } }) => (
                   <div className="flex gap-3 sm:gap-6">
-                    <label className="flex gap-1 sm:gap-2">
-                      <input
-                        type="radio"
-                        onChange={() => onChange('월')}
-                        checked={value === '월'}
-                        className="accent-black"
-                      />
-                      월
-                    </label>
-                    <label className="flex gap-1 sm:gap-2">
-                      <input
-                        type="radio"
-                        onChange={() => onChange('화')}
-                        checked={value === '화'}
-                        className="accent-black"
-                      />
-                      화
-                    </label>
-                    <label className="flex gap-1 sm:gap-2">
-                      <input
-                        type="radio"
-                        onChange={() => onChange('수')}
-                        checked={value === '수'}
-                        className="accent-black"
-                      />
-                      수
-                    </label>
-                    <label className="flex gap-1 sm:gap-2">
-                      <input
-                        type="radio"
-                        onChange={() => onChange('목')}
-                        checked={value === '목'}
-                        className="accent-black"
-                      />
-                      목
-                    </label>
-                    <label className="flex gap-1 sm:gap-2">
-                      <input
-                        type="radio"
-                        onChange={() => onChange('금')}
-                        checked={value === '금'}
-                        className="accent-black"
-                      />
-                      금
-                    </label>
-                    <label className="flex gap-1 sm:gap-2">
-                      <input
-                        type="radio"
-                        onChange={() => onChange('토')}
-                        checked={value === '토'}
-                        className="accent-black"
-                      />
-                      토
-                    </label>
-                    <label className="flex gap-1 sm:gap-2">
-                      <input
-                        type="radio"
-                        onChange={() => onChange('일')}
-                        checked={value === '일'}
-                        className="accent-black"
-                      />
-                      일
-                    </label>
+                    {dayOptions.map((day) => (
+                      <label key={day} className="flex gap-1 sm:gap-2">
+                        <input
+                          type="radio"
+                          onChange={() => onChange(day)}
+                          checked={value === day}
+                          className="accent-black"
+                        />
+                        {day}
+                      </label>
+                    ))}
                   </div>
                 )}
               />
@@ -273,6 +222,7 @@ export default function OpenStudy() {
             </div>
           </div>
         </div>
+
         <div className="flex justify-between max-md:flex-col max-md:gap-4">
           <div className="flex flex-col gap-1">
             <p className="text-xl font-semibold">캠퍼스</p>
@@ -281,38 +231,23 @@ export default function OpenStudy() {
               name="campus"
               render={({ field: { onChange, value } }) => (
                 <div className="flex gap-6">
-                  <label className="flex gap-2">
-                    <input
-                      type="radio"
-                      onChange={() => onChange('율전')}
-                      checked={value === '율전'}
-                      className="accent-black"
-                    />
-                    율전
-                  </label>
-                  <label className="flex gap-2">
-                    <input
-                      type="radio"
-                      onChange={() => onChange('명륜')}
-                      checked={value === '명륜'}
-                      className="accent-black"
-                    />
-                    명륜
-                  </label>
-                  <label className="flex gap-2">
-                    <input
-                      type="radio"
-                      onChange={() => onChange('온라인')}
-                      checked={value === '온라인'}
-                      className="accent-black"
-                    />
-                    온라인
-                  </label>
+                  {campusOptions.map((campus) => (
+                    <label key={campus} className="flex gap-2">
+                      <input
+                        type="radio"
+                        onChange={() => onChange(campus)}
+                        checked={value === campus}
+                        className="accent-black"
+                      />
+                      {campus}
+                    </label>
+                  ))}
                 </div>
               )}
             />
             {errors.campus && <p className="text-sm text-red-500">{errors.campus.message}</p>}
           </div>
+
           <div className="flex flex-col gap-1">
             <p className="text-xl font-semibold">난이도</p>
             <Controller
@@ -320,48 +255,24 @@ export default function OpenStudy() {
               name="level"
               render={({ field: { onChange, value } }) => (
                 <div className="flex gap-6">
-                  <label className="flex gap-2">
-                    <input
-                      type="radio"
-                      onChange={() => onChange('입문')}
-                      checked={value === '입문'}
-                      className="accent-black"
-                    />
-                    입문
-                  </label>
-                  <label className="flex gap-2">
-                    <input
-                      type="radio"
-                      onChange={() => onChange('초급')}
-                      checked={value === '초급'}
-                      className="accent-black"
-                    />
-                    초급
-                  </label>
-                  <label className="flex gap-2">
-                    <input
-                      type="radio"
-                      onChange={() => onChange('중급')}
-                      checked={value === '중급'}
-                      className="accent-black"
-                    />
-                    중급
-                  </label>
-                  <label className="flex gap-2">
-                    <input
-                      type="radio"
-                      onChange={() => onChange('고급')}
-                      checked={value === '고급'}
-                      className="accent-black"
-                    />
-                    고급
-                  </label>
+                  {levelOptions.map((level) => (
+                    <label key={level} className="flex gap-2">
+                      <input
+                        type="radio"
+                        onChange={() => onChange(level)}
+                        checked={value === level}
+                        className="accent-black"
+                      />
+                      {level}
+                    </label>
+                  ))}
                 </div>
               )}
             />
             {errors.level && <p className="text-sm text-red-500">{errors.level.message}</p>}
           </div>
         </div>
+
         <div className="flex flex-col gap-1">
           <div className="flex items-center gap-2">
             <p className="text-xl font-semibold">주제 / 기술 스택</p>
@@ -371,7 +282,7 @@ export default function OpenStudy() {
                   <MdHelpOutline className="hover:text-gray-600" />
                 </button>
               </PopoverTrigger>
-              <PopoverContent className="flex w-64 justify-center text-sm" side="top">
+              <PopoverContent className="mb-2 flex w-64 justify-center text-sm" side="top">
                 <ul>
                   <li>스택은 최대 4개까지 입력 가능하며</li>
                   <li>첫번째 스택만 카드에 표시됩니다.</li>
@@ -387,8 +298,8 @@ export default function OpenStudy() {
                   placeholder="주제를 입력해주세요"
                   id="stack"
                   value={currentStack}
-                  onChange={handleInputChange}
-                  onKeyDown={handleEnterPress}
+                  onChange={handleStackChange}
+                  onKeyDown={handleStackAdd}
                   className="w-60 rounded-xl border border-slate-300"
                 />
                 <Button
@@ -397,9 +308,17 @@ export default function OpenStudy() {
                   className="absolute right-2 top-1/2 h-4 w-4 -translate-y-1/2 p-3 text-2xl text-gray-600"
                   disabled={currentStack.trim() === '' || (watchedStacks && watchedStacks.length >= 4)}
                   onClick={() => {
-                    setValue('stack', getValues('stack') ? getValues('stack').concat(currentStack) : [currentStack])
+                    const newStack = getValues('stack').concat(currentStack)
+                    if (new Set(newStack).size === getValues('stack').length) {
+                      setError('stack', {
+                        type: 'Duplicate',
+                        message: '중복 스택이 존재합니다'
+                      })
+                    } else {
+                      clearErrors('stack')
+                      setValue('stack', getValues('stack') ? newStack : [currentStack])
+                    }
                     setCurrentStack('')
-                    trigger('stack')
                   }}
                 >
                   +
