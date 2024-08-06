@@ -26,7 +26,6 @@ const ScrollToTopButton: React.FC = () => {
 
   useEffect(() => {
     window.addEventListener('scroll', toggleVisibility)
-    console.log(window)
     return () => {
       window.removeEventListener('scroll', toggleVisibility)
     }

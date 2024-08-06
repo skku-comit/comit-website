@@ -8,29 +8,29 @@ export interface Route {
   url: string
 }
 
-export const ROUTES = {
+export const ROUTES: { [key: string]: Route } = {
   HOME: {
     name: 'Home',
     url: '/'
-  } satisfies Route,
+  },
   ABOUT: {
     name: 'About',
     url: '/about'
-  } satisfies Route,
+  },
   STUDY: {
     name: 'Study',
     url: '/study'
-  } satisfies Route,
+  },
   CLUBROOM: {
     name: 'Clubroom',
     url: '/clubroom'
-  } satisfies Route,
+  },
   LOGIN: {
     name: 'Log in',
     url: '/login'
-  } satisfies Route,
+  },
   SIGNUP: {
     name: 'Sign up',
     url: '/signup'
-  } satisfies Route
+  }
 }
