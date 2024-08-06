@@ -308,8 +308,7 @@ export default function OpenStudy() {
                 />
                 <Button
                   type="button"
-                  variant="secondary"
-                  className="absolute right-2 top-1/2 h-4 w-4 -translate-y-1/2 p-3 text-xl text-gray-600"
+                  className="absolute right-2 top-1/2 z-10 h-4 w-4 -translate-y-1/2 p-3 text-xl"
                   disabled={currentStack.trim() === '' || (watchedStacks && watchedStacks.length >= 4)}
                   onClick={handleDuplicateStack}
                 >
@@ -323,7 +322,6 @@ export default function OpenStudy() {
                 onClick={() => {
                   setStackError('')
                   clearErrors('stack')
-
                   setValue('stack', [])
                 }}
               >
