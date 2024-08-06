@@ -112,16 +112,32 @@ export default function OpenStudy() {
   const handleStackChange = (e: { target: { value: SetStateAction<string> } }) => {
     setCurrentStack(e.target.value)
   }
-  const handleStackAdd = (e: { key: string }) => {
-    if (currentStack.trim() === '' || (watchedStacks && watchedStacks.length >= 4)) {
-      if (watchedStacks && watchedStacks.length >= 4) setStackError('스택은 최대 4개까지만 입력 가능합니다')
-      return
+  const handleStackAdd = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const newStack = e.currentTarget.value.trim()
+
+    if (watchedStacks.length === 4) {
+      newStack !== '' ? setStackError('스택은 최대 4개까지만 입력 가능합니다') : setStackError('')
     }
-    if (e.key === 'Enter' && currentStack.trim() !== '') {
-      setValue('stack', getValues('stack') ? getValues('stack').concat(currentStack) : [currentStack])
-      setCurrentStack('')
+
+    if (e.key === 'Enter' && newStack !== '') {
+      watchedStacks.length !== 4 ? handleDuplicateStack() : setCurrentStack('')
     }
   }
+  const handleDuplicateStack = () => {
+    const newStack = getValues('stack').concat(currentStack)
+
+    if (new Set(newStack).size === getValues('stack').length) {
+      setError('stack', {
+        type: 'Duplicate',
+        message: '중복 스택이 존재합니다'
+      })
+    } else {
+      clearErrors('stack')
+      setValue('stack', getValues('stack') ? newStack : [currentStack])
+    }
+    setCurrentStack('')
+  }
+
   // Time
   const [startTime, setStartTime] = useState<Date | undefined>(undefined)
   const [endTime, setEndTime] = useState<Date | undefined>(undefined)
@@ -287,30 +303,15 @@ export default function OpenStudy() {
                   id="stack"
                   value={currentStack}
                   onChange={handleStackChange}
-                  onKeyDown={handleStackAdd}
+                  onKeyUp={handleStackAdd}
                   className="w-60"
                 />
                 <Button
                   type="button"
                   variant="secondary"
-                  className="absolute right-2 top-1/2 h-4 w-4 -translate-y-1/2 p-3 text-2xl text-gray-600"
+                  className="absolute right-2 top-1/2 h-4 w-4 -translate-y-1/2 p-3 text-xl text-gray-600"
                   disabled={currentStack.trim() === '' || (watchedStacks && watchedStacks.length >= 4)}
-                  onClick={() => {
-                    const newStack = getValues('stack').concat(currentStack)
-                    console.log(new Set(newStack).size) // 추가한거
-                    console.log(getValues('stack').length) // 기존
-
-                    if (new Set(newStack).size === getValues('stack').length) {
-                      setError('stack', {
-                        type: 'Duplicate',
-                        message: '중복 스택이 존재합니다'
-                      })
-                    } else {
-                      clearErrors('stack')
-                      setValue('stack', getValues('stack') ? newStack : [currentStack])
-                    }
-                    setCurrentStack('')
-                  }}
+                  onClick={handleDuplicateStack}
                 >
                   +
                 </Button>
@@ -353,7 +354,14 @@ export default function OpenStudy() {
         <div className="my-8 flex justify-end">
           <AlertDialog>
             <AlertDialogTrigger asChild>
-              <Button type="button" className="px-8 font-extrabold" onClick={() => trigger()}>
+              <Button
+                type="button"
+                className="px-8 font-extrabold"
+                onClick={() => {
+                  trigger()
+                  isValid && setStackError('')
+                }}
+              >
                 제출하기
               </Button>
             </AlertDialogTrigger>
