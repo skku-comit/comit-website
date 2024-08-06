@@ -36,7 +36,6 @@ const TimePickerInput = React.forwardRef<HTMLInputElement, TimePickerInputProps>
   ) => {
     const [flag, setFlag] = React.useState<boolean>(false)
     const [prevIntKey, setPrevIntKey] = React.useState<string>('0')
-
     /**
      * allow the user to enter the second digit within 2 seconds
      * otherwise start again with entering first digit
@@ -96,8 +95,9 @@ const TimePickerInput = React.forwardRef<HTMLInputElement, TimePickerInputProps>
         id={id || picker}
         name={name || picker}
         className={cn(
-          'w-[48px] text-center font-mono text-base tabular-nums caret-transparent focus:text-accent-foreground [&::-webkit-inner-spin-button]:appearance-none',
-          className
+          'w-[48px] text-center font-mono text-base tabular-nums focus:text-accent-foreground [&::-webkit-inner-spin-button]:appearance-none',
+          className,
+          picker === 'hours' ? 'border-r-0' : picker === 'minutes' ? 'border-l-0' : null
         )}
         value={value || calculatedValue}
         onChange={(e) => {
