@@ -1,12 +1,12 @@
 import React from 'react'
 
 import Main from '@/components/main/Main'
-import { fetchDatas } from '@/lib/CRUD'
+import { fetchData } from '@/lib/fetch'
 import { Study } from '@/types/Study'
-import { Path } from '@/types/URL'
+import { ROUTES } from '@/types/URL'
 
 const Home = async (): Promise<React.JSX.Element> => {
-  const studyList: Study[] = await fetchDatas('api/studies' as Path, 'Studies')
+  const studyList: Study[] = await fetchData(ROUTES.STUDY.LIST)
   return <Main studyList={studyList} />
 }
 

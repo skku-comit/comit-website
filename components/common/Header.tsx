@@ -1,7 +1,6 @@
-'use client'
 import Image from 'next/image'
 import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
+import React from 'react'
 import { BsDoorOpen } from 'react-icons/bs'
 import { FaRegPenToSquare } from 'react-icons/fa6'
 import { GiHamburgerMenu } from 'react-icons/gi'
@@ -14,24 +13,26 @@ import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from '@/components/
 import { cn } from '@/lib/utils'
 import ComitLogo from '@/public/comit.png'
 
-export function NavLink({ href }: { href: string }) {
-  const pathname = usePathname()
-  const isDarkMode = ['/', '/signup', '/login'].includes(pathname)
+const NavLink = ({ href, isDarkMode }: { href: string; isDarkMode: boolean }) => {
   return (
-    <Link
-      href={`/${href}`}
-      className={cn('flex items-center text-xl hover:text-primary', isDarkMode && 'text-white')}
-      scroll={true}
-    >
+    <Link href={`/${href}`} className={cn('flex items-center text-xl hover:text-primary', isDarkMode && 'text-white')}>
       <p className="font-medium capitalize">{href}</p>
     </Link>
   )
 }
-export default function Header() {
-  const pathname = usePathname()
-  const isDarkMode = ['/', '/signup', '/login'].includes(pathname)
 
-  const router = useRouter()
+const DrawerItem = ({ href, icon, text }: { href: string; icon: React.ReactNode; text: string }) => {
+  return (
+    <DrawerClose asChild>
+      <Link className="flex items-center gap-4 text-3xl font-medium" href={href}>
+        {icon}
+        <p className="flex items-center text-xl">{text}</p>
+      </Link>
+    </DrawerClose>
+  )
+}
+
+const Header = ({ isDarkMode }: { isDarkMode: boolean }) => {
   return (
     <header
       className={cn(
@@ -40,17 +41,22 @@ export default function Header() {
       )}
     >
       <nav className="flex h-full w-screen max-w-[1280px] items-center justify-between">
+        {/* Common: Logo */}
         <Link href="/">
           <div className="flex items-center gap-2">
             <Image src={ComitLogo} alt="comit_logo" width={32} height={37} />
             <p className={cn('text-xl font-semibold', isDarkMode && 'text-white')}>CoMit</p>
           </div>
         </Link>
+
+        {/* Desktop: Links */}
         <div className="hidden md:flex md:gap-10 lg:gap-24">
-          <NavLink href="about" />
-          <NavLink href="study" />
-          <NavLink href="clubroom" />
+          <NavLink href="about" isDarkMode={isDarkMode} />
+          <NavLink href="study" isDarkMode={isDarkMode} />
+          <NavLink href="clubroom" isDarkMode={isDarkMode} />
         </div>
+
+        {/* Desktop: Sign up / Log in */}
         <div className="hidden h-[40px] w-[270px] items-center justify-between md:flex lg:w-[310px]">
           <Button className="h-[36px] w-[120px] text-base lg:w-[140px]" asChild>
             <Link href="/signup">Sign up</Link>
@@ -64,81 +70,28 @@ export default function Header() {
           </Button>
         </div>
       </nav>
+
+      {/* Mobile: Drawer */}
       <Drawer>
         <DrawerTrigger>
           <GiHamburgerMenu className={cn('md:hidden', isDarkMode && 'text-white')} size={32} />
         </DrawerTrigger>
         <DrawerContent
-          className={cn('flex flex-col gap-4 px-6 pb-6', isDarkMode && 'border-gray-900 bg-black text-slate-200')}
+          className={cn(
+            'hide-scrollbar flex flex-col gap-4 px-6 pb-6',
+            isDarkMode && 'border-gray-900 bg-black text-slate-200'
+          )}
         >
-          <DrawerClose>
-            <div
-              className="flex items-center gap-4 text-3xl font-medium"
-              onClick={() => {
-                router.push('/')
-              }}
-            >
-              <IoHomeOutline size={27} />
-              <p className="flex items-center text-xl">Home</p>
-            </div>
-          </DrawerClose>
-          <DrawerClose>
-            <div
-              className="flex items-center gap-4 text-3xl font-medium"
-              onClick={() => {
-                router.push('/about')
-              }}
-            >
-              <IoMdInformationCircleOutline size={27} />
-              <p className="flex items-center text-xl">About</p>
-            </div>
-          </DrawerClose>
-          <DrawerClose>
-            <div
-              className="flex items-center gap-4 text-3xl font-medium"
-              onClick={() => {
-                router.push('/study')
-              }}
-            >
-              <IoLaptopOutline size={27} />
-              <p className="flex items-center text-xl">Study</p>
-            </div>
-          </DrawerClose>
-          <DrawerClose>
-            <div
-              className="flex items-center gap-4 text-3xl font-medium"
-              onClick={() => {
-                router.push('/clubroom')
-              }}
-            >
-              <BsDoorOpen size={27} />
-              <p className="flex items-center text-xl">Clubroom</p>
-            </div>
-          </DrawerClose>
-          <DrawerClose>
-            <div
-              className="flex items-center gap-4 text-3xl font-medium"
-              onClick={() => {
-                router.push('/login')
-              }}
-            >
-              <MdLogin size={27} />
-              <p className="flex items-center text-xl">Log in</p>
-            </div>
-          </DrawerClose>
-          <DrawerClose>
-            <div
-              className="flex items-center gap-4 text-3xl font-medium"
-              onClick={() => {
-                router.push('/signup')
-              }}
-            >
-              <FaRegPenToSquare size={24} />
-              <p className="flex items-center text-xl">Sign up</p>
-            </div>
-          </DrawerClose>
+          <DrawerItem href="/" text="Home" icon={<IoHomeOutline size={27} />} />
+          <DrawerItem href="/about" text="About" icon={<IoMdInformationCircleOutline size={27} />} />
+          <DrawerItem href="/study" text="Study" icon={<IoLaptopOutline size={27} />} />
+          <DrawerItem href="/clubroom" text="Clubroom" icon={<BsDoorOpen size={27} />} />
+          <DrawerItem href="/login" text="Log in" icon={<MdLogin size={27} />} />
+          <DrawerItem href="/signup" text="Sign up" icon={<FaRegPenToSquare size={24} />} />
         </DrawerContent>
       </Drawer>
     </header>
   )
 }
+
+export default Header

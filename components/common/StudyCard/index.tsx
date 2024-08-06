@@ -25,7 +25,7 @@ const WeekDayAndDuration = ({ day, startTime, endTime }: { day: string; startTim
         {day}요일 <span className="text-xs text-red-500">(시간 미정)</span>
       </div>
     )
-  } else return
+  } else return <div>&nbsp;</div>
 }
 
 const BadgeList = ({ badges }: { badges: string[] }) => {
