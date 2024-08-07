@@ -13,7 +13,7 @@ export type Database = {
           id: string
           isStaff: boolean
           name: string
-          position: string
+          position: string | null
           profileImage: string | null
           studentId: string
         }
@@ -26,7 +26,7 @@ export type Database = {
           id?: string
           isStaff?: boolean
           name: string
-          position: string
+          position?: string | null
           profileImage?: string | null
           studentId: string
         }
@@ -39,19 +39,11 @@ export type Database = {
           id?: string
           isStaff?: boolean
           name?: string
-          position?: string
+          position?: string | null
           profileImage?: string | null
           studentId?: string
         }
-        Relationships: [
-          {
-            foreignKeyName: 'profile_id_fkey'
-            columns: ['id']
-            isOneToOne: true
-            referencedRelation: 'users'
-            referencedColumns: ['id']
-          }
-        ]
+        Relationships: []
       }
       'profile-study': {
         Row: {
@@ -94,13 +86,13 @@ export type Database = {
           description: string
           endTime: string | null
           id: string
+          imageSrc: string | null
           isRecruiting: boolean
           level: string
-          mentor: number | null
-          stack: string
+          mentor: string | null
+          stack: string[]
           startTime: string | null
-          status: string
-          title: string | null
+          title: string
         }
         Insert: {
           campus: string
@@ -109,13 +101,13 @@ export type Database = {
           description: string
           endTime?: string | null
           id?: string
+          imageSrc?: string | null
           isRecruiting?: boolean
           level: string
-          mentor?: number | null
-          stack: string
+          mentor?: string | null
+          stack: string[]
           startTime?: string | null
-          status: string
-          title?: string | null
+          title: string
         }
         Update: {
           campus?: string
@@ -124,15 +116,23 @@ export type Database = {
           description?: string
           endTime?: string | null
           id?: string
+          imageSrc?: string | null
           isRecruiting?: boolean
           level?: string
-          mentor?: number | null
-          stack?: string
+          mentor?: string | null
+          stack?: string[]
           startTime?: string | null
-          status?: string
-          title?: string | null
+          title?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: 'study_mentor_fkey'
+            columns: ['mentor']
+            isOneToOne: false
+            referencedRelation: 'profile'
+            referencedColumns: ['id']
+          }
+        ]
       }
     }
     Views: {

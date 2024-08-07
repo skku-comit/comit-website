@@ -2,7 +2,7 @@ import React from 'react'
 
 import Main from '@/components/main/Main'
 import { fetchData } from '@/lib/fetch'
-import { Study } from '@/types/Study'
+import { Study } from '@/types'
 import { ROUTES } from '@/types/URL'
 
 const Home = async (): Promise<React.JSX.Element> => {

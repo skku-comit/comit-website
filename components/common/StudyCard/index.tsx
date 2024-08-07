@@ -2,7 +2,7 @@ import Image from 'next/image'
 
 import { Badge } from '@/components/ui/badge'
 import { Card } from '@/components/ui/card'
-import { Study } from '@/types/Study'
+import { Study } from '@/types'
 
 const RecruitingStatus = ({ isRecruiting }: { isRecruiting: boolean }) => {
   return isRecruiting ? (
@@ -12,11 +12,19 @@ const RecruitingStatus = ({ isRecruiting }: { isRecruiting: boolean }) => {
   )
 }
 
-const WeekDayAndDuration = ({ day, startTime, endTime }: { day: string; startTime: string; endTime: string }) => {
+const WeekDayAndDuration = ({
+  day,
+  startTime,
+  endTime
+}: {
+  day: string | null
+  startTime: string | null
+  endTime: string | null
+}) => {
   if (day && startTime && endTime) {
     return (
       <p className="text-center text-sm text-gray-500">
-        {day} {startTime} ~ {endTime}
+        {day} {startTime.substring(0, 5)} ~ {endTime.substring(0, 5)}
       </p>
     )
   } else if (day) {
@@ -61,7 +69,7 @@ export default function StudyCard({ study, imageSize, showStatus, imageWrapperCl
 
       <div className={imageWrapperClassName}>
         <Image
-          src={study.imageSrc}
+          src={study.imageSrc ?? '/empty-300x240.jpg'}
           alt={study.title}
           width={imageSize}
           height={imageSize}

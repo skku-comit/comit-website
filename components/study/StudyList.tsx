@@ -6,7 +6,7 @@ import { RiStackOverflowLine } from 'react-icons/ri'
 import StudyCard from '@/components/common/StudyCard'
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 import { fetchData } from '@/lib/fetch'
-import { Study } from '@/types/Study'
+import { Study } from '@/types'
 import { ROUTES } from '@/types/URL'
 
 const StudyList = async () => {
@@ -26,20 +26,21 @@ const StudyList = async () => {
           </DialogTrigger>
           <DialogContent className="w-[324px] rounded-xl p-6 sm:w-[480px] sm:p-8">
             <div className="break-words text-2xl font-bold">{study.title}</div>
-            {study.day === '' ? null : study.startTime === '' ? (
+            {!study.day ? null : !study.startTime || !study.endTime ? (
               <div className="flex gap-3 break-words text-lg text-gray-600">
                 {study.day}요일 <span className="text-base text-red-500">(시간 미정)</span>
               </div>
             ) : (
               <div className="break-words text-lg text-gray-600">
-                {study.day} {study.startTime} ~ {study.endTime}
+                {study.day} {study.startTime.substring(0, 5)} ~ {study.endTime.substring(0, 5)}
               </div>
             )}
             <div className="leading-snug">
               <div className="flex gap-6">
                 <div className="flex items-center gap-2">
                   <IoPersonSharp />
-                  {study.mentor.name}
+                  {/* TODO: Factory 함수 탈피해서 mentor(User)의 name 컬럼도 join 해서 가져오는 레포지토리 생성 */}
+                  {/* {study.mentor.name} */}
                 </div>
                 <div className="flex items-center gap-2">
                   <MdOutlineSignalCellularAlt />

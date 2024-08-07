@@ -12,7 +12,7 @@ type EntityTypeWithoutId = Omit<Database['public']['Tables'][TableName]['Row'], 
 function CreateFactory(relation: TableName) {
   return async (req: NextRequest, data: Database['public']['Tables'][TableName]['Row']) => {
     try {
-      let created = await supabase.from(relation).insert(data).select()
+      let created = await supabase.from(relation).insert(data).select('*')
 
       return NextResponse.json(created.data)
     } catch (error) {
@@ -31,7 +31,6 @@ function RetrieveFactory(relation: TableName) {
       }
 
       let searchResult = await supabase.from(relation).select('*').eq('id', id)
-      searchResult.count
 
       if (!searchResult) {
         return NextResponse.json(httpError.NotFound, { status: httpError.NotFound.status })
@@ -46,7 +45,7 @@ function RetrieveFactory(relation: TableName) {
 function ListFactory(relation: TableName) {
   return async (req: NextRequest) => {
     try {
-      let searchResult = await supabase.from(relation).select()
+      let searchResult = await supabase.from(relation).select('*')
 
       return NextResponse.json(searchResult.data)
     } catch (error) {
