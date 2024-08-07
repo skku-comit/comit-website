@@ -1,15 +1,11 @@
-import Image from 'next/image'
-
-import StudyImage from '@/public/study-image/study.png'
-
 interface ImageSectionProps {
   className?: string
 }
-
+// Todo: Image source 넣기
 export default function ImageSection({ className }: ImageSectionProps) {
   return (
-    <div className="relative h-64 w-full md:h-96">
-      <Image src={StudyImage} alt="Study Image" fill />
+    <div className="relative h-full w-full">
+      {/* <Image src={StudyImage} alt="Study Image" width={1248} height={400} style={{ width: '100%', height: 'auto' }} /> */}
     </div>
   )
 }

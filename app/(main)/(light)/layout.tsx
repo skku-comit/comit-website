@@ -10,7 +10,7 @@ export default function LightLayout({ children }: { children: React.ReactNode })
         style={{ WebkitOverflowScrolling: 'touch' }}
       >
         <div className="flex w-full justify-center">
-          <main className="flex min-h-dvh w-[1280px] flex-1 flex-col items-center">{children}</main>
+          <main className="relative flex min-h-dvh w-[1280px] flex-1 flex-col items-center">{children}</main>
         </div>
         <Footer />
       </div>
