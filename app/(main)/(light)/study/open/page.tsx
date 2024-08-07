@@ -49,7 +49,7 @@ const schema = z.object({
   campus: z.enum(['율전', '명륜', '온라인'], {
     required_error: '캠퍼스를 선택해주세요'
   }),
-  level: z.enum(['초급', '초중급', '중급', '중상급', '상급'], {
+  level: z.enum(['초급', '중급', '고급'], {
     required_error: '난이도를 선택해주세요'
   }),
   stack: z.array(z.string()).min(1, { message: '스택을 입력해주세요' }),
@@ -60,7 +60,7 @@ const schema = z.object({
 type StudyForm = Omit<Study, 'id' | 'mentor' | 'isRecruiting'>
 const dayOptions: Day[] = ['월', '화', '수', '목', '금', '토', '일']
 const campusOptions: Campus[] = ['율전', '명륜', '온라인']
-const levelOptions: Level[] = ['초급', '초중급', '중급', '중상급', '상급']
+const levelOptions: Level[] = ['초급', '중급', '고급']
 
 export default function OpenStudy() {
   const {
@@ -137,17 +137,22 @@ export default function OpenStudy() {
   }
 
   // Time
-  const [startTime, setStartTime] = useState<Date | undefined>(undefined)
-  const [endTime, setEndTime] = useState<Date | undefined>(undefined)
+  type TimeInput = Date | undefined
+  const [startTime, setStartTime] = useState<TimeInput>(undefined)
+  const [endTime, setEndTime] = useState<TimeInput>(undefined)
 
-  const onChangeStartTime = (date: Date | undefined) => {
-    setValue('startTime', formatDateToTime(date as Date))
-    setStartTime(date)
+  const onChangeStartTime = (date: TimeInput) => {
+    if (typeof date !== 'undefined') {
+      setValue('startTime', formatDateToTime(date))
+      setStartTime(date)
+    }
   }
 
-  const onChangeEndTime = (date: Date | undefined) => {
-    setValue('endTime', formatDateToTime(date as Date))
-    setEndTime(date)
+  const onChangeEndTime = (date: TimeInput) => {
+    if (typeof date !== 'undefined') {
+      setValue('endTime', formatDateToTime(date))
+      setEndTime(date)
+    }
   }
 
   return (
