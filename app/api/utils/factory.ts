@@ -1,112 +1,117 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-import BaseEntity from '@/types'
+import { Database } from '@/database.types'
+import { supabase } from '@/lib/supabase/client'
 
 import httpError from '../errors/standardHttpErrors'
 import { HttpStatusCode } from './httpConsts'
 
-function CreateFactory<E extends BaseEntity>() {
-  return async (req: NextRequest) => {
+type TableName = keyof Database['public']['Tables']
+type EntityTypeWithoutId = Omit<Database['public']['Tables'][TableName]['Row'], 'id'>
+
+function CreateFactory(relation: TableName) {
+  return async (req: NextRequest, data: Database['public']['Tables'][TableName]['Row']) => {
     try {
-      const entityCreated = req.body
-      return NextResponse.json(entityCreated, { status: HttpStatusCode.Created })
+      let created = await supabase.from(relation).insert(data).select()
+
+      return NextResponse.json(created.data)
     } catch (error) {
       return NextResponse.json(httpError.InternalServerError, { status: httpError.InternalServerError.status })
     }
   }
 }
 
-function RetrieveFactory<E extends BaseEntity>(entities: E[]) {
-  return (req: NextRequest) => {
-    try {
-      const { pathname } = req.nextUrl
-      const id = pathname.split('/').pop()
-
-      const entityFound = entities.find((instance) => instance.id === id)
-
-      if (!entityFound) {
-        return NextResponse.json(httpError.NotFound, { status: httpError.NotFound.status })
-      }
-      return NextResponse.json(entityFound)
-    } catch (error) {
-      return NextResponse.json(httpError.InternalServerError, { status: httpError.InternalServerError.status })
-    }
-  }
-}
-
-function ListFactory<E extends BaseEntity>(entities: E[]) {
-  return (req: NextRequest) => {
-    try {
-      let searchResult = entities.slice()
-      const url = new URL(req.url!)
-
-      const queryParams = url.searchParams
-      queryParams.forEach((key, value) => {
-        searchResult = searchResult.filter((entity) => {
-          // Entity가 queryParam을 속성으로 가지면 필터
-          if (Object.hasOwn(entity, value)) {
-            let queryKey = value as keyof E
-            return entity[queryKey] === key
-          }
-        })
-      })
-
-      return NextResponse.json(searchResult)
-    } catch (error) {
-      return NextResponse.json(httpError.InternalServerError, { status: httpError.InternalServerError.status })
-    }
-  }
-}
-
-function PutFactory<E extends BaseEntity>(entities: E[]) {
+function RetrieveFactory(relation: TableName) {
   return async (req: NextRequest) => {
     try {
       const { pathname } = req.nextUrl
       const id = pathname.split('/').pop()
-
-      const entityFound = entities.find((instance) => instance.id === id)
-
-      if (!entityFound) {
-        return NextResponse.json(httpError.NotFound, { status: httpError.NotFound.status })
+      if (!id) {
+        return NextResponse.json(httpError.BadRequest, { status: httpError.BadRequest.status })
       }
 
-      const entityUpdated = req.body
-      return NextResponse.json(entityUpdated)
-    } catch (error) {
-      return NextResponse.json(httpError.InternalServerError, { status: httpError.InternalServerError.status })
-    }
-  }
-}
+      let searchResult = await supabase.from(relation).select('*').eq('id', id)
+      searchResult.count
 
-function PatchFactory<E extends BaseEntity>(entities: E[]) {
-  return async (req: NextRequest) => {
-    try {
-      const { pathname } = req.nextUrl
-      const id = pathname.split('/').pop()
-
-      const entityFound = entities.find((instance) => instance.id === id)
-
-      if (!entityFound) {
+      if (!searchResult) {
         return NextResponse.json(httpError.NotFound, { status: httpError.NotFound.status })
       }
-
-      const entityUpdated = req.body
-      return NextResponse.json(entityUpdated)
+      return NextResponse.json(searchResult.data)
     } catch (error) {
       return NextResponse.json(httpError.InternalServerError, { status: httpError.InternalServerError.status })
     }
   }
 }
 
-function DeleteFactory<E extends BaseEntity>(entities: E[]) {
+function ListFactory(relation: TableName) {
+  return async (req: NextRequest) => {
+    try {
+      let searchResult = await supabase.from(relation).select()
+
+      return NextResponse.json(searchResult.data)
+    } catch (error) {
+      return NextResponse.json(httpError.InternalServerError, { status: httpError.InternalServerError.status })
+    }
+  }
+}
+
+function PutFactory(relation: TableName) {
+  return async (req: NextRequest, data: EntityTypeWithoutId) => {
+    try {
+      const { pathname } = req.nextUrl
+      const id = pathname.split('/').pop()
+      if (!id) {
+        return NextResponse.json(httpError.BadRequest, { status: httpError.BadRequest.status })
+      }
+
+      let searchResult = await supabase.from(relation).update(data).eq('id', id)
+
+      if (!searchResult) {
+        return NextResponse.json(httpError.NotFound, { status: httpError.NotFound.status })
+      }
+      return NextResponse.json(searchResult.data)
+    } catch (error) {
+      return NextResponse.json(httpError.InternalServerError, { status: httpError.InternalServerError.status })
+    }
+  }
+}
+
+function PatchFactory(relation: TableName) {
+  return async (req: NextRequest, key: string, value: string) => {
+    try {
+      const { pathname } = req.nextUrl
+      const id = pathname.split('/').pop()
+      if (!id) {
+        return NextResponse.json(httpError.BadRequest, { status: httpError.BadRequest.status })
+      }
+
+      let searchResult = await supabase
+        .from(relation)
+        .update({ [(key = key)]: value })
+        .eq('id', id)
+
+      if (!searchResult) {
+        return NextResponse.json(httpError.NotFound, { status: httpError.NotFound.status })
+      }
+      return NextResponse.json(searchResult.data)
+    } catch (error) {
+      return NextResponse.json(httpError.InternalServerError, { status: httpError.InternalServerError.status })
+    }
+  }
+}
+
+function DeleteFactory(relation: TableName) {
   return async (req: NextRequest) => {
     try {
       const { pathname } = req.nextUrl
       const id = pathname.split('/').pop()
+      if (!id) {
+        return NextResponse.json(httpError.BadRequest, { status: httpError.BadRequest.status })
+      }
 
-      const entityFound = entities.find((instance) => instance.id === id)
+      let deleted = await supabase.from(relation).delete().eq('id', id)
 
-      if (!entityFound) {
+      if (!deleted) {
         return NextResponse.json(httpError.NotFound, { status: httpError.NotFound.status })
       }
 
