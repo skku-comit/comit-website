@@ -1,8 +1,7 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { TimePicker } from 'antd'
-import type { Dayjs } from 'dayjs'
+import { Clock } from 'lucide-react'
 import Image from 'next/image'
 import { SetStateAction, useRef, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
@@ -28,6 +27,8 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Textarea } from '@/components/ui/textarea'
+import { formatDateToTime } from '@/components/ui/time-picker-utils'
+import { TimePicker } from '@/components/ui/timepicker'
 import { Campus, Day, Level, Study } from '@/types/Study'
 
 // TODO: 백엔드와 논의 후 schema 수정
@@ -40,15 +41,15 @@ const schema = z.object({
     required_error: '요일을 선택해주세요'
   }),
   startTime: z.string({
-    required_error: '시작 시간을 입력해주세요'
+    required_error: '스터디 시간을 입력해주세요'
   }),
   endTime: z.string({
-    required_error: '종료 시간을 입력해주세요'
+    required_error: '스터디 시간을 입력해주세요'
   }),
   campus: z.enum(['율전', '명륜', '온라인'], {
     required_error: '캠퍼스를 선택해주세요'
   }),
-  level: z.enum(['입문', '초급', '중급', '고급'], {
+  level: z.enum(['초급', '중급', '고급'], {
     required_error: '난이도를 선택해주세요'
   }),
   stack: z.array(z.string()).min(1, { message: '스택을 입력해주세요' }),
@@ -59,11 +60,12 @@ const schema = z.object({
 type StudyForm = Omit<Study, 'id' | 'mentor' | 'isRecruiting'>
 const dayOptions: Day[] = ['월', '화', '수', '목', '금', '토', '일']
 const campusOptions: Campus[] = ['율전', '명륜', '온라인']
-const levelOptions: Level[] = ['초급', '초중급', '중급', '중상급', '상급']
+const levelOptions: Level[] = ['초급', '중급', '고급']
 
 export default function OpenStudy() {
   const {
     handleSubmit,
+    trigger,
     register,
     setValue,
     getValues,
@@ -108,27 +110,49 @@ export default function OpenStudy() {
   const handleStackChange = (e: { target: { value: SetStateAction<string> } }) => {
     setCurrentStack(e.target.value)
   }
-  const handleStackAdd = (e: { key: string }) => {
-    if (currentStack.trim() === '' || (watchedStacks && watchedStacks.length >= 4)) {
-      if (watchedStacks && watchedStacks.length >= 4) setStackError('스택은 최대 4개까지만 입력 가능합니다')
-      return
-    }
-    if (e.key === 'Enter' && currentStack.trim() !== '') {
-      setValue('stack', getValues('stack') ? getValues('stack').concat(currentStack) : [currentStack])
-      setCurrentStack('')
-    }
-  }
-  // Time
-  const [startTime, setStartTime] = useState<Dayjs | null>(null)
-  const [endTime, setEndTime] = useState<Dayjs | null>(null)
+  const handleStackAdd = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const newStack = e.currentTarget.value.trim()
 
-  const onChangeStartTime = (time: Dayjs) => {
-    setValue('startTime', time.format('HH:mm'))
-    setStartTime(time)
+    if (watchedStacks.length === 4) {
+      newStack !== '' ? setStackError('스택은 최대 4개까지만 입력 가능합니다') : setStackError('')
+    }
+
+    if (e.key === 'Enter' && newStack !== '') {
+      watchedStacks.length !== 4 ? handleDuplicateStack() : setCurrentStack('')
+    }
   }
-  const onChangeEndTime = (time: Dayjs) => {
-    setValue('endTime', time.format('HH:mm'))
-    setEndTime(time)
+  const handleDuplicateStack = () => {
+    const newStack = getValues('stack').concat(currentStack)
+
+    if (new Set(newStack).size === getValues('stack').length) {
+      setError('stack', {
+        type: 'Duplicate',
+        message: '중복 스택이 존재합니다'
+      })
+    } else {
+      clearErrors('stack')
+      setValue('stack', getValues('stack') ? newStack : [currentStack])
+    }
+    setCurrentStack('')
+  }
+
+  // Time
+  type TimeInput = Date | undefined
+  const [startTime, setStartTime] = useState<TimeInput>(undefined)
+  const [endTime, setEndTime] = useState<TimeInput>(undefined)
+
+  const onChangeStartTime = (date: TimeInput) => {
+    if (typeof date !== 'undefined') {
+      setValue('startTime', formatDateToTime(date))
+      setStartTime(date)
+    }
+  }
+
+  const onChangeEndTime = (date: TimeInput) => {
+    if (typeof date !== 'undefined') {
+      setValue('endTime', formatDateToTime(date))
+      setEndTime(date)
+    }
   }
 
   return (
@@ -156,45 +180,28 @@ export default function OpenStudy() {
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-1">
               <p className="text-xl font-semibold">스터디 제목</p>
-              <Input
-                placeholder="스터디 제목을 입력해주세요"
-                id="title"
-                {...register('title')}
-                className="w-full rounded-xl border border-slate-300"
-              />
+              <Input placeholder="스터디 제목을 입력해주세요" id="title" {...register('title')} className="w-full" />
               {errors.title && <p className="text-sm text-red-500">{errors.title.message}</p>}
             </div>
 
             <div className="flex flex-col gap-1">
-              <p className="text-xl font-semibold">시간</p>
-              <div className="flex justify-between max-md:gap-4">
+              <p className="flex items-center text-xl font-semibold">
+                시간
+                <Clock className="ml-2 h-4 w-4" />
+              </p>
+
+              <div className="flex items-center justify-start gap-2 max-md:gap-4">
                 <div className="flex flex-col gap-1">
-                  <TimePicker
-                    placeholder="시작 시간"
-                    value={startTime}
-                    onChange={onChangeStartTime}
-                    className="w-36 rounded-xl border border-slate-300 px-4 sm:w-48"
-                    format="HH:mm"
-                    size="large"
-                    needConfirm={false}
-                    changeOnScroll
-                  />
-                  {errors.startTime && <p className="text-sm text-red-500">{errors.startTime.message}</p>}
+                  <TimePicker date={startTime} setDate={onChangeStartTime} />
                 </div>
+                ~
                 <div className="flex flex-col gap-1">
-                  <TimePicker
-                    placeholder="종료 시간"
-                    value={endTime}
-                    onChange={onChangeEndTime}
-                    className="w-36 rounded-xl border border-slate-300 px-4 sm:w-48"
-                    format="HH:mm"
-                    size="large"
-                    needConfirm={false}
-                    changeOnScroll
-                  />
-                  {errors.endTime && <p className="text-sm text-red-500">{errors.endTime.message}</p>}
+                  <TimePicker date={endTime} setDate={onChangeEndTime} />
                 </div>
               </div>
+              {(errors.startTime || errors.endTime) && (
+                <p className="text-sm text-red-500">{errors.startTime?.message}</p>
+              )}
             </div>
 
             <div className="flex flex-col gap-1">
@@ -284,8 +291,8 @@ export default function OpenStudy() {
               </PopoverTrigger>
               <PopoverContent className="mb-2 flex w-64 justify-center text-sm" side="top">
                 <ul>
-                  <li>스택은 최대 4개까지 입력 가능하며</li>
-                  <li>첫번째 스택만 카드에 표시됩니다.</li>
+                  <li>최대 4개까지 입력 가능하며</li>
+                  <li>첫번째 스택만 미리보기에 표시됩니다.</li>
                 </ul>
               </PopoverContent>
             </Popover>
@@ -299,27 +306,14 @@ export default function OpenStudy() {
                   id="stack"
                   value={currentStack}
                   onChange={handleStackChange}
-                  onKeyDown={handleStackAdd}
-                  className="w-60 rounded-xl border border-slate-300"
+                  onKeyUp={handleStackAdd}
+                  className="w-60"
                 />
                 <Button
                   type="button"
-                  variant="secondary"
-                  className="absolute right-2 top-1/2 h-4 w-4 -translate-y-1/2 p-3 text-2xl text-gray-600"
+                  className="absolute right-2 top-1/2 z-10 h-4 w-4 -translate-y-1/2 p-3 text-xl"
                   disabled={currentStack.trim() === '' || (watchedStacks && watchedStacks.length >= 4)}
-                  onClick={() => {
-                    const newStack = getValues('stack').concat(currentStack)
-                    if (new Set(newStack).size === getValues('stack').length) {
-                      setError('stack', {
-                        type: 'Duplicate',
-                        message: '중복 스택이 존재합니다'
-                      })
-                    } else {
-                      clearErrors('stack')
-                      setValue('stack', getValues('stack') ? newStack : [currentStack])
-                    }
-                    setCurrentStack('')
-                  }}
+                  onClick={handleDuplicateStack}
                 >
                   +
                 </Button>
@@ -330,6 +324,7 @@ export default function OpenStudy() {
                 type="button"
                 onClick={() => {
                   setStackError('')
+                  clearErrors('stack')
                   setValue('stack', [])
                 }}
               >
@@ -337,7 +332,7 @@ export default function OpenStudy() {
               </Button>
             </div>
             {errors.stack && <p className="-mt-2 text-sm text-red-500">{errors.stack.message}</p>}
-            <div className="flex gap-4 rounded-2xl">
+            <div className="flex gap-4">
               {watchedStacks &&
                 watchedStacks.map((stack, index) => (
                   <Badge variant="secondary" key={index}>
@@ -353,14 +348,21 @@ export default function OpenStudy() {
             placeholder="스터디 목표, 배우는 내용, 선행돼야 하는 지식 등을 구체적으로 작성해주세요"
             id="description"
             {...register('description')}
-            className="h-48 w-full rounded-xl border border-slate-300"
+            className="h-48 w-full"
           />
           {errors.description && <p className="text-sm text-red-500">{errors.description.message}</p>}
         </div>
         <div className="my-8 flex justify-end">
           <AlertDialog>
             <AlertDialogTrigger asChild>
-              <Button type="button" className="px-8 font-extrabold">
+              <Button
+                type="button"
+                className="px-8 font-extrabold"
+                onClick={() => {
+                  trigger()
+                  isValid && setStackError('')
+                }}
+              >
                 제출하기
               </Button>
             </AlertDialogTrigger>

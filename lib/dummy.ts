@@ -211,7 +211,7 @@ const studyDict: { [key: string]: Study } = {
     day: '수',
     startTime: '19:30',
     endTime: '21:30',
-    level: '초중급',
+    level: '초급',
     stack: ['Unity', 'C#'],
     campus: '율전',
     description:
@@ -226,7 +226,7 @@ const studyDict: { [key: string]: Study } = {
     day: '화',
     startTime: '16:00',
     endTime: '17:30',
-    level: '초중급',
+    level: '중급',
     stack: ['Kotlin', 'Android'],
     campus: '율전',
     description:
@@ -257,7 +257,7 @@ const studyDict: { [key: string]: Study } = {
     day: '화',
     startTime: '19:30',
     endTime: '21:00',
-    level: '초중급',
+    level: '중급',
     stack: ['Spring', 'Git'],
     campus: '율전',
     description:
@@ -349,7 +349,7 @@ const studyDict: { [key: string]: Study } = {
     day: '월',
     startTime: '21:00',
     endTime: '22:00',
-    level: '상급',
+    level: '고급',
     stack: ['AWS'],
     campus: '온라인',
     description:
