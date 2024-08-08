@@ -21,7 +21,7 @@ export const Motion = <Tag extends keyof JSX.IntrinsicElements>({
 }: CustomMotionProps<Tag>) => {
   const Component = tag ? (motion as any)[tag] : motion.div
 
-  const animationKeys: AnimationKey[] = ['initial', 'animate', 'transition', 'whileInView']
+  const animationKeys: AnimationKey[] = ['initial', 'animate', 'transition', 'whileInView', 'viewport']
   const animationProps = animationKeys.reduce((acc, key) => {
     if (animation && animation[key]) {
       acc[key] = animation[key]

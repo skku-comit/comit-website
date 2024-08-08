@@ -3,6 +3,7 @@ export type Animation = {
   animate: object
   transition: object
   whileInView: object
+  viewport: object
 }
 export type partialAnimation = Partial<Animation>
 
