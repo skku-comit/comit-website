@@ -33,19 +33,19 @@ export default function ClubroomMainContent() {
   return (
     <div className="mb-12 flex items-center justify-center gap-8 space-x-reverse max-md:flex-col xl:gap-12">
       <div className="flex flex-col gap-8">
-        <Motion animation={fadeInLeft}>
+        <Motion animation={fadeInLeft()}>
           <ClburoomInfoCard {...clubroomInfoCardData[0]} />
         </Motion>
-        <Motion animation={fadeInRight}>
+        <Motion animation={fadeInRight()}>
           <ClburoomInfoCard {...clubroomInfoCardData[1]} align={Align.RIGHT} />
         </Motion>
-        <Motion animation={fadeInLeft}>
+        <Motion animation={fadeInLeft()}>
           <ClburoomInfoCard {...clubroomInfoCardData[2]} />
         </Motion>
       </div>
 
       <Motion
-        animation={fadeInLeft}
+        animation={fadeInLeft()}
         className="h-[270px] w-[360px] md:h-[300px] md:w-[400px] lg:h-[360px] lg:w-[480px]"
       >
         <ClubroomCarousel

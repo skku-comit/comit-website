@@ -6,20 +6,20 @@ import React from 'react'
 import { AnimationKey, partialAnimation } from '@/lib/animations'
 
 interface CustomMotionProps<Tag extends keyof JSX.IntrinsicElements> extends MotionProps {
-  type?: Tag
+  tag?: Tag
   children: React.ReactNode
   className?: string
   animation: partialAnimation
 }
 
 export const Motion = <Tag extends keyof JSX.IntrinsicElements>({
-  type,
+  tag,
   children,
   className,
   animation,
   ...props
 }: CustomMotionProps<Tag>) => {
-  const Component = type ? (motion as any)[type] : motion.div
+  const Component = tag ? (motion as any)[tag] : motion.div
 
   const animationKeys: AnimationKey[] = ['initial', 'animate', 'transition', 'whileInView']
   const animationProps = animationKeys.reduce((acc, key) => {
