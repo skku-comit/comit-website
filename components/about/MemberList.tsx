@@ -6,7 +6,8 @@ import { User } from '@/types'
 import { ROUTES } from '@/types/URL'
 
 const MemberList = async (): Promise<React.JSX.Element> => {
-  const members: User[] = await fetchData(ROUTES.MEMBER.LIST)
+  const res = await fetchData(ROUTES.MEMBER.LIST)
+  const members: User[] = res.data
   return (
     <div className="grid grid-cols-1 gap-x-[5vw] gap-y-12 xl:grid-cols-2">
       {members.map((member) => member.isStaff && <IntroduceMemeberCard key={member.id} member={member} />)}

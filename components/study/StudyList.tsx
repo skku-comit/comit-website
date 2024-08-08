@@ -10,7 +10,8 @@ import { Study } from '@/types'
 import { ROUTES } from '@/types/URL'
 
 const StudyList = async () => {
-  const studies: Study[] = await fetchData(ROUTES.STUDY.LIST)
+  const res = await fetchData(ROUTES.STUDY.LIST)
+  const studies: Study[] = res.data
 
   return (
     <div className="mb-12 grid grid-cols-2 gap-6 max-sm:px-2 sm:gap-x-16 sm:gap-y-12 lg:grid-cols-4">
