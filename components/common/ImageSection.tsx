@@ -1,3 +1,7 @@
+import Image from 'next/image'
+
+import StudyImage from '@/public/study-image/study.png'
+
 interface ImageSectionProps {
   className?: string
 }
@@ -5,7 +9,7 @@ interface ImageSectionProps {
 export default function ImageSection({ className }: ImageSectionProps) {
   return (
     <div className="relative h-full w-full">
-      {/* <Image src={StudyImage} alt="Study Image" width={1248} height={400} style={{ width: '100%', height: 'auto' }} /> */}
+      <Image src={StudyImage} alt="Study Image" fill />
     </div>
   )
 }

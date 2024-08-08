@@ -26,8 +26,8 @@ const descriptions: DescriptionCardProps[] = [
       recommendation: 'CoMit 부원들이 개설한 다양한 스터디에 참여하여 함께 공부하며 성장하세요!',
       notices: [
         '스터디원 선정은 스터디장 권한입니다',
-        '스터디 장소/시간은 자유롭게 조정하세요',
-        '스터디는 다중 참여가 가능합니다'
+        '스터디 장소/시간은 함께 조정하세요',
+        '다중 스터디 참여도 가능합니다'
       ]
     },
     hasButton: false
@@ -36,13 +36,13 @@ const descriptions: DescriptionCardProps[] = [
 export default function Study() {
   return (
     <>
-      {/* Todo : svg 이미지 구해서 넣기*/}
+      {/* Todo : svg 이미지 구해서 넣기, span 지우기*/}
       <section className="flex h-96 w-full items-center justify-center bg-primary">
         <span className="text-4xl text-white">이미지 자리</span>
         {/* <ImageSection /> */}
       </section>
 
-      <section className="flex w-4/5 max-w-[1300px] flex-col justify-start border-2 border-solid border-red-500 lg:w-[90%]">
+      <section className="flex w-4/5 max-w-[1300px] flex-col justify-start lg:w-[90%]">
         <SectionBanner title="스터디 개요" description="" className="h-40 w-full" />
 
         <div className="flex w-full flex-col items-center justify-start gap-10 lg:flex-row lg:items-start lg:justify-between">
@@ -52,6 +52,14 @@ export default function Study() {
         </div>
       </section>
 
+      <section className="mt-10 flex w-4/5 max-w-[1300px] justify-center lg:w-[90%]">
+        <SectionBanner
+          title="CoMit의 다양한 스터디 분반을 확인해보세요!"
+          description="* 스터디카드를 클릭하여 세부사항을 확인하세요"
+          titleClassName="text-3xl text-pretty text-center"
+          descriptionClassName="text-sm text-[#6A6D70] text-center text-pretty"
+        />
+      </section>
       <Suspense fallback={<LoadingSpinner />}>
         <StudyList />
       </Suspense>
