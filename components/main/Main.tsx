@@ -1,21 +1,19 @@
-import AutoScroll from 'embla-carousel-auto-scroll'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Suspense, useRef } from 'react'
+import { Suspense } from 'react'
 import { BsChevronCompactDown } from 'react-icons/bs'
 import { FaAngleRight } from 'react-icons/fa6'
 import { useInView } from 'react-intersection-observer'
 
 import ExampleStudyList from '@/components/main/ExampleStudyList'
 import { Button } from '@/components/ui/button'
-import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel'
 import { fadeIn } from '@/lib/animations'
-import { dummyStackUrl } from '@/lib/dummy'
 import mainPicture from '@/public/mainPicture.svg'
 import { Study } from '@/types/Study'
 
 import LoadingSpinner from '../common/LoadingSpinner'
 import { Motion } from '../common/MotionWrapper'
+import { MainCarousel } from './MainCarousel'
 
 interface MainProps {
   studyList: Study[]
@@ -23,7 +21,7 @@ interface MainProps {
 
 export default function Main({ studyList }: MainProps) {
   const [ref, inView] = useInView({ triggerOnce: true })
-  const plugin = useRef(AutoScroll({ playOnInit: true }))
+
   const mainIntroduceTextFirstLine: Array<string> = ['개발자', '를 꿈꾸는']
   const mainIntroduceTextSecondLine: Array<string> = ['모든 ', '학생', '들을 ', '위해서']
   const subIntroduceTextFirstLine: Array<string> = ['자유롭게 ', '지식을 ', '공유하고 ', '개발할 ', '수 ', '있는']
@@ -174,36 +172,7 @@ export default function Main({ studyList }: MainProps) {
           <div className="w-full font-semibold">
             <p className="text-left text-[70px] max-xl:hidden">Study</p>
             <p className="items-start text-left text-[40px] max-xl:text-center">다뤄진 기술 스택</p>
-            <div className="mt-8 flex h-[128px] w-full items-center">
-              <Carousel
-                className="pointer-events-none flex w-full items-center justify-between"
-                opts={{
-                  align: 'start',
-                  loop: true
-                }}
-                plugins={[plugin.current]}
-              >
-                <CarouselContent>
-                  {dummyStackUrl.map((item, index) => {
-                    return (
-                      <CarouselItem key={index} className="basis-1/8 flex items-center">
-                        <div className="h-28 w-28 sm:h-32 sm:w-32">
-                          <Image
-                            width={128}
-                            height={128}
-                            src={item}
-                            unoptimized
-                            alt="stack"
-                            className="h-full w-full object-cover"
-                            key={index}
-                          ></Image>
-                        </div>
-                      </CarouselItem>
-                    )
-                  })}
-                </CarouselContent>
-              </Carousel>
-            </div>
+            <MainCarousel />
           </div>
         </div>
         <div className="mt-[50px] flex justify-between xl:mt-32">
