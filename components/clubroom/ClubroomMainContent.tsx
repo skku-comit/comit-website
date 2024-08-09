@@ -1,16 +1,16 @@
-'use client'
-
-import { motion } from 'framer-motion'
 import Image from 'next/image'
 
 import { ClubroomCarousel } from '@/components/clubroom/ClubroomCarousel'
 import ClburoomInfoCard from '@/components/clubroom/ClubroomInfoCard'
 import { Align } from '@/components/clubroom/ClubroomInfoCard'
+import { fadeInLeft, fadeInRight } from '@/lib/animations'
 import clubroomImage1 from '@/public/clubroom-image/clubroom1.webp'
 import clubroomImage2 from '@/public/clubroom-image/clubroom2.webp'
 import clubroomImage3 from '@/public/clubroom-image/clubroom3.webp'
 import clubroomImage4 from '@/public/clubroom-image/clubroom4.webp'
 import clubroomImage5 from '@/public/clubroom-image/clubroom5.webp'
+
+import { Motion } from '../common/MotionWrapper'
 
 const clubroomInfoCardData = [
   {
@@ -33,33 +33,19 @@ export default function ClubroomMainContent() {
   return (
     <div className="mb-12 flex items-center justify-center gap-8 space-x-reverse max-md:flex-col xl:gap-12">
       <div className="flex flex-col gap-8">
-        <motion.div
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
-        >
+        <Motion animation={fadeInLeft()}>
           <ClburoomInfoCard {...clubroomInfoCardData[0]} />
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0, x: 50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
-        >
+        </Motion>
+        <Motion animation={fadeInRight()}>
           <ClburoomInfoCard {...clubroomInfoCardData[1]} align={Align.RIGHT} />
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
-        >
+        </Motion>
+        <Motion animation={fadeInLeft()}>
           <ClburoomInfoCard {...clubroomInfoCardData[2]} />
-        </motion.div>
+        </Motion>
       </div>
 
-      <motion.div
-        initial={{ opacity: 0, x: -50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.5 }}
+      <Motion
+        animation={fadeInLeft()}
         className="h-[270px] w-[360px] md:h-[300px] md:w-[400px] lg:h-[360px] lg:w-[480px]"
       >
         <ClubroomCarousel
@@ -73,7 +59,7 @@ export default function ClubroomMainContent() {
             inViewThreshold: 0.7
           }}
         />
-      </motion.div>
+      </Motion>
     </div>
   )
 }
