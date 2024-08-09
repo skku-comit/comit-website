@@ -15,8 +15,6 @@ export interface DescriptionCardProps {
 }
 
 export default function DescriptionCard({ description, hasButton }: DescriptionCardProps) {
-  console.log(hasButton)
-
   return (
     <div className="relative flex w-full max-w-[550px]  flex-col items-start justify-start gap-4 rounded-3xl bg-[#F4F7FA] p-6 lg:w-[45%] xl:p-10">
       <div className="text-3xl font-bold">{description.title}</div>
