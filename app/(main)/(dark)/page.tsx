@@ -15,7 +15,7 @@ import { ROUTES } from '@/constants/routes'
 import { fadeIn } from '@/lib/animations'
 import { fetchData } from '@/lib/fetch'
 import mainPicture from '@/public/mainPicture.svg'
-import { Study } from '@/types/Study'
+import { Study } from '@/types'
 
 const mainIntroduceTextFirstLine: Array<string> = ['개발자', '를 꿈꾸는']
 const mainIntroduceTextSecondLine: Array<string> = ['모든 ', '학생', '들을 ', '위해서']
@@ -37,7 +37,9 @@ const aboutData: { description: string; number: number }[] = [
 ]
 
 const Home = async (): Promise<React.JSX.Element> => {
-  const studyList: Study[] = await fetchData(API_ENDPOINTS.STUDY.LIST)
+  const res = await fetchData(API_ENDPOINTS.STUDY.LIST)
+  const studyList: Study[] = res.data
+
   const renderAnimatedText = (text: Array<string>) => {
     return text.map((item: string, index: number) => {
       if (item === '개발자' || item === '학생') {

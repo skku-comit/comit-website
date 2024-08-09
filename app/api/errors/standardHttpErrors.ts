@@ -1,5 +1,5 @@
 import { HttpStatusCode } from '../utils/httpConsts'
-import { ServerError } from '.'
+import { ServerError } from '../utils/response'
 
 // Client error responses(400 ~ )
 const BadRequest: ServerError = {
@@ -22,6 +22,10 @@ const MethodNotAllowed: ServerError = {
   errorType: 'Method Not Allowed',
   status: HttpStatusCode.MethodNotAllowed
 }
+const NotAcceptable: ServerError = {
+  errorType: 'Not Acceptable',
+  status: HttpStatusCode.NotAcceptable
+}
 const IamAteapot: ServerError = {
   errorType: "I'm a tea pot",
   status: HttpStatusCode.IamAteapot
@@ -43,6 +47,7 @@ const httpError = {
   Forbidden,
   NotFound,
   MethodNotAllowed,
+  NotAcceptable,
   IamAteapot,
   InternalServerError,
   NotImplemented

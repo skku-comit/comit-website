@@ -1,9 +1,9 @@
 import Image from 'next/image'
 
-import { Member } from '@/types/Member'
+import { User } from '@/types'
 
 interface IntroduceMemberCardProps {
-  member: Member
+  member: User
 }
 
 export default function IntroduceMemeberCard({ member }: IntroduceMemberCardProps) {
@@ -11,7 +11,7 @@ export default function IntroduceMemeberCard({ member }: IntroduceMemberCardProp
     <div className="flex items-center gap-8 max-md:flex-col">
       <div className="relative h-[168px] w-[168px] transform overflow-hidden rounded-[40px] shadow-md transition-transform hover:scale-125">
         <Image
-          src={member.imageUrl}
+          src={member.profileImage!}
           alt={member.name}
           width={168}
           height={168}
@@ -24,7 +24,7 @@ export default function IntroduceMemeberCard({ member }: IntroduceMemberCardProp
           <p className="text-xl font-semibold sm:text-2xl">
             {member.name} / {member.position}
           </p>
-          <p className="w-full text-base font-medium sm:text-lg">{member.description}</p>
+          <p className="w-full text-base font-medium sm:text-lg">{member.bio}</p>
         </div>
       </div>
     </div>
