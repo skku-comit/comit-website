@@ -5,12 +5,12 @@ import { RiStackOverflowLine } from 'react-icons/ri'
 
 import StudyCard from '@/components/common/StudyCard'
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
+import { API_ENDPOINTS } from '@/constants/apiEndpoint'
 import { fetchData } from '@/lib/fetch'
 import { Study } from '@/types'
-import { ROUTES } from '@/types/URL'
 
 const StudyList = async () => {
-  const res = await fetchData(ROUTES.STUDY.LIST)
+  const res = await fetchData(API_ENDPOINTS.STUDY.LIST)
   const studies: Study[] = res.data
 
   return (
