@@ -11,7 +11,7 @@ const POST = async (req: NextRequest) => {
     data: null,
     count: null,
     status: HttpStatusCode.NotImplemented,
-    statusText: `Server got requst: ${data}. But this endpoint is not implemented`
+    statusText: `Server got requst: ${JSON.stringify(data)}. But this endpoint is not implemented`
   })
 }
 export { POST }
