@@ -1,6 +1,8 @@
 import { HttpMethod } from '@/app/api/utils/httpConsts'
 
-const baseURL = 'http://localhost:3000'
+const baseURL =
+  process.env.NODE_ENV === 'development' ? process.env.NEXT_PUBLIC_LOCAL_URL : process.env.NEXT_PUBLIC_DEPLOY_URL
+
 const API_PREFIX = 'api'
 
 export interface ApiEndpoint {
