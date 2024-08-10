@@ -20,4 +20,5 @@ export type Study = BaseStudy & {
   campus: Campus
   day: Day | null
   level: Level
+  mentor: User
 }

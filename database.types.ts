@@ -45,39 +45,6 @@ export type Database = {
         }
         Relationships: []
       }
-      'profile-study': {
-        Row: {
-          id: number
-          profile: string
-          study: string
-        }
-        Insert: {
-          id?: number
-          profile: string
-          study: string
-        }
-        Update: {
-          id?: number
-          profile?: string
-          study?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: 'profile-study_profile_fkey'
-            columns: ['profile']
-            isOneToOne: false
-            referencedRelation: 'profile'
-            referencedColumns: ['id']
-          },
-          {
-            foreignKeyName: 'profile-study_study_fkey'
-            columns: ['study']
-            isOneToOne: false
-            referencedRelation: 'study'
-            referencedColumns: ['id']
-          }
-        ]
-      }
       study: {
         Row: {
           campus: string
@@ -86,7 +53,7 @@ export type Database = {
           description: string
           endTime: string | null
           id: string
-          imageSrc: string | null
+          imageSrc: string
           isRecruiting: boolean
           level: string
           mentor: string | null
@@ -101,7 +68,7 @@ export type Database = {
           description: string
           endTime?: string | null
           id?: string
-          imageSrc?: string | null
+          imageSrc: string
           isRecruiting?: boolean
           level: string
           mentor?: string | null
@@ -116,7 +83,7 @@ export type Database = {
           description?: string
           endTime?: string | null
           id?: string
-          imageSrc?: string | null
+          imageSrc?: string
           isRecruiting?: boolean
           level?: string
           mentor?: string | null
@@ -130,6 +97,36 @@ export type Database = {
             columns: ['mentor']
             isOneToOne: false
             referencedRelation: 'profile'
+            referencedColumns: ['id']
+          }
+        ]
+      }
+      'study-participants': {
+        Row: {
+          profile_id: string
+          study_id: string
+        }
+        Insert: {
+          profile_id: string
+          study_id: string
+        }
+        Update: {
+          profile_id?: string
+          study_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'profile-study_profile_fkey'
+            columns: ['profile_id']
+            isOneToOne: false
+            referencedRelation: 'profile'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'profile-study_study_fkey'
+            columns: ['study_id']
+            isOneToOne: false
+            referencedRelation: 'study'
             referencedColumns: ['id']
           }
         ]
