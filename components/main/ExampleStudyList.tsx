@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
 import StudyCard from '@/components/common/StudyCard'
-import { Study } from '@/types/Study'
+import { Study } from '@/types'
 
 interface ExampleStudyListProps {
   studyList: Study[]
