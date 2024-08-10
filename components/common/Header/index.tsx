@@ -28,11 +28,11 @@ const DrawerItem = ({ route, icon }: { route: Route; icon: React.ReactNode }) =>
 }
 
 const Header = ({ isDarkMode }: { isDarkMode: boolean }) => {
-  const NAVLINK_ROUTES = [ROUTES.ABOUT, ROUTES.STUDY, ROUTES.CLUBROOM]
+  const NAVLINK_ROUTES = [ROUTES.ABOUT, ROUTES.STUDY.index, ROUTES.CLUBROOM]
   const DRAWER_ITEMS_WITH_ICON = [
     { route: ROUTES.HOME, icon: <IoHomeOutline size={27} /> },
     { route: ROUTES.ABOUT, icon: <IoMdInformationCircleOutline size={27} /> },
-    { route: ROUTES.STUDY, icon: <IoLaptopOutline size={27} /> },
+    { route: ROUTES.STUDY.index, icon: <IoLaptopOutline size={27} /> },
     { route: ROUTES.CLUBROOM, icon: <BsDoorOpen size={27} /> },
     { route: ROUTES.LOGIN, icon: <MdLogin size={27} /> },
     { route: ROUTES.SIGNUP, icon: <FaRegPenToSquare size={24} /> }
