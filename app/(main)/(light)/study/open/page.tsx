@@ -29,7 +29,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Textarea } from '@/components/ui/textarea'
 import { formatDateToTime } from '@/components/ui/time-picker-utils'
 import { TimePicker } from '@/components/ui/timepicker'
-import { Campus, Day, Level, Study } from '@/types/Study'
+import { Campus, Day, Level, Study } from '@/types'
 
 // TODO: 백엔드와 논의 후 schema 수정
 const schema = z.object({
