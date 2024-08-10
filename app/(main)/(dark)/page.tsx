@@ -10,12 +10,9 @@ import { Motion } from '@/components/common/MotionWrapper'
 import ExampleStudyList from '@/components/main/ExampleStudyList'
 import { MainCarousel } from '@/components/main/MainCarousel'
 import { Button } from '@/components/ui/button'
-import { API_ENDPOINTS } from '@/constants/apiEndpoint'
 import { ROUTES } from '@/constants/routes'
 import { fadeIn } from '@/lib/animations'
-import { fetchData } from '@/lib/fetch'
 import mainPicture from '@/public/mainPicture.svg'
-import { Study } from '@/types'
 
 const mainIntroduceTextFirstLine: Array<string> = ['개발자', '를 꿈꾸는']
 const mainIntroduceTextSecondLine: Array<string> = ['모든 ', '학생', '들을 ', '위해서']
@@ -36,10 +33,7 @@ const aboutData: { description: string; number: number }[] = [
   }
 ]
 
-const Home = async (): Promise<React.JSX.Element> => {
-  const res = await fetchData(API_ENDPOINTS.STUDY.LIST)
-  const studyList: Study[] = res.data
-
+const Home = () => {
   const renderAnimatedText = (text: Array<string>) => {
     return text.map((item: string, index: number) => {
       if (item === '개발자' || item === '학생') {
@@ -174,7 +168,7 @@ const Home = async (): Promise<React.JSX.Element> => {
               </Button>
             </div>
             <Suspense fallback={<LoadingSpinner />}>
-              <ExampleStudyList studyList={studyList} />
+              <ExampleStudyList />
             </Suspense>
             <Button
               variant="outline"

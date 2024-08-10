@@ -1,13 +1,13 @@
 import Link from 'next/link'
 
 import StudyCard from '@/components/common/StudyCard'
+import { API_ENDPOINTS } from '@/constants/apiEndpoint'
+import { fetchData } from '@/lib/fetch'
 import { Study } from '@/types'
 
-interface ExampleStudyListProps {
-  studyList: Study[]
-}
-
-export default function ExampleStudyList({ studyList }: ExampleStudyListProps) {
+export const ExampleStudyList = async (): Promise<React.JSX.Element> => {
+  const res = await fetchData(API_ENDPOINTS.STUDY.LIST)
+  const studyList: Study[] = res.data
   const exampleStudies = studyList.slice(0, 4)
 
   return (
@@ -25,3 +25,5 @@ export default function ExampleStudyList({ studyList }: ExampleStudyListProps) {
     </div>
   )
 }
+
+export default ExampleStudyList
