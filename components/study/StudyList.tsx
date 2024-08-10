@@ -5,13 +5,14 @@ import { RiStackOverflowLine } from 'react-icons/ri'
 
 import StudyCard from '@/components/common/StudyCard'
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
-import { API_ENDPOINTS } from '@/constants/apiEndpoint'
-import { fetchData } from '@/lib/fetch'
+// import { API_ENDPOINTS } from '@/constants/apiEndpoint'
+// import { fetchData } from '@/lib/fetch'
 import { Study } from '@/types'
 
 const StudyList = async () => {
-  const res = await fetchData(API_ENDPOINTS.STUDY.LIST)
-  const studies: Study[] = res.data
+  // const res = await fetchData(API_ENDPOINTS.STUDY.LIST)
+  // const studies: Study[] = res.data
+  const studies: Study[] = []
 
   return (
     <div className="mb-12 grid grid-cols-2 gap-6 max-sm:px-2 sm:gap-x-16 sm:gap-y-12 lg:grid-cols-4">

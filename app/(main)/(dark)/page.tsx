@@ -10,10 +10,10 @@ import { Motion } from '@/components/common/MotionWrapper'
 import ExampleStudyList from '@/components/main/ExampleStudyList'
 import { MainCarousel } from '@/components/main/MainCarousel'
 import { Button } from '@/components/ui/button'
-import { API_ENDPOINTS } from '@/constants/apiEndpoint'
+// import { API_ENDPOINTS } from '@/constants/apiEndpoint'
 import { ROUTES } from '@/constants/routes'
 import { fadeIn } from '@/lib/animations'
-import { fetchData } from '@/lib/fetch'
+// import { fetchData } from '@/lib/fetch'
 import mainPicture from '@/public/mainPicture.svg'
 import { Study } from '@/types'
 
@@ -37,8 +37,9 @@ const aboutData: { description: string; number: number }[] = [
 ]
 
 const Home = async (): Promise<React.JSX.Element> => {
-  const res = await fetchData(API_ENDPOINTS.STUDY.LIST)
-  const studyList: Study[] = res.data
+  // const res = await fetchData(API_ENDPOINTS.STUDY.LIST)
+  // const studyList: Study[] = res.data
+  const studyList: Study[] = []
 
   const renderAnimatedText = (text: Array<string>) => {
     return text.map((item: string, index: number) => {
