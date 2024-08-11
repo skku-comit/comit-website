@@ -103,14 +103,17 @@ export type Database = {
       }
       'study-participants': {
         Row: {
+          applicationMotiv: string
           profile_id: string
           study_id: string
         }
         Insert: {
+          applicationMotiv: string
           profile_id: string
           study_id: string
         }
         Update: {
+          applicationMotiv?: string
           profile_id?: string
           study_id?: string
         }

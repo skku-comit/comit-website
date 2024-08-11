@@ -12,16 +12,22 @@ import { API_ENDPOINTS } from '@/constants/apiEndpoint'
 import { fetchData } from '@/lib/fetch'
 import { Study } from '@/types'
 
+export interface StudySignupRequest {
+  study_id: string
+  user_id: string
+  applicationMotiv: string
+}
+
 const Subheader = ({ children }: { children: string }) => {
   return <h3 className="text-lg">{children}</h3>
 }
 
 interface IStudySignupForm {
-  motiv: string
+  applicationMotiv: string
 }
 
 const schema = z.object({
-  motiv: z.string().min(1, {
+  applicationMotiv: z.string().min(1, {
     message: '지원 동기를 입력해주세요'
   })
 })
@@ -47,9 +53,14 @@ const StudySignupForm = ({ study }: StudySignupFormProps) => {
     resolver: zodResolver(schema)
   })
 
-  const onValid = async (data: IStudySignupForm) => {
-    const jsonData = JSON.stringify(data)
-    console.log(jsonData)
+  const onValid = async (formData: IStudySignupForm) => {
+    const TEST_USER_ID = 'b5851320-d374-4763-a7d5-70427602c19b' // 손장수
+    const requestBody: StudySignupRequest = {
+      study_id: study.id,
+      user_id: TEST_USER_ID,
+      applicationMotiv: formData.applicationMotiv
+    }
+    const jsonData = JSON.stringify(requestBody)
     const res = await fetchData(API_ENDPOINTS.STUDY.SIGNUP(study.id), {
       headers: {
         'Content-Type': 'application/json'
@@ -99,8 +110,8 @@ const StudySignupForm = ({ study }: StudySignupFormProps) => {
         <p>* 지원동기는 스터디 신청 기간동안 자유롭게 수정 가능합니다</p>
 
         <div className="rounded-xl border p-2">
-          <Input id="motiv" {...register('motiv')} placeholder="지원 동기를 입력해주세요" />
-          {errors.motiv && <p className="text-destructive">{errors.motiv.message}</p>}
+          <Input id="applicationMotiv" {...register('applicationMotiv')} placeholder="지원 동기를 입력해주세요" />
+          {errors.applicationMotiv && <p className="text-destructive">{errors.applicationMotiv.message}</p>}
         </div>
       </div>
 

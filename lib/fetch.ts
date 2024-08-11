@@ -10,7 +10,7 @@ export async function fetchData(route: ApiEndpoint, init?: RequestInit): Promise
 
   const res = await fetch(route.url, requestInit)
   if (!res.ok) {
-    throw new FetchError(`Failed to fetch ${route.url} (${route.method})`)
+    throw new FetchError(`Failed to fetch ${route.url} (${route.method})\n${res.status}: ${res.statusText}`)
   }
   return res.json()
 }

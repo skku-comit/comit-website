@@ -19,6 +19,7 @@ export enum HttpStatusCode {
   NotFound = 404,
   MethodNotAllowed = 405,
   NotAcceptable = 406,
+  Conflict = 409,
   IamAteapot = 418,
   InternalServerError = 500,
   NotImplemented = 501
