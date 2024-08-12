@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import Image from 'next/image'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -17,7 +17,6 @@ import { Study } from '@/types'
 
 export interface StudySignupRequest {
   study_id: string
-  user_id: string
   applicationMotiv: string
 }
 
@@ -38,6 +37,15 @@ interface StudySignupFormProps {
 }
 
 const StudySignupForm = ({ study }: StudySignupFormProps) => {
+  // TODO: 신청 취소 기능 추가
+  // TODO: 스터디 신청 정규화
+  // study-participants 이외에도 studyEnrollment라는 다른 테이블 만들기 -> 신청 한것과 실제 스터디 진행 인원 분리
+  // StudyEnrollment 엔티티 추가 및 CRUD API 엔드포인트 추가
+  // StudyEnrollment에는 createdAt, editedAt 추가해서 마지막으로 수정한 날짜도 UI에서 확인 가능하게 하기
+  useEffect(() => {
+    // TODO: 신청서 데이터 가져와서 채워 넣기
+  }, [])
+
   const duration = (startTime: string | null, endTime: string | null) => {
     if (!startTime || !endTime) {
       return '(시간 미정)'
@@ -55,10 +63,8 @@ const StudySignupForm = ({ study }: StudySignupFormProps) => {
   })
 
   const onValid = async (formData: IStudySignupForm) => {
-    const TEST_USER_ID = 'b5851320-d374-4763-a7d5-70427602c19b' // 손장수
     const requestBody: StudySignupRequest = {
       study_id: study.id,
-      user_id: TEST_USER_ID,
       applicationMotiv: formData.applicationMotiv
     }
     const jsonData = JSON.stringify(requestBody)

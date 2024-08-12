@@ -11,9 +11,11 @@ const POST = async (req: NextRequest) => {
   try {
     const data: StudySignupRequest = await req.json()
     type InsertType = Database['public']['Tables']['study-participants']['Insert']
+    // TODO: user id는 헤더에서 받기
+    const TEST_USER_ID = 'b5851320-d374-4763-a7d5-70427602c19b' // 손장수
     const inputData: InsertType = {
       study_id: data.study_id,
-      profile_id: data.user_id,
+      profile_id: TEST_USER_ID,
       applicationMotiv: data.applicationMotiv
     }
 
