@@ -101,7 +101,7 @@ const StudySignupForm = ({ study }: StudySignupFormProps) => {
                 />
               </div>
               {/* 스터디 기본 정보 */}
-              <div className="space-y-1 rounded-lg bg-slate-100 p-5 lg:space-y-3 lg:bg-transparent lg:p-0">
+              <div className="space-y-1 rounded-lg bg-slate-100 p-5 md:bg-transparent md:p-0 lg:space-y-3">
                 <h4 className="mb-3 text-xl font-bold">{study.title}</h4>
 
                 <HoverCard>
