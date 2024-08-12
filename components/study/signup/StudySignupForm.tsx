@@ -4,6 +4,11 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import Image from 'next/image'
 import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
+import { FaSchoolFlag } from 'react-icons/fa6'
+import { IoPersonSharp } from 'react-icons/io5'
+import { IoTime } from 'react-icons/io5'
+import { MdOutlineSignalCellularAlt } from 'react-icons/md'
+import { RiStackOverflowLine } from 'react-icons/ri'
 import { z } from 'zod'
 
 import LoadingSpinner from '@/components/common/LoadingSpinner'
@@ -96,25 +101,36 @@ const StudySignupForm = ({ study }: StudySignupFormProps) => {
                 />
               </div>
               {/* 스터디 기본 정보 */}
-              <div className="space-y-1 lg:space-y-3">
-                <h4 className="text-xl font-bold">{study.title}</h4>
+              <div className="space-y-1 rounded-lg bg-slate-100 p-5 lg:space-y-3 lg:bg-transparent lg:p-0">
+                <h4 className="mb-3 text-xl font-bold">{study.title}</h4>
+
                 <HoverCard>
                   <HoverCardTrigger>
-                    <p className="underline-offset-2 hover:underline">@{study.mentor.name}</p>
+                    <p className="flex items-center gap-2 underline-offset-2 hover:underline">
+                      <IoPersonSharp />@{study.mentor.name}
+                    </p>
                   </HoverCardTrigger>
                   <HoverCardContent>
                     {/* TODO: 스터디장 정보 기입 */}
-                    {/* {study.mentor.bio} */}
+                    Not Implemented
                   </HoverCardContent>
                 </HoverCard>
-                <p>
+                <p className="flex items-center gap-2">
+                  <FaSchoolFlag />
                   {study.campus}
                   {study.day && ` | ${study.day}`}
                 </p>
-                <p>{duration(study.startTime, study.endTime)}</p>
-                <p>{study.level}</p>
+                <p className="flex items-center gap-2">
+                  <IoTime />
+                  {duration(study.startTime, study.endTime)}
+                </p>
+                <p className="flex items-center gap-2">
+                  <MdOutlineSignalCellularAlt />
+                  {study.level}
+                </p>
                 <div className="overflow-auto">
                   <div className="flex justify-start gap-x-2">
+                    <RiStackOverflowLine />
                     {study.stack.map((s) => (
                       <Badge key={s} variant="secondary" className="text-xs">
                         {s}
@@ -126,13 +142,9 @@ const StudySignupForm = ({ study }: StudySignupFormProps) => {
             </div>
 
             {/* 스터디 상세 설명 */}
-            <div className="col-span-12 lg:col-span-6">
-              <div className="lg:rounded-lg lg:border">
-                <p
-                  className="whitespace-pre-line break-all p-1 lg:p-3"
-                  dangerouslySetInnerHTML={{ __html: study.description }}
-                />
-              </div>
+            <div className="col-span-12 mb-5 lg:col-span-6 lg:mb-0">
+              <h4 className="mb-2 text-lg font-extrabold">스터디 설명</h4>
+              <p className="whitespace-pre-line break-all" dangerouslySetInnerHTML={{ __html: study.description }} />
             </div>
           </div>
 
