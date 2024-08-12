@@ -19,7 +19,9 @@ const StudySignup = async ({ params }: StudySignupProps) => {
   return (
     <>
       <SectionBanner title="스터디 참여 신청" />
-      <StudySignupForm study={study} />
+      <div className="max-w-[1280px]">
+        <StudySignupForm study={study} />
+      </div>
     </>
   )
 }
