@@ -15,12 +15,17 @@ import LoadingSpinner from '@/components/common/LoadingSpinner'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { API_ENDPOINTS } from '@/constants/apiEndpoint'
 import { fetchData } from '@/lib/fetch'
 import { Study } from '@/types'
 
 export interface StudySignupRequest {
+  username: string
+  studentId: number
+  github: string
   study_id: string
   applicationMotiv: string
 }
@@ -30,6 +35,9 @@ const Subheader = ({ children }: { children: React.ReactNode }) => {
 }
 
 interface IStudySignupForm {
+  username: string
+  studentId: number
+  github: string
   applicationMotiv: string
 }
 
@@ -64,11 +72,19 @@ const StudySignupForm = ({ study }: StudySignupFormProps) => {
     register,
     formState: { errors, isSubmitting }
   } = useForm<IStudySignupForm>({
-    resolver: zodResolver(schema)
+    resolver: zodResolver(schema),
+    defaultValues: {
+      username: '손장수',
+      studentId: 2019313647,
+      github: 'github.com/skku-comit/comit-website'
+    }
   })
 
   const onValid = async (formData: IStudySignupForm) => {
     const requestBody: StudySignupRequest = {
+      username: formData.username,
+      studentId: formData.studentId,
+      github: formData.github,
       study_id: study.id,
       applicationMotiv: formData.applicationMotiv
     }
@@ -152,6 +168,48 @@ const StudySignupForm = ({ study }: StudySignupFormProps) => {
           <div className="text-sm lg:space-y-1">
             <p>* 스터디 장소, 날짜, 시간을 다시 한번 확인해주세요.</p>
             <p>* 다중 스터디 신청은 가능합니다 (여러 스터디 참여 가능)</p>
+          </div>
+        </div>
+
+        <div className="py-10">
+          <Subheader>2. 개인정보 확인</Subheader>
+          {/* 참고 사항 */}
+          <div className="text-sm lg:space-y-1">
+            <p>* 아래 정보는 스터디장에게 제공됩니다</p>
+            <p>* Github 주소는 필수 정보가 아닙니다</p>
+          </div>
+
+          {/* 이름, 학번, Github 확인 */}
+          <div className="mt-5 flex flex-col gap-x-16 lg:flex-row">
+            {/* 이름 */}
+            <div className="flex items-center lg:block">
+              <Label className="me-3 text-xl font-bold lg:me-0">이름{'username' && ' *'}</Label>
+              <Input
+                disabled
+                {...register('username')}
+                className="text-md mt-2 h-10 w-40 rounded-xl bg-secondary text-center lg:h-14 lg:w-60 lg:text-lg"
+              />
+              {errors.username && <p className="text-destructive">{errors.username.message}</p>}
+            </div>
+            {/* 학번 */}
+            <div className="flex items-center lg:block">
+              <Label className="me-3 text-xl font-bold lg:me-0">학번{'studentId' && ' *'}</Label>
+              <Input
+                disabled
+                {...register('studentId')}
+                className="text-md mt-2 h-10 w-40 rounded-xl bg-secondary text-center lg:h-14 lg:w-60 lg:text-lg"
+              />
+              {errors.studentId && <p className="text-destructive">{errors.studentId.message}</p>}
+            </div>
+            {/* Github */}
+            <div className="flex items-center lg:block">
+              <Label className="me-3 text-xl font-bold lg:me-0">Github{!'github' && ' *'}</Label>
+              <Input
+                {...register('github')}
+                className="text-md mt-2 h-10 w-72 rounded-xl bg-secondary text-center lg:h-14 lg:w-96 lg:text-lg"
+              />
+              {errors.github && <p className="text-destructive">{errors.github.message}</p>}
+            </div>
           </div>
         </div>
 
