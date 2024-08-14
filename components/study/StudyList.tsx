@@ -1,13 +1,17 @@
+import Link from 'next/link'
 import { FaSchoolFlag } from 'react-icons/fa6'
 import { IoPersonSharp } from 'react-icons/io5'
 import { MdOutlineSignalCellularAlt } from 'react-icons/md'
 import { RiStackOverflowLine } from 'react-icons/ri'
 
 import StudyCard from '@/components/common/StudyCard'
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { API_ENDPOINTS } from '@/constants/apiEndpoint'
+import { ROUTES } from '@/constants/routes'
 import { fetchData } from '@/lib/fetch'
 import { Study } from '@/types'
+
+import { Button } from '../ui/button'
 
 const StudyList = async () => {
   const res = await fetchData(API_ENDPOINTS.STUDY.LIST)
@@ -26,7 +30,7 @@ const StudyList = async () => {
             />
           </DialogTrigger>
           <DialogContent className="w-[324px] rounded-xl p-6 sm:w-[480px] sm:p-8">
-            <div className="break-words text-2xl font-bold">{study.title}</div>
+            <DialogTitle className="break-words text-2xl font-bold">{study.title}</DialogTitle>
             {!study.day ? null : !study.startTime || !study.endTime ? (
               <div className="flex gap-3 break-words text-lg text-gray-600">
                 {study.day}요일 <span className="text-base text-red-500">(시간 미정)</span>
@@ -57,6 +61,12 @@ const StudyList = async () => {
                 {study.stack.join(', ')}
               </div>
               <div className="whitespace-pre-line break-keep" dangerouslySetInnerHTML={{ __html: study.description }} />
+            </div>
+
+            <div className="flex justify-end">
+              <Button asChild>
+                <Link href={ROUTES.STUDY.SIGNUP(study.id).url}>신청하기</Link>
+              </Button>
             </div>
           </DialogContent>
         </Dialog>

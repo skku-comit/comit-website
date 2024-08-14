@@ -7,8 +7,21 @@ export interface Route {
   name: string
   url: string
 }
+interface StudyRoutes {
+  index: Route
+  SIGNUP: (id: string) => Route
+}
 
-export const ROUTES: { [key: string]: Route } = {
+interface Routes {
+  HOME: Route
+  ABOUT: Route
+  STUDY: StudyRoutes
+  CLUBROOM: Route
+  LOGIN: Route
+  SIGNUP: Route
+}
+
+export const ROUTES: Routes = {
   HOME: {
     name: 'Home',
     url: '/'
@@ -18,8 +31,14 @@ export const ROUTES: { [key: string]: Route } = {
     url: '/about'
   },
   STUDY: {
-    name: 'Study',
-    url: '/study'
+    index: {
+      name: 'Study',
+      url: '/study'
+    },
+    SIGNUP: (id: string) => ({
+      name: 'Study Signup',
+      url: `/study/${id}/signup`
+    })
   },
   CLUBROOM: {
     name: 'Clubroom',

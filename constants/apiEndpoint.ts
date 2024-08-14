@@ -16,6 +16,8 @@ interface StudyRoutes {
   LIST: ApiEndpoint
   UPDATE: (id: string) => ApiEndpoint
   DELETE: (id: string) => ApiEndpoint
+
+  SIGNUP: (id: string) => ApiEndpoint
 }
 
 interface MemberRoutes {
@@ -26,18 +28,20 @@ interface MemberRoutes {
   DELETE: (id: string) => ApiEndpoint
 }
 
-interface Routes {
+interface ApiEndpoints {
   STUDY: StudyRoutes
   MEMBER: MemberRoutes
 }
 
-export const API_ENDPOINTS: Routes = {
+export const API_ENDPOINTS: ApiEndpoints = {
   STUDY: {
     CREATE: { url: `${baseURL}/${API_PREFIX}/studies`, method: 'POST' },
     RETRIEVE: (id: string) => ({ url: `${baseURL}/${API_PREFIX}/studies/${id}`, method: 'GET' }),
     LIST: { url: `${baseURL}/${API_PREFIX}/studies`, method: 'GET' },
     UPDATE: (id: string) => ({ url: `${baseURL}/${API_PREFIX}/studies/${id}`, method: 'PUT' }),
-    DELETE: (id: string) => ({ url: `${baseURL}/${API_PREFIX}/studies/${id}`, method: 'DELETE' })
+    DELETE: (id: string) => ({ url: `${baseURL}/${API_PREFIX}/studies/${id}`, method: 'DELETE' }),
+
+    SIGNUP: (id: string) => ({ url: `${baseURL}/${API_PREFIX}/studies/${id}/signup`, method: 'POST' })
   },
   MEMBER: {
     CREATE: { url: `${baseURL}/${API_PREFIX}/users`, method: 'POST' },

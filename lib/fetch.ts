@@ -2,11 +2,15 @@ import { ServerResponse } from '@/app/api/utils/response'
 import { ApiEndpoint } from '@/constants/apiEndpoint'
 import { FetchError } from '@/errors'
 
-export async function fetchData(route: ApiEndpoint): Promise<ServerResponse> {
-  const res = await fetch(route.url, { method: route.method })
-  if (!res.ok) {
-    throw new FetchError(`Failed to Fetch ${route.url} (${route.method})`)
+export async function fetchData(route: ApiEndpoint, init?: RequestInit): Promise<ServerResponse> {
+  const requestInit: RequestInit = {
+    method: route.method,
+    ...init
   }
 
+  const res = await fetch(route.url, requestInit)
+  if (!res.ok) {
+    throw new FetchError(`Failed to fetch ${route.url} (${route.method})\n${res.status}: ${res.statusText}`)
+  }
   return res.json()
 }
