@@ -22,7 +22,7 @@ const authOptions: NextAuthConfig = {
         const dummy_users = [
           {
             id: '1',
-            name: 'COMIT 임시 계정',
+            name: 'b0xercat',
             email: 'comit@g.skku.edu',
             password: 'comit1234'
           },
@@ -58,3 +58,11 @@ const authOptions: NextAuthConfig = {
 }
 
 export const { handlers, signIn, signOut, auth } = NextAuth(authOptions)
+
+export const signInSA = async () => {
+  return await signIn()
+}
+
+export const signOutSA = async () => {
+  return await signOut()
+}

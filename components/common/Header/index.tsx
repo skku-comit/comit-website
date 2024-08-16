@@ -11,9 +11,11 @@ import { MdLogin } from 'react-icons/md'
 import { Button } from '@/components/ui/button'
 import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from '@/components/ui/drawer'
 import { Route, ROUTES } from '@/constants/routes'
+import { auth } from '@/lib/auth/auth'
 import { cn } from '@/lib/utils'
 import ComitLogo from '@/public/comit.png'
 
+import { DropdownHeader } from './Dropdown'
 import NavLink from './NavLink'
 
 const DrawerItem = ({ route, icon }: { route: Route; icon: React.ReactNode }) => {
@@ -26,17 +28,19 @@ const DrawerItem = ({ route, icon }: { route: Route; icon: React.ReactNode }) =>
     </DrawerClose>
   )
 }
+// Constants
+const NAVLINK_ROUTES = [ROUTES.ABOUT, ROUTES.STUDY.index, ROUTES.CLUBROOM]
+const DRAWER_ITEMS_WITH_ICON = [
+  { route: ROUTES.HOME, icon: <IoHomeOutline size={27} /> },
+  { route: ROUTES.ABOUT, icon: <IoMdInformationCircleOutline size={27} /> },
+  { route: ROUTES.STUDY.index, icon: <IoLaptopOutline size={27} /> },
+  { route: ROUTES.CLUBROOM, icon: <BsDoorOpen size={27} /> },
+  { route: ROUTES.LOGIN, icon: <MdLogin size={27} /> },
+  { route: ROUTES.SIGNUP, icon: <FaRegPenToSquare size={24} /> }
+]
 
-const Header = ({ isDarkMode }: { isDarkMode: boolean }) => {
-  const NAVLINK_ROUTES = [ROUTES.ABOUT, ROUTES.STUDY.index, ROUTES.CLUBROOM]
-  const DRAWER_ITEMS_WITH_ICON = [
-    { route: ROUTES.HOME, icon: <IoHomeOutline size={27} /> },
-    { route: ROUTES.ABOUT, icon: <IoMdInformationCircleOutline size={27} /> },
-    { route: ROUTES.STUDY.index, icon: <IoLaptopOutline size={27} /> },
-    { route: ROUTES.CLUBROOM, icon: <BsDoorOpen size={27} /> },
-    { route: ROUTES.LOGIN, icon: <MdLogin size={27} /> },
-    { route: ROUTES.SIGNUP, icon: <FaRegPenToSquare size={24} /> }
-  ]
+const Header = async ({ isDarkMode }: { isDarkMode: boolean }) => {
+  const session = await auth()
 
   return (
     <header
@@ -61,19 +65,23 @@ const Header = ({ isDarkMode }: { isDarkMode: boolean }) => {
           ))}
         </div>
 
-        {/* Desktop: Sign up / Log in */}
-        <div className="hidden h-[40px] w-[270px] items-center justify-between md:flex lg:w-[310px]">
-          <Button className="h-[36px] w-[120px] text-base lg:w-[140px]" asChild>
-            <Link href="/signup">Sign up</Link>
-          </Button>
-          <Button
-            className={cn('h-[36px] w-[120px] text-base lg:w-[140px]', isDarkMode && 'border-white')}
-            variant="outline"
-            asChild
-          >
-            <Link href="/login">Log in</Link>
-          </Button>
-        </div>
+        {/* Desktop: Sign up / Log in  or User */}
+        {session ? (
+          <DropdownHeader name={session.user?.name as string} />
+        ) : (
+          <div className="hidden h-[40px] w-[270px] items-center justify-between md:flex lg:w-[310px]">
+            <Button className="h-[36px] w-[120px] text-base lg:w-[140px]" asChild>
+              <Link href="/signup">Sign up</Link>
+            </Button>
+            <Button
+              className={cn('h-[36px] w-[120px] text-base lg:w-[140px]', isDarkMode && 'border-white')}
+              variant="outline"
+              asChild
+            >
+              <Link href="/login">Log in</Link>
+            </Button>
+          </div>
+        )}
       </nav>
 
       {/* Mobile: Drawer */}
