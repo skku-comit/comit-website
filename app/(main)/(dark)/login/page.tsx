@@ -3,12 +3,13 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { signIn } from 'next-auth/react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { BsEye, BsEyeSlash } from 'react-icons/bs'
 import { z } from 'zod'
 
-import UnderConstructionDialog from '@/components/common/UnderConstructionDialog'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import ComitOwl from '@/public/comitOwl.png'
@@ -25,6 +26,7 @@ const schema = z.object({
 })
 
 export default function Login() {
+  const router = useRouter()
   const [showPassword, setShowPassword] = useState(false)
 
   const {
@@ -35,14 +37,25 @@ export default function Login() {
     resolver: zodResolver(schema)
   })
 
-  // TODO: login API 연결
-  const onSubmit = (data: LoginForm) => {
-    console.log(data)
+  // TODO: 에러 핸들링 코드 작성
+  const onSubmit = async (data: LoginForm) => {
+    try {
+      const res = await signIn('credentials', {
+        email: data.email,
+        password: data.password
+      })
+
+      if (res?.error) {
+        // 에러 처리
+        console.error(res.error)
+      }
+    } catch (error) {
+      console.error('로그인 중 오류 발생:', error)
+    }
   }
 
   return (
     <div className="flex max-h-lvh w-full justify-center bg-black pt-8 text-white">
-      <UnderConstructionDialog />
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex w-[88%] max-w-[480px] flex-col items-center gap-4 rounded-[32px] bg-[#121212] p-8 pb-8 sm:p-16 md:w-[480px]"
