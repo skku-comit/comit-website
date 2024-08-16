@@ -7,6 +7,7 @@ import { User } from '@/types'
 
 const MemberList = async (): Promise<React.JSX.Element> => {
   const res = await fetchData(API_ENDPOINTS.MEMBER.LIST)
+
   const members: User[] = res.data
 
   return (

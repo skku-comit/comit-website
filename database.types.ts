@@ -9,12 +9,10 @@ export type Database = {
           bio: string
           blog: string | null
           createdDate: string
-          email: string
           github: string | null
           id: string
           isStaff: boolean
           name: string
-          password: string | null
           position: string | null
           profileImage: string | null
           studentId: string
@@ -24,12 +22,10 @@ export type Database = {
           bio?: string
           blog?: string | null
           createdDate?: string
-          email: string
           github?: string | null
           id?: string
           isStaff?: boolean
           name: string
-          password?: string | null
           position?: string | null
           profileImage?: string | null
           studentId: string
@@ -39,12 +35,10 @@ export type Database = {
           bio?: string
           blog?: string | null
           createdDate?: string
-          email?: string
           github?: string | null
           id?: string
           isStaff?: boolean
           name?: string
-          password?: string | null
           position?: string | null
           profileImage?: string | null
           studentId?: string
