@@ -67,7 +67,7 @@ const Header = async ({ isDarkMode }: { isDarkMode: boolean }) => {
 
         {/* Desktop: Sign up / Log in  or User */}
         {session ? (
-          <DropdownHeader name={session.user?.name as string} />
+          <DropdownHeader isDarkMode={isDarkMode} name={session.user?.name as string} />
         ) : (
           <div className="hidden h-[40px] w-[270px] items-center justify-between md:flex lg:w-[310px]">
             <Button className="h-[36px] w-[120px] text-base lg:w-[140px]" asChild>

@@ -11,18 +11,23 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
+import { cn } from '@/lib/utils'
 
 interface DropdownHeaderProps {
   name: string
+  isDarkMode: boolean
 }
 
 const dropdownItems = ['My Studies', 'My Profile', 'Log Out']
 
-export function DropdownHeader({ name }: DropdownHeaderProps) {
+export function DropdownHeader({ name, isDarkMode }: DropdownHeaderProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button className="justify-between bg-black ">
+        <Button
+          variant={isDarkMode ? 'default' : 'outline'}
+          className={cn('justify-between', isDarkMode ? 'bg-black' : 'border-none hover:bg-transparent')}
+        >
           {name}
           <IoChevronDownOutline className="ml-2" />
         </Button>

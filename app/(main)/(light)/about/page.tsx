@@ -44,7 +44,7 @@ const About = () => {
           ))}
         </div>
         <div className="mb-24 mt-60 flex w-full flex-col items-center">
-          <p className="mb-20 text-4xl font-semibold text-black">CoMit 임원진</p>          
+          <p className="mb-20 text-4xl font-semibold text-black">CoMit 임원진</p>
           <Suspense fallback={<LoadingSpinner />}>
             <MemberList />
           </Suspense>
