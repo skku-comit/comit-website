@@ -19,7 +19,7 @@ function CreateFactory(relation: TableName) {
     if (res.error) {
       return constructServerResponse({
         error: InternalServerError,
-        data: res.data
+        data: null
       })
     }
     return constructServerResponse({
@@ -52,7 +52,7 @@ function RetrieveFactory(relation: TableName) {
       }
       return constructServerResponse({
         error: InternalServerError,
-        data: res.data
+        data: null
       })
     }
     return constructServerResponse({
@@ -69,7 +69,7 @@ function ListFactory(relation: TableName) {
     if (res.error) {
       return constructServerResponse({
         error: InternalServerError,
-        data: res.data
+        data: null
       })
     }
     return constructServerResponse({
@@ -105,7 +105,7 @@ function PutFactory(relation: TableName) {
       }
       return constructServerResponse({
         error: InternalServerError,
-        data: res.data
+        data: null
       })
     }
     return constructServerResponse({
@@ -141,7 +141,7 @@ function PatchFactory(relation: TableName) {
       }
       return constructServerResponse({
         error: InternalServerError,
-        data: res.data
+        data: null
       })
     }
     return constructServerResponse({
@@ -174,7 +174,7 @@ function DeleteFactory(relation: TableName) {
       }
       return constructServerResponse({
         error: InternalServerError,
-        data: res.data
+        data: null
       })
     }
     return constructServerResponse({
