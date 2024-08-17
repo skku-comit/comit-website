@@ -10,9 +10,13 @@ const authOptions: NextAuthConfig = {
     signIn: ROUTES.LOGIN.url,
     newUser: ROUTES.SIGNUP.url
   },
+  session: {
+    strategy: 'jwt'
+  },
   providers: [
     Credentials({
       name: 'Credentials',
+
       credentials: {
         email: { label: 'Email', type: 'text', placeholder: 'Enter your Email' },
         password: { label: 'password', type: 'password' }
