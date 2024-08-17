@@ -1,56 +1,43 @@
 import { HttpStatusCode } from '../utils/httpConsts'
 import { ServerError } from '../utils/response'
+import { ServerErrorType } from './types'
 
 // Client error responses(400 ~ )
-const BadRequest: ServerError = {
-  errorType: 'BadRequest',
+export const BadRequest: ServerError = {
+  errorType: ServerErrorType.standard.BadRequest,
   status: HttpStatusCode.BadRequest
 }
-const UnAuthorized: ServerError = {
-  errorType: 'UnAuthorized',
+export const UnAuthorized: ServerError = {
+  errorType: ServerErrorType.standard.UnAuthorized,
   status: HttpStatusCode.UnAuthorized
 }
-const Forbidden: ServerError = {
-  errorType: 'Forbidden',
+export const Forbidden: ServerError = {
+  errorType: ServerErrorType.standard.Forbidden,
   status: HttpStatusCode.Forbidden
 }
-const NotFound: ServerError = {
-  errorType: 'Not Found',
+export const NotFound: ServerError = {
+  errorType: ServerErrorType.standard.NotFound,
   status: HttpStatusCode.NotFound
 }
-const MethodNotAllowed: ServerError = {
-  errorType: 'Method Not Allowed',
+export const MethodNotAllowed: ServerError = {
+  errorType: ServerErrorType.standard.MethodNotAllowed,
   status: HttpStatusCode.MethodNotAllowed
 }
-const NotAcceptable: ServerError = {
-  errorType: 'Not Acceptable',
+export const NotAcceptable: ServerError = {
+  errorType: ServerErrorType.standard.NotAcceptable,
   status: HttpStatusCode.NotAcceptable
 }
-const IamAteapot: ServerError = {
-  errorType: "I'm a tea pot",
+export const IamAteapot: ServerError = {
+  errorType: ServerErrorType.standard.IamAteapot,
   status: HttpStatusCode.IamAteapot
 }
 
 // Server error responses(500 ~ )
-const InternalServerError: ServerError = {
-  errorType: 'Internal Server Error',
+export const InternalServerError: ServerError = {
+  errorType: ServerErrorType.standard.InternalServerError,
   status: HttpStatusCode.InternalServerError
 }
-const NotImplemented: ServerError = {
-  errorType: 'NotImplemented',
+export const NotImplemented: ServerError = {
+  errorType: ServerErrorType.standard.NotImplemented,
   status: HttpStatusCode.NotImplemented
 }
-
-const httpError = {
-  BadRequest,
-  UnAuthorized,
-  Forbidden,
-  NotFound,
-  MethodNotAllowed,
-  NotAcceptable,
-  IamAteapot,
-  InternalServerError,
-  NotImplemented
-}
-
-export default httpError
