@@ -15,10 +15,8 @@ type StandardHttpErrorType =
   | 'NotImplemented'
 export type ServerErrorType =
   | StandardHttpErrorType
-  | 'InternalServerError'
   | 'StudySignup/AlreadySignedup'
   | 'StudySignup/EnrollmentPeriodExceeded'
-  | 'BadRequest'
 
 interface IServerErrorType {
   standard: Standard

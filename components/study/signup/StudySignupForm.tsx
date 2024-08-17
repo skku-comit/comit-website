@@ -11,6 +11,9 @@ import { MdOutlineSignalCellularAlt } from 'react-icons/md'
 import { RiStackOverflowLine } from 'react-icons/ri'
 import { z } from 'zod'
 
+import { ServerErrorType } from '@/app/api/errors/types'
+import { HttpStatusCode } from '@/app/api/utils/httpConsts'
+import { ServerResponse } from '@/app/api/utils/response'
 import LoadingSpinner from '@/components/common/LoadingSpinner'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -70,6 +73,7 @@ const StudySignupForm = ({ study }: StudySignupFormProps) => {
   const {
     handleSubmit,
     register,
+    setError,
     formState: { errors, isSubmitting }
   } = useForm<IStudySignupForm>({
     resolver: zodResolver(schema),
@@ -88,14 +92,32 @@ const StudySignupForm = ({ study }: StudySignupFormProps) => {
       study_id: study.id,
       applicationMotiv: formData.applicationMotiv
     }
-    const jsonData = JSON.stringify(requestBody)
     const res = await fetchData(API_ENDPOINTS.STUDY.SIGNUP(study.id), {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: jsonData
+      body: JSON.stringify(requestBody)
     })
-    console.log(res)
+
+    if (!res.ok) {
+      switch (res.status) {
+        case HttpStatusCode.BadRequest:
+          const json: ServerResponse = await res.json()
+          switch (json.error!.errorType) {
+            case ServerErrorType.StudySignup.Enrollment.AlreadySignedup:
+              setError('root', { type: ServerErrorType.StudySignup.Enrollment.AlreadySignedup })
+              alert('이미 신청 되었습니다.')
+              break
+
+            default:
+              throw new Error('Uncaught Error!')
+          }
+        default:
+          throw new Error('Uncaught Error!')
+      }
+    }
+    const data = await res.json()
+    console.log(data)
   }
 
   return (
