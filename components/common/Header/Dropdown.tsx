@@ -1,5 +1,4 @@
 'use client'
-import { signOut } from 'next-auth/react'
 import { IoChevronDownOutline } from 'react-icons/io5'
 
 import { Button } from '@/components/ui/button'
@@ -11,16 +10,21 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
+import { Route } from '@/constants/routes'
 import { cn } from '@/lib/utils'
 
-interface DropdownHeaderProps {
-  name: string
+import { SignOutButton } from './ClientAuthButton'
+
+interface HeaderDropdownProps {
+  displayText: string
+  items: {
+    route: Route
+    icon: React.JSX.Element
+  }[]
   isDarkMode: boolean
 }
 
-const dropdownItems = ['My Studies', 'My Profile', 'Log Out']
-
-export function DropdownHeader({ name, isDarkMode }: DropdownHeaderProps) {
+export function HeaderDropdown({ displayText, items, isDarkMode }: HeaderDropdownProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -28,18 +32,22 @@ export function DropdownHeader({ name, isDarkMode }: DropdownHeaderProps) {
           variant={isDarkMode ? 'default' : 'outline'}
           className={cn('justify-between', isDarkMode ? 'bg-black' : 'border-none hover:bg-transparent')}
         >
-          {name}
+          {displayText}
           <IoChevronDownOutline className="ml-2" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-32">
         <DropdownMenuGroup>
-          <DropdownMenuItem>My Studies</DropdownMenuItem>
-          <DropdownMenuItem>My Profile</DropdownMenuItem>
-          {/* TODO: ADMIN 추가하기 */}
+          {items.map((item) => (
+            <DropdownMenuItem key={item.route.name}>{item.route.name}</DropdownMenuItem>
+          ))}
+
+          {/* TODO: ADMIN Dropdown 추가하기 */}
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => signOut()}>Log out</DropdownMenuItem>
+        <SignOutButton className="w-full">
+          <DropdownMenuItem>Log out</DropdownMenuItem>
+        </SignOutButton>
       </DropdownMenuContent>
     </DropdownMenu>
   )
