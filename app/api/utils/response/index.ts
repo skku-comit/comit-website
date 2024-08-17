@@ -15,7 +15,7 @@ export interface ServerResponse {
 }
 
 export interface ServerResponseDTO {
-  error: ServerErrorDTO
+  error: ServerErrorDTO | null
   data: any
 }
 
