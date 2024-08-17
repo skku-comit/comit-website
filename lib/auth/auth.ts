@@ -62,11 +62,3 @@ const authOptions: NextAuthConfig = {
 }
 
 export const { handlers, signIn, signOut, auth } = NextAuth(authOptions)
-
-export const signInSA = async () => {
-  return await signIn()
-}
-
-export const signOutSA = async () => {
-  return await signOut()
-}
