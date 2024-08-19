@@ -3,7 +3,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import { signIn } from 'next-auth/react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -26,7 +25,6 @@ const schema = z.object({
 })
 
 export default function Login() {
-  const router = useRouter()
   const [showPassword, setShowPassword] = useState(false)
 
   const {
