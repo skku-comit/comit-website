@@ -85,7 +85,8 @@
               },
               "response": []
             }
-          ]
+          ],
+          "description": "#### User가 로그인하면 Access Token과 Refresh Token을 발급합니다.\n\n- Access Token\n    \n    - `access` 헤더에 저장됩니다\n        \n    - 30분 뒤 만료됩니다\n        \n- Refresh Token\n    \n    - Cookie에 저장됩니다\n        \n    - 24시간 뒤 만료됩니다\n        \n- 이메일이 존재하지 않으면 401\n    \n- 비밀번호가 틀리면 401"
         },
         {
           "name": "Logout",
@@ -128,7 +129,8 @@
               },
               "response": []
             }
-          ]
+          ],
+          "description": "#### User가 로그아웃하면 Refresh Token을 삭제합니다\n\n- 토큰이 없으면 400\n    \n- 만료된 토큰이면 401\n    \n- 리프레시 토큰이 아니면 400\n    \n- 토큰이 DB에 없으면 404"
         },
         {
           "name": "Reissue",
@@ -161,7 +163,8 @@
               },
               "response": []
             }
-          ]
+          ],
+          "description": "#### Refresh Token을 이용해 Access Token을 재발급합니다.\n\n- 토큰이 없으면 400\n    \n- 만료된 토큰이면 401\n    \n- 유효하지 않은 토큰이면 401\n    \n- 토큰이 DB에 없으면 404"
         },
         {
           "name": "Join",
@@ -314,7 +317,8 @@
               },
               "response": []
             }
-          ]
+          ],
+          "description": "#### 이름, 비밀번호, 전화번호, 학번, 이메일을 바탕으로 신규 User를 생성합니다.\n\n- 중복된 전화번호, 학번, 이메일인 경우 409\n    \n- 이메일, 전화번호, 학번 형식이 잘못 되면 400\n    \n- 비밀번호가 6자 미만이면 400"
         }
       ],
       "description": "회원가입, 로그인, 로그아웃, 토큰 재발급 등 Auth와 관련된 API입니다."
