@@ -19,6 +19,8 @@ interface Routes {
   CLUBROOM: Route
   LOGIN: Route
   SIGNUP: Route
+  MYSTUDY: Route
+  PROFILE: Route
 }
 
 export const ROUTES: Routes = {
@@ -51,5 +53,13 @@ export const ROUTES: Routes = {
   SIGNUP: {
     name: 'Sign up',
     url: '/signup'
+  },
+  MYSTUDY: {
+    name: 'My Studies',
+    url: '/mystudy'
+  },
+  PROFILE: {
+    name: 'My Profile',
+    url: '/profile'
   }
 }

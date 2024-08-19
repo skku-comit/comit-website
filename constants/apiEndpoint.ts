@@ -40,7 +40,6 @@ export const API_ENDPOINTS: ApiEndpoints = {
     LIST: { url: `${baseURL}/${API_PREFIX}/studies`, method: 'GET' },
     UPDATE: (id: string) => ({ url: `${baseURL}/${API_PREFIX}/studies/${id}`, method: 'PUT' }),
     DELETE: (id: string) => ({ url: `${baseURL}/${API_PREFIX}/studies/${id}`, method: 'DELETE' }),
-
     SIGNUP: (id: string) => ({ url: `${baseURL}/${API_PREFIX}/studies/${id}/signup`, method: 'POST' })
   },
   MEMBER: {

@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import { useState } from 'react'
-import { SubmitHandler,useForm } from 'react-hook-form'
+import { SubmitHandler, useForm } from 'react-hook-form'
 
 import Welcome from '@/public/welcome.svg'
 
@@ -58,7 +58,6 @@ export default function Signup() {
     // setError("");
     try {
       const response = await simulatedApi(data)
-      console.log('Success:', response)
       // 성공 로직 (success message 띄우거나 redirect, etc.)
     } catch (error: any) {
       console.error('Error:', error)
