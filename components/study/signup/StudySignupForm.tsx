@@ -112,6 +112,7 @@ const StudySignupForm = ({ study }: StudySignupFormProps) => {
             default:
               throw new Error('Uncaught Error!')
           }
+          break
         default:
           throw new Error('Uncaught Error!')
       }
