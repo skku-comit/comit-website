@@ -1,3 +1,7 @@
+import { notFound, redirect } from 'next/navigation'
+
+import { HttpStatusCode } from '@/app/api/utils/httpConsts'
+import { ServerResponse } from '@/app/api/utils/response'
 import SectionBanner from '@/components/common/SectionBanner'
 import StudySignupForm from '@/components/study/signup/StudySignupForm'
 import { API_ENDPOINTS } from '@/constants/apiEndpoint'
@@ -14,7 +18,16 @@ const StudySignup = async ({ params }: StudySignupProps) => {
   const { id } = params
 
   const res = await fetchData(API_ENDPOINTS.STUDY.RETRIEVE(id))
-  const study: Study = res.data
+  if (!res.ok) {
+    switch (res.status) {
+      case HttpStatusCode.NotFound:
+        notFound()
+      default:
+        redirect('/error')
+    }
+  }
+  const json: ServerResponse = await res.json()
+  const study: Study = json.data
 
   return (
     <>

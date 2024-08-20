@@ -1,9 +1,11 @@
 import Link from 'next/link'
+import { redirect } from 'next/navigation'
 import { FaSchoolFlag } from 'react-icons/fa6'
 import { IoPersonSharp } from 'react-icons/io5'
 import { MdOutlineSignalCellularAlt } from 'react-icons/md'
 import { RiStackOverflowLine } from 'react-icons/ri'
 
+import { ServerResponse } from '@/app/api/utils/response'
 import StudyCard from '@/components/common/StudyCard'
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { API_ENDPOINTS } from '@/constants/apiEndpoint'
@@ -15,7 +17,14 @@ import { Button } from '../ui/button'
 
 const StudyList = async () => {
   const res = await fetchData(API_ENDPOINTS.STUDY.LIST)
-  const studies: Study[] = res.data
+  if (!res.ok) {
+    switch (res.status) {
+      default:
+        redirect('/error')
+    }
+  }
+  const json: ServerResponse = await res.json()
+  const studies: Study[] = json.data
 
   return (
     <div className="mb-12 grid grid-cols-2 gap-6 max-sm:px-2 sm:gap-x-16 sm:gap-y-12 lg:grid-cols-4">

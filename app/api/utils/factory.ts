@@ -3,395 +3,184 @@ import { NextRequest } from 'next/server'
 import { Database } from '@/database.types'
 import { supabase } from '@/lib/supabase/client'
 
+import { NoIdProvided } from '../../../lib/errors/customErrors'
+import { InternalServerError, NotFound } from '../../../lib/errors/standardHttpErrors'
 import { HttpStatusCode } from './httpConsts'
-import { getNextResponse, ServerResponse } from './response'
+import { constructServerResponse } from './response'
 
 type TableName = keyof Database['public']['Tables']
 
 function CreateFactory(relation: TableName) {
   return async (req: NextRequest) => {
-    try {
-      const inputData: Database['public']['Tables'][TableName]['Insert'] = await req.json()
-      const res = await supabase.from(relation).insert(inputData).select('*').single()
+    type supabaseInsertType = Database['public']['Tables'][TableName]['Insert']
+    const inputData: supabaseInsertType = await req.json()
+    const res = await supabase.from(relation).insert(inputData).select('*').single()
 
-      if (res.error) {
-        const customErrorResponse: ServerResponse = {
-          error: {
-            errorType: `/${relation}-create`,
-            status: res.status,
-            title: res.error.message,
-            detail: res.error.details,
-            instance: `/${relation}`
-          },
-          data: res.data,
-          count: res.data,
-          status: res.status,
-          statusText: res.statusText
-        }
-        return getNextResponse(customErrorResponse)
-      }
-      return getNextResponse(res)
-    } catch (error) {
-      return getNextResponse({
-        error: {
-          errorType: `/${relation}-create`,
-          status: HttpStatusCode.InternalServerError,
-          title: 'Internal Server Error',
-          instance: `/${relation}`
-        },
-        data: null,
-        count: null,
-        status: HttpStatusCode.InternalServerError,
-        statusText: 'Internal Server Error'
+    if (res.error) {
+      return constructServerResponse({
+        error: InternalServerError,
+        data: null
       })
     }
+    return constructServerResponse({
+      error: null,
+      data: res.data
+    })
   }
 }
 
 function RetrieveFactory(relation: TableName) {
   return async (req: NextRequest) => {
-    try {
-      const { pathname } = req.nextUrl
-      const id = pathname.split('/').pop()
-      if (!id) {
-        const customErrorResponse: ServerResponse = {
-          error: {
-            errorType: `/${relation}-retrieve`,
-            status: HttpStatusCode.BadRequest,
-            title: 'No id was given',
-            detail: 'No id was given. Please specify the id.',
-            instance: `/${relation}`
-          },
-          data: null,
-          count: null,
-          status: HttpStatusCode.BadRequest,
-          statusText: 'Bad Request'
-        }
-        return getNextResponse(customErrorResponse)
-      }
-
-      const res = await supabase.from(relation).select('*').eq('id', id).single()
-
-      if (res.error) {
-        // Supabase will return 406(Not Acceptable) error if the result is not a single JSON object
-        if (res.status === HttpStatusCode.NotAcceptable) {
-          const customErrorResponse: ServerResponse = {
-            error: {
-              errorType: `/${relation}-retrieve`,
-              status: HttpStatusCode.NotFound,
-              title: res.error.message,
-              detail: res.error.details,
-              instance: `/${relation}/${id}`
-            },
-            data: res.data,
-            count: res.data,
-            status: HttpStatusCode.NotFound,
-            statusText: res.statusText
-          }
-          return getNextResponse(customErrorResponse)
-        }
-
-        const customErrorResponse: ServerResponse = {
-          error: {
-            errorType: `/${relation}-retrieve`,
-            status: res.status,
-            title: res.error.message,
-            detail: res.error.details,
-            instance: `/${relation}/${id}`
-          },
-          data: res.data,
-          count: res.data,
-          status: res.status,
-          statusText: res.statusText
-        }
-        return getNextResponse(customErrorResponse)
-      }
-      return getNextResponse(res)
-    } catch (error) {
-      return getNextResponse({
-        error: {
-          errorType: `/${relation}-retrieve`,
-          status: HttpStatusCode.InternalServerError,
-          title: 'Internal Server Error',
-          instance: `/${relation}`
-        },
-        data: null,
-        count: null,
-        status: HttpStatusCode.InternalServerError,
-        statusText: 'Internal Server Error'
+    const { pathname } = req.nextUrl
+    const id = pathname.split('/').pop()
+    if (!id) {
+      return constructServerResponse({
+        error: NoIdProvided,
+        data: null
       })
     }
+
+    const res = await supabase.from(relation).select('*').eq('id', id).single()
+
+    if (res.error) {
+      // 결과가 하나의 JSON 오브젝트가 아니면 Supabase는 406(Not Acceptable)을 반환합니다
+      if (res.status === HttpStatusCode.NotAcceptable && !res.data) {
+        return constructServerResponse({
+          error: NotFound,
+          data: null
+        })
+      }
+      return constructServerResponse({
+        error: InternalServerError,
+        data: null
+      })
+    }
+    return constructServerResponse({
+      error: null,
+      data: res.data
+    })
   }
 }
 
 function ListFactory(relation: TableName) {
   return async (req: NextRequest) => {
-    try {
-      const res = await supabase.from(relation).select('*')
+    const res = await supabase.from(relation).select('*')
 
-      if (res.error) {
-        const customErrorResponse: ServerResponse = {
-          error: {
-            errorType: `/${relation}-list`,
-            status: res.status,
-            title: res.error.message,
-            detail: res.error.details,
-            instance: `/${relation}`
-          },
-          data: res.data,
-          count: res.data,
-          status: res.status,
-          statusText: res.statusText
-        }
-        return getNextResponse(customErrorResponse)
-      }
-      return getNextResponse(res)
-    } catch (error) {
-      return getNextResponse({
-        error: {
-          errorType: `/${relation}-list`,
-          status: HttpStatusCode.InternalServerError,
-          title: 'Internal Server Error',
-          instance: `/${relation}`
-        },
-        data: null,
-        count: null,
-        status: HttpStatusCode.InternalServerError,
-        statusText: 'Internal Server Error'
+    if (res.error) {
+      return constructServerResponse({
+        error: InternalServerError,
+        data: null
       })
     }
+    return constructServerResponse({
+      error: null,
+      data: res.data
+    })
   }
 }
 
 function PutFactory(relation: TableName) {
   return async (req: NextRequest) => {
-    try {
-      const inputData: Database['public']['Tables'][TableName]['Update'] = await req.json()
+    type supabaseUpdateType = Database['public']['Tables'][TableName]['Update']
+    const inputData: supabaseUpdateType = await req.json()
 
-      const { pathname } = req.nextUrl
-      const id = pathname.split('/').pop()
-      if (!id) {
-        const customErrorResponse: ServerResponse = {
-          error: {
-            errorType: `/${relation}-put`,
-            status: HttpStatusCode.BadRequest,
-            title: 'No id was given',
-            detail: 'No id was given. Please specify the id.',
-            instance: `/${relation}`
-          },
-          data: null,
-          count: null,
-          status: HttpStatusCode.BadRequest,
-          statusText: 'Bad Request'
-        }
-        return getNextResponse(customErrorResponse)
-      }
-
-      const res = await supabase.from(relation).update(inputData).eq('id', id).single()
-
-      if (res.error) {
-        // Supabase will return 406(Not Acceptable) error if the result is not a single JSON object
-        if (res.status === HttpStatusCode.NotAcceptable) {
-          const customErrorResponse: ServerResponse = {
-            error: {
-              errorType: `/${relation}-put`,
-              status: HttpStatusCode.NotFound,
-              title: res.error.message,
-              detail: res.error.details,
-              instance: `/${relation}/${id}`
-            },
-            data: res.data,
-            count: res.data,
-            status: HttpStatusCode.NotFound,
-            statusText: res.statusText
-          }
-          return getNextResponse(customErrorResponse)
-        }
-
-        const customErrorResponse: ServerResponse = {
-          error: {
-            errorType: `/${relation}-put`,
-            status: res.status,
-            title: res.error.message,
-            detail: res.error.details,
-            instance: `/${relation}/${id}`
-          },
-          data: res.data,
-          count: res.data,
-          status: res.status,
-          statusText: res.statusText
-        }
-        return getNextResponse(customErrorResponse)
-      }
-      return getNextResponse(res)
-    } catch (error) {
-      return getNextResponse({
-        error: {
-          errorType: `/${relation}-put`,
-          status: HttpStatusCode.InternalServerError,
-          title: 'Internal Server Error',
-          instance: `/${relation}`
-        },
-        data: null,
-        count: null,
-        status: HttpStatusCode.InternalServerError,
-        statusText: 'Internal Server Error'
+    const { pathname } = req.nextUrl
+    const id = pathname.split('/').pop()
+    if (!id) {
+      return constructServerResponse({
+        error: NoIdProvided,
+        data: null
       })
     }
+
+    const res = await supabase.from(relation).update(inputData).eq('id', id).single()
+
+    if (res.error) {
+      // 결과가 하나의 JSON 오브젝트가 아니면 Supabase는 406(Not Acceptable)을 반환합니다
+      if (res.status === HttpStatusCode.NotAcceptable && !res.data) {
+        return constructServerResponse({
+          error: NotFound,
+          data: null
+        })
+      }
+      return constructServerResponse({
+        error: InternalServerError,
+        data: null
+      })
+    }
+    return constructServerResponse({
+      error: null,
+      data: res.data
+    })
   }
 }
 
 function PatchFactory(relation: TableName) {
   return async (req: NextRequest) => {
-    try {
-      const inputData: Database['public']['Tables'][TableName]['Update'] = await req.json()
+    type supabaseUpdateType = Database['public']['Tables'][TableName]['Update']
+    const inputData: supabaseUpdateType = await req.json()
 
-      const { pathname } = req.nextUrl
-      const id = pathname.split('/').pop()
-      if (!id) {
-        const customErrorResponse: ServerResponse = {
-          error: {
-            errorType: `/${relation}-patch`,
-            status: HttpStatusCode.BadRequest,
-            title: 'No id was given',
-            detail: 'No id was given. Please specify the id.',
-            instance: `/${relation}`
-          },
-          data: null,
-          count: null,
-          status: HttpStatusCode.BadRequest,
-          statusText: 'Bad Request'
-        }
-        return getNextResponse(customErrorResponse)
-      }
-
-      const res = await supabase.from(relation).update(inputData).eq('id', id).single()
-
-      if (res.error) {
-        // Supabase will return 406(Not Acceptable) error if the result is not a single JSON object
-        if (res.status === HttpStatusCode.NotAcceptable) {
-          const customErrorResponse: ServerResponse = {
-            error: {
-              errorType: `/${relation}-patch`,
-              status: HttpStatusCode.NotFound,
-              title: res.error.message,
-              detail: res.error.details,
-              instance: `/${relation}/${id}`
-            },
-            data: res.data,
-            count: res.data,
-            status: HttpStatusCode.NotFound,
-            statusText: res.statusText
-          }
-          return getNextResponse(customErrorResponse)
-        }
-
-        const customErrorResponse: ServerResponse = {
-          error: {
-            errorType: `/${relation}-patch`,
-            status: res.status,
-            title: res.error.message,
-            detail: res.error.details,
-            instance: `/${relation}/${id}`
-          },
-          data: res.data,
-          count: res.data,
-          status: res.status,
-          statusText: res.statusText
-        }
-        return getNextResponse(customErrorResponse)
-      }
-      return getNextResponse(res)
-    } catch (error) {
-      return getNextResponse({
-        error: {
-          errorType: `/${relation}-patch`,
-          status: HttpStatusCode.InternalServerError,
-          title: 'Internal Server Error',
-          instance: `/${relation}`
-        },
-        data: null,
-        count: null,
-        status: HttpStatusCode.InternalServerError,
-        statusText: 'Internal Server Error'
+    const { pathname } = req.nextUrl
+    const id = pathname.split('/').pop()
+    if (!id) {
+      return constructServerResponse({
+        error: NoIdProvided,
+        data: null
       })
     }
+
+    const res = await supabase.from(relation).update(inputData).eq('id', id).single()
+
+    if (res.error) {
+      // 결과가 하나의 JSON 오브젝트가 아니면 Supabase는 406(Not Acceptable)을 반환합니다
+      if (res.status === HttpStatusCode.NotAcceptable && !res.data) {
+        return constructServerResponse({
+          error: NotFound,
+          data: null
+        })
+      }
+      return constructServerResponse({
+        error: InternalServerError,
+        data: null
+      })
+    }
+    return constructServerResponse({
+      error: null,
+      data: res.data
+    })
   }
 }
 
 function DeleteFactory(relation: TableName) {
   return async (req: NextRequest) => {
-    try {
-      const { pathname } = req.nextUrl
-      const id = pathname.split('/').pop()
-      if (!id) {
-        const customErrorResponse: ServerResponse = {
-          error: {
-            errorType: `/${relation}-delete`,
-            status: HttpStatusCode.BadRequest,
-            title: 'No id was given',
-            detail: 'No id was given. Please specify the id.',
-            instance: `/${relation}`
-          },
-          data: null,
-          count: null,
-          status: HttpStatusCode.BadRequest,
-          statusText: 'Bad Request'
-        }
-        return getNextResponse(customErrorResponse)
-      }
-
-      const res = await supabase.from(relation).delete().eq('id', id).single()
-
-      if (res.error) {
-        // Supabase will return 406(Not Acceptable) error if the result is not a single JSON object
-        if (res.status === HttpStatusCode.NotAcceptable) {
-          const customErrorResponse: ServerResponse = {
-            error: {
-              errorType: `/${relation}-delete`,
-              status: HttpStatusCode.NotFound,
-              title: res.error.message,
-              detail: res.error.details,
-              instance: `/${relation}/${id}`
-            },
-            data: res.data,
-            count: res.data,
-            status: HttpStatusCode.NotFound,
-            statusText: res.statusText
-          }
-          return getNextResponse(customErrorResponse)
-        }
-
-        const customErrorResponse: ServerResponse = {
-          error: {
-            errorType: `/${relation}-delete`,
-            status: res.status,
-            title: res.error.message,
-            detail: res.error.details,
-            instance: `/${relation}/${id}`
-          },
-          data: res.data,
-          count: res.data,
-          status: res.status,
-          statusText: res.statusText
-        }
-        return getNextResponse(customErrorResponse)
-      }
-      return getNextResponse(res)
-    } catch (error) {
-      return getNextResponse({
-        error: {
-          errorType: `/${relation}-retrieve`,
-          status: HttpStatusCode.InternalServerError,
-          title: 'Internal Server Error',
-          instance: `/${relation}`
-        },
-        data: null,
-        count: null,
-        status: HttpStatusCode.InternalServerError,
-        statusText: 'Internal Server Error'
+    const { pathname } = req.nextUrl
+    const id = pathname.split('/').pop()
+    if (!id) {
+      return constructServerResponse({
+        error: NoIdProvided,
+        data: null
       })
     }
+
+    const res = await supabase.from(relation).delete().eq('id', id).single()
+
+    if (res.error) {
+      // 결과가 하나의 JSON 오브젝트가 아니면 Supabase는 406(Not Acceptable)을 반환합니다
+      if (res.status === HttpStatusCode.NotAcceptable && !res.data) {
+        return constructServerResponse({
+          error: NotFound,
+          data: null
+        })
+      }
+      return constructServerResponse({
+        error: InternalServerError,
+        data: null
+      })
+    }
+    return constructServerResponse({
+      error: null,
+      data: res.data
+    })
   }
 }
 

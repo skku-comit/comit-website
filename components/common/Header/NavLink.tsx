@@ -7,7 +7,9 @@ import { cn } from '@/lib/utils'
 
 const NavLink = ({ href, isDarkMode, text }: { href: string; isDarkMode: boolean; text: string }) => {
   const pathname = usePathname()
-  const ligthModeTextColorClass = pathname === href ? 'text-primary' : 'text-black'
+  const parentPathname = pathname.split('/')[1]
+  const hrefWithoutSlash = href.substring(1)
+  const ligthModeTextColorClass = parentPathname === hrefWithoutSlash ? 'text-primary' : 'text-black'
   const textColorClass = isDarkMode ? 'text-white' : ligthModeTextColorClass
 
   return (
