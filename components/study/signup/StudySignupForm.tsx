@@ -99,26 +99,30 @@ const StudySignupForm = ({ study }: StudySignupFormProps) => {
       body: JSON.stringify(requestBody)
     })
 
-    if (!res.ok) {
-      switch (res.status) {
-        case HttpStatusCode.BadRequest:
-          const json: ServerResponse = await res.json()
-          switch (json.error!.errorType) {
-            case ServerErrorType.StudySignup.Enrollment.AlreadySignedup:
-              setError('root', { type: ServerErrorType.StudySignup.Enrollment.AlreadySignedup })
-              alert('이미 신청 되었습니다.')
-              break
-
-            default:
-              throw new Error('Uncaught Error!')
-          }
-          break
-        default:
-          throw new Error('Uncaught Error!')
-      }
+    if (res.ok) {
+      const data = await res.json()
+      console.log(data)
+      alert(data)
+      // TODO: 신청 성공 시 처리 로직 추가
+      return
     }
-    const data = await res.json()
-    console.log(data)
+
+    switch (res.status) {
+      case HttpStatusCode.BadRequest:
+        const json: ServerResponse = await res.json()
+        switch (json.error!.errorType) {
+          case ServerErrorType.StudySignup.Enrollment.AlreadySignedup:
+            setError('root', { type: ServerErrorType.StudySignup.Enrollment.AlreadySignedup })
+            alert('이미 신청 되었습니다.')
+            break
+
+          default:
+            throw new Error('Uncaught Error!')
+        }
+        break
+      default:
+        throw new Error('Uncaught Error!')
+    }
   }
 
   return (
