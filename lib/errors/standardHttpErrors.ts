@@ -1,5 +1,5 @@
-import { HttpStatusCode } from '../utils/httpConsts'
-import { ServerError } from '../utils/response'
+import { HttpStatusCode } from '../../app/api/utils/httpConsts'
+import { ServerError } from '../../app/api/utils/response'
 import { ServerErrorType } from './types'
 
 // Client error responses(400 ~ )

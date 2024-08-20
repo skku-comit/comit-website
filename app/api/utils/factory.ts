@@ -3,8 +3,8 @@ import { NextRequest } from 'next/server'
 import { Database } from '@/database.types'
 import { supabase } from '@/lib/supabase/client'
 
-import { NoIdProvided } from '../errors/customErrors'
-import { InternalServerError, NotFound } from '../errors/standardHttpErrors'
+import { NoIdProvided } from '../../../lib/errors/customErrors'
+import { InternalServerError, NotFound } from '../../../lib/errors/standardHttpErrors'
 import { HttpStatusCode } from './httpConsts'
 import { constructServerResponse } from './response'
 

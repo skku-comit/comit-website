@@ -1,11 +1,11 @@
 import { NextRequest } from 'next/server'
 
-import { AlreadySignedup } from '@/app/api/errors/customErrors'
-import { InternalServerError } from '@/app/api/errors/standardHttpErrors'
 import { HttpStatusCode } from '@/app/api/utils/httpConsts'
 import { constructServerResponse } from '@/app/api/utils/response'
 import { StudySignupRequest } from '@/components/study/signup/StudySignupForm'
 import { Database } from '@/database.types'
+import { AlreadySignedup } from '@/lib/errors/customErrors'
+import { InternalServerError } from '@/lib/errors/standardHttpErrors'
 import { supabase } from '@/lib/supabase/client'
 
 const POST = async (req: NextRequest) => {

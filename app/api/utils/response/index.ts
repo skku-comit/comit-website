@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 
-import { type ServerErrorType } from '../../errors/types'
+import { type ServerErrorType } from '../../../../lib/errors/types'
 import { HttpStatusCode } from '../httpConsts'
 
 /**
