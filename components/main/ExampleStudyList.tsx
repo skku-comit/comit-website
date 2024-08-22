@@ -1,10 +1,10 @@
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 
-import { ServerResponse } from '@/app/api/utils/response'
 import StudyCard from '@/components/common/StudyCard'
 import { API_ENDPOINTS } from '@/constants/apiEndpoint'
 import { fetchData } from '@/lib/fetch'
+import { CustomResponse } from '@/lib/response'
 import { Study } from '@/types'
 
 export const ExampleStudyList = async (): Promise<React.JSX.Element> => {
@@ -15,7 +15,7 @@ export const ExampleStudyList = async (): Promise<React.JSX.Element> => {
         redirect('/error')
     }
   }
-  const json: ServerResponse = await res.json()
+  const json: CustomResponse = await res.json()
   const studyList: Study[] = json.data
   const exampleStudies = studyList.slice(0, 4)
 

@@ -12,7 +12,6 @@ import { RiStackOverflowLine } from 'react-icons/ri'
 import { z } from 'zod'
 
 import { HttpStatusCode } from '@/app/api/utils/httpConsts'
-import { ServerResponse } from '@/app/api/utils/response'
 import LoadingSpinner from '@/components/common/LoadingSpinner'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -21,8 +20,9 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { API_ENDPOINTS } from '@/constants/apiEndpoint'
-import { ServerErrorType } from '@/lib/errors/types'
 import { fetchData } from '@/lib/fetch'
+import { CustomResponse } from '@/lib/response'
+import { AlreadySignedup } from '@/lib/response/errors'
 import { Study } from '@/types'
 
 export interface StudySignupRequest {
@@ -109,10 +109,9 @@ const StudySignupForm = ({ study }: StudySignupFormProps) => {
 
     switch (res.status) {
       case HttpStatusCode.BadRequest:
-        const json: ServerResponse = await res.json()
+        const json: CustomResponse = await res.json()
         switch (json.error!.errorType) {
-          case ServerErrorType.StudySignup.Enrollment.AlreadySignedup:
-            setError('root', { type: ServerErrorType.StudySignup.Enrollment.AlreadySignedup })
+          case AlreadySignedup.errorType:
             alert('이미 신청 되었습니다.')
             break
 

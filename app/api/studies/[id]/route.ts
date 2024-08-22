@@ -1,12 +1,12 @@
 import { NextRequest } from 'next/server'
 
+import { InternalServerError, NotFound } from '@/lib/response/errors'
+import { NoIdProvided } from '@/lib/response/errors'
 import { supabase } from '@/lib/supabase/client'
 
-import { NoIdProvided } from '../../../../lib/errors/customErrors'
-import { InternalServerError, NotFound } from '../../../../lib/errors/standardHttpErrors'
+import { constructServerResponse } from '../../../../lib/response'
 import { api } from '../../utils/factory'
 import { HttpStatusCode } from '../../utils/httpConsts'
-import { constructServerResponse } from '../../utils/response'
 
 const GET = async (req: NextRequest) => {
   const { pathname } = req.nextUrl

@@ -1,12 +1,12 @@
 import { NextRequest } from 'next/server'
 
 import { Database } from '@/database.types'
+import { NoIdProvided } from '@/lib/response/errors'
+import { InternalServerError, NotFound } from '@/lib/response/errors'
 import { supabase } from '@/lib/supabase/client'
 
-import { NoIdProvided } from '../../../lib/errors/customErrors'
-import { InternalServerError, NotFound } from '../../../lib/errors/standardHttpErrors'
+import { constructServerResponse } from '../../../lib/response'
 import { HttpStatusCode } from './httpConsts'
-import { constructServerResponse } from './response'
 
 type TableName = keyof Database['public']['Tables']
 
