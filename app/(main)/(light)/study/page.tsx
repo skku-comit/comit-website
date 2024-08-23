@@ -42,27 +42,30 @@ export default function Study() {
         {/* <ImageSection /> */}
       </section>
 
-      <section className="flex w-4/5 max-w-[1300px] flex-col justify-start lg:w-[90%]">
-        <SectionBanner title="스터디 개요" description="" className="h-40 w-full" />
+      <div className="container max-w-[1200px]">
+        <section className="flex w-full max-w-[1300px] flex-col justify-start">
+          <SectionBanner title="스터디 개요" description="" className="h-40 w-full" />
 
-        <div className="flex w-full flex-col items-center justify-start gap-10 lg:flex-row lg:items-start lg:justify-between">
-          {descriptions.map((data) => (
-            <DescriptionCard key={data.description.title} description={data.description} hasButton={data.hasButton} />
-          ))}
-        </div>
-      </section>
+          <div className="flex w-full flex-col items-center justify-start gap-10 lg:flex-row lg:items-start lg:justify-between">
+            {descriptions.map((data) => (
+              <DescriptionCard key={data.description.title} description={data.description} hasButton={data.hasButton} />
+            ))}
+          </div>
+        </section>
 
-      <section className="mt-10 flex w-4/5 max-w-[1300px] justify-center lg:w-[90%]">
-        <SectionBanner
-          title="CoMit의 다양한 스터디 분반을 확인해보세요!"
-          description="* 스터디카드를 클릭하여 세부사항을 확인하세요"
-          titleClassName="text-3xl text-pretty text-center"
-          descriptionClassName="text-sm text-[#6A6D70] text-center text-pretty"
-        />
-      </section>
-      <Suspense fallback={<LoadingSpinner />}>
-        <StudyList />
-      </Suspense>
+        <section className="mt-10 flex w-full max-w-[1300px] justify-center">
+          <SectionBanner
+            title="CoMit의 다양한 스터디 분반을 확인해보세요!"
+            description="* 스터디카드를 클릭하여 세부사항을 확인하세요"
+            titleClassName="text-3xl text-pretty text-center"
+            descriptionClassName="text-sm text-[#6A6D70] text-center text-pretty"
+          />
+        </section>
+
+        <Suspense fallback={<LoadingSpinner />}>
+          <StudyList />
+        </Suspense>
+      </div>
     </>
   )
 }

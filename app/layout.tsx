@@ -8,6 +8,7 @@ import HeightPopulatedBody from '@/components/common/HeightPopulatedBody'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://comit-website.vercel.app'),
   title: 'COMIT',
   description: 'SKKU COMIT official website',
   icons: {
@@ -25,10 +26,9 @@ export const metadata: Metadata = {
         alt: 'COMIT Banner Image'
       }
     ],
-    url: 'https://comit-website.vercel.app/',
+    url: 'https://comit-website.vercel.app',
     type: 'website'
   },
-  viewport: 'width=device-width, initial-scale=1',
   keywords: ['SKKU', 'COMIT', 'Website', 'Official'],
   robots: 'index, follow'
 }
@@ -40,7 +40,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <HeightPopulatedBody headerHeight="4rem" footerHeight="5rem" className={inter.className}>
+      <HeightPopulatedBody headerHeight="5rem" footerHeight="5rem" className={inter.className}>
         {children}
       </HeightPopulatedBody>
     </html>

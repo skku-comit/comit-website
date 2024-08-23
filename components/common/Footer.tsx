@@ -14,7 +14,10 @@ export default function Footer({ height }: FooterProp) {
   const isDarkMode = ['/', '/signup', '/login'].includes(pathname)
 
   return (
-    <footer className={cn('relative w-full py-4', isDarkMode ? 'bg-gray-800' : 'bg-black')} style={{ height }}>
+    <footer
+      className={cn('w-full py-4', isDarkMode ? 'bg-gray-800' : 'bg-black')}
+      style={{ height, transform: 'translateY(-100%)' }}
+    >
       <div className="flex h-full w-full flex-col items-center justify-around">
         <div className="flex items-center gap-1 text-center text-sm font-light text-white">
           <FaRegCopyright />
