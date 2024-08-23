@@ -28,7 +28,6 @@ export interface FormData {
   password: string
   checkPassword: string
   consent: boolean
-  collapseButton: boolean
 }
 
 export default function Signup() {
@@ -48,18 +47,14 @@ export default function Signup() {
       email: '',
       password: '',
       checkPassword: '',
-      consent: false,
-      collapseButton: false
+      consent: false
     }
   })
 
-  const [watchPassword, watchCheckPassword, watchcollapseButton] = watch([
-    'password',
-    'checkPassword',
-    'collapseButton'
-  ])
+  const [watchPassword, watchCheckPassword] = watch(['password', 'checkPassword'])
   const [isCheckPasswordBlurred, setIsCheckPasswordBlurred] = useState(false)
   const [userName, setuserName] = useState('신규부원')
+  const [toggle, setToggle] = useState(false)
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     // setError("");
@@ -277,12 +272,11 @@ export default function Signup() {
                 id="toggle"
                 type="checkbox"
                 className="hidden"
-                {...register('collapseButton', {
-                  required: false
-                })}
+                checked={toggle}
+                onChange={() => setToggle((prevState) => !prevState)}
               />
               <label htmlFor="toggle" className="cursor-pointer">
-                {watchcollapseButton ? (
+                {toggle ? (
                   <span className="absolute right-0 top-[1px] bg-cover text-[10px] sm:top-0 sm:mb-0 sm:text-[16px] ">
                     &#9650;
                   </span>
@@ -298,7 +292,7 @@ export default function Signup() {
                 <p className="text-[8px] text-destructive sm:text-xs/[18px]">{errors.consent.message}</p>
               )}
             </div>
-            {watchcollapseButton && (
+            {toggle && (
               <div className="mt-2 box-border w-full rounded-lg bg-[#fff] p-2 text-[8px]/[15px] sm:mt-4 sm:p-4 sm:text-[12px]/[20px]">
                 <p className="text-[#222]">
                   성균관대 코딩동아리 &apos;코밋(Comit)&apos; 회원 등록을 위해 아래와 같이 개인정보를 수집 및
