@@ -26,10 +26,10 @@ export const metadata: Metadata = {
         alt: 'COMIT Banner Image'
       }
     ],
-    url: 'https://comit-website.vercel.app',
+    url: 'https://skku-comit.dev',
     type: 'website'
   },
-  keywords: ['SKKU', 'COMIT', 'Website', 'Official'],
+  keywords: ['SKKU', 'COMIT', 'Official'],
   robots: 'index, follow'
 }
 
