@@ -12,17 +12,15 @@ import { RiStackOverflowLine } from 'react-icons/ri'
 import { z } from 'zod'
 
 import { HttpStatusCode } from '@/app/api/utils/httpConsts'
-import { ServerResponse } from '@/app/api/utils/response'
 import LoadingSpinner from '@/components/common/LoadingSpinner'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { API_ENDPOINTS } from '@/constants/apiEndpoint'
-import { ServerErrorType } from '@/lib/errors/types'
 import { fetchData } from '@/lib/fetch'
+import { CustomResponse } from '@/lib/response'
+import { AlreadySignedup } from '@/lib/response/errors'
 import { Study } from '@/types'
 
 export interface StudySignupRequest {
@@ -73,7 +71,6 @@ const StudySignupForm = ({ study }: StudySignupFormProps) => {
   const {
     handleSubmit,
     register,
-    setError,
     formState: { errors, isSubmitting }
   } = useForm<IStudySignupForm>({
     resolver: zodResolver(schema),
@@ -109,10 +106,9 @@ const StudySignupForm = ({ study }: StudySignupFormProps) => {
 
     switch (res.status) {
       case HttpStatusCode.BadRequest:
-        const json: ServerResponse = await res.json()
+        const json: CustomResponse = await res.json()
         switch (json.error!.errorType) {
-          case ServerErrorType.StudySignup.Enrollment.AlreadySignedup:
-            setError('root', { type: ServerErrorType.StudySignup.Enrollment.AlreadySignedup })
+          case AlreadySignedup.errorType:
             alert('이미 신청 되었습니다.')
             break
 
@@ -129,7 +125,7 @@ const StudySignupForm = ({ study }: StudySignupFormProps) => {
     <form onSubmit={handleSubmit(onValid)} className="p-3">
       <div className="mb-5 flex flex-col divide-y divide-gray-300">
         <div className="pb-10">
-          <Subheader>1. 신청 스터디 확인</Subheader>
+          <Subheader>신청 스터디 확인</Subheader>
           <div className="mb-2 grid grid-cols-12 gap-5">
             {/* 스터디 사진과 기본 정보 */}
             <div className="col-span-12 block md:flex md:gap-5 lg:col-span-6">
@@ -198,56 +194,15 @@ const StudySignupForm = ({ study }: StudySignupFormProps) => {
           </div>
         </div>
 
-        <div className="py-10">
-          <Subheader>2. 개인정보 확인</Subheader>
-          {/* 참고 사항 */}
-          <div className="text-sm lg:space-y-1">
-            <p>* 아래 정보는 스터디장에게 제공됩니다</p>
-            <p>* Github 주소는 필수 정보가 아닙니다</p>
-          </div>
-
-          {/* 이름, 학번, Github 확인 */}
-          <div className="mt-5 flex flex-col gap-x-16 lg:flex-row">
-            {/* 이름 */}
-            <div className="flex items-center lg:block">
-              <Label className="me-3 text-xl font-bold lg:me-0">이름{'username' && ' *'}</Label>
-              <Input
-                disabled
-                {...register('username')}
-                className="text-md mt-2 h-10 w-40 rounded-xl bg-secondary text-center lg:h-14 lg:w-60 lg:text-lg"
-              />
-              {errors.username && <p className="text-destructive">{errors.username.message}</p>}
-            </div>
-            {/* 학번 */}
-            <div className="flex items-center lg:block">
-              <Label className="me-3 text-xl font-bold lg:me-0">학번{'studentId' && ' *'}</Label>
-              <Input
-                disabled
-                {...register('studentId')}
-                className="text-md mt-2 h-10 w-40 rounded-xl bg-secondary text-center lg:h-14 lg:w-60 lg:text-lg"
-              />
-              {errors.studentId && <p className="text-destructive">{errors.studentId.message}</p>}
-            </div>
-            {/* Github */}
-            <div className="flex items-center lg:block">
-              <Label className="me-3 text-xl font-bold lg:me-0">Github{!'github' && ' *'}</Label>
-              <Input
-                {...register('github')}
-                className="text-md mt-2 h-10 w-72 rounded-xl bg-secondary text-center lg:h-14 lg:w-96 lg:text-lg"
-              />
-              {errors.github && <p className="text-destructive">{errors.github.message}</p>}
-            </div>
-          </div>
-        </div>
-
         <div className="pt-10">
           <Subheader>
-            3. 지원동기 작성&nbsp;
+            지원동기 작성&nbsp;
             <span className="text-lg">(300자 이내)</span>
           </Subheader>
 
           <div>
             <div className="mb-3 text-sm lg:space-y-1">
+              <p>* 아래 정보는 스터디장에게 제공됩니다</p>
               <p>* 자신의 열정 및 스터디 참여 의지를 어필해주세요</p>
               <p>* 지원동기는 스터디 신청 기간동안 자유롭게 수정 가능합니다</p>
             </div>

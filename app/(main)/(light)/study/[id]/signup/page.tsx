@@ -1,11 +1,11 @@
 import { notFound, redirect } from 'next/navigation'
 
 import { HttpStatusCode } from '@/app/api/utils/httpConsts'
-import { ServerResponse } from '@/app/api/utils/response'
 import SectionBanner from '@/components/common/SectionBanner'
 import StudySignupForm from '@/components/study/signup/StudySignupForm'
 import { API_ENDPOINTS } from '@/constants/apiEndpoint'
 import { fetchData } from '@/lib/fetch'
+import { CustomResponse } from '@/lib/response'
 import { Study } from '@/types'
 
 interface StudySignupProps {
@@ -26,7 +26,7 @@ const StudySignup = async ({ params }: StudySignupProps) => {
         redirect('/error')
     }
   }
-  const json: ServerResponse = await res.json()
+  const json: CustomResponse = await res.json()
   const study: Study = json.data
 
   return (

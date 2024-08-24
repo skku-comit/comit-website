@@ -5,12 +5,12 @@ import { IoPersonSharp } from 'react-icons/io5'
 import { MdOutlineSignalCellularAlt } from 'react-icons/md'
 import { RiStackOverflowLine } from 'react-icons/ri'
 
-import { ServerResponse } from '@/app/api/utils/response'
 import StudyCard from '@/components/common/StudyCard'
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { API_ENDPOINTS } from '@/constants/apiEndpoint'
 import { ROUTES } from '@/constants/routes'
 import { fetchData } from '@/lib/fetch'
+import { CustomResponse } from '@/lib/response'
 import { Study } from '@/types'
 
 import { Button } from '../ui/button'
@@ -23,7 +23,7 @@ const StudyList = async () => {
         redirect('/error')
     }
   }
-  const json: ServerResponse = await res.json()
+  const json: CustomResponse = await res.json()
   const studies: Study[] = json.data
 
   return (

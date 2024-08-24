@@ -1,10 +1,10 @@
 import { redirect } from 'next/navigation'
 import React from 'react'
 
-import { ServerResponse } from '@/app/api/utils/response'
 import IntroduceMemeberCard from '@/components/about/IntroduceMemberCard'
 import { API_ENDPOINTS } from '@/constants/apiEndpoint'
 import { fetchData } from '@/lib/fetch'
+import { CustomResponse } from '@/lib/response'
 import { User } from '@/types'
 
 const MemberList = async (): Promise<React.JSX.Element> => {
@@ -15,7 +15,7 @@ const MemberList = async (): Promise<React.JSX.Element> => {
         redirect('/error')
     }
   }
-  const json: ServerResponse = await res.json()
+  const json: CustomResponse = await res.json()
   const members: User[] = json.data
 
   return (
