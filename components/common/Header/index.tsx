@@ -48,7 +48,7 @@ const LOGGED_IN_DRAWER_ITEMS = [
   { route: ROUTES.MYSTUDY, icon: <FaBook /> },
   { route: ROUTES.PROFILE, icon: <CgProfile /> }
 ]
-const Header = async ({ isDarkMode }: { isDarkMode: boolean }) => {
+const Header = async ({ isDarkMode = false, height }: { isDarkMode?: boolean; height: string }) => {
   const session = await auth()
 
   const DRAWER_ITEMS = session
@@ -58,9 +58,10 @@ const Header = async ({ isDarkMode }: { isDarkMode: boolean }) => {
   return (
     <header
       className={cn(
-        'fixed top-0 z-10 flex h-20 w-full justify-center px-4',
+        'fixed top-0 z-10 flex w-full justify-center px-4',
         isDarkMode ? 'bg-black' : 'border-b border-b-gray-200 bg-white'
       )}
+      style={{ height }}
     >
       <nav className="flex h-full w-screen max-w-[1280px] items-center justify-between">
         {/* Common: Logo */}
