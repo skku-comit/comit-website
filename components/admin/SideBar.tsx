@@ -19,7 +19,7 @@ function NavLink({ href, buttonName }: { href: string; buttonName: string }) {
 export default function SideBar({ className }: { className?: string }) {
   const path = usePathname()
   return (
-    <div className={cn(className, 'p-5 shadow-2xl')}>
+    <div className={cn(className, 'border-e p-5')}>
       <div className="flex flex-col gap-y-6">
         <Link
           href="/admin"

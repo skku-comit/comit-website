@@ -49,15 +49,15 @@ export default function RootLayout({
       <body className={cn(inter.className, 'h-screen')}>
         <Header height={headerHeight} />
         <div
-          className="flex h-auto flex-grow"
+          className="flex"
           style={{
             paddingTop: headerHeight,
             minHeight: '100%',
             paddingBottom: footerHeight
           }}
         >
-          <SideBar className="min-w-[280px] flex-1" />
-          <div className="flex-3">{children}</div>
+          <SideBar className="w-1/5" />
+          <div className="w-4/5">{children}</div>
         </div>
         <Footer height={footerHeight} />
       </body>
