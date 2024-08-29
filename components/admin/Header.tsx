@@ -1,9 +1,9 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
+import Profile from '@/components/common/Header/Profile'
 import ComitLogo from '@/public/comit.png'
 
-import DropdownMenuCheckboxes from './Dropdown'
 export default function Header({ height }: { height: string }) {
   return (
     <header
@@ -18,7 +18,7 @@ export default function Header({ height }: { height: string }) {
           </div>
         </Link>
         <div className="flex h-[40px] items-center justify-between">
-          <DropdownMenuCheckboxes />
+          <Profile />
         </div>
       </nav>
     </header>

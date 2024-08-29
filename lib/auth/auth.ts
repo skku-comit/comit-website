@@ -28,12 +28,14 @@ const authOptions: NextAuthConfig = {
             id: '1',
             name: 'b0xercat',
             email: 'comit@g.skku.edu',
+            isStaff: true,
             password: 'comit1234'
           },
           {
             id: '2',
             name: 'Test 2',
             email: 'test@g.skku.edu',
+            isStaff: false,
             password: 'comit1234'
           }
         ]
