@@ -15,20 +15,21 @@ function NavLink({ href, buttonName }: { href: string; buttonName: string }) {
     </Link>
   )
 }
-export default function SideBar() {
+
+export default function SideBar({ className }: { className?: string }) {
   const path = usePathname()
   return (
-    <div className="fixed left-0 top-20 flex h-full w-[300px] justify-center shadow-2xl">
-      <div className="mt-4 flex w-[50%] flex-col gap-4">
+    <div className={cn(className, 'p-5 shadow-2xl')}>
+      <div className="flex flex-col gap-y-6">
         <Link
           href="/admin"
           className={cn(
-            'flex items-center justify-start hover:text-primary',
+            'flex items-center justify-start gap-x-4 hover:text-primary',
             path === '/admin' ? 'text-primary' : 'text-black'
           )}
         >
           <IoHomeSharp size={28} />
-          <p className="pl-[17px] text-[20px] font-medium">Dashboard</p>
+          <p className="text-lg font-bold">Dashboard</p>
         </Link>
         <Link
           href="/admin/reviewing"

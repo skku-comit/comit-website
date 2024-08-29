@@ -4,9 +4,12 @@ import Link from 'next/link'
 import ComitLogo from '@/public/comit.png'
 
 import DropdownMenuCheckboxes from './Dropdown'
-export default function Header() {
+export default function Header({ height }: { height: string }) {
   return (
-    <header className="fixed top-0 z-10 flex h-20 w-full justify-center border-b border-b-gray-200 bg-white">
+    <header
+      className="fixed top-0 z-10 flex h-20 w-full justify-center border-b border-b-gray-200 bg-white"
+      style={{ height }}
+    >
       <nav className="flex h-full w-[96vw] items-center justify-between">
         <Link href="/">
           <div className="flex items-center gap-2">
