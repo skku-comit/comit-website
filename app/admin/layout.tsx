@@ -4,7 +4,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
 import Header from '@/components/admin/Header'
-import SideBar from '@/components/admin/SideBar'
+import SideBar from '@/components/admin/Sidebar'
 import Footer from '@/components/common/Footer'
 import { cn } from '@/lib/utils'
 
