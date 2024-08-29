@@ -21,9 +21,9 @@ const simulatedApi = (data: FormData): Promise<{ success: boolean; data?: FormDa
 }
 
 export interface FormData {
-  koreanName: string
+  username: string
   phoneNumber: string
-  studentID: string
+  studentId: string
   email: string
   password: string
   checkPassword: string
@@ -41,9 +41,9 @@ export default function Signup() {
   } = useForm<FormData>({
     mode: 'onBlur',
     defaultValues: {
-      koreanName: '',
+      username: '',
       phoneNumber: '',
-      studentID: '',
+      studentId: '',
       email: '',
       password: '',
       checkPassword: '',
@@ -93,18 +93,18 @@ export default function Signup() {
                 </label>
                 <div className="flex flex-grow flex-col gap-y-1 sm:gap-y-2">
                   <input
-                    {...register('koreanName', {
+                    {...register('username', {
                       required: '이름을 입력해주세요.',
-                      onBlur: () => setuserName(getValues().koreanName)
+                      onBlur: () => setuserName(getValues().username)
                     })}
                     placeholder="실명을 입력해주세요."
                     className={cn(
                       'box-border rounded-lg border border-solid border-[#d2d2d2] px-3 py-2 align-middle text-xs tracking-normal outline-none sm:w-full sm:px-4 sm:py-3 sm:text-sm/[22px]',
-                      errors.koreanName && 'border-2 border-destructive'
+                      errors.username && 'border-2 border-destructive'
                     )}
                   />
-                  {errors.koreanName && (
-                    <p className="block text-[8px] text-destructive sm:text-xs/[18px]">{errors.koreanName.message}</p>
+                  {errors.username && (
+                    <p className="block text-[8px] text-destructive sm:text-xs/[18px]">{errors.username.message}</p>
                   )}
                 </div>
               </div>
@@ -142,7 +142,7 @@ export default function Signup() {
                 </label>
                 <div className="flex flex-grow flex-col gap-y-1 sm:gap-y-2">
                   <input
-                    {...register('studentID', {
+                    {...register('studentId', {
                       required: '학번을 입력해주세요.',
                       pattern: {
                         value: /^20\d{8}$/,
@@ -152,11 +152,11 @@ export default function Signup() {
                     placeholder="예)20xx331582"
                     className={cn(
                       'box-border w-full rounded-lg border border-solid border-[#d2d2d2] px-3 py-2 align-middle text-xs tracking-normal outline-none sm:px-4 sm:py-3 sm:text-sm/[22px]',
-                      errors.studentID && 'border-2 border-destructive'
+                      errors.studentId && 'border-2 border-destructive'
                     )}
                   />
-                  {errors.studentID && (
-                    <p className="block text-[8px] text-destructive sm:text-xs/[18px]">{errors.studentID.message}</p>
+                  {errors.studentId && (
+                    <p className="block text-[8px] text-destructive sm:text-xs/[18px]">{errors.studentId.message}</p>
                   )}
                 </div>
               </div>
