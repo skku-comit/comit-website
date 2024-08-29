@@ -6,7 +6,7 @@ import { API_ENDPOINTS } from '@/constants/apiEndpoint'
 import { fetchData } from '@/lib/fetch'
 import { Study } from '@/types'
 
-export default async function Admin() {
+const Admin = async () => {
   // TODO: Admin Dashboard 만을 위한 API Endpoint 필요 - 스터디 및 유저의 간략한 정보만 받아오기
   const studyRes = await fetchData(API_ENDPOINTS.STUDY.LIST)
   if (!studyRes.ok) {
@@ -95,3 +95,5 @@ export default async function Admin() {
     </div>
   )
 }
+
+export default Admin

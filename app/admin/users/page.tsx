@@ -1,13 +1,14 @@
-'use client'
-
 import { columns } from '@/components/columns/Study'
 import { DataTable } from '@/components/common/DataTable'
 
-export default function Closed() {
+const UserManagePage = async () => {
   return (
-    <div className="flex flex-col gap-8 pt-24">
-      <div className="text-5xl font-semibold">Closed Studies</div>
+    <div className="p-5">
+      <h1 className="flex w-full items-center justify-start text-3xl font-extrabold">유저 관리</h1>
+
       <DataTable columns={columns} data={[]} />
     </div>
   )
 }
+
+export default UserManagePage
