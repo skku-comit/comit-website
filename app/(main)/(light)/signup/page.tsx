@@ -97,7 +97,7 @@ export default function Signup() {
                       required: '이름을 입력해주세요.',
                       onBlur: () => setuserName(getValues().username)
                     })}
-                    placeholder="실명을 입력해주세요."
+                    placeholder="실명을 입력해주세요"
                     className={cn(
                       'box-border rounded-lg border border-solid border-[#d2d2d2] px-3 py-2 align-middle text-xs tracking-normal outline-none sm:w-full sm:px-4 sm:py-3 sm:text-sm/[22px]',
                       errors.username && 'border-2 border-destructive'
@@ -117,13 +117,13 @@ export default function Signup() {
                 <div className="flex flex-grow flex-col gap-y-1 sm:gap-y-2">
                   <input
                     {...register('phoneNumber', {
-                      required: '휴대폰번호를 입력해주세요.',
+                      required: '휴대폰 번호를 입력해주세요.',
                       pattern: {
                         value: /^010\d{8}$/,
-                        message: '휴대폰번호를 다시 확인해주세요.'
+                        message: '휴대폰 번호를 다시 확인해주세요.'
                       }
                     })}
-                    placeholder="예)01012345678"
+                    placeholder="휴대폰 번호 입력 ('-' 제외 11자리)"
                     className={cn(
                       'box-border w-full rounded-lg border border-solid border-[#d2d2d2] px-3 py-2 align-middle text-xs tracking-normal outline-none sm:px-4 sm:py-3 sm:text-sm/[22px]',
                       errors.phoneNumber && 'border-2 border-destructive'
@@ -149,7 +149,7 @@ export default function Signup() {
                         message: '학번을 다시 확인해주세요.'
                       }
                     })}
-                    placeholder="예)20xx331582"
+                    placeholder="학번 입력 (숫자 10자)"
                     className={cn(
                       'box-border w-full rounded-lg border border-solid border-[#d2d2d2] px-3 py-2 align-middle text-xs tracking-normal outline-none sm:px-4 sm:py-3 sm:text-sm/[22px]',
                       errors.studentId && 'border-2 border-destructive'
@@ -176,7 +176,7 @@ export default function Signup() {
                           message: '이메일을 다시 확인해주세요.'
                         }
                       })}
-                      placeholder="예)comit10282@g.skku.edu"
+                      placeholder="이메일 주소 입력 (로그인용)"
                       className={cn(
                         'box-border w-full rounded-lg border border-solid border-[#d2d2d2] px-3 py-2 align-middle text-xs tracking-normal outline-none sm:px-4 sm:py-3 sm:text-sm/[22px]',
                         errors.email && 'border-2 border-destructive'
@@ -203,7 +203,7 @@ export default function Signup() {
                         message: '유효한 비밀번호를 입력해주세요.'
                       }
                     })}
-                    placeholder="영문자, 숫자 포함 8자 ~ 20자"
+                    placeholder="비밀번호 입력 (영문자, 숫자 포함 8~20자)"
                     type="password"
                     className={cn(
                       'box-border w-full rounded-lg border border-solid border-[#d2d2d2] px-3 py-2 align-middle text-xs tracking-normal outline-none sm:px-4 sm:py-3 sm:text-sm/[22px]',
@@ -227,7 +227,7 @@ export default function Signup() {
                       required: '비밀번호를 확인해주세요.',
                       onBlur: () => setIsCheckPasswordBlurred(true)
                     })}
-                    placeholder="비밀번호를 재입력해주세요."
+                    placeholder="비밀번호 재입력"
                     type="password"
                     className={cn(
                       'box-border w-full rounded-lg border border-solid border-[#d2d2d2] px-3 py-2 align-middle text-xs tracking-normal outline-none sm:px-4 sm:py-3 sm:text-sm/[22px]',
