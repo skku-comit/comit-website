@@ -1,5 +1,3 @@
-'use client'
-
 import { FaGithub, FaInstagram, FaRegCopyright } from 'react-icons/fa'
 import { RiKakaoTalkFill } from 'react-icons/ri'
 

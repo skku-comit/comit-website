@@ -1,4 +1,3 @@
-'use client'
 import { IoChevronDownOutline } from 'react-icons/io5'
 
 import { Button } from '@/components/ui/button'
