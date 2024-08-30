@@ -14,7 +14,7 @@ import {
 import React from 'react'
 
 import AdminDataTableHeader from '@/components/admin/DataTable/ControlHeader'
-import { DataTablePagination } from '@/components/common/DataTable/Pagenation'
+import { DataTablePagination } from '@/components/common/DataTable/Pagination'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 
 interface AdminDataTableProps<TData, TValue> {
