@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Clock } from 'lucide-react'
 import Image from 'next/image'
-import { SetStateAction, useRef, useState } from 'react'
+import { SetStateAction, useEffect, useRef, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { MdHelpOutline } from 'react-icons/md'
 import { z } from 'zod'
@@ -29,6 +29,10 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Textarea } from '@/components/ui/textarea'
 import { formatDateToTime } from '@/components/ui/time-picker-utils'
 import { TimePicker } from '@/components/ui/timepicker'
+import { API_ENDPOINTS } from '@/constants/apiEndpoint'
+import { fetchData } from '@/lib/fetch'
+import { TEST_USER_ID } from '@/lib/supabase/client'
+import { useSupabaseFile } from '@/lib/supabase/utils'
 import { Campus, Day, Level, Study } from '@/types'
 
 // TODO: 백엔드와 논의 후 schema 수정
@@ -80,18 +84,29 @@ export default function OpenStudy() {
       stack: []
     }
   })
+  const fileHandler = useSupabaseFile({ pathPrefix: 'image/study' })
+
   // TODO: study API 연결
-  const onSubmit = (data: StudyForm) => {
-    console.log(data)
+  const onSubmit = async (data: StudyForm) => {
     document.getElementById('closeDialog')?.click()
-  }
 
-  // Image
-  const [image, setImage] = useState<string>('')
+    if (!imageFile) return
+    const file = await fileHandler.upload(imageFile)
+    const fileUrl = file.supabaseFileData.url
+    console.log('파일을 임시로 업로드 했습니다.')
 
-  const fileRef = useRef<HTMLInputElement>(null)
-  const handleClick = () => {
-    fileRef?.current?.click()
+    const res = await fetchData(API_ENDPOINTS.STUDY.CREATE, {
+      body: JSON.stringify({
+        ...data,
+        imageSrc: fileUrl,
+        mentor: TEST_USER_ID // TODO: 서버 측에서 JWT 토큰으로 유저 정보 받아오기
+      })
+    })
+    if (!res.ok) {
+      await file.delete()
+      return
+    }
+    file.commit()
   }
   const handleFileChange = (e: React.ChangeEvent) => {
     const targetFiles = (e.target as HTMLInputElement).files as FileList
@@ -100,7 +115,21 @@ export default function OpenStudy() {
       const selectedFile = URL.createObjectURL(targetFiles[0])
       setImage(selectedFile)
       setValue('imageSrc', selectedFile)
+      setImageFile(targetFiles[0])
     }
+  }
+
+  // Image
+  const [imageFile, setImageFile] = useState<File | null>(null)
+  const [image, setImage] = useState<string>('')
+
+  useEffect(() => {
+    console.log(image)
+  }, [image])
+
+  const fileRef = useRef<HTMLInputElement>(null)
+  const handleClick = () => {
+    fileRef?.current?.click()
   }
   // Stack
   const watchedStacks: string[] = watch('stack')
