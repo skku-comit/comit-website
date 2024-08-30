@@ -1,37 +1,20 @@
-import { NextRequest } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 
-import { InternalServerError, NotFound } from '@/lib/response/errors'
-import { NoIdProvided } from '@/lib/response/errors'
+import { getIdFromPathnameOrErrorResponse } from '@/app/api/utils'
 import { supabase } from '@/lib/supabase/client'
+import { createSupabaseErrorResponse } from '@/lib/supabase/utils'
 
 import { constructServerResponse } from '../../../../lib/response'
 import { api } from '../../utils/factory'
-import { HttpStatusCode } from '../../utils/httpConsts'
 
 const GET = async (req: NextRequest) => {
   const { pathname } = req.nextUrl
-  const id = pathname.split('/').pop()
-  if (!id) {
-    return constructServerResponse({
-      error: NoIdProvided,
-      data: null
-    })
-  }
+  const id = getIdFromPathnameOrErrorResponse(pathname)
+  if (id instanceof NextResponse) return id
 
   const res = await supabase.from('study').select('*, mentor ( * )').eq('id', id).single()
 
-  if (res.error) {
-    if (res.status === HttpStatusCode.NotAcceptable) {
-      return constructServerResponse({
-        error: NotFound,
-        data: null
-      })
-    }
-    return constructServerResponse({
-      error: InternalServerError,
-      data: null
-    })
-  }
+  if (res.error) return createSupabaseErrorResponse(res)
   return constructServerResponse({
     error: null,
     data: res.data
