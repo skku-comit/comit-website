@@ -11,7 +11,6 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
 import { Route } from '@/constants/routes'
-import { cn } from '@/lib/utils'
 
 import { SignOutButton } from './ClientAuthButton'
 
@@ -21,17 +20,13 @@ interface HeaderDropdownProps {
     route: Route
     icon: React.JSX.Element
   }[]
-  isDarkMode: boolean
 }
 
-export function HeaderDropdown({ displayText, items, isDarkMode }: HeaderDropdownProps) {
+export function HeaderDropdown({ displayText, items }: HeaderDropdownProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
-          variant={isDarkMode ? 'default' : 'outline'}
-          className={cn('justify-between', isDarkMode ? 'bg-black' : 'border-none hover:bg-transparent')}
-        >
+        <Button variant={'outline'} className="justify-between border-none hover:bg-transparent">
           {displayText}
           <IoChevronDownOutline className="ml-2" />
         </Button>

@@ -1,23 +1,15 @@
 'use client'
-import { usePathname } from 'next/navigation'
+
 import { FaGithub, FaInstagram, FaRegCopyright } from 'react-icons/fa'
 import { RiKakaoTalkFill } from 'react-icons/ri'
-
-import { cn } from '@/lib/utils'
 
 interface FooterProp {
   height: string
 }
 
 export default function Footer({ height }: FooterProp) {
-  const pathname = usePathname()
-  const isDarkMode = ['/', '/signup', '/login'].includes(pathname)
-
   return (
-    <footer
-      className={cn('w-full py-4', isDarkMode ? 'bg-gray-800' : 'bg-black')}
-      style={{ height, transform: 'translateY(-100%)' }}
-    >
+    <footer className="w-full bg-black py-4" style={{ height, transform: 'translateY(-100%)' }}>
       <div className="flex h-full w-full flex-col items-center justify-around">
         <div className="flex items-center gap-1 text-center text-sm font-light text-white">
           <FaRegCopyright />
