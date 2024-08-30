@@ -11,14 +11,10 @@ import {
   SortingState,
   useReactTable
 } from '@tanstack/react-table'
-import Link from 'next/link'
 import React from 'react'
-import { IoAddCircleOutline } from 'react-icons/io5'
 
+import AdminDataTableHeader from '@/components/admin/DataTable/ControlHeader'
 import { DataTablePagination } from '@/components/common/DataTable/Pagenation'
-import { DataTableViewOptions } from '@/components/common/DataTable/ViewOptions'
-import { Button } from '@/components/ui/button'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 
 interface AdminDataTableProps<TData, TValue> {
@@ -50,32 +46,7 @@ export function AdminDataTable<TData, TValue>({ columns, data }: AdminDataTableP
 
   return (
     <div className="rounded-md border-none">
-      <div className="flex w-full items-center justify-between">
-        <div className="flex items-center gap-x-2">
-          <Select>
-            <SelectTrigger className="h-8 w-[180px]">
-              <SelectValue placeholder="삭제" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="delete">삭제</SelectItem>
-            </SelectContent>
-          </Select>
-
-          <Button asChild className="h-8 px-3">
-            <Link href="#">적용</Link>
-          </Button>
-        </div>
-
-        <div className="flex gap-x-2">
-          <Button asChild className="h-8 px-3">
-            <Link href="#">
-              <IoAddCircleOutline size={20} />
-              &nbsp;Create
-            </Link>
-          </Button>
-          <DataTableViewOptions table={table} />
-        </div>
-      </div>
+      <AdminDataTableHeader table={table} />
 
       <Table className="my-5">
         <TableHeader>
