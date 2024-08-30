@@ -21,9 +21,9 @@ const simulatedApi = (data: FormData): Promise<{ success: boolean; data?: FormDa
 }
 
 export interface FormData {
-  koreanName: string
+  username: string
   phoneNumber: string
-  studentID: string
+  studentId: string
   email: string
   password: string
   checkPassword: string
@@ -41,9 +41,9 @@ export default function Signup() {
   } = useForm<FormData>({
     mode: 'onBlur',
     defaultValues: {
-      koreanName: '',
+      username: '',
       phoneNumber: '',
-      studentID: '',
+      studentId: '',
       email: '',
       password: '',
       checkPassword: '',
@@ -93,18 +93,18 @@ export default function Signup() {
                 </label>
                 <div className="flex flex-grow flex-col gap-y-1 sm:gap-y-2">
                   <input
-                    {...register('koreanName', {
+                    {...register('username', {
                       required: '이름을 입력해주세요.',
-                      onBlur: () => setuserName(getValues().koreanName)
+                      onBlur: () => setuserName(getValues().username)
                     })}
-                    placeholder="실명을 입력해주세요."
+                    placeholder="실명을 입력해주세요"
                     className={cn(
                       'box-border rounded-lg border border-solid border-[#d2d2d2] px-3 py-2 align-middle text-xs tracking-normal outline-none sm:w-full sm:px-4 sm:py-3 sm:text-sm/[22px]',
-                      errors.koreanName && 'border-2 border-destructive'
+                      errors.username && 'border-2 border-destructive'
                     )}
                   />
-                  {errors.koreanName && (
-                    <p className="block text-[8px] text-destructive sm:text-xs/[18px]">{errors.koreanName.message}</p>
+                  {errors.username && (
+                    <p className="block text-[8px] text-destructive sm:text-xs/[18px]">{errors.username.message}</p>
                   )}
                 </div>
               </div>
@@ -117,13 +117,13 @@ export default function Signup() {
                 <div className="flex flex-grow flex-col gap-y-1 sm:gap-y-2">
                   <input
                     {...register('phoneNumber', {
-                      required: '휴대폰번호를 입력해주세요.',
+                      required: '휴대폰 번호를 입력해주세요.',
                       pattern: {
                         value: /^010\d{8}$/,
-                        message: '휴대폰번호를 다시 확인해주세요.'
+                        message: '휴대폰 번호를 다시 확인해주세요.'
                       }
                     })}
-                    placeholder="예)01012345678"
+                    placeholder="휴대폰 번호 입력 ('-' 제외 11자리)"
                     className={cn(
                       'box-border w-full rounded-lg border border-solid border-[#d2d2d2] px-3 py-2 align-middle text-xs tracking-normal outline-none sm:px-4 sm:py-3 sm:text-sm/[22px]',
                       errors.phoneNumber && 'border-2 border-destructive'
@@ -142,21 +142,21 @@ export default function Signup() {
                 </label>
                 <div className="flex flex-grow flex-col gap-y-1 sm:gap-y-2">
                   <input
-                    {...register('studentID', {
+                    {...register('studentId', {
                       required: '학번을 입력해주세요.',
                       pattern: {
                         value: /^20\d{8}$/,
                         message: '학번을 다시 확인해주세요.'
                       }
                     })}
-                    placeholder="예)20xx331582"
+                    placeholder="학번 입력 (숫자 10자)"
                     className={cn(
                       'box-border w-full rounded-lg border border-solid border-[#d2d2d2] px-3 py-2 align-middle text-xs tracking-normal outline-none sm:px-4 sm:py-3 sm:text-sm/[22px]',
-                      errors.studentID && 'border-2 border-destructive'
+                      errors.studentId && 'border-2 border-destructive'
                     )}
                   />
-                  {errors.studentID && (
-                    <p className="block text-[8px] text-destructive sm:text-xs/[18px]">{errors.studentID.message}</p>
+                  {errors.studentId && (
+                    <p className="block text-[8px] text-destructive sm:text-xs/[18px]">{errors.studentId.message}</p>
                   )}
                 </div>
               </div>
@@ -176,7 +176,7 @@ export default function Signup() {
                           message: '이메일을 다시 확인해주세요.'
                         }
                       })}
-                      placeholder="예)comit10282@g.skku.edu"
+                      placeholder="이메일 주소 입력 (로그인용)"
                       className={cn(
                         'box-border w-full rounded-lg border border-solid border-[#d2d2d2] px-3 py-2 align-middle text-xs tracking-normal outline-none sm:px-4 sm:py-3 sm:text-sm/[22px]',
                         errors.email && 'border-2 border-destructive'
@@ -203,7 +203,7 @@ export default function Signup() {
                         message: '유효한 비밀번호를 입력해주세요.'
                       }
                     })}
-                    placeholder="영문자, 숫자 포함 8자 ~ 20자"
+                    placeholder="비밀번호 입력 (영문자, 숫자 포함 8~20자)"
                     type="password"
                     className={cn(
                       'box-border w-full rounded-lg border border-solid border-[#d2d2d2] px-3 py-2 align-middle text-xs tracking-normal outline-none sm:px-4 sm:py-3 sm:text-sm/[22px]',
@@ -227,7 +227,7 @@ export default function Signup() {
                       required: '비밀번호를 확인해주세요.',
                       onBlur: () => setIsCheckPasswordBlurred(true)
                     })}
-                    placeholder="비밀번호를 재입력해주세요."
+                    placeholder="비밀번호 재입력"
                     type="password"
                     className={cn(
                       'box-border w-full rounded-lg border border-solid border-[#d2d2d2] px-3 py-2 align-middle text-xs tracking-normal outline-none sm:px-4 sm:py-3 sm:text-sm/[22px]',
