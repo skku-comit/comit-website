@@ -46,7 +46,7 @@ export function AdminDataTable<TData, TValue>({ columns, data }: AdminDataTableP
 
   return (
     <div className="rounded-md border-none">
-      <AdminDataTableHeader table={table} />
+      <AdminDataTableHeader table={table} getRowSelection={() => rowSelection} />
 
       <Table className="my-5">
         <TableHeader>

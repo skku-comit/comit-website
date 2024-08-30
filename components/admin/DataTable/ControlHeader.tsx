@@ -1,39 +1,25 @@
 import { Table } from '@tanstack/react-table'
-import Link from 'next/link'
+import React from 'react'
 import { IoAddCircleOutline } from 'react-icons/io5'
 
+import RowAction from '@/components/admin/DataTable/RowAction'
 import { DataTableViewOptions } from '@/components/common/DataTable/ViewOptions'
 import { Button } from '@/components/ui/button'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 
-interface AdminDataTableHeaderProps<TData> {
-  table: Table<TData>
+interface ControlHeaderProps {
+  table: Table<any>
+  getRowSelection: () => Record<string, boolean>
 }
 
-const AdminDataTableHeader = ({ table }: AdminDataTableHeaderProps<any>) => {
+const ControlHeader = ({ table, getRowSelection }: ControlHeaderProps) => {
   return (
     <div className="flex w-full items-center justify-between">
-      <div className="flex items-center gap-x-2">
-        <Select>
-          <SelectTrigger className="h-8 w-[180px]">
-            <SelectValue placeholder="삭제" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="delete">삭제</SelectItem>
-          </SelectContent>
-        </Select>
-
-        <Button asChild className="h-8 px-3">
-          <Link href="#">적용</Link>
-        </Button>
-      </div>
+      <RowAction table={table} getRowSelection={getRowSelection} />
 
       <div className="flex gap-x-2">
-        <Button asChild className="h-8 px-3">
-          <Link href="#">
-            <IoAddCircleOutline size={20} />
-            &nbsp;Create
-          </Link>
+        <Button className="h-8 px-3">
+          <IoAddCircleOutline size={20} />
+          &nbsp;Create
         </Button>
         <DataTableViewOptions table={table} />
       </div>
@@ -41,4 +27,4 @@ const AdminDataTableHeader = ({ table }: AdminDataTableHeaderProps<any>) => {
   )
 }
 
-export default AdminDataTableHeader
+export default ControlHeader
