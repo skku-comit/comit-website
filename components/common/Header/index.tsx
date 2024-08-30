@@ -14,7 +14,6 @@ import { Button } from '@/components/ui/button'
 import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from '@/components/ui/drawer'
 import { Route, ROUTES } from '@/constants/routes'
 import { auth } from '@/lib/auth/auth'
-import { cn } from '@/lib/utils'
 import ComitLogo from '@/public/comit.png'
 
 import { SignOutButton } from './ClientAuthButton'
@@ -48,7 +47,7 @@ const LOGGED_IN_DRAWER_ITEMS = [
   { route: ROUTES.MYSTUDY, icon: <FaBook /> },
   { route: ROUTES.PROFILE, icon: <CgProfile /> }
 ]
-const Header = async ({ isDarkMode = false, height }: { isDarkMode?: boolean; height: string }) => {
+const Header = async ({ height }: { height: string }) => {
   const session = await auth()
 
   const DRAWER_ITEMS = session
@@ -57,10 +56,7 @@ const Header = async ({ isDarkMode = false, height }: { isDarkMode?: boolean; he
 
   return (
     <header
-      className={cn(
-        'fixed top-0 z-10 flex w-full justify-center px-4',
-        isDarkMode ? 'bg-black' : 'border-b border-b-gray-200 bg-white'
-      )}
+      className="fixed top-0 z-10 flex w-full justify-center border-b border-b-gray-200 bg-white px-4"
       style={{ height }}
     >
       <nav className="flex h-full w-screen max-w-[1280px] items-center justify-between">
@@ -68,35 +64,27 @@ const Header = async ({ isDarkMode = false, height }: { isDarkMode?: boolean; he
         <Link href="/">
           <div className="flex items-center gap-2">
             <Image src={ComitLogo} alt="comit_logo" width={32} height={37} />
-            <p className={cn('text-xl font-semibold', isDarkMode && 'text-white')}>CoMit</p>
+            <p className="text-xl font-semibold">CoMit</p>
           </div>
         </Link>
 
         {/* Desktop: Links */}
         <div className="hidden md:flex md:gap-10 lg:gap-24">
           {NAVLINK_ROUTES.map((route) => (
-            <NavLink key={route.name} href={route.url} isDarkMode={isDarkMode} text={route.name} />
+            <NavLink key={route.name} href={route.url} text={route.name} />
           ))}
         </div>
 
         {/* Desktop: Sign up / Log in  or User */}
         <div className="hidden h-[40px] w-[270px] items-center justify-between md:flex lg:w-[310px]">
           {session ? (
-            <HeaderDropdown
-              displayText={session.user?.name as string}
-              isDarkMode={isDarkMode}
-              items={LOGGED_IN_DRAWER_ITEMS}
-            />
+            <HeaderDropdown displayText={session.user?.name as string} items={LOGGED_IN_DRAWER_ITEMS} />
           ) : (
             <>
               <Button className="h-[36px] w-[120px] text-base lg:w-[140px]" asChild>
                 <Link href="/signup">Sign up</Link>
               </Button>
-              <Button
-                className={cn('h-[36px] w-[120px] text-base lg:w-[140px]', isDarkMode && 'border-white')}
-                variant="outline"
-                asChild
-              >
+              <Button className="h-[36px] w-[120px] text-base lg:w-[140px]" variant="outline" asChild>
                 <Link href="/login">Log in</Link>
               </Button>
             </>
@@ -107,14 +95,9 @@ const Header = async ({ isDarkMode = false, height }: { isDarkMode?: boolean; he
       {/* Mobile: Drawer */}
       <Drawer>
         <DrawerTrigger>
-          <GiHamburgerMenu className={cn('md:hidden', isDarkMode && 'text-white')} size={32} />
+          <GiHamburgerMenu className="md:hidden" size={32} />
         </DrawerTrigger>
-        <DrawerContent
-          className={cn(
-            'hide-scrollbar flex flex-col gap-4 px-6 pb-6',
-            isDarkMode && 'border-gray-900 bg-black text-slate-200'
-          )}
-        >
+        <DrawerContent className="hide-scrollbar flex flex-col gap-4 px-6 pb-6">
           {DRAWER_ITEMS.map((e) => (
             <DrawerItem key={e.route.name} route={e.route} icon={e.icon} />
           ))}

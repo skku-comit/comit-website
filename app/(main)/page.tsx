@@ -53,7 +53,7 @@ const Home = () => {
   }
 
   return (
-    <div className="flex w-full flex-col items-center bg-black text-center text-white">
+    <div className="flex w-full flex-col items-center text-center">
       <div className="container">
         <div className="relative flex h-[90vh] items-start justify-center md:items-center">
           <div className="flex items-center justify-between max-lg:flex-col lg:flex-row-reverse">
@@ -81,15 +81,14 @@ const Home = () => {
               </span>
               <div className="w-full">
                 <div className="flex items-center justify-between sm:justify-between lg:justify-normal lg:gap-16">
-                  <p className="text-left text-4xl font-extrabold leading-[70px] text-primary xl:text-[70px]">
+                  <p className="text-left text-4xl font-semibold leading-[70px] text-primary xl:text-[70px]">
                     {renderAnimatedText(['C', 'O', 'M', 'I', 'T'])}
                   </p>
                   {/* Todo: 동아리 신청 기간을 백엔드로 부터 받아, disabled 기간을 설정 */}
                   <Motion animation={fadeIn()}>
                     <Button
                       disabled
-                      variant="outline"
-                      className="h-12 w-40 rounded-2xl border-none text-xl font-semibold text-black max-sm:h-10 max-sm:w-32 max-sm:text-lg xl:h-[60px] xl:w-[190px] xl:text-[24px]"
+                      className="h-12 w-40 rounded-2xl border-none text-xl font-semibold lg:h-[60px] lg:w-[190px] lg:text-[24px]"
                     >
                       <Link href={ROUTES.SIGNUP.url}>신규 지원</Link>
                     </Button>
@@ -113,7 +112,7 @@ const Home = () => {
                   transition: { duration: 0.25 }
                 }}
               >
-                <BsChevronCompactDown size={84} className="text-white" />
+                <BsChevronCompactDown size={84} />
               </Motion>
             </Motion>
           </div>
@@ -170,14 +169,10 @@ const Home = () => {
             <Suspense fallback={<LoadingSpinner />}>
               <ExampleStudyList />
             </Suspense>
-            <Button
-              variant="outline"
-              className="relative my-12 w-64 border-none py-6 text-lg font-semibold text-gray-600 xl:hidden"
-              asChild
-            >
+            <Button className="relative my-12 w-64 border-none py-6 text-lg font-semibold xl:hidden" asChild>
               <Link href="/study">
                 스터디 더보기
-                <FaAngleRight className="absolute right-12 text-gray-600" />
+                <FaAngleRight className="absolute right-12" />
               </Link>
             </Button>
           </div>

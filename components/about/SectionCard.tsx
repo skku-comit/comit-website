@@ -13,7 +13,6 @@ export interface SectionCardProps {
   backgroundColor?: string
 }
 
-
 export default function SectionCard({ id, title, description, image, backgroundColor }: SectionCardProps) {
   const [isHovered, setIsHovered] = useState(false)
 
