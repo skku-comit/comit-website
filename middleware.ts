@@ -18,5 +18,5 @@ export async function middleware(request: NextRequest) {
 
 // Warning: Caanot use CallExpressions! (고유 문자열 사용하기)
 export const config = {
-  matcher: ['/mystudy/:path*', '/profile/:path*']
+  matcher: ['/mystudy/:path*', '/profile/:path*', '/admin/:path*']
 }

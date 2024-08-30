@@ -2,23 +2,13 @@
 
 import { ColumnDef } from '@tanstack/react-table'
 
-import { Study } from '@/types'
+import { User } from '@/types'
 
-export const columns: ColumnDef<Study>[] = [
+export const columns: ColumnDef<User>[] = [
   {
     accessorKey: 'id',
     header: () => <div className="ml-8 min-w-24 text-left text-base">ID</div>,
     cell: ({ row }) => <p className="ml-8 text-base">{row.original.id}</p>
-  },
-  {
-    accessorKey: 'title',
-    header: () => <div className="min-w-96 text-left text-base">Title</div>,
-    cell: ({ row }) => <div className="text-base">{row.original.title}</div>
-  },
-  {
-    accessorKey: 'mentor',
-    header: () => <div className="min-w-48 text-base">Mentor</div>,
-    cell: ({ row }) => <p className="text-center text-base">{row.original.mentor}</p>
   },
   {
     accessorKey: 'createDate',

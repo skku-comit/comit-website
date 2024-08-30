@@ -1,4 +1,4 @@
-import './globals.css'
+import '../globals.css'
 
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
@@ -8,7 +8,7 @@ import HeightPopulatedBody from '@/components/common/HeightPopulatedBody'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://comit-website.vercel.app'),
+  metadataBase: new URL('https://skku-comit.dev'),
   title: 'COMIT',
   description: 'SKKU COMIT official website',
   icons: {

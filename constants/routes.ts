@@ -7,23 +7,8 @@ export interface Route {
   name: string
   url: string
 }
-interface StudyRoutes {
-  index: Route
-  SIGNUP: (id: string) => Route
-}
 
-interface Routes {
-  HOME: Route
-  ABOUT: Route
-  STUDY: StudyRoutes
-  CLUBROOM: Route
-  LOGIN: Route
-  SIGNUP: Route
-  MYSTUDY: Route
-  PROFILE: Route
-}
-
-export const ROUTES: Routes = {
+export const ROUTES = {
   HOME: {
     name: 'Home',
     url: '/'
@@ -61,5 +46,19 @@ export const ROUTES: Routes = {
   PROFILE: {
     name: 'My Profile',
     url: '/profile'
+  },
+  ADMIN: {
+    DASHBOARD: {
+      name: 'Dashboard',
+      url: '/admin'
+    },
+    STUDY: {
+      name: 'Study Management',
+      url: '/admin/studies'
+    },
+    USER: {
+      name: 'User Management',
+      url: '/admin/users'
+    }
   }
 }
