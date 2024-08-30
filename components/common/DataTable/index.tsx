@@ -13,7 +13,7 @@ import {
 } from '@tanstack/react-table'
 import React from 'react'
 
-import { DataTablePagination } from '@/components/common/DataTable/Pagenation'
+import { DataTablePagination } from '@/components/common/DataTable/Pagination'
 import { DataTableViewOptions } from '@/components/common/DataTable/ViewOptions'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 
