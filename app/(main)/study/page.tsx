@@ -35,14 +35,8 @@ const descriptions: DescriptionCardProps[] = [
 ]
 export default function Study() {
   return (
-    <>
-      {/* Todo : svg 이미지 구해서 넣기, span 지우기*/}
-      <section className="flex h-96 w-full items-center justify-center bg-primary">
-        <span className="text-4xl text-white">이미지 자리</span>
-        {/* <ImageSection /> */}
-      </section>
-
-      <div className="container max-w-[1200px]">
+    <div className="flex justify-center">
+      <div className="max-w-[1200px]">
         <section className="flex w-full max-w-[1300px] flex-col justify-start">
           <SectionBanner title="스터디 개요" description="" className="h-40 w-full" />
 
@@ -66,6 +60,6 @@ export default function Study() {
           <StudyList />
         </Suspense>
       </div>
-    </>
+    </div>
   )
 }
