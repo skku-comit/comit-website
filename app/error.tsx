@@ -1,10 +1,8 @@
 'use client'
 
-interface ErrorProps {
-  statusCode: number
-}
+import { ErrorProps } from 'next/error'
 
-const ErrorPage: React.FC<ErrorProps> = ({ statusCode }) => {
+const ErrorPage = ({ statusCode }: ErrorProps) => {
   return (
     <div>
       <h1>{statusCode ? `An error ${statusCode} occurred` : 'An error occurred'}</h1>

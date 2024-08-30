@@ -16,7 +16,9 @@ import { Study } from '@/types'
 import { Button } from '../ui/button'
 
 const StudyList = async () => {
-  const res = await fetchData(API_ENDPOINTS.STUDY.LIST)
+  const res = await fetchData(API_ENDPOINTS.STUDY.LIST, {
+    cache: 'no-cache'
+  })
   if (!res.ok) {
     switch (res.status) {
       default:
