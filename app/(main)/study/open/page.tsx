@@ -32,7 +32,7 @@ import { TimePicker } from '@/components/ui/timepicker'
 import { API_ENDPOINTS } from '@/constants/apiEndpoint'
 import { fetchData } from '@/lib/fetch'
 import { TEST_USER_ID } from '@/lib/supabase/client'
-import { useSupabaseFile } from '@/lib/supabase/utils'
+import { useSupabaseFile } from '@/lib/supabase/hooks'
 import { Campus, Day, Level, Study } from '@/types'
 
 // TODO: 백엔드와 논의 후 schema 수정
