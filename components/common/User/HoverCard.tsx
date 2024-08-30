@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge'
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card'
 import { User } from '@/types'
 
-export const UserHoverCard = ({ user }: { user: User }) => {
+const UserHoverCard = ({ user }: { user: User }) => {
   return (
     <HoverCard>
       <HoverCardTrigger className="hover:underline">@{user.name}</HoverCardTrigger>
