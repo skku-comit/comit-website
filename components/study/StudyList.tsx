@@ -27,10 +27,10 @@ const StudyList = async () => {
   const studies: Study[] = json.data
 
   return (
-    <div className="mb-12 grid grid-cols-2 gap-6 max-sm:px-2 sm:gap-x-16 sm:gap-y-12 lg:grid-cols-4">
+    <div className="mb-12 grid grid-cols-2 gap-3 max-sm:px-2 sm:gap-y-12 lg:grid-cols-4 lg:gap-x-14">
       {studies.map((study) => (
         <Dialog key={study.id}>
-          <DialogTrigger>
+          <DialogTrigger className="flex justify-center">
             <StudyCard
               study={study}
               imageSize={144}

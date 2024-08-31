@@ -22,7 +22,7 @@ const descriptions: DescriptionCardProps[] = [
   {
     description: {
       title: '스터디 참여',
-      question: '혼자 공부하기 지루하고 막막했던적 있으신가요?',
+      question: '혼자 공부하기 막막했던 적 있으신가요?',
       recommendation: 'CoMit 부원들이 개설한 다양한 스터디에 참여하여 함께 공부하며 성장하세요!',
       notices: [
         '스터디원 선정은 스터디장의 권한입니다',
@@ -35,23 +35,24 @@ const descriptions: DescriptionCardProps[] = [
 ]
 export default function Study() {
   return (
-    <div className="flex justify-center">
-      <div className="max-w-[1200px]">
-        <section className="flex w-full max-w-[1300px] flex-col justify-start">
+    <div className="flex flex-col items-center justify-center">
+      <div className="flex max-w-7xl flex-col items-center justify-center">
+        <section className="flex w-full max-w-6xl flex-col justify-start">
           <SectionBanner title="스터디 개요" description="" className="h-40 w-full" />
 
-          <div className="flex w-full flex-col items-center justify-start gap-10 lg:flex-row lg:items-start lg:justify-between">
+          <div className="flex w-full flex-col items-center justify-start gap-10 px-3 lg:flex-row lg:items-start lg:justify-between">
             {descriptions.map((data) => (
               <DescriptionCard key={data.description.title} description={data.description} hasButton={data.hasButton} />
             ))}
           </div>
         </section>
 
-        <section className="mt-10 flex w-full max-w-[1300px] justify-center">
+        <section className="mt-10 flex w-full max-w-7xl justify-center">
           <SectionBanner
-            title="CoMit의 다양한 스터디 분반을 확인해보세요!"
+            title="CoMit의 스터디 분반들을 확인해보세요!"
             description="* 스터디카드를 클릭하여 세부사항을 확인하세요"
-            titleClassName="text-3xl text-pretty text-center"
+            titleClassName="text-lg
+           sm:text-3xl text-pretty text-center"
             descriptionClassName="text-sm text-[#6A6D70] text-center text-pretty"
           />
         </section>
