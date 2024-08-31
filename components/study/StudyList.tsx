@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { FaSchoolFlag } from 'react-icons/fa6'
 import { IoPersonSharp } from 'react-icons/io5'
@@ -8,12 +7,10 @@ import { RiStackOverflowLine } from 'react-icons/ri'
 import StudyCard from '@/components/common/StudyCard'
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { API_ENDPOINTS } from '@/constants/apiEndpoint'
-import { ROUTES } from '@/constants/routes'
 import { fetchData } from '@/lib/fetch'
 import { CustomResponse } from '@/lib/response'
 import { Study } from '@/types'
 
-import { Button } from '../ui/button'
 
 const StudyList = async () => {
   const res = await fetchData(API_ENDPOINTS.STUDY.LIST)
@@ -72,11 +69,12 @@ const StudyList = async () => {
               <div className="whitespace-pre-line break-keep" dangerouslySetInnerHTML={{ __html: study.description }} />
             </div>
 
-            <div className="flex justify-end">
+            {/* 24-2 수강신청 기능 미사용으로 인한 주석 처리 */}
+            {/* <div className="flex justify-end">
               <Button asChild>
                 <Link href={ROUTES.STUDY.SIGNUP(study.id).url}>신청하기</Link>
               </Button>
-            </div>
+            </div> */}
           </DialogContent>
         </Dialog>
       ))}
