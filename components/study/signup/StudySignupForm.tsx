@@ -5,7 +5,6 @@ import Image from 'next/image'
 import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { FaSchoolFlag } from 'react-icons/fa6'
-import { IoPersonSharp } from 'react-icons/io5'
 import { IoTime } from 'react-icons/io5'
 import { MdOutlineSignalCellularAlt } from 'react-icons/md'
 import { RiStackOverflowLine } from 'react-icons/ri'
@@ -13,9 +12,9 @@ import { z } from 'zod'
 
 import { HttpStatusCode } from '@/app/api/utils/httpConsts'
 import LoadingSpinner from '@/components/common/LoadingSpinner'
+import UserHoverCard from '@/components/common/User/HoverCard'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card'
 import { Textarea } from '@/components/ui/textarea'
 import { API_ENDPOINTS } from '@/constants/apiEndpoint'
 import { fetchData } from '@/lib/fetch'
@@ -143,17 +142,7 @@ const StudySignupForm = ({ study }: StudySignupFormProps) => {
               <div className="space-y-1 rounded-lg bg-slate-100 p-5 md:bg-transparent md:p-0 lg:space-y-3">
                 <h4 className="mb-3 text-xl font-bold">{study.title}</h4>
 
-                <HoverCard>
-                  <HoverCardTrigger>
-                    <p className="flex items-center gap-2 underline-offset-2 hover:underline">
-                      <IoPersonSharp />@{study.mentor.name}
-                    </p>
-                  </HoverCardTrigger>
-                  <HoverCardContent>
-                    {/* TODO: 스터디장 정보 기입 */}
-                    Not Implemented
-                  </HoverCardContent>
-                </HoverCard>
+                <UserHoverCard user={study.mentor} />
                 <p className="flex items-center gap-2">
                   <FaSchoolFlag />
                   {study.campus}

@@ -6,13 +6,12 @@ import { Database } from '@/database.types'
 import { constructServerResponse } from '@/lib/response'
 import { AlreadySignedup } from '@/lib/response/errors'
 import { InternalServerError } from '@/lib/response/errors'
-import { supabase } from '@/lib/supabase/client'
+import { supabase, TEST_USER_ID } from '@/lib/supabase/client'
 
 const POST = async (req: NextRequest) => {
   const data: StudySignupRequest = await req.json()
   type InsertType = Database['public']['Tables']['study-participants']['Insert']
   // TODO: user id는 헤더에서 받기
-  const TEST_USER_ID = 'b5851320-d374-4763-a7d5-70427602c19b' // 손장수
   const inputData: InsertType = {
     study_id: data.study_id,
     profile_id: TEST_USER_ID,

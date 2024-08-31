@@ -5,6 +5,7 @@ import { MdOutlineSignalCellularAlt } from 'react-icons/md'
 import { RiStackOverflowLine } from 'react-icons/ri'
 
 import StudyCard from '@/components/common/StudyCard'
+import UserHoverCard from '@/components/common/User/HoverCard'
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { API_ENDPOINTS } from '@/constants/apiEndpoint'
 import { fetchData } from '@/lib/fetch'
@@ -13,7 +14,9 @@ import { Study } from '@/types'
 
 
 const StudyList = async () => {
-  const res = await fetchData(API_ENDPOINTS.STUDY.LIST)
+  const res = await fetchData(API_ENDPOINTS.STUDY.LIST, {
+    cache: 'no-cache'
+  })
   if (!res.ok) {
     switch (res.status) {
       default:
@@ -50,8 +53,7 @@ const StudyList = async () => {
               <div className="flex gap-6">
                 <div className="flex items-center gap-2">
                   <IoPersonSharp />
-                  {/* TODO: Factory 함수 탈피해서 mentor(User)의 name 컬럼도 join 해서 가져오는 레포지토리 생성 */}
-                  {/* {study.mentor.name} */}
+                  <UserHoverCard user={study.mentor} />
                 </div>
                 <div className="flex items-center gap-2">
                   <MdOutlineSignalCellularAlt />

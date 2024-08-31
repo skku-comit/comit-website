@@ -1,27 +1,21 @@
-import { NextRequest } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 
 import { Database } from '@/database.types'
 import { NoIdProvided } from '@/lib/response/errors'
-import { InternalServerError, NotFound } from '@/lib/response/errors'
 import { supabase } from '@/lib/supabase/client'
+import { createSupabaseErrorResponse } from '@/lib/supabase/utils'
 
 import { constructServerResponse } from '../../../lib/response'
-import { HttpStatusCode } from './httpConsts'
 
 type TableName = keyof Database['public']['Tables']
 
 function CreateFactory(relation: TableName) {
-  return async (req: NextRequest) => {
+  return async (req: NextRequest): Promise<NextResponse> => {
     type supabaseInsertType = Database['public']['Tables'][TableName]['Insert']
     const inputData: supabaseInsertType = await req.json()
     const res = await supabase.from(relation).insert(inputData).select('*').single()
 
-    if (res.error) {
-      return constructServerResponse({
-        error: InternalServerError,
-        data: null
-      })
-    }
+    if (res.error) return createSupabaseErrorResponse(res)
     return constructServerResponse({
       error: null,
       data: res.data
@@ -30,7 +24,7 @@ function CreateFactory(relation: TableName) {
 }
 
 function RetrieveFactory(relation: TableName) {
-  return async (req: NextRequest) => {
+  return async (req: NextRequest): Promise<NextResponse> => {
     const { pathname } = req.nextUrl
     const id = pathname.split('/').pop()
     if (!id) {
@@ -42,19 +36,7 @@ function RetrieveFactory(relation: TableName) {
 
     const res = await supabase.from(relation).select('*').eq('id', id).single()
 
-    if (res.error) {
-      // 결과가 하나의 JSON 오브젝트가 아니면 Supabase는 406(Not Acceptable)을 반환합니다
-      if (res.status === HttpStatusCode.NotAcceptable && !res.data) {
-        return constructServerResponse({
-          error: NotFound,
-          data: null
-        })
-      }
-      return constructServerResponse({
-        error: InternalServerError,
-        data: null
-      })
-    }
+    if (res.error) return createSupabaseErrorResponse(res)
     return constructServerResponse({
       error: null,
       data: res.data
@@ -63,15 +45,10 @@ function RetrieveFactory(relation: TableName) {
 }
 
 function ListFactory(relation: TableName) {
-  return async (req: NextRequest) => {
+  return async (req: NextRequest): Promise<NextResponse> => {
     const res = await supabase.from(relation).select('*')
 
-    if (res.error) {
-      return constructServerResponse({
-        error: InternalServerError,
-        data: null
-      })
-    }
+    if (res.error) return createSupabaseErrorResponse(res)
     return constructServerResponse({
       error: null,
       data: res.data
@@ -80,7 +57,7 @@ function ListFactory(relation: TableName) {
 }
 
 function PutFactory(relation: TableName) {
-  return async (req: NextRequest) => {
+  return async (req: NextRequest): Promise<NextResponse> => {
     type supabaseUpdateType = Database['public']['Tables'][TableName]['Update']
     const inputData: supabaseUpdateType = await req.json()
 
@@ -95,19 +72,7 @@ function PutFactory(relation: TableName) {
 
     const res = await supabase.from(relation).update(inputData).eq('id', id).single()
 
-    if (res.error) {
-      // 결과가 하나의 JSON 오브젝트가 아니면 Supabase는 406(Not Acceptable)을 반환합니다
-      if (res.status === HttpStatusCode.NotAcceptable && !res.data) {
-        return constructServerResponse({
-          error: NotFound,
-          data: null
-        })
-      }
-      return constructServerResponse({
-        error: InternalServerError,
-        data: null
-      })
-    }
+    if (res.error) return createSupabaseErrorResponse(res)
     return constructServerResponse({
       error: null,
       data: res.data
@@ -116,7 +81,7 @@ function PutFactory(relation: TableName) {
 }
 
 function PatchFactory(relation: TableName) {
-  return async (req: NextRequest) => {
+  return async (req: NextRequest): Promise<NextResponse> => {
     type supabaseUpdateType = Database['public']['Tables'][TableName]['Update']
     const inputData: supabaseUpdateType = await req.json()
 
@@ -131,19 +96,7 @@ function PatchFactory(relation: TableName) {
 
     const res = await supabase.from(relation).update(inputData).eq('id', id).single()
 
-    if (res.error) {
-      // 결과가 하나의 JSON 오브젝트가 아니면 Supabase는 406(Not Acceptable)을 반환합니다
-      if (res.status === HttpStatusCode.NotAcceptable && !res.data) {
-        return constructServerResponse({
-          error: NotFound,
-          data: null
-        })
-      }
-      return constructServerResponse({
-        error: InternalServerError,
-        data: null
-      })
-    }
+    if (res.error) return createSupabaseErrorResponse(res)
     return constructServerResponse({
       error: null,
       data: res.data
@@ -152,7 +105,7 @@ function PatchFactory(relation: TableName) {
 }
 
 function DeleteFactory(relation: TableName) {
-  return async (req: NextRequest) => {
+  return async (req: NextRequest): Promise<NextResponse> => {
     const { pathname } = req.nextUrl
     const id = pathname.split('/').pop()
     if (!id) {
@@ -164,19 +117,7 @@ function DeleteFactory(relation: TableName) {
 
     const res = await supabase.from(relation).delete().eq('id', id).single()
 
-    if (res.error) {
-      // 결과가 하나의 JSON 오브젝트가 아니면 Supabase는 406(Not Acceptable)을 반환합니다
-      if (res.status === HttpStatusCode.NotAcceptable && !res.data) {
-        return constructServerResponse({
-          error: NotFound,
-          data: null
-        })
-      }
-      return constructServerResponse({
-        error: InternalServerError,
-        data: null
-      })
-    }
+    if (res.error) return createSupabaseErrorResponse(res)
     return constructServerResponse({
       error: null,
       data: res.data
