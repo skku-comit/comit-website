@@ -28,7 +28,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Textarea } from '@/components/ui/textarea'
 import { formatDateToTime } from '@/components/ui/time-picker-utils'
 import { TimePicker } from '@/components/ui/timepicker'
-import { API_ENDPOINTS } from '@/constants/apiEndpoint'
+import { API_ENDPOINTS, ApiEndpoint } from '@/constants/apiEndpoint'
 import { fetchData } from '@/lib/fetch'
 import { TEST_USER_ID } from '@/lib/supabase/client'
 import { useSupabaseFile } from '@/lib/supabase/hooks'
@@ -94,7 +94,7 @@ export default function OpenStudy() {
     const fileUrl = file.supabaseFileData.url
     console.log('파일을 임시로 업로드 했습니다.')
 
-    const res = await fetchData(API_ENDPOINTS.STUDY.CREATE, {
+    const res = await fetchData(API_ENDPOINTS.STUDY.CREATE as ApiEndpoint, {
       body: JSON.stringify({
         ...data,
         imageSrc: fileUrl,

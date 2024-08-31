@@ -10,30 +10,7 @@ export interface ApiEndpoint {
   method: HttpMethod
 }
 
-interface StudyRoutes {
-  CREATE: ApiEndpoint
-  RETRIEVE: (id: string) => ApiEndpoint
-  LIST: ApiEndpoint
-  UPDATE: (id: string) => ApiEndpoint
-  DELETE: (id: string) => ApiEndpoint
-
-  SIGNUP: (id: string) => ApiEndpoint
-}
-
-interface MemberRoutes {
-  CREATE: ApiEndpoint
-  RETRIEVE: (id: string) => ApiEndpoint
-  LIST: ApiEndpoint
-  UPDATE: (id: string) => ApiEndpoint
-  DELETE: (id: string) => ApiEndpoint
-}
-
-interface ApiEndpoints {
-  STUDY: StudyRoutes
-  MEMBER: MemberRoutes
-}
-
-export const API_ENDPOINTS: ApiEndpoints = {
+export const API_ENDPOINTS = {
   STUDY: {
     CREATE: { url: `${baseURL}/${API_PREFIX}/studies`, method: 'POST' },
     RETRIEVE: (id: string) => ({ url: `${baseURL}/${API_PREFIX}/studies/${id}`, method: 'GET' }),
@@ -48,5 +25,11 @@ export const API_ENDPOINTS: ApiEndpoints = {
     LIST: { url: `${baseURL}/${API_PREFIX}/users`, method: 'GET' },
     UPDATE: (id: string) => ({ url: `${baseURL}/${API_PREFIX}/users/${id}`, method: 'PUT' }),
     DELETE: (id: string) => ({ url: `${baseURL}/${API_PREFIX}/users/${id}`, method: 'DELETE' })
+  },
+  AUTH: {
+    LOGIN: { url: `${baseURL}/${API_PREFIX}/login`, method: 'POST' },
+    LOGOUT: { url: `${baseURL}/${API_PREFIX}/logout`, method: 'POST' },
+    REISSUE: { url: `${baseURL}/${API_PREFIX}/reissue`, method: 'POST' },
+    SIGNUP: { url: `${baseURL}/${API_PREFIX}/join`, method: 'POST' }
   }
 }

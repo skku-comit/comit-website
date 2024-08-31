@@ -2,13 +2,13 @@ import Link from 'next/link'
 import { redirect } from 'next/navigation'
 
 import StudyCard from '@/components/common/StudyCard'
-import { API_ENDPOINTS } from '@/constants/apiEndpoint'
+import { API_ENDPOINTS, ApiEndpoint } from '@/constants/apiEndpoint'
 import { fetchData } from '@/lib/fetch'
 import { CustomResponse } from '@/lib/response'
 import { Study } from '@/types'
 
 export const ExampleStudyList = async (): Promise<React.JSX.Element> => {
-  const res = await fetchData(API_ENDPOINTS.STUDY.LIST)
+  const res = await fetchData(API_ENDPOINTS.STUDY.LIST as ApiEndpoint)
   if (!res.ok) {
     switch (res.status) {
       default:

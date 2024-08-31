@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { API_ENDPOINTS } from '@/constants/apiEndpoint'
+import { API_ENDPOINTS, ApiEndpoint } from '@/constants/apiEndpoint'
 import { fetchData } from '@/lib/fetch'
 import { CustomResponseDTO } from '@/lib/response'
 import { Study } from '@/types'
@@ -29,7 +29,7 @@ const EditableCell: React.FC<EditableCellProps> = ({ fieldName, row, readonly })
     e.preventDefault()
     setValue(inputValue) // Optimistic update
     setOpen(false)
-    const res = await fetchData(API_ENDPOINTS.STUDY.UPDATE(id), {
+    const res = await fetchData(API_ENDPOINTS.STUDY.UPDATE(id) as ApiEndpoint, {
       body: JSON.stringify({ [fieldName]: inputValue }),
       cache: 'no-cache'
     })
