@@ -1,7 +1,11 @@
 import NextAuth, { NextAuthConfig, User } from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
 
+import { HttpStatusCode } from '@/app/api/utils/httpConsts'
+import { API_ENDPOINTS, ApiEndpoint } from '@/constants/apiEndpoint'
 import { ROUTES } from '@/constants/routes'
+import { fetchData } from '@/lib/fetch'
+import { CustomResponseDTO } from '@/lib/response'
 
 export const BASE_AUTH_PATH = '/api/auth'
 
@@ -21,30 +25,24 @@ const authOptions: NextAuthConfig = {
         email: { label: 'Email', type: 'text', placeholder: 'Enter your Email' },
         password: { label: 'password', type: 'password' }
       },
-      async authorize(credentials, request): Promise<User | null> {
-        // Todo: 서버에서 로그인 완료 후 AT, RT 받아와서 저장하는 로직
-        const dummy_users = [
-          {
-            id: '1',
-            name: 'b0xercat',
-            email: 'comit@g.skku.edu',
-            isStaff: true,
-            password: 'comit1234'
-          },
-          {
-            id: '2',
-            name: 'Test 2',
-            email: 'test@g.skku.edu',
-            isStaff: false,
-            password: 'comit1234'
+      async authorize(credentials): Promise<User | null> {
+        const res = await fetchData(API_ENDPOINTS.AUTH.LOGIN as ApiEndpoint, {
+          body: JSON.stringify({ email: credentials.email, password: credentials.password })
+        })
+        const data = (await res.json()) as CustomResponseDTO
+        if (!res.ok) {
+          switch (res.status) {
+            case HttpStatusCode.UnAuthorized:
+              return null
+            default:
+              throw new Error(`Unhandled Error: ${data.error?.errorType} ${data.error?.detail}`)
           }
-        ]
-
-        const user = dummy_users.find(
-          (user) => user.email === credentials.email && user.password === credentials.password
-        )
-
-        return user ? { id: user.id, name: user.name, email: user.email } : null
+        }
+        const userInitialData = data.data
+        if (!userInitialData) return null
+        const { id, name } = userInitialData
+        // const user: CustomUser = await getFullUserDataWithToken()
+        return { id, name }
       }
     })
   ],

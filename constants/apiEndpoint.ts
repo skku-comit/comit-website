@@ -26,6 +26,10 @@ export const API_ENDPOINTS = {
     UPDATE: (id: string) => ({ url: `${baseURL}/${API_PREFIX}/users/${id}`, method: 'PUT' }),
     DELETE: (id: string) => ({ url: `${baseURL}/${API_PREFIX}/users/${id}`, method: 'DELETE' })
   },
+  PROFILE: {
+    url: `${baseURL}/${API_PREFIX}/users/profile`,
+    method: 'GET'
+  },
   AUTH: {
     LOGIN: { url: `${baseURL}/${API_PREFIX}/login`, method: 'POST' },
     LOGOUT: { url: `${baseURL}/${API_PREFIX}/logout`, method: 'POST' },
