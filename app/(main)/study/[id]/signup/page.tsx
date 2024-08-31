@@ -30,12 +30,12 @@ const StudySignup = async ({ params }: StudySignupProps) => {
   const study: Study = json.data
 
   return (
-    <>
+    <div className="flex flex-col items-center">
       <SectionBanner title="스터디 참여 신청" />
-      <div className="max-w-[1280px]">
+      <div className="max-w-5xl">
         <StudySignupForm study={study} />
       </div>
-    </>
+    </div>
   )
 }
 

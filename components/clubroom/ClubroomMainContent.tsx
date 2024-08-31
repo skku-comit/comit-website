@@ -31,7 +31,7 @@ const clubroomCarouselData = [clubroomImage1, clubroomImage2, clubroomImage3, cl
 
 export default function ClubroomMainContent() {
   return (
-    <div className="flex items-center justify-center gap-8 space-x-reverse max-md:flex-col xl:gap-12">
+    <div className="mb-12 flex items-center justify-center gap-8 space-x-reverse max-md:flex-col xl:gap-12">
       <div className="flex flex-col gap-8">
         <Motion animation={fadeInLeft()}>
           <ClburoomInfoCard {...clubroomInfoCardData[0]} />
