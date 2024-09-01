@@ -9,12 +9,14 @@ const NavLink = ({
   href,
   icon,
   children,
-  className
+  className,
+  onClick
 }: {
   href: string
   icon: React.ReactNode
   children: React.ReactNode
   className?: string
+  onClick?: () => void
 }) => {
   const pathname = usePathname()
   const [_, parentPathname, childPathname] = pathname.split('/')
@@ -27,6 +29,7 @@ const NavLink = ({
     <Link
       href={href}
       className={cn('flex items-center justify-start gap-x-4 hover:text-primary', activeClass, className)}
+      onClick={onClick}
     >
       {icon}
       <p className="text-lg font-bold">{children}</p>
