@@ -1,7 +1,7 @@
 import { SessionProvider } from 'next-auth/react'
 import React from 'react'
 
-import { auth, BASE_AUTH_PATH } from './auth'
+import { auth } from './auth'
 
 interface AuthProviderProps {
   children: React.ReactNode
@@ -9,17 +9,17 @@ interface AuthProviderProps {
 
 const AuthProvider = async ({ children }: AuthProviderProps) => {
   const session = await auth()
+
   if (session && session.user) {
     session.user = {
       name: session.user.name,
-      email: session.user.email
+      email: session.user.email,
+      accessToken: session.user.accessToken,
+      refreshToken: session.user.refreshToken
     }
   }
-  return (
-    <SessionProvider basePath={BASE_AUTH_PATH} session={session}>
-      {children}
-    </SessionProvider>
-  )
+
+  return <SessionProvider session={session}>{children}</SessionProvider>
 }
 
 export default AuthProvider

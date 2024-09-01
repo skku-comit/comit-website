@@ -96,9 +96,9 @@ Auth.js 5에서는 다음과 같은 콜백 함수들을 제공합니다:
 - 현재 세션 객체.
 - 필드:
   - **user**: `Object`
-    - **name**: `string` | `null` - 사용자의 이름.
-    - **email**: `string` | `null` - 사용자의 이메일 주소.
-    - **image**: `string` | `null` - 사용자의 프로필 이미지 URL.
+  - **name**: `string` | `null` - 사용자의 이름.
+  - **email**: `string` | `null` - 사용자의 이메일 주소.
+  - **image**: `string` | `null` - 사용자의 프로필 이미지 URL.
   - **expires**: `string` - 세션 만료 시간 (ISO 8601 형식).
 
 ### **user**: `Object`

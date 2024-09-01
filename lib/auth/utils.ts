@@ -1,45 +1,9 @@
-import { HttpStatusCode } from '@/app/api/utils/httpConsts'
 import { API_ENDPOINTS, ApiEndpoint } from '@/constants/apiEndpoint'
 import { fetchData } from '@/lib/fetch'
-import { CustomResponseDTO } from '@/lib/response'
-import { User } from '@/types'
 
 export interface Credentials {
   email: string
   password: string
-}
-
-export async function getUserInitialDataWithCredentials({ email, password }: Credentials) {
-  const res = await fetchData(API_ENDPOINTS.AUTH.LOGIN as ApiEndpoint, {
-    body: JSON.stringify({ email, password })
-  })
-  const data = (await res.json()) as CustomResponseDTO
-  if (!res.ok) {
-    switch (res.status) {
-      case HttpStatusCode.UnAuthorized:
-        return null
-      default:
-        throw new Error(`Unhandled Error: ${data.error?.errorType} ${data.error?.detail}`)
-    }
-  }
-  const user = data.data as User
-  return { id: user.id, name: user.name }
-}
-
-export async function getFullUserDataWithToken(accessToken: string): Promise<User> {
-  const res = await fetchData(API_ENDPOINTS.PROFILE as ApiEndpoint, {
-    credentials: 'include',
-    headers: {
-      Authorization: `Bearer ${accessToken}`
-    }
-  })
-  const data = (await res.json()) as CustomResponseDTO
-  console.log(data)
-  if (!res.ok) {
-    throw new Error(`Unhandled Error: ${data.error?.errorType} ${data.error?.detail}`)
-  }
-
-  return data.data as User
 }
 
 export async function getAccessTokenWithRefreshToken(refreshToken: string): Promise<string> {
@@ -67,15 +31,29 @@ interface Token {
   maxAge?: number
   httpOnly?: boolean
 
-  // isExpired: boolean  // 토큰이 만료되었는지 확인
-  // isValid: boolean    // 파싱이 가능한 유효한 토큰인지 확인
-  // expiresIn: number    // 만료까지 남은 시간
+  isExpired: boolean // 토큰이 만료되었는지 확인
+  isValid: boolean // 파싱이 가능한 유효한 토큰인지 확인
+  expiresIn: number // 만료까지 남은 시간
 }
 
 export function decodeToken(token: string) {
   return JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString())
 }
 
+/**
+ * 액세스 토큰을 다루기 쉽게 해주는 클래스 입니다.
+ * @warning 각 콜백 함수에서 받은 매개 변수는 쿠키에 저장될 때 타입을 잃어버림으로
+ * 자동으로 이 클래스 인스턴스로 변환되지 않으니 반드시 직접 변환해야 합니다.
+ * @example
+ * ```ts
+ * async function jwt({ token, user }: { token: JWT; user: User }): Promise<CustomToken> {
+ *  console.log(token.accessToken instanceof AccessToken) // false
+ *  token.accessToken = new AccessToken(token.accessToken.token)
+ *  console.log(token.accessToken instanceof AccessToken) // true
+ *  ...
+ * }
+ * ```
+ */
 export class AccessToken implements Token {
   public readonly token: string // 디코드 하기 전의 변형 되지 않은 토큰 값
   public readonly subject: string
@@ -132,25 +110,6 @@ export class RefreshToken implements Token {
     this.httpOnly = httpOnly
     this._isValid = true
   }
-
-  // parse(token: string) {
-  //   const cookieParts = token.split(';').map(part => part.trim());
-
-  //   // 쿠키 이름과 값을 추출
-  //   const parsedCookie = {
-  //     name: cookieParts[0].split('=')[0],
-  //     value: cookieParts[0].split('=')[1],
-  //     attributes: cookieParts.slice(1).map(attr => {
-  //       return  {
-  //         [attr.split('=')[0]]: attr.split('=')[1]
-  //       }
-  //     })
-  //   }
-  //   if (parsedCookie.name !== 'refresh') {
-  //     throw new Error('Invalid cookie name: ' + parsedCookie.name)
-  //   }
-  //   return parsedCookie
-  // }
 
   parseTokenPart(token: string) {
     return decodeToken(token.split(';')[0].split('=')[1])

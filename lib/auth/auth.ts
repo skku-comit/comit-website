@@ -4,10 +4,7 @@ import { z } from 'zod'
 
 import { HttpStatusCode } from '@/app/api/utils/httpConsts'
 import { API_ENDPOINTS, ApiEndpoint } from '@/constants/apiEndpoint'
-import jwt from '@/lib/auth/callbackFunctions/jwt'
-import { CustomUser } from '@/lib/auth/callbackFunctions/parameters'
-import redirect from '@/lib/auth/callbackFunctions/redirect'
-import session from '@/lib/auth/callbackFunctions/session'
+import { CustomToken } from '@/lib/auth/callbackFunctions/parameters'
 import { AccessToken, RefreshToken } from '@/lib/auth/utils'
 import { fetchData } from '@/lib/fetch'
 
@@ -34,22 +31,15 @@ const authOptions: NextAuthConfig = {
        * @param credentials 유저가 입력한 로그인 정보
        * @returns `null`을 반환하면 로그인 실패, `object`를 반환하면 로그인 성공되어 `jwt` 콜백의 `token`으로 전달됨
        */
-      authorize: async (credentials: Partial<Record<'email' | 'password', unknown>>): Promise<CustomUser | null> => {
+      authorize: async (credentials) => {
         const { email, password } = await signInSchema.parseAsync(credentials)
 
         const res = await fetchData(API_ENDPOINTS.AUTH.LOGIN as ApiEndpoint, {
-          body: JSON.stringify({
-            email,
-            password
-          })
+          body: JSON.stringify({ email, password })
         })
         if (!res.ok) {
-          switch (res.status) {
-            case HttpStatusCode.UnAuthorized:
-              return null
-            default:
-              throw new Error(res.statusText)
-          }
+          if (res.status === HttpStatusCode.UnAuthorized) return null
+          throw new Error(res.statusText)
         }
 
         const accessToken = res.headers.get('access')
@@ -59,7 +49,6 @@ const authOptions: NextAuthConfig = {
         const data = (await res.json()).data
 
         return {
-          id: data.id,
           name: data.name,
           accessToken: new AccessToken(accessToken),
           refreshToken: new RefreshToken(refreshToken)
@@ -68,12 +57,70 @@ const authOptions: NextAuthConfig = {
     })
   ],
   callbacks: {
-    redirect,
-    jwt,
-    session
-  },
-  basePath: BASE_AUTH_PATH,
-  secret: process.env.AUTH_SECRET
+    jwt: async ({ token, user }): Promise<CustomToken | null> => {
+      // 토큰 없는 상태(로그인 X)에서 로그인 시도
+      if (user !== undefined) {
+        token.accessToken = user.accessToken
+        token.refreshToken = user.refreshToken
+        return token
+      }
+      token.accessToken = new AccessToken(token.accessToken.token)
+      token.refreshToken = new RefreshToken(token.refreshToken.token)
+
+      if (!token.accessToken.isExpired) {
+        console.log(
+          `액세스 토큰이 만료되지 않았으므로 그대로 반환합니다. (남은 시간: ${token.accessToken.expiresIn}초)`
+        )
+        return token
+      }
+
+      // 액세스 토큰이 만료된 경우, 리프레시 토큰을 사용하여 새로운 액세스 토큰 발급
+      const refreshedToken = await refreshAccessToken(token.refreshToken)
+      if (!refreshedToken) {
+        console.log('리프레시 토큰이 만료되어 로그아웃합니다.')
+        return null
+      }
+
+      token.accessToken = refreshedToken.accessToken
+      token.refreshToken = refreshedToken.refreshToken
+      return token
+    },
+    session: async ({ session, token }) => {
+      session.accessToken = token.accessToken
+      session.refreshToken = token.refreshToken
+      return session
+    }
+  }
 }
 
 export const { handlers, signIn, signOut, auth } = NextAuth(authOptions)
+
+async function refreshAccessToken(
+  refreshToken: RefreshToken
+): Promise<{ accessToken: AccessToken; refreshToken: RefreshToken } | null> {
+  const res = await fetchData(API_ENDPOINTS.AUTH.REISSUE as ApiEndpoint, {
+    headers: {
+      Cookie: `refresh=${refreshToken.token}`
+    }
+  })
+  const data = await res.json()
+
+  console.log('=== Reissue ===')
+  console.log('res:', res)
+  console.log('data:', data)
+
+  if (!res.ok) {
+    if (res.status === HttpStatusCode.UnAuthorized) return null // Refresh Token이 만료된 경우
+    throw new Error(data.message)
+  }
+  const newAccessToken = res.headers.get('access')
+  const newRefreshToken = res.headers.get('Set-Cookie')
+  if (!newAccessToken || !newRefreshToken) {
+    throw new Error('Failed to refresh access token')
+  }
+
+  return {
+    accessToken: new AccessToken(newAccessToken),
+    refreshToken: new RefreshToken(newRefreshToken)
+  }
+}
