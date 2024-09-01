@@ -4,25 +4,19 @@ import { z } from 'zod'
 
 import { HttpStatusCode } from '@/app/api/utils/httpConsts'
 import { API_ENDPOINTS, ApiEndpoint } from '@/constants/apiEndpoint'
+import signInSchema from '@/constants/zodSchema/signin'
+import signUpSchema from '@/constants/zodSchema/signup'
 import { CustomToken } from '@/lib/auth/callbackFunctions/parameters'
 import { AccessToken, RefreshToken } from '@/lib/auth/utils'
 import { fetchData } from '@/lib/fetch'
 
 export const BASE_AUTH_PATH = '/api/auth'
 
-const signInSchema = z.object({
-  email: z.string({ required_error: 'Email is required' }).min(1, 'Email is required').email('Invalid email'),
-  password: z
-    .string({ required_error: 'Password is required' })
-    .min(1, 'Password is required')
-    .min(6, 'Password must be more than 8 characters')
-    .max(32, 'Password must be less than 32 characters')
-})
-
 const authOptions: NextAuthConfig = {
   providers: [
     Credentials({
       credentials: {
+        name: { label: 'Name', type: 'text' },
         email: { label: 'Email', type: 'email' },
         password: { label: 'Password', type: 'password' }
       },
@@ -32,27 +26,12 @@ const authOptions: NextAuthConfig = {
        * @returns `null`을 반환하면 로그인 실패, `object`를 반환하면 로그인 성공되어 `jwt` 콜백의 `token`으로 전달됨
        */
       authorize: async (credentials) => {
-        const { email, password } = await signInSchema.parseAsync(credentials)
+        const userInfo = await signInSchema.parseAsync(credentials)
 
-        const res = await fetchData(API_ENDPOINTS.AUTH.LOGIN as ApiEndpoint, {
-          body: JSON.stringify({ email, password })
-        })
-        if (!res.ok) {
-          if (res.status === HttpStatusCode.UnAuthorized) return null
-          throw new Error(res.statusText)
+        if (credentials.name) {
+          return _signIn('signup', userInfo)
         }
-
-        const accessToken = res.headers.get('access')
-        const refreshToken = res.headers.get('Set-Cookie')
-        if (!accessToken || !refreshToken) return null
-
-        const data = (await res.json()).data
-
-        return {
-          name: data.name,
-          accessToken: new AccessToken(accessToken),
-          refreshToken: new RefreshToken(refreshToken)
-        }
+        return _signIn('login', userInfo)
       }
     })
   ],
@@ -122,5 +101,29 @@ async function refreshAccessToken(
   return {
     accessToken: new AccessToken(newAccessToken),
     refreshToken: new RefreshToken(newRefreshToken)
+  }
+}
+
+async function _signIn(type: 'signup' | 'login', body: z.infer<typeof signUpSchema> | z.infer<typeof signInSchema>) {
+  const apiEndpoint = type === 'signup' ? API_ENDPOINTS.AUTH.SIGNUP : API_ENDPOINTS.AUTH.LOGIN
+  const res = await fetchData(apiEndpoint as ApiEndpoint, {
+    body: JSON.stringify(body)
+  })
+
+  if (!res.ok) {
+    if (res.status === HttpStatusCode.UnAuthorized) return null
+    throw new Error(res.statusText)
+  }
+
+  const accessToken = res.headers.get('access')
+  const refreshToken = res.headers.get('Set-Cookie')
+  if (!accessToken || !refreshToken) return null
+
+  const data = (await res.json()).data
+
+  return {
+    name: data.name,
+    accessToken: new AccessToken(accessToken),
+    refreshToken: new RefreshToken(refreshToken)
   }
 }

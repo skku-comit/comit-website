@@ -7,22 +7,16 @@ import { signIn } from 'next-auth/react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { BsEye, BsEyeSlash } from 'react-icons/bs'
-import { z } from 'zod'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import signInSchema from '@/constants/zodSchema/signin'
 import ComitOwl from '@/public/comitOwl.png'
 
 interface LoginForm {
   email: string
   password: string
 }
-
-// TODO: 백엔드와 논의 후 schema 수정
-const schema = z.object({
-  email: z.string().email({ message: '올바른 이메일 주소를 입력해주세요' }),
-  password: z.string().min(6, { message: '비밀번호는 6자 이상이어야 합니다' })
-})
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false)
@@ -32,7 +26,7 @@ export default function Login() {
     register,
     formState: { errors }
   } = useForm<LoginForm>({
-    resolver: zodResolver(schema)
+    resolver: zodResolver(signInSchema)
   })
 
   // TODO: 에러 핸들링 코드 작성
