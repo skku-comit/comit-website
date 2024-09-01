@@ -16,7 +16,7 @@ const authOptions: NextAuthConfig = {
   providers: [
     Credentials({
       credentials: {
-        name: { label: 'Name', type: 'text' },
+        username: { label: 'Name', type: 'text' },
         email: { label: 'Email', type: 'email' },
         password: { label: 'Password', type: 'password' }
       },
@@ -26,11 +26,11 @@ const authOptions: NextAuthConfig = {
        * @returns `null`을 반환하면 로그인 실패, `object`를 반환하면 로그인 성공되어 `jwt` 콜백의 `token`으로 전달됨
        */
       authorize: async (credentials) => {
-        const userInfo = await signInSchema.parseAsync(credentials)
-
-        if (credentials.name) {
+        if (credentials.username) {
+          const userInfo = await signUpSchema.parseAsync(credentials)
           return _signIn('signup', userInfo)
         }
+        const userInfo = await signInSchema.parseAsync(credentials)
         return _signIn('login', userInfo)
       }
     })
@@ -115,6 +115,7 @@ async function _signIn(type: 'signup' | 'login', body: z.infer<typeof signUpSche
     throw new Error(res.statusText)
   }
 
+  // 현재는 백엔드 측에서 signup 시에 토큰을 반환하지 않으므로 에러가 발생함
   const accessToken = res.headers.get('access')
   const refreshToken = res.headers.get('Set-Cookie')
   if (!accessToken || !refreshToken) return null
@@ -122,7 +123,7 @@ async function _signIn(type: 'signup' | 'login', body: z.infer<typeof signUpSche
   const data = (await res.json()).data
 
   return {
-    name: data.name,
+    name: data.username,
     accessToken: new AccessToken(accessToken),
     refreshToken: new RefreshToken(refreshToken)
   }
