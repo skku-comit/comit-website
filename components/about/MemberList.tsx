@@ -2,13 +2,13 @@ import { redirect } from 'next/navigation'
 import React from 'react'
 
 import IntroduceMemeberCard from '@/components/about/IntroduceMemberCard'
-import { API_ENDPOINTS } from '@/constants/apiEndpoint'
+import { API_ENDPOINTS, ApiEndpoint } from '@/constants/apiEndpoint'
 import { fetchData } from '@/lib/fetch'
 import { CustomResponse } from '@/lib/response'
 import { User } from '@/types'
 
 const MemberList = async (): Promise<React.JSX.Element> => {
-  const res = await fetchData(API_ENDPOINTS.MEMBER.LIST)
+  const res = await fetchData(API_ENDPOINTS.MEMBER.LIST as ApiEndpoint)
   if (!res.ok) {
     switch (res.status) {
       default:

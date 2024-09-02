@@ -16,7 +16,7 @@ import UserHoverCard from '@/components/common/User/HoverCard'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
-import { API_ENDPOINTS } from '@/constants/apiEndpoint'
+import { API_ENDPOINTS, ApiEndpoint } from '@/constants/apiEndpoint'
 import { fetchData } from '@/lib/fetch'
 import { CustomResponse } from '@/lib/response'
 import { AlreadySignedup } from '@/lib/response/errors'
@@ -88,7 +88,7 @@ const StudySignupForm = ({ study }: StudySignupFormProps) => {
       study_id: study.id,
       applicationMotiv: formData.applicationMotiv
     }
-    const res = await fetchData(API_ENDPOINTS.STUDY.SIGNUP(study.id), {
+    const res = await fetchData(API_ENDPOINTS.STUDY.SIGNUP(study.id) as ApiEndpoint, {
       headers: {
         'Content-Type': 'application/json'
       },

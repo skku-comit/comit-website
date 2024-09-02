@@ -30,6 +30,7 @@
     "embla-carousel-autoplay": "^8.0.0",
     "embla-carousel-react": "^8.0.0",
     "framer-motion": "^11.0.8",
+    "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.335.0",
     "next": "14.1.0",
     "next-auth": "^5.0.0-beta.20",
@@ -44,6 +45,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^20",
     "@types/react": "^18.2.57",
     "@types/react-dom": "^18.2.19",

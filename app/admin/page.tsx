@@ -2,13 +2,13 @@ import Link from 'next/link'
 
 // import { redirect } from 'next/navigation'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { API_ENDPOINTS } from '@/constants/apiEndpoint'
+import { API_ENDPOINTS, ApiEndpoint } from '@/constants/apiEndpoint'
 import { fetchData } from '@/lib/fetch'
 import { Study } from '@/types'
 
 const Admin = async () => {
   // TODO: Admin Dashboard 만을 위한 API Endpoint 필요 - 스터디 및 유저의 간략한 정보만 받아오기
-  const studyRes = await fetchData(API_ENDPOINTS.STUDY.LIST)
+  const studyRes = await fetchData(API_ENDPOINTS.STUDY.LIST as ApiEndpoint)
   if (!studyRes.ok) {
     switch (studyRes.status) {
       default:
