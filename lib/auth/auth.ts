@@ -85,10 +85,6 @@ async function refreshAccessToken(
   })
   const data = await res.json()
 
-  console.log('=== Reissue ===')
-  console.log('res:', res)
-  console.log('data:', data)
-
   if (!res.ok) {
     if (res.status === HttpStatusCode.UnAuthorized) return null // Refresh Token이 만료된 경우
     throw new Error(data.message)
@@ -117,7 +113,6 @@ async function _signIn(type: 'signup' | 'login', body: z.infer<typeof signUpSche
     throw new Error(res.statusText)
   }
 
-  // 현재는 백엔드 측에서 signup 시에 토큰을 반환하지 않으므로 에러가 발생함
   const accessToken = res.headers.get('access')
   const refreshToken = res.headers.get('Set-Cookie')
   if (!accessToken || !refreshToken) return null
