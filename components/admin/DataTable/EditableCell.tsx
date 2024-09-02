@@ -8,12 +8,11 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { API_ENDPOINTS, ApiEndpoint } from '@/constants/apiEndpoint'
 import { fetchData } from '@/lib/fetch'
 import { CustomResponseDTO } from '@/lib/response'
-import { Study } from '@/types'
 
 interface EditableCellProps {
-  fieldName: keyof Study
+  fieldName: any
   row: {
-    original: Study
+    original: any
   }
   readonly?: boolean
 }
@@ -21,24 +20,38 @@ interface EditableCellProps {
 const EditableCell: React.FC<EditableCellProps> = ({ fieldName, row, readonly }) => {
   const initialValue = row.original[fieldName]
   const [open, setOpen] = useState<boolean>(false)
-  const [value, setValue] = useState<string | number | boolean | string[]>(initialValue ?? '')
-  const [inputValue, setInputValue] = useState<string | number | boolean | string[]>(initialValue ?? '')
+  const [value, setValue] = useState<any>(initialValue ?? '')
+  const [inputValue, setInputValue] = useState<any>(initialValue ?? '')
   const id = row.original.id
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     setValue(inputValue) // Optimistic update
     setOpen(false)
-    const res = await fetchData(API_ENDPOINTS.CLIENT.STUDY.UPDATE(id) as ApiEndpoint, {
-      body: JSON.stringify({ [fieldName]: inputValue }),
-      cache: 'no-cache'
-    })
+    let res: Response
+    if (fieldName === 'role') {
+      res = await fetchData(API_ENDPOINTS.ADMIN.USER.ROLE_UPDATE(id) as ApiEndpoint, {
+        body: JSON.stringify({ [fieldName]: inputValue }),
+        cache: 'no-cache'
+      })
+    } else if (fieldName === 'isStaff') {
+      res = await fetchData(API_ENDPOINTS.ADMIN.USER.STAFF_UPDATE(id) as ApiEndpoint, {
+        body: JSON.stringify({ [fieldName]: inputValue }),
+        cache: 'no-cache'
+      })
+    } else {
+      throw new Error('Not Implemented. Please add PUT endpoint.')
+      res = await fetchData(API_ENDPOINTS.CLIENT.STUDY.UPDATE(id) as ApiEndpoint, {
+        body: JSON.stringify({ [fieldName]: inputValue }),
+        cache: 'no-cache'
+      })
+    }
+
     if (!res.ok) {
       console.error('Failed to update', fieldName, id, inputValue)
       return
     }
     const data: CustomResponseDTO = await res.json()
-    if (!data.data) return // Supabase 사용 시에는 data가 null임
     const updatedFieldResult = data.data[fieldName]
     setValue(updatedFieldResult) // 실제 업데이트
   }
@@ -56,7 +69,7 @@ const EditableCell: React.FC<EditableCellProps> = ({ fieldName, row, readonly })
             <Input
               type="checkbox"
               checked={inputValue}
-              onChange={() => setInputValue((prev) => !prev)}
+              onChange={() => setInputValue((prev: any) => !prev)}
               className={inputClass}
             />
           ) : (

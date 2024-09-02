@@ -61,7 +61,8 @@ export default function StudyCard({ study, imageSize, showStatus, imageWrapperCl
   showStatus = showStatus ?? true
   imageWrapperClassName = imageWrapperClassName ?? 'mb-8 mt-4 h-24 w-24 overflow-hidden sm:h-36 sm:w-36'
 
-  const badges = [study.level, study.stack[0], study.campus]
+  const mainStack = study.stack?.length > 0 ? study.stack[0] : '기술 스택 미정'
+  const badges = [study.level, mainStack, study.campus]
 
   return (
     <Card className="relative flex w-44 transform cursor-pointer flex-col items-center justify-center overflow-hidden px-2 py-4 shadow-md transition-transform hover:scale-105 hover:shadow-2xl sm:w-60 sm:px-4 sm:py-8">

@@ -10,16 +10,11 @@ import { MdOutlineSignalCellularAlt } from 'react-icons/md'
 import { RiStackOverflowLine } from 'react-icons/ri'
 import { z } from 'zod'
 
-import { HttpStatusCode } from '@/app/api/utils/httpConsts'
 import LoadingSpinner from '@/components/common/LoadingSpinner'
 import UserHoverCard from '@/components/common/User/HoverCard'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
-import { API_ENDPOINTS, ApiEndpoint } from '@/constants/apiEndpoint'
-import { fetchData } from '@/lib/fetch'
-import { CustomResponse } from '@/lib/response'
-import { AlreadySignedup } from '@/lib/response/errors'
 import { Study } from '@/types'
 
 export interface StudySignupRequest {
@@ -88,36 +83,38 @@ const StudySignupForm = ({ study }: StudySignupFormProps) => {
       study_id: study.id,
       applicationMotiv: formData.applicationMotiv
     }
-    const res = await fetchData(API_ENDPOINTS.CLIENT.STUDY.SIGNUP(study.id) as ApiEndpoint, {
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(requestBody)
-    })
 
-    if (res.ok) {
-      const data = await res.json()
-      console.log(data)
-      alert(data)
-      // TODO: 신청 성공 시 처리 로직 추가
-      return
-    }
+    // TODO: 스터디 참여 신청 API 구현 후 연결
+    // const res = await fetchData(API_ENDPOINTS.CLIENT.STUDY.SIGNUP(study.id) as ApiEndpoint, {
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify(requestBody)
+    // })
 
-    switch (res.status) {
-      case HttpStatusCode.BadRequest:
-        const json: CustomResponse = await res.json()
-        switch (json.error!.errorType) {
-          case AlreadySignedup.errorType:
-            alert('이미 신청 되었습니다.')
-            break
+    // if (res.ok) {
+    //   const data = await res.json()
+    //   console.log(data)
+    //   alert(data)
+    //   // TODO: 신청 성공 시 처리 로직 추가
+    //   return
+    // }
 
-          default:
-            throw new Error('Uncaught Error!')
-        }
-        break
-      default:
-        throw new Error('Uncaught Error!')
-    }
+    // switch (res.status) {
+    //   case HttpStatusCode.BadRequest:
+    //     const json: CustomResponse = await res.json()
+    //     switch (json.error!.errorType) {
+    //       case AlreadySignedup.errorType:
+    //         alert('이미 신청 되었습니다.')
+    //         break
+
+    //       default:
+    //         throw new Error('Uncaught Error!')
+    //     }
+    //     break
+    //   default:
+    //     throw new Error('Uncaught Error!')
+    // }
   }
 
   return (

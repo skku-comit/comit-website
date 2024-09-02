@@ -10,7 +10,7 @@ import { Study } from '@/types'
 
 interface StudySignupProps {
   params: {
-    id: string
+    id: number
   }
 }
 

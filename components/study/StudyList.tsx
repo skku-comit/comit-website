@@ -69,7 +69,7 @@ const StudyList = async () => {
                   </div>
                   <div className="mb-4 mt-1 flex items-center gap-2 break-words">
                     <RiStackOverflowLine />
-                    {study.stack.join(', ')}
+                    {study.stacks.join(', ')}
                   </div>
                   <div
                     className="whitespace-pre-line break-keep"

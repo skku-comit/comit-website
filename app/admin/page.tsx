@@ -16,6 +16,7 @@ const Admin = async () => {
     }
   }
   const studyJSON = await studyRes.json()
+  console.log(studyJSON)
   const studyList: Study[] = studyJSON.data
 
   return (

@@ -40,12 +40,12 @@ export const columns: ColumnDef<Study>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(study.id)}>
+            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(study.id.toString())}>
               <MdContentCopy size={13} />
               &nbsp;ID 복사
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link href={ROUTES.STUDY.SIGNUP(row.original.id).url}>
+              <Link href={ROUTES.STUDY.SIGNUP(row.original.id.toString()).url}>
                 <GoPencil size={13} />
                 &nbsp;링크
               </Link>
@@ -54,7 +54,7 @@ export const columns: ColumnDef<Study>[] = [
             <DropdownMenuSeparator />
             <DropdownMenuItem
               onClick={async () => {
-                const res = await fetchData(API_ENDPOINTS.CLIENT.STUDY.DELETE(study.id) as ApiEndpoint)
+                const res = await fetchData(API_ENDPOINTS.ADMIN.STUDY.DELETE(study.id) as ApiEndpoint)
                 if (!res.ok) {
                   console.error('Failed to delete', study.id)
                   return
@@ -85,7 +85,7 @@ export const columns: ColumnDef<Study>[] = [
   {
     accessorKey: 'stack',
     header: ({ column }) => <DataTableColumnHeader column={column} title="스택" />,
-    cell: ({ row }) => <EditableCell row={row} fieldName="stack" />
+    cell: ({ row }) => <EditableCell row={row} fieldName="stacks" />
   },
   {
     accessorKey: 'day',
