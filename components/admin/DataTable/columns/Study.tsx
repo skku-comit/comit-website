@@ -19,7 +19,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
-import { API_ENDPOINTS } from '@/constants/apiEndpoint'
+import { API_ENDPOINTS, ApiEndpoint } from '@/constants/apiEndpoint'
 import { ROUTES } from '@/constants/routes'
 import { fetchData } from '@/lib/fetch'
 import { Study } from '@/types'
@@ -54,7 +54,7 @@ export const columns: ColumnDef<Study>[] = [
             <DropdownMenuSeparator />
             <DropdownMenuItem
               onClick={async () => {
-                const res = await fetchData(API_ENDPOINTS.STUDY.DELETE(study.id))
+                const res = await fetchData(API_ENDPOINTS.STUDY.DELETE(study.id) as ApiEndpoint)
                 if (!res.ok) {
                   console.error('Failed to delete', study.id)
                   return

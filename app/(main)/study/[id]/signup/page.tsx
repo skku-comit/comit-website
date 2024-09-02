@@ -3,7 +3,7 @@ import { notFound, redirect } from 'next/navigation'
 import { HttpStatusCode } from '@/app/api/utils/httpConsts'
 import SectionBanner from '@/components/common/SectionBanner'
 import StudySignupForm from '@/components/study/signup/StudySignupForm'
-import { API_ENDPOINTS } from '@/constants/apiEndpoint'
+import { API_ENDPOINTS, ApiEndpoint } from '@/constants/apiEndpoint'
 import { fetchData } from '@/lib/fetch'
 import { CustomResponse } from '@/lib/response'
 import { Study } from '@/types'
@@ -17,7 +17,7 @@ interface StudySignupProps {
 const StudySignup = async ({ params }: StudySignupProps) => {
   const { id } = params
 
-  const res = await fetchData(API_ENDPOINTS.STUDY.RETRIEVE(id))
+  const res = await fetchData(API_ENDPOINTS.STUDY.RETRIEVE(id) as ApiEndpoint)
   if (!res.ok) {
     switch (res.status) {
       case HttpStatusCode.NotFound:
