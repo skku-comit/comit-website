@@ -88,7 +88,7 @@ const StudySignupForm = ({ study }: StudySignupFormProps) => {
       study_id: study.id,
       applicationMotiv: formData.applicationMotiv
     }
-    const res = await fetchData(API_ENDPOINTS.STUDY.SIGNUP(study.id) as ApiEndpoint, {
+    const res = await fetchData(API_ENDPOINTS.CLIENT.STUDY.SIGNUP(study.id) as ApiEndpoint, {
       headers: {
         'Content-Type': 'application/json'
       },

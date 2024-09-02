@@ -133,4 +133,4 @@ const JSP_ENDPOINTS: JspEndpoints = {
 }
 
 // export const API_ENDPOINTS: JspEndpoints = process.env.NODE_ENV === 'development' ? SUPABASE_ENDPOINTS : JSP_ENDPOINTS
-export const API_ENDPOINT = JSP_ENDPOINTS
+export const API_ENDPOINTS = JSP_ENDPOINTS

@@ -29,7 +29,7 @@ const EditableCell: React.FC<EditableCellProps> = ({ fieldName, row, readonly })
     e.preventDefault()
     setValue(inputValue) // Optimistic update
     setOpen(false)
-    const res = await fetchData(API_ENDPOINTS.STUDY.UPDATE(id) as ApiEndpoint, {
+    const res = await fetchData(API_ENDPOINTS.CLIENT.STUDY.UPDATE(id) as ApiEndpoint, {
       body: JSON.stringify({ [fieldName]: inputValue }),
       cache: 'no-cache'
     })

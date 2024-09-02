@@ -5,7 +5,7 @@ import { fetchData } from '@/lib/fetch'
 import { Study } from '@/types'
 
 const StudyManagePage = async () => {
-  const res = await fetchData(API_ENDPOINTS.STUDY.LIST as ApiEndpoint, {
+  const res = await fetchData(API_ENDPOINTS.CLIENT.STUDY.LIST as ApiEndpoint, {
     cache: 'no-cache'
   })
   const studies = (await res.json()).data as Study[]

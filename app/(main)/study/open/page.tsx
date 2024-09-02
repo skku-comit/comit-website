@@ -94,7 +94,7 @@ export default function OpenStudy() {
     const fileUrl = file.supabaseFileData.url
     console.log('파일을 임시로 업로드 했습니다.')
 
-    const res = await fetchData(API_ENDPOINTS.STUDY.CREATE as ApiEndpoint, {
+    const res = await fetchData(API_ENDPOINTS.CLIENT.STUDY.CREATE as ApiEndpoint, {
       body: JSON.stringify({
         ...data,
         imageSrc: fileUrl,

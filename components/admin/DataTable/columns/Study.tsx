@@ -54,7 +54,7 @@ export const columns: ColumnDef<Study>[] = [
             <DropdownMenuSeparator />
             <DropdownMenuItem
               onClick={async () => {
-                const res = await fetchData(API_ENDPOINTS.STUDY.DELETE(study.id) as ApiEndpoint)
+                const res = await fetchData(API_ENDPOINTS.CLIENT.STUDY.DELETE(study.id) as ApiEndpoint)
                 if (!res.ok) {
                   console.error('Failed to delete', study.id)
                   return
