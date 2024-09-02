@@ -10,7 +10,7 @@ export interface ApiEndpoint {
   method: HttpMethod
 }
 
-export const API_ENDPOINTS = {
+const SUPABASE_ENDPOINTS = {
   STUDY: {
     CREATE: { url: `${baseURL}/${API_PREFIX}/studies`, method: 'POST' },
     RETRIEVE: (id: string) => ({ url: `${baseURL}/${API_PREFIX}/studies/${id}`, method: 'GET' }),
@@ -37,3 +37,12 @@ export const API_ENDPOINTS = {
     SIGNUP: { url: `${baseURL}/${API_PREFIX}/join`, method: 'POST' }
   }
 }
+
+const JSP_ENDPOINTS = {
+  ADMIN: {
+    USER: {}
+  }
+}
+
+export const API_ENDPOINTS = SUPABASE_ENDPOINTS
+// export const API_ENDPOINTS = process.env.NODE_ENV === 'development' ? SUPABASE_ENDPOINTS : JSP_ENDPOINTS

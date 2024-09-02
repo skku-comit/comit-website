@@ -80,7 +80,8 @@ async function refreshAccessToken(
   const res = await fetchData(API_ENDPOINTS.AUTH.REISSUE as ApiEndpoint, {
     headers: {
       Cookie: `refresh=${refreshToken.token}`
-    }
+    },
+    cache: 'no-store'
   })
   const data = await res.json()
 
@@ -107,7 +108,8 @@ async function refreshAccessToken(
 async function _signIn(type: 'signup' | 'login', body: z.infer<typeof signUpSchema> | z.infer<typeof signInSchema>) {
   const apiEndpoint = type === 'signup' ? API_ENDPOINTS.AUTH.SIGNUP : API_ENDPOINTS.AUTH.LOGIN
   const res = await fetchData(apiEndpoint as ApiEndpoint, {
-    body: JSON.stringify(body)
+    body: JSON.stringify(body),
+    cache: 'no-store'
   })
 
   if (!res.ok) {
