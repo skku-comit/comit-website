@@ -3,6 +3,8 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Clock } from 'lucide-react'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
+import { useSession } from 'next-auth/react'
 import { SetStateAction, useRef, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { MdHelpOutline } from 'react-icons/md'
@@ -29,6 +31,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { formatDateToTime } from '@/components/ui/time-picker-utils'
 import { TimePicker } from '@/components/ui/timepicker'
 import { API_ENDPOINTS, ApiEndpoint } from '@/constants/apiEndpoint'
+import { ROUTES } from '@/constants/routes'
 import { fetchData } from '@/lib/fetch'
 import { useSupabaseFile } from '@/lib/supabase/hooks'
 import { Campus, Day, Level, Study } from '@/types'
@@ -65,6 +68,9 @@ const campusOptions: Campus[] = ['율전', '명륜', '온라인']
 const levelOptions: Level[] = ['초급', '중급', '고급']
 
 export default function OpenStudy() {
+  const session = useSession()
+  const router = useRouter()
+
   const {
     handleSubmit,
     trigger,
@@ -91,19 +97,24 @@ export default function OpenStudy() {
     if (!imageFile) return
     const file = await fileHandler.upload(imageFile)
     const fileUrl = file.supabaseFileData.url
-    console.log('파일을 임시로 업로드 했습니다.')
-
     const res = await fetchData(API_ENDPOINTS.CLIENT.STUDY.CREATE as ApiEndpoint, {
       body: JSON.stringify({
         ...data,
-        imageSrc: fileUrl
-      })
+        imageSrc: fileUrl,
+        isRecruiting: true,
+        semester: 1 // TODO: 학기 정보 추가, 하드코딩하지마라!!!
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${session.data?.accessToken.token}`
+      }
     })
     if (!res.ok) {
       await file.delete()
       return
     }
     file.commit()
+    router.push(ROUTES.STUDY.index.url)
   }
   const handleFileChange = (e: React.ChangeEvent) => {
     const targetFiles = (e.target as HTMLInputElement).files as FileList
