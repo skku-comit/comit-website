@@ -2,7 +2,8 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import Image from 'next/image'
-import { signIn } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
+import { signIn, useSession } from 'next-auth/react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
@@ -34,6 +35,11 @@ export default function Signup() {
     mode: 'onBlur',
     resolver: zodResolver(signUpSchema)
   })
+  const session = useSession()
+  const router = useRouter()
+  if (session.status === 'authenticated') {
+    router.push('/')
+  }
 
   const [watchPassword, watchConfirmPassword] = watch(['password', 'confirmPassword'])
   const [isConfirmPasswordBlurred, setIsConfirmPasswordBlurred] = useState(false)
