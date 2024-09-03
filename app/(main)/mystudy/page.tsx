@@ -1,5 +1,3 @@
-'use client'
-
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 
@@ -45,7 +43,7 @@ export default async function MyStudy() {
         <div id="studylist-container" className="mb-10">
           {/* 받아온 JSON 데이터 중 스터디장인 것을 마이스터디 페이지 카드로 변환 */}
           {studyList.map((study, index) => (
-            <Link href="/mystudy/43" className="cursor-pointer" key={index}>
+            <Link href={`/mystudy/${study.id}`} className="cursor-pointer" key={index}>
               <div className="border-b-solid  flex border-b border-b-[#dee2e6] px-4 py-[18px]">
                 <div className=" flex-auto">
                   {/* //card 내의 첫번째 행: 개설 혹은 참여, 스터디 제목 display */}
