@@ -1,66 +1,128 @@
-import NextAuth, { NextAuthConfig, User } from 'next-auth'
+import NextAuth, { NextAuthConfig } from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
+import { z } from 'zod'
 
-import { ROUTES } from '@/constants/routes'
+import { HttpStatusCode } from '@/app/api/utils/httpConsts'
+import { API_ENDPOINTS, ApiEndpoint } from '@/constants/apiEndpoint'
+import signInSchema from '@/constants/zodSchema/signin'
+import signUpSchema from '@/constants/zodSchema/signup'
+import { CustomToken } from '@/lib/auth/callbackFunctions/parameters'
+import { AccessToken, RefreshToken } from '@/lib/auth/utils'
+import { fetchData } from '@/lib/fetch'
 
 export const BASE_AUTH_PATH = '/api/auth'
 
 const authOptions: NextAuthConfig = {
-  pages: {
-    signIn: ROUTES.LOGIN.url,
-    newUser: ROUTES.SIGNUP.url
-  },
-  session: {
-    strategy: 'jwt'
-  },
   providers: [
     Credentials({
-      name: 'Credentials',
-
       credentials: {
-        email: { label: 'Email', type: 'text', placeholder: 'Enter your Email' },
-        password: { label: 'password', type: 'password' }
+        username: { label: 'Name', type: 'text' },
+        email: { label: 'Email', type: 'email' },
+        password: { label: 'Password', type: 'password' }
       },
-      async authorize(credentials, request): Promise<User | null> {
-        // Todo: 서버에서 로그인 완료 후 AT, RT 받아와서 저장하는 로직
-        const dummy_users = [
-          {
-            id: '1',
-            name: 'b0xercat',
-            email: 'comit@g.skku.edu',
-            isStaff: true,
-            password: 'comit1234'
-          },
-          {
-            id: '2',
-            name: 'Test 2',
-            email: 'test@g.skku.edu',
-            isStaff: false,
-            password: 'comit1234'
-          }
-        ]
-
-        const user = dummy_users.find(
-          (user) => user.email === credentials.email && user.password === credentials.password
-        )
-
-        return user ? { id: user.id, name: user.name, email: user.email } : null
+      /**
+       * 로그인 또는 회원가입 시 호출되는 함수
+       * @param credentials 유저가 입력한 로그인 정보
+       * @returns `null`을 반환하면 로그인 실패, `object`를 반환하면 로그인 성공되어 `jwt` 콜백의 `token`으로 전달됨
+       */
+      authorize: async (credentials) => {
+        if (credentials.username) {
+          const userInfo = await signUpSchema.parseAsync(credentials)
+          return _signIn('signup', userInfo)
+        }
+        const userInfo = await signInSchema.parseAsync(credentials)
+        return _signIn('login', userInfo)
       }
     })
   ],
   callbacks: {
-    /**
-     * called anytime the user is redirected to a callback URL (i.e. on signin or signout).
-     * By default only URLs on the same host as the origin are allowed.
-     * url : URL provided as callback URL by the client
-     * baseURL:  Default base URL of site (can be used as fallback)
-     */
-    async redirect({ url, baseUrl }) {
-      return baseUrl
+    jwt: async ({ token, user }): Promise<CustomToken | null> => {
+      // 토큰 없는 상태(로그인 X)에서 로그인 시도
+      if (user !== undefined) {
+        token.accessToken = user.accessToken
+        token.refreshToken = user.refreshToken
+        return token
+      }
+      token.accessToken = new AccessToken(token.accessToken.token)
+      token.refreshToken = new RefreshToken(token.refreshToken.token)
+
+      if (!token.accessToken.isExpired) {
+        console.log(
+          `액세스 토큰이 만료되지 않았으므로 그대로 반환합니다. (남은 시간: ${token.accessToken.expiresIn}초)`
+        )
+        return token
+      }
+
+      // 액세스 토큰이 만료된 경우, 리프레시 토큰을 사용하여 새로운 액세스 토큰 발급
+      const refreshedToken = await refreshAccessToken(token.refreshToken)
+      if (!refreshedToken) {
+        console.log('리프레시 토큰이 만료되어 로그아웃합니다.')
+        return null
+      }
+
+      token.accessToken = refreshedToken.accessToken
+      token.refreshToken = refreshedToken.refreshToken
+      return token
+    },
+    session: async ({ session, token }) => {
+      session.accessToken = token.accessToken
+      session.refreshToken = token.refreshToken
+      return session
     }
-  },
-  basePath: BASE_AUTH_PATH,
-  secret: process.env.AUTH_SECRET // 복호화
+  }
 }
 
 export const { handlers, signIn, signOut, auth } = NextAuth(authOptions)
+
+async function refreshAccessToken(
+  refreshToken: RefreshToken
+): Promise<{ accessToken: AccessToken; refreshToken: RefreshToken } | null> {
+  const res = await fetchData(API_ENDPOINTS.AUTH.REISSUE as ApiEndpoint, {
+    headers: {
+      Cookie: `refresh=${refreshToken.token}`
+    },
+    cache: 'no-store'
+  })
+  const data = await res.json()
+
+  if (!res.ok) {
+    if (res.status === HttpStatusCode.UnAuthorized) return null // Refresh Token이 만료된 경우
+    // TODO: 그냥 에러 발생시키는 것이 아니라 에러 처리 로직 추가
+    throw new Error(data.message)
+  }
+  const newAccessToken = res.headers.get('access')
+  const newRefreshToken = res.headers.get('Set-Cookie')
+  if (!newAccessToken || !newRefreshToken) {
+    throw new Error('Failed to refresh access token')
+  }
+
+  return {
+    accessToken: new AccessToken(newAccessToken),
+    refreshToken: new RefreshToken(newRefreshToken)
+  }
+}
+
+async function _signIn(type: 'signup' | 'login', body: z.infer<typeof signUpSchema> | z.infer<typeof signInSchema>) {
+  const apiEndpoint = type === 'signup' ? API_ENDPOINTS.AUTH.SIGNUP : API_ENDPOINTS.AUTH.LOGIN
+  const res = await fetchData(apiEndpoint as ApiEndpoint, {
+    body: JSON.stringify(body),
+    cache: 'no-store'
+  })
+
+  if (!res.ok) {
+    if (res.status === HttpStatusCode.UnAuthorized) return null
+    throw new Error(res.statusText)
+  }
+
+  const accessToken = res.headers.get('access')
+  const refreshToken = res.headers.get('Set-Cookie')
+  if (!accessToken || !refreshToken) return null
+
+  const data = (await res.json()).data
+
+  return {
+    name: data.username,
+    accessToken: new AccessToken(accessToken),
+    refreshToken: new RefreshToken(refreshToken)
+  }
+}

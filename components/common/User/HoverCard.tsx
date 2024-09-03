@@ -9,14 +9,14 @@ import { User } from '@/types'
 const UserHoverCard = ({ user }: { user: User }) => {
   return (
     <HoverCard>
-      <HoverCardTrigger className="hover:underline">@{user.name}</HoverCardTrigger>
+      <HoverCardTrigger className="hover:underline">@{user.username}</HoverCardTrigger>
       <UserHoverCardContent user={user} />
     </HoverCard>
   )
 }
 
 export const UserHoverCardContent = ({ user }: { user: User }) => {
-  const firstName = user.name.substring(1) // TODO: 성이 2자 이상인 경우나 없?는 경우 처리
+  const firstName = user.username.substring(1) // TODO: 성이 2자 이상인 경우나 없?는 경우 처리
 
   return (
     <HoverCardContent className="flex gap-x-3">
@@ -27,7 +27,7 @@ export const UserHoverCardContent = ({ user }: { user: User }) => {
       <div className="w-full space-y-1">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-x-1">
-            <span className="font-bold">{user.name}</span>
+            <span className="font-bold">{user.username}</span>
             {user.position && <Badge>{user.position}</Badge>}
           </div>
 

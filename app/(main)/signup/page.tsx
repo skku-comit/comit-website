@@ -1,24 +1,17 @@
 'use client'
 
+import { zodResolver } from '@hookform/resolvers/zod'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
+import { signIn, useSession } from 'next-auth/react'
 import { useState } from 'react'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import signUpSchema from '@/constants/zodSchema/signup'
 import { cn } from '@/lib/utils'
 import Welcome from '@/public/welcome.svg'
-
-const simulatedApi = (data: FormData): Promise<{ success: boolean; data?: FormData; message?: string }> => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      // 서버 사이드 에러 시뮬레이션
-      if (Math.random() < 0.5) {
-        reject({ message: 'Server error occurred. Please try again.' })
-      } else {
-        resolve({ success: true, data })
-      }
-    }, 2000)
-  })
-}
 
 export interface FormData {
   username: string
@@ -26,7 +19,7 @@ export interface FormData {
   studentId: string
   email: string
   password: string
-  checkPassword: string
+  confirmPassword: string
   consent: boolean
 }
 
@@ -40,31 +33,36 @@ export default function Signup() {
     formState: { errors, isSubmitting }
   } = useForm<FormData>({
     mode: 'onBlur',
-    defaultValues: {
-      username: '',
-      phoneNumber: '',
-      studentId: '',
-      email: '',
-      password: '',
-      checkPassword: '',
-      consent: false
-    }
+    resolver: zodResolver(signUpSchema)
   })
+  const session = useSession()
+  const router = useRouter()
+  if (session.status === 'authenticated') {
+    router.push('/')
+  }
 
-  const [watchPassword, watchCheckPassword] = watch(['password', 'checkPassword'])
-  const [isCheckPasswordBlurred, setIsCheckPasswordBlurred] = useState(false)
+  const [watchPassword, watchConfirmPassword] = watch(['password', 'confirmPassword'])
+  const [isConfirmPasswordBlurred, setIsConfirmPasswordBlurred] = useState(false)
   const [userName, setuserName] = useState('신규부원')
   const [toggle, setToggle] = useState(false)
 
-  const onSubmit: SubmitHandler<FormData> = async (data) => {
-    // setError("");
+  const onSubmit = async (data: FormData) => {
     try {
-      const response = await simulatedApi(data)
-      // 성공 로직 (success message 띄우거나 redirect, etc.)
-    } catch (error: any) {
-      console.error('Error:', error)
+      const res = await signIn('credentials', {
+        username: data.username,
+        phoneNumber: data.phoneNumber,
+        studentId: data.studentId,
+        email: data.email,
+        password: data.password
+      })
+
+      if (res) {
+        console.log(res)
+      }
+    } catch (error) {
       setError('root', {
-        message: error.message
+        type: 'manual',
+        message: '로그인 중 오류 발생'
       })
     }
   }
@@ -94,7 +92,6 @@ export default function Signup() {
                 <div className="flex flex-grow flex-col gap-y-1 sm:gap-y-2">
                   <input
                     {...register('username', {
-                      required: '이름을 입력해주세요.',
                       onBlur: () => setuserName(getValues().username)
                     })}
                     placeholder="실명을 입력해주세요"
@@ -115,14 +112,8 @@ export default function Signup() {
                   <span className="inline-block text-destructive">*</span>
                 </label>
                 <div className="flex flex-grow flex-col gap-y-1 sm:gap-y-2">
-                  <input
-                    {...register('phoneNumber', {
-                      required: '휴대폰 번호를 입력해주세요.',
-                      pattern: {
-                        value: /^010\d{8}$/,
-                        message: '휴대폰 번호를 다시 확인해주세요.'
-                      }
-                    })}
+                  <Input
+                    {...register('phoneNumber')}
                     placeholder="휴대폰 번호 입력 ('-' 제외 11자리)"
                     className={cn(
                       'box-border w-full rounded-lg border border-solid border-[#d2d2d2] px-3 py-2 align-middle text-xs tracking-normal outline-none sm:px-4 sm:py-3 sm:text-sm/[22px]',
@@ -142,13 +133,7 @@ export default function Signup() {
                 </label>
                 <div className="flex flex-grow flex-col gap-y-1 sm:gap-y-2">
                   <input
-                    {...register('studentId', {
-                      required: '학번을 입력해주세요.',
-                      pattern: {
-                        value: /^20\d{8}$/,
-                        message: '학번을 다시 확인해주세요.'
-                      }
-                    })}
+                    {...register('studentId')}
                     placeholder="학번 입력 (숫자 10자)"
                     className={cn(
                       'box-border w-full rounded-lg border border-solid border-[#d2d2d2] px-3 py-2 align-middle text-xs tracking-normal outline-none sm:px-4 sm:py-3 sm:text-sm/[22px]',
@@ -169,13 +154,7 @@ export default function Signup() {
                 <div className="flex flex-grow flex-col gap-y-1 sm:gap-y-2">
                   <div className="flex flex-grow items-center gap-x-2">
                     <input
-                      {...register('email', {
-                        required: '이메일을 입력해주세요.',
-                        pattern: {
-                          value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-                          message: '이메일을 다시 확인해주세요.'
-                        }
-                      })}
+                      {...register('email')}
                       placeholder="이메일 주소 입력 (로그인용)"
                       className={cn(
                         'box-border w-full rounded-lg border border-solid border-[#d2d2d2] px-3 py-2 align-middle text-xs tracking-normal outline-none sm:px-4 sm:py-3 sm:text-sm/[22px]',
@@ -196,13 +175,7 @@ export default function Signup() {
                 </label>
                 <div className="flex flex-grow flex-col gap-y-1 sm:gap-y-2">
                   <input
-                    {...register('password', {
-                      required: '비밀번호를 입력해주세요.',
-                      pattern: {
-                        value: /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,20}$/,
-                        message: '유효한 비밀번호를 입력해주세요.'
-                      }
-                    })}
+                    {...register('password')}
                     placeholder="비밀번호 입력 (영문자, 숫자 포함 8~20자)"
                     type="password"
                     className={cn(
@@ -223,24 +196,24 @@ export default function Signup() {
                 </label>
                 <div className="flex flex-grow flex-col gap-y-1 sm:gap-y-2">
                   <input
-                    {...register('checkPassword', {
-                      required: '비밀번호를 확인해주세요.',
-                      onBlur: () => setIsCheckPasswordBlurred(true)
+                    {...register('confirmPassword', {
+                      onBlur: () => setIsConfirmPasswordBlurred(true)
                     })}
                     placeholder="비밀번호 재입력"
                     type="password"
                     className={cn(
                       'box-border w-full rounded-lg border border-solid border-[#d2d2d2] px-3 py-2 align-middle text-xs tracking-normal outline-none sm:px-4 sm:py-3 sm:text-sm/[22px]',
-                      (errors.checkPassword || (watchPassword !== watchCheckPassword && isCheckPasswordBlurred)) &&
+                      (errors.confirmPassword ||
+                        (watchPassword !== watchConfirmPassword && isConfirmPasswordBlurred)) &&
                         'border-2 border-destructive'
                     )}
                   />
-                  {errors.checkPassword && watchCheckPassword == '' && (
+                  {errors.confirmPassword && watchConfirmPassword == '' && (
                     <p className="block text-[8px] text-destructive sm:text-xs/[18px]">
-                      {errors.checkPassword.message}
+                      {errors.confirmPassword.message}
                     </p>
                   )}
-                  {watchPassword !== watchCheckPassword && watchCheckPassword && isCheckPasswordBlurred && (
+                  {watchPassword !== watchConfirmPassword && watchConfirmPassword && isConfirmPasswordBlurred && (
                     <p className="block text-[8px] text-destructive sm:text-xs/[18px]">
                       동일한 비밀번호를 입력해주세요.
                     </p>
@@ -320,19 +293,13 @@ export default function Signup() {
               </div>
             )}
           </div>
-          <div className="flex justify-center">
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="mt-3 w-1/3 rounded-lg border border-solid border-[#d2d2d2] bg-primary px-3 py-2 hover:opacity-80 sm:mt-5 sm:w-full sm:py-[15px]"
-            >
-              {isSubmitting ? (
-                <span className="block text-xs font-bold text-[#fff] sm:text-[20px]/[26px]">제출중...</span>
-              ) : (
-                <span className="block text-xs font-bold text-[#fff] sm:text-[20px]/[26px]">입력완료</span>
-              )}
-            </button>
-          </div>
+          <Button
+            type="submit"
+            disabled={isSubmitting}
+            className="mt-3 block h-10 w-full rounded-lg bg-primary px-3 py-2 text-xs font-bold text-[#fff] sm:mt-5 sm:w-full sm:py-[15px] sm:text-[20px]/[26px] md:h-14"
+          >
+            {isSubmitting ? '제출중...' : '입력완료'}
+          </Button>
         </form>
       </div>
     </div>

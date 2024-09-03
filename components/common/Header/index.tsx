@@ -10,14 +10,13 @@ import { IoMdInformationCircleOutline } from 'react-icons/io'
 import { IoHomeOutline, IoLaptopOutline } from 'react-icons/io5'
 import { MdLogin, MdLogout } from 'react-icons/md'
 
-import { Button } from '@/components/ui/button'
+import Profile from '@/components/common/Header/Profile'
 import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from '@/components/ui/drawer'
 import { Route, ROUTES } from '@/constants/routes'
 import { auth } from '@/lib/auth/auth'
 import ComitLogo from '@/public/comit.png'
 
 import { SignOutButton } from './ClientAuthButton'
-import { HeaderDropdown } from './Dropdown'
 import NavLink from './NavLink'
 
 const DrawerItem = ({ route, icon }: { route: Route; icon: React.ReactNode }) => {
@@ -76,20 +75,7 @@ const Header = async ({ height }: { height: string }) => {
         </div>
 
         {/* Desktop: Sign up / Log in  or User */}
-        <div className="hidden h-[40px] w-[270px] items-center justify-between md:flex lg:w-[310px]">
-          {session ? (
-            <HeaderDropdown displayText={session.user?.name as string} items={LOGGED_IN_DRAWER_ITEMS} />
-          ) : (
-            <>
-              <Button className="h-[36px] w-[120px] text-base lg:w-[140px]" asChild>
-                <Link href="/signup">Sign up</Link>
-              </Button>
-              <Button className="h-[36px] w-[120px] text-base lg:w-[140px]" variant="outline" asChild>
-                <Link href="/login">Log in</Link>
-              </Button>
-            </>
-          )}
-        </div>
+        <Profile />
       </nav>
 
       {/* Mobile: Drawer */}

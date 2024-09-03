@@ -3,7 +3,9 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Clock } from 'lucide-react'
 import Image from 'next/image'
-import { SetStateAction, useEffect, useRef, useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { useSession } from 'next-auth/react'
+import { SetStateAction, useRef, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { MdHelpOutline } from 'react-icons/md'
 import { z } from 'zod'
@@ -28,9 +30,10 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Textarea } from '@/components/ui/textarea'
 import { formatDateToTime } from '@/components/ui/time-picker-utils'
 import { TimePicker } from '@/components/ui/timepicker'
-import { API_ENDPOINTS } from '@/constants/apiEndpoint'
+import { useToast } from '@/components/ui/use-toast'
+import { API_ENDPOINTS, ApiEndpoint } from '@/constants/apiEndpoint'
+import { ROUTES } from '@/constants/routes'
 import { fetchData } from '@/lib/fetch'
-import { TEST_USER_ID } from '@/lib/supabase/client'
 import { useSupabaseFile } from '@/lib/supabase/hooks'
 import { Campus, Day, Level, Study } from '@/types'
 
@@ -55,7 +58,7 @@ const schema = z.object({
   level: z.enum(['초급', '중급', '고급'], {
     required_error: '난이도를 선택해주세요'
   }),
-  stack: z.array(z.string()).min(1, { message: '스택을 입력해주세요' }),
+  stacks: z.array(z.string()).min(1, { message: '스택을 입력해주세요' }),
   description: z.string().min(1, { message: '설명을 입력해주세요' })
 })
 
@@ -66,6 +69,10 @@ const campusOptions: Campus[] = ['율전', '명륜', '온라인']
 const levelOptions: Level[] = ['초급', '중급', '고급']
 
 export default function OpenStudy() {
+  const session = useSession()
+  const router = useRouter()
+  const { toast } = useToast()
+
   const {
     handleSubmit,
     trigger,
@@ -80,7 +87,7 @@ export default function OpenStudy() {
   } = useForm<StudyForm>({
     resolver: zodResolver(schema),
     defaultValues: {
-      stack: []
+      stacks: []
     }
   })
   const fileHandler = useSupabaseFile({ pathPrefix: 'image/study' })
@@ -92,20 +99,28 @@ export default function OpenStudy() {
     if (!imageFile) return
     const file = await fileHandler.upload(imageFile)
     const fileUrl = file.supabaseFileData.url
-    console.log('파일을 임시로 업로드 했습니다.')
-
-    const res = await fetchData(API_ENDPOINTS.STUDY.CREATE, {
+    const res = await fetchData(API_ENDPOINTS.CLIENT.STUDY.CREATE as ApiEndpoint, {
       body: JSON.stringify({
         ...data,
         imageSrc: fileUrl,
-        mentor: TEST_USER_ID // TODO: 서버 측에서 JWT 토큰으로 유저 정보 받아오기
-      })
+        isRecruiting: true,
+        semester: 1 // TODO: 학기 정보 추가, 하드코딩하지마라!!!
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${session.data?.accessToken.token}`
+      }
     })
     if (!res.ok) {
       await file.delete()
       return
     }
     file.commit()
+    toast({
+      title: '스터디 생성 완료',
+      description: '스터디가 성공적으로 생성되었습니다.'
+    })
+    router.push(ROUTES.STUDY.index.url)
   }
   const handleFileChange = (e: React.ChangeEvent) => {
     const targetFiles = (e.target as HTMLInputElement).files as FileList
@@ -122,16 +137,12 @@ export default function OpenStudy() {
   const [imageFile, setImageFile] = useState<File | null>(null)
   const [image, setImage] = useState<string>('')
 
-  useEffect(() => {
-    console.log(image)
-  }, [image])
-
   const fileRef = useRef<HTMLInputElement>(null)
   const handleClick = () => {
     fileRef?.current?.click()
   }
   // Stack
-  const watchedStacks: string[] = watch('stack')
+  const watchedStacks: string[] = watch('stacks')
   const [stackError, setStackError] = useState<string>('')
   const [currentStack, setCurrentStack] = useState<string>('')
 
@@ -150,16 +161,16 @@ export default function OpenStudy() {
     }
   }
   const handleDuplicateStack = () => {
-    const newStack = getValues('stack').concat(currentStack)
+    const newStack = getValues('stacks').concat(currentStack)
 
-    if (new Set(newStack).size === getValues('stack').length) {
-      setError('stack', {
+    if (new Set(newStack).size === getValues('stacks').length) {
+      setError('stacks', {
         type: 'Duplicate',
         message: '중복 스택이 존재합니다'
       })
     } else {
-      clearErrors('stack')
-      setValue('stack', getValues('stack') ? newStack : [currentStack])
+      clearErrors('stacks')
+      setValue('stacks', getValues('stacks') ? newStack : [currentStack])
     }
     setCurrentStack('')
   }
@@ -330,7 +341,7 @@ export default function OpenStudy() {
               <div className="relative">
                 <Input
                   placeholder="주제를 입력해주세요"
-                  id="stack"
+                  id="stacks"
                   value={currentStack}
                   onChange={handleStackChange}
                   onKeyUp={handleStackAdd}
@@ -351,24 +362,25 @@ export default function OpenStudy() {
                 type="button"
                 onClick={() => {
                   setStackError('')
-                  clearErrors('stack')
-                  setValue('stack', [])
+                  clearErrors('stacks')
+                  setValue('stacks', [])
                 }}
               >
                 Reset
               </Button>
             </div>
-            {errors.stack && <p className="-mt-2 text-sm text-red-500">{errors.stack.message}</p>}
+            {errors.stacks && <p className="-mt-2 text-sm text-red-500">{errors.stacks.message}</p>}
             <div className="flex gap-4">
               {watchedStacks &&
-                watchedStacks.map((stack, index) => (
+                watchedStacks.map((stacks, index) => (
                   <Badge variant="secondary" key={index}>
-                    {stack}
+                    {stacks}
                   </Badge>
                 ))}
             </div>
           </div>
         </div>
+
         <div className="flex flex-col gap-1">
           <p className="text-xl font-semibold">설명</p>
           <Textarea
@@ -414,7 +426,7 @@ export default function OpenStudy() {
                   }
                   endTime={getValues('endTime') || ''}
                   level={getValues('level') || ''}
-                  stack={getValues('stack') || ''}
+                  stacks={getValues('stacks') || ''}
                   startTime={getValues('startTime') || ''}
                   title={getValues('title') || ''}
                 /> */}

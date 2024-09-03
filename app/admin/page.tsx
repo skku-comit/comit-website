@@ -1,14 +1,25 @@
 import Link from 'next/link'
+import { redirect } from 'next/navigation'
 
-// import { redirect } from 'next/navigation'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { API_ENDPOINTS } from '@/constants/apiEndpoint'
+import { API_ENDPOINTS, ApiEndpoint } from '@/constants/apiEndpoint'
+import { ROUTES } from '@/constants/routes'
+import { auth } from '@/lib/auth/auth'
 import { fetchData } from '@/lib/fetch'
-import { Study } from '@/types'
+import { Study, User } from '@/types'
 
 const Admin = async () => {
-  // TODO: Admin Dashboard 만을 위한 API Endpoint 필요 - 스터디 및 유저의 간략한 정보만 받아오기
-  const studyRes = await fetchData(API_ENDPOINTS.STUDY.LIST)
+  const session = await auth()
+  if (!session) {
+    redirect(ROUTES.LOGIN.url)
+  }
+  const { accessToken } = session
+
+  const studyRes = await fetchData(API_ENDPOINTS.ADMIN.STUDY.LIST as ApiEndpoint, {
+    headers: {
+      Authorization: `Bearer ${accessToken.token}`
+    }
+  })
   if (!studyRes.ok) {
     switch (studyRes.status) {
       default:
@@ -17,6 +28,20 @@ const Admin = async () => {
   }
   const studyJSON = await studyRes.json()
   const studyList: Study[] = studyJSON.data
+
+  const userRes = await fetchData(API_ENDPOINTS.ADMIN.USER.LIST as ApiEndpoint, {
+    headers: {
+      Authorization: `Bearer ${accessToken.token}`
+    }
+  })
+  if (!userRes.ok) {
+    switch (userRes.status) {
+      default:
+      // redirect('/error')
+    }
+  }
+  const userJSON = await userRes.json()
+  const userList: User[] = userJSON.data
 
   return (
     <div className="p-5">
@@ -32,22 +57,22 @@ const Admin = async () => {
           <CardContent className="flex-col gap-y-4 md:flex">
             <p className="text-lg">
               전체 스터디:&nbsp;
-              <Link href="" className="text-primary underline">
+              <Link href={ROUTES.ADMIN.STUDY.url} className="text-primary underline">
                 {studyList.length}
               </Link>
               개
             </p>
             <p className="text-lg">
               열린 스터디:&nbsp;
-              <Link href="" className="text-primary underline">
-                {studyList.length}
+              <Link href={ROUTES.ADMIN.STUDY.url} className="text-primary underline">
+                {studyList.filter((study) => study.isRecruiting).length}
               </Link>
               개
             </p>
             <p className="text-lg">
               종료된 스터디:&nbsp;
-              <Link href="" className="text-primary underline">
-                {studyList.length}
+              <Link href={ROUTES.ADMIN.STUDY.url} className="text-primary underline">
+                {studyList.filter((study) => !study.isRecruiting).length}
               </Link>
               개
             </p>
@@ -63,29 +88,29 @@ const Admin = async () => {
           <CardContent className="flex-col gap-y-4 md:flex">
             <p className="text-lg">
               전체:&nbsp;
-              <Link href="" className="text-primary underline">
-                {studyList.length}
+              <Link href={ROUTES.ADMIN.USER.url} className="text-primary underline">
+                {userList.length}
               </Link>
               명
             </p>
             <p className="text-lg">
               관리자:&nbsp;
-              <Link href="" className="text-primary underline">
-                {studyList.length}
+              <Link href={ROUTES.ADMIN.USER.url} className="text-primary underline">
+                {userList.filter((user) => user.role === 'ROLE_ADMIN').length}
               </Link>
               명
             </p>
             <p className="text-lg">
               일반 부원:&nbsp;
-              <Link href="" className="text-primary underline">
-                {studyList.length}
+              <Link href={ROUTES.ADMIN.USER.url} className="text-primary underline">
+                {userList.filter((user) => user.role === 'ROLE_VERIFIED').length}
               </Link>
               명
             </p>
             <p className="text-lg">
               승인 대기:&nbsp;
-              <Link href="" className="text-primary underline">
-                {studyList.length}
+              <Link href={ROUTES.ADMIN.USER.url} className="text-primary underline">
+                {userList.filter((user) => user.role === 'ROLE_MEMBER').length}
               </Link>
               명
             </p>
