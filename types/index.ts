@@ -17,6 +17,8 @@ export type User = {
   username: string
 }
 
+export type UserProfile = Omit<User, 'createdDate' | 'isStaff' | 'modifiedDate' | 'password' | 'role'>
+
 export type Level = '초급' | '중급' | '고급'
 export type Campus = '공통' | '온라인' | '명륜' | '율전'
 export type Day = '월' | '화' | '수' | '목' | '금' | '토' | '일'
