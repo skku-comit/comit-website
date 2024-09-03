@@ -3,6 +3,7 @@
 import { DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu'
 import { MixerHorizontalIcon } from '@radix-ui/react-icons'
 import { Table } from '@tanstack/react-table'
+import { useEffect, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -17,7 +18,36 @@ interface DataTableViewOptionsProps<TData> {
   table: Table<TData>
 }
 
+const defaultCheckedColumns = ['id', 'username', 'isStaff', 'phoneNumber', 'position', 'role', 'studentId']
+
 export function DataTableViewOptions<TData>({ table }: DataTableViewOptionsProps<TData>) {
+  const [visibleColumns, setVisibleColumns] = useState<string[]>(defaultCheckedColumns)
+
+  useEffect(() => {
+    table.getAllColumns().forEach((column) => {
+      if (defaultCheckedColumns.includes(column.id)) {
+        column.toggleVisibility(true)
+      } else {
+        column.toggleVisibility(false)
+      }
+    })
+  }, [table])
+
+  const handleCheckedChange = (columnId: string, isChecked: boolean) => {
+    setVisibleColumns((prev) => {
+      if (isChecked) {
+        return [...prev, columnId]
+      } else {
+        return prev.filter((id) => id !== columnId)
+      }
+    })
+
+    const column = table.getColumn(columnId)
+    if (column) {
+      column.toggleVisibility(isChecked)
+    }
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -37,8 +67,8 @@ export function DataTableViewOptions<TData>({ table }: DataTableViewOptionsProps
               <DropdownMenuCheckboxItem
                 key={column.id}
                 className="capitalize"
-                checked={column.getIsVisible()}
-                onCheckedChange={(value) => column.toggleVisibility(!!value)}
+                checked={visibleColumns.includes(column.id)}
+                onCheckedChange={(value) => handleCheckedChange(column.id, value)}
               >
                 {column.id}
               </DropdownMenuCheckboxItem>
