@@ -8,7 +8,6 @@ export type User = {
   id: number
   isStaff: boolean
   modifiedDate?: string
-  password: string
   phoneNumber: string
   position: string
   profileImage?: string
@@ -17,7 +16,7 @@ export type User = {
   username: string
 }
 
-export type UserProfile = Omit<User, 'createdDate' | 'isStaff' | 'modifiedDate' | 'password' | 'role'>
+export type UserProfile = Omit<User, 'createdDate' | 'isStaff' | 'modifiedDate' | 'role'>
 
 export type Level = '초급' | '중급' | '고급'
 export type Campus = '공통' | '온라인' | '명륜' | '율전'
