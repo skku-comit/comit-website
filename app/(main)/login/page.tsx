@@ -3,7 +3,8 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import Image from 'next/image'
 import Link from 'next/link'
-import { signIn } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
+import { signIn, useSession } from 'next-auth/react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { BsEye, BsEyeSlash } from 'react-icons/bs'
@@ -19,6 +20,12 @@ interface LoginForm {
 }
 
 export default function Login() {
+  const session = useSession()
+  const router = useRouter()
+  if (session.status === 'authenticated') {
+    router.push('/')
+  }
+
   const [showPassword, setShowPassword] = useState(false)
 
   const {

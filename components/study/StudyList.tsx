@@ -13,8 +13,8 @@ import { CustomResponse } from '@/lib/response'
 import { Study } from '@/types'
 
 const StudyList = async () => {
-  const res = await fetchData(API_ENDPOINTS.STUDY.LIST as ApiEndpoint, {
-    cache: 'no-cache'
+  const res = await fetchData(API_ENDPOINTS.CLIENT.STUDY.LIST as ApiEndpoint, {
+    cache: 'no-store'
   })
   if (!res.ok) {
     switch (res.status) {
@@ -69,7 +69,7 @@ const StudyList = async () => {
                   </div>
                   <div className="mb-4 mt-1 flex items-center gap-2 break-words">
                     <RiStackOverflowLine />
-                    {study.stack.join(', ')}
+                    {study.stacks.join(', ')}
                   </div>
                   <div
                     className="whitespace-pre-line break-keep"

@@ -10,14 +10,14 @@ import { Study } from '@/types'
 
 interface StudySignupProps {
   params: {
-    id: string
+    id: number
   }
 }
 
 const StudySignup = async ({ params }: StudySignupProps) => {
   const { id } = params
 
-  const res = await fetchData(API_ENDPOINTS.STUDY.RETRIEVE(id) as ApiEndpoint)
+  const res = await fetchData(API_ENDPOINTS.CLIENT.STUDY.RETRIEVE(id) as ApiEndpoint)
   if (!res.ok) {
     switch (res.status) {
       case HttpStatusCode.NotFound:

@@ -10,16 +10,11 @@ import { MdOutlineSignalCellularAlt } from 'react-icons/md'
 import { RiStackOverflowLine } from 'react-icons/ri'
 import { z } from 'zod'
 
-import { HttpStatusCode } from '@/app/api/utils/httpConsts'
 import LoadingSpinner from '@/components/common/LoadingSpinner'
 import UserHoverCard from '@/components/common/User/HoverCard'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
-import { API_ENDPOINTS, ApiEndpoint } from '@/constants/apiEndpoint'
-import { fetchData } from '@/lib/fetch'
-import { CustomResponse } from '@/lib/response'
-import { AlreadySignedup } from '@/lib/response/errors'
 import { Study } from '@/types'
 
 export interface StudySignupRequest {
@@ -81,43 +76,41 @@ const StudySignupForm = ({ study }: StudySignupFormProps) => {
   })
 
   const onValid = async (formData: IStudySignupForm) => {
-    const requestBody: StudySignupRequest = {
-      username: formData.username,
-      studentId: formData.studentId,
-      github: formData.github,
-      study_id: study.id,
-      applicationMotiv: formData.applicationMotiv
-    }
-    const res = await fetchData(API_ENDPOINTS.STUDY.SIGNUP(study.id) as ApiEndpoint, {
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(requestBody)
-    })
-
-    if (res.ok) {
-      const data = await res.json()
-      console.log(data)
-      alert(data)
-      // TODO: 신청 성공 시 처리 로직 추가
-      return
-    }
-
-    switch (res.status) {
-      case HttpStatusCode.BadRequest:
-        const json: CustomResponse = await res.json()
-        switch (json.error!.errorType) {
-          case AlreadySignedup.errorType:
-            alert('이미 신청 되었습니다.')
-            break
-
-          default:
-            throw new Error('Uncaught Error!')
-        }
-        break
-      default:
-        throw new Error('Uncaught Error!')
-    }
+    // const requestBody: StudySignupRequest = {
+    //   username: formData.username,
+    //   studentId: formData.studentId,
+    //   github: formData.github,
+    //   study_id: study.id,
+    //   applicationMotiv: formData.applicationMotiv
+    // }
+    // TODO: 스터디 참여 신청 API 구현 후 연결
+    // const res = await fetchData(API_ENDPOINTS.CLIENT.STUDY.SIGNUP(study.id) as ApiEndpoint, {
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify(requestBody)
+    // })
+    // if (res.ok) {
+    //   const data = await res.json()
+    //   console.log(data)
+    //   alert(data)
+    //   // TODO: 신청 성공 시 처리 로직 추가
+    //   return
+    // }
+    // switch (res.status) {
+    //   case HttpStatusCode.BadRequest:
+    //     const json: CustomResponse = await res.json()
+    //     switch (json.error!.errorType) {
+    //       case AlreadySignedup.errorType:
+    //         alert('이미 신청 되었습니다.')
+    //         break
+    //       default:
+    //         throw new Error('Uncaught Error!')
+    //     }
+    //     break
+    //   default:
+    //     throw new Error('Uncaught Error!')
+    // }
   }
 
   return (
@@ -159,7 +152,7 @@ const StudySignupForm = ({ study }: StudySignupFormProps) => {
                 <div className="overflow-auto">
                   <div className="flex justify-start gap-x-2">
                     <RiStackOverflowLine />
-                    {study.stack.map((s) => (
+                    {study.stacks.map((s) => (
                       <Badge key={s} variant="secondary" className="text-xs">
                         {s}
                       </Badge>

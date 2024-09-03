@@ -1,44 +1,62 @@
 'use client'
 
+import { redirect } from 'next/navigation'
+import { useSession } from 'next-auth/react'
 import { useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { API_ENDPOINTS, ApiEndpoint } from '@/constants/apiEndpoint'
+import { ApiEndpoint } from '@/constants/apiEndpoint'
+import { ROUTES } from '@/constants/routes'
 import { fetchData } from '@/lib/fetch'
 import { CustomResponseDTO } from '@/lib/response'
-import { Study } from '@/types'
 
 interface EditableCellProps {
-  fieldName: keyof Study
+  fieldName: any
   row: {
-    original: Study
+    original: any
   }
   readonly?: boolean
+  submitApiEndpoint: ApiEndpoint
 }
 
-const EditableCell: React.FC<EditableCellProps> = ({ fieldName, row, readonly }) => {
+const EditableCell: React.FC<EditableCellProps> = ({ fieldName, row, readonly, submitApiEndpoint }) => {
+  const session = useSession()
+  const accessToken = session.data?.accessToken
+
+  if (!accessToken) {
+    redirect(ROUTES.LOGIN.url)
+  }
+
   const initialValue = row.original[fieldName]
   const [open, setOpen] = useState<boolean>(false)
-  const [value, setValue] = useState<string | number | boolean | string[]>(initialValue ?? '')
-  const [inputValue, setInputValue] = useState<string | number | boolean | string[]>(initialValue ?? '')
+  const [value, setValue] = useState<any>(initialValue ?? '')
+  const [inputValue, setInputValue] = useState<any>(initialValue ?? '')
   const id = row.original.id
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    if (accessToken === undefined) {
+      redirect(ROUTES.LOGIN.url)
+    }
     e.preventDefault()
-    setValue(inputValue) // Optimistic update
+    setValue(inputValue)
     setOpen(false)
-    const res = await fetchData(API_ENDPOINTS.STUDY.UPDATE(id) as ApiEndpoint, {
+
+    const res = await fetchData(submitApiEndpoint, {
       body: JSON.stringify({ [fieldName]: inputValue }),
-      cache: 'no-cache'
+      cache: 'no-cache',
+      headers: {
+        Authorization: `Bearer ${accessToken.token}`,
+        'Content-Type': 'application/json'
+      }
     })
+
     if (!res.ok) {
       console.error('Failed to update', fieldName, id, inputValue)
       return
     }
     const data: CustomResponseDTO = await res.json()
-    if (!data.data) return // Supabase 사용 시에는 data가 null임
     const updatedFieldResult = data.data[fieldName]
     setValue(updatedFieldResult) // 실제 업데이트
   }
@@ -56,7 +74,7 @@ const EditableCell: React.FC<EditableCellProps> = ({ fieldName, row, readonly })
             <Input
               type="checkbox"
               checked={inputValue}
-              onChange={() => setInputValue((prev) => !prev)}
+              onChange={() => setInputValue((prev: any) => !prev)}
               className={inputClass}
             />
           ) : (

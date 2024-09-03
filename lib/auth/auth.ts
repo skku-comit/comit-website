@@ -87,6 +87,7 @@ async function refreshAccessToken(
 
   if (!res.ok) {
     if (res.status === HttpStatusCode.UnAuthorized) return null // Refresh Token이 만료된 경우
+    // TODO: 그냥 에러 발생시키는 것이 아니라 에러 처리 로직 추가
     throw new Error(data.message)
   }
   const newAccessToken = res.headers.get('access')

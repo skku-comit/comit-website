@@ -1,12 +1,24 @@
+import { redirect } from 'next/navigation'
+
 import { AdminDataTable } from '@/components/admin/DataTable'
 import { columns } from '@/components/admin/DataTable/columns/Study'
 import { API_ENDPOINTS, ApiEndpoint } from '@/constants/apiEndpoint'
+import { ROUTES } from '@/constants/routes'
+import { auth } from '@/lib/auth/auth'
 import { fetchData } from '@/lib/fetch'
 import { Study } from '@/types'
 
 const StudyManagePage = async () => {
-  const res = await fetchData(API_ENDPOINTS.STUDY.LIST as ApiEndpoint, {
-    cache: 'no-cache'
+  const session = await auth()
+  if (!session) {
+    redirect(ROUTES.LOGIN.url)
+  }
+  const { accessToken } = session
+
+  const res = await fetchData(API_ENDPOINTS.ADMIN.STUDY.LIST as ApiEndpoint, {
+    headers: {
+      Authorization: `Bearer ${accessToken.token}`
+    }
   })
   const studies = (await res.json()).data as Study[]
 
