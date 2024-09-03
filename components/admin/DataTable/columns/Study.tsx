@@ -75,61 +75,122 @@ export const columns: ColumnDef<Study>[] = [
   {
     accessorKey: 'id',
     header: ({ column }) => <DataTableColumnHeader column={column} title="ID" />,
-    cell: ({ row }) => <EditableCell row={row} fieldName="id" readonly={true} />
+    cell: ({ row }) => (
+      <EditableCell
+        submitApiEndpoint={API_ENDPOINTS.ADMIN.STUDY.UPDATE(row.original.id)}
+        row={row}
+        fieldName="id"
+        readonly={true}
+      />
+    )
   },
   {
     accessorKey: 'title',
     header: ({ column }) => <DataTableColumnHeader column={column} title="이름" />,
-    cell: ({ row }) => <EditableCell row={row} fieldName="title" />
+    cell: ({ row }) => (
+      <EditableCell submitApiEndpoint={API_ENDPOINTS.ADMIN.STUDY.UPDATE(row.original.id)} row={row} fieldName="title" />
+    )
   },
   {
     accessorKey: 'stack',
     header: ({ column }) => <DataTableColumnHeader column={column} title="스택" />,
-    cell: ({ row }) => <EditableCell row={row} fieldName="stacks" />
+    cell: ({ row }) => (
+      <EditableCell
+        submitApiEndpoint={API_ENDPOINTS.ADMIN.STUDY.UPDATE(row.original.id)}
+        row={row}
+        fieldName="stacks"
+      />
+    )
   },
   {
     accessorKey: 'day',
     header: ({ column }) => <DataTableColumnHeader column={column} title="요일" />,
-    cell: ({ row }) => <EditableCell row={row} fieldName="day" />
+    cell: ({ row }) => (
+      <EditableCell submitApiEndpoint={API_ENDPOINTS.ADMIN.STUDY.UPDATE(row.original.id)} row={row} fieldName="day" />
+    )
   },
   {
     accessorKey: 'startTime',
     header: ({ column }) => <DataTableColumnHeader column={column} title="시작시간" />,
-    cell: ({ row }) => <EditableCell row={row} fieldName="startTime" />
+    cell: ({ row }) => (
+      <EditableCell
+        submitApiEndpoint={API_ENDPOINTS.ADMIN.STUDY.UPDATE(row.original.id)}
+        row={row}
+        fieldName="startTime"
+      />
+    )
   },
   {
     accessorKey: 'endTime',
     header: ({ column }) => <DataTableColumnHeader column={column} title="종료시간" />,
-    cell: ({ row }) => <EditableCell row={row} fieldName="endTime" />
+    cell: ({ row }) => (
+      <EditableCell
+        submitApiEndpoint={API_ENDPOINTS.ADMIN.STUDY.UPDATE(row.original.id)}
+        row={row}
+        fieldName="endTime"
+      />
+    )
   },
   {
     accessorKey: 'level',
     header: ({ column }) => <DataTableColumnHeader column={column} title="난이도" />,
-    cell: ({ row }) => <EditableCell row={row} fieldName="level" />
+    cell: ({ row }) => (
+      <EditableCell submitApiEndpoint={API_ENDPOINTS.ADMIN.STUDY.UPDATE(row.original.id)} row={row} fieldName="level" />
+    )
   },
   {
     accessorKey: 'campus',
     header: ({ column }) => <DataTableColumnHeader column={column} title="캠퍼스" />,
-    cell: ({ row }) => <EditableCell row={row} fieldName="campus" />
+    cell: ({ row }) => (
+      <EditableCell
+        submitApiEndpoint={API_ENDPOINTS.ADMIN.STUDY.UPDATE(row.original.id)}
+        row={row}
+        fieldName="campus"
+      />
+    )
   },
   {
     accessorKey: 'description',
     header: ({ column }) => <DataTableColumnHeader column={column} title="설명" />,
-    cell: ({ row }) => <EditableCell row={row} fieldName="description" />
+    cell: ({ row }) => (
+      <EditableCell
+        submitApiEndpoint={API_ENDPOINTS.ADMIN.STUDY.UPDATE(row.original.id)}
+        row={row}
+        fieldName="description"
+      />
+    )
   },
   {
     accessorKey: 'isRecruiting',
     header: ({ column }) => <DataTableColumnHeader column={column} title="모집 여부" />,
-    cell: ({ row }) => <EditableCell row={row} fieldName="isRecruiting" />
+    cell: ({ row }) => (
+      <EditableCell
+        submitApiEndpoint={API_ENDPOINTS.ADMIN.STUDY.UPDATE(row.original.id)}
+        row={row}
+        fieldName="isRecruiting"
+      />
+    )
   },
   {
     accessorKey: 'imageSrc',
     header: ({ column }) => <DataTableColumnHeader column={column} title="이미지" />,
-    cell: ({ row }) => <EditableCell row={row} fieldName="imageSrc" />
+    cell: ({ row }) => (
+      <EditableCell
+        submitApiEndpoint={API_ENDPOINTS.ADMIN.STUDY.UPDATE(row.original.id)}
+        row={row}
+        fieldName="imageSrc"
+      />
+    )
   },
   {
     accessorKey: 'mentor',
     header: ({ column }) => <DataTableColumnHeader column={column} title="스터디장" />,
-    cell: ({ row }) => <EditableCell row={row} fieldName="mentor" />
+    cell: ({ row }) => (
+      <EditableCell
+        submitApiEndpoint={API_ENDPOINTS.ADMIN.STUDY.UPDATE(row.original.id)}
+        row={row}
+        fieldName="mentor"
+      />
+    )
   }
 ]

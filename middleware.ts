@@ -15,10 +15,6 @@ export async function middleware(request: NextRequest) {
   if (request.nextUrl.pathname === ROUTES.LOGIN.url || request.nextUrl.pathname === ROUTES.SIGNUP.url) {
     return session ? NextResponse.redirect(ROUTES.HOME.url) : NextResponse.next()
   }
-
-  if (session.accessToken) {
-    request.headers.set('Authorization', `Bearer ${session.accessToken.token}`)
-  }
   return NextResponse.next()
 }
 

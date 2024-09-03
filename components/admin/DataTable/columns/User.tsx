@@ -2,6 +2,8 @@
 
 import { ColumnDef } from '@tanstack/react-table'
 
+import EditableCell from '@/components/admin/DataTable/EditableCell'
+import { API_ENDPOINTS } from '@/constants/apiEndpoint'
 import { User } from '@/types'
 
 export const columns: ColumnDef<User>[] = [
@@ -43,7 +45,13 @@ export const columns: ColumnDef<User>[] = [
   {
     accessorKey: 'isStaff',
     header: () => <div className="ml-8 min-w-24 text-left text-base">스태프 여부</div>,
-    cell: ({ row }) => <p className="ml-8 text-base">{row.original.isStaff}</p>
+    cell: ({ row }) => (
+      <EditableCell
+        submitApiEndpoint={API_ENDPOINTS.ADMIN.USER.STAFF_UPDATE(row.original.id)}
+        row={row}
+        fieldName="isStaff"
+      />
+    )
   },
   {
     accessorKey: 'modifiedDate',
@@ -68,7 +76,13 @@ export const columns: ColumnDef<User>[] = [
   {
     accessorKey: 'role',
     header: () => <div className="ml-8 min-w-24 text-left text-base">권한</div>,
-    cell: ({ row }) => <p className="ml-8 text-base">{row.original.role}</p>
+    cell: ({ row }) => (
+      <EditableCell
+        submitApiEndpoint={API_ENDPOINTS.ADMIN.USER.ROLE_UPDATE(row.original.id)}
+        row={row}
+        fieldName="role"
+      />
+    )
   },
   {
     accessorKey: 'studentId',

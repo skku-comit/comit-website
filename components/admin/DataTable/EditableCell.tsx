@@ -1,11 +1,14 @@
 'use client'
 
+import { redirect } from 'next/navigation'
+import { useSession } from 'next-auth/react'
 import { useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { API_ENDPOINTS, ApiEndpoint } from '@/constants/apiEndpoint'
+import { ApiEndpoint } from '@/constants/apiEndpoint'
+import { ROUTES } from '@/constants/routes'
 import { fetchData } from '@/lib/fetch'
 import { CustomResponseDTO } from '@/lib/response'
 
@@ -15,9 +18,17 @@ interface EditableCellProps {
     original: any
   }
   readonly?: boolean
+  submitApiEndpoint: ApiEndpoint
 }
 
-const EditableCell: React.FC<EditableCellProps> = ({ fieldName, row, readonly }) => {
+const EditableCell: React.FC<EditableCellProps> = ({ fieldName, row, readonly, submitApiEndpoint }) => {
+  const session = useSession()
+  const accessToken = session.data?.accessToken
+
+  if (!accessToken) {
+    redirect(ROUTES.LOGIN.url)
+  }
+
   const initialValue = row.original[fieldName]
   const [open, setOpen] = useState<boolean>(false)
   const [value, setValue] = useState<any>(initialValue ?? '')
@@ -25,27 +36,21 @@ const EditableCell: React.FC<EditableCellProps> = ({ fieldName, row, readonly })
   const id = row.original.id
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    setValue(inputValue) // Optimistic update
-    setOpen(false)
-    let res: Response
-    if (fieldName === 'role') {
-      res = await fetchData(API_ENDPOINTS.ADMIN.USER.ROLE_UPDATE(id) as ApiEndpoint, {
-        body: JSON.stringify({ [fieldName]: inputValue }),
-        cache: 'no-cache'
-      })
-    } else if (fieldName === 'isStaff') {
-      res = await fetchData(API_ENDPOINTS.ADMIN.USER.STAFF_UPDATE(id) as ApiEndpoint, {
-        body: JSON.stringify({ [fieldName]: inputValue }),
-        cache: 'no-cache'
-      })
-    } else {
-      throw new Error('Not Implemented. Please add PUT endpoint.')
-      res = await fetchData(API_ENDPOINTS.CLIENT.STUDY.UPDATE(id) as ApiEndpoint, {
-        body: JSON.stringify({ [fieldName]: inputValue }),
-        cache: 'no-cache'
-      })
+    if (accessToken === undefined) {
+      redirect(ROUTES.LOGIN.url)
     }
+    e.preventDefault()
+    setValue(inputValue)
+    setOpen(false)
+
+    const res = await fetchData(submitApiEndpoint, {
+      body: JSON.stringify({ [fieldName]: inputValue }),
+      cache: 'no-cache',
+      headers: {
+        Authorization: `Bearer ${accessToken.token}`,
+        'Content-Type': 'application/json'
+      }
+    })
 
     if (!res.ok) {
       console.error('Failed to update', fieldName, id, inputValue)
