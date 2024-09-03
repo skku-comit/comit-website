@@ -12,11 +12,11 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <HeightPopulatedBody headerHeight="5rem" footerHeight="5rem" className={inter.className}>
-      <AuthProvider>
+    <AuthProvider>
+      <HeightPopulatedBody headerHeight="5rem" footerHeight="5rem" className={inter.className}>
         {children}
         <Toaster />
-      </AuthProvider>
-    </HeightPopulatedBody>
+      </HeightPopulatedBody>
+    </AuthProvider>
   )
 }
