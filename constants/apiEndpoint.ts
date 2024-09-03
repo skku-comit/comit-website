@@ -44,7 +44,8 @@ const JSP_ENDPOINTS = {
     PROFILE: {
       RETRIEVE: { url: `${baseURL}/${API_PREFIX}/profile`, method: 'GET' as HttpMethod },
       UPDATE: { url: `${baseURL}/${API_PREFIX}/profile`, method: 'PUT' as HttpMethod },
-      DELETE: { url: `${baseURL}/${API_PREFIX}/profile`, method: 'DELETE' as HttpMethod }
+      DELETE: { url: `${baseURL}/${API_PREFIX}/profile`, method: 'DELETE' as HttpMethod },
+      CREATED_STUDY: { url: `${baseURL}/${API_PREFIX}/profile/studies-created`, method: 'GET' as HttpMethod }
     }
   },
   AUTH: {

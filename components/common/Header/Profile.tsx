@@ -63,7 +63,7 @@ function Profile() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
+      <DropdownMenuTrigger className="max-md:hidden">
         <div className="flex items-center justify-center gap-x-3 text-primary">
           <Avatar>
             <AvatarImage src={session.user?.image ?? RANDOM_PROFILE_IMAGE} />

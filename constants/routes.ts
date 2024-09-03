@@ -40,7 +40,7 @@ export const ROUTES = {
     url: '/signup'
   },
   MYSTUDY: {
-    name: 'My Studies',
+    name: 'My Study',
     url: '/mystudy'
   },
   PROFILE: {
