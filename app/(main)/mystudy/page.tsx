@@ -1,9 +1,7 @@
 'use client'
-import './mystudy.css'
 
 import Link from 'next/link'
 import { IoPersonOutline } from 'react-icons/io5'
-
 
 interface StudyData {
   imageSrc: string
