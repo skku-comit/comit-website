@@ -76,6 +76,7 @@ const EditableCell: React.FC<EditableCellProps> = ({ fieldName, row, readonly, s
               checked={inputValue}
               onChange={() => setInputValue((prev: any) => !prev)}
               className={inputClass}
+              disabled={readonly}
             />
           ) : (
             <Input value={inputValue} onChange={(e) => setInputValue(e.target.value)} className={inputClass} />
