@@ -7,20 +7,18 @@ import { ROUTES } from './constants/routes'
 export async function middleware(request: NextRequest) {
   const session = await auth()
 
-  console.log(request)
-
   // 세션이 없는 경우 로그인 페이지로 리디렉션
   if (!session || session.message) {
-    const callbackUrl = encodeURIComponent(request.url) // 시도했던 URL을 callbackUrl로 설정
-    return NextResponse.redirect(new URL(`${ROUTES.LOGIN.url}?callbackUrl=${request.url}`, request.url))
-    return NextResponse.redirect(new URL(request.url))
+    return NextResponse.redirect(new URL(ROUTES.LOGIN.url, request.url))
   }
+
+  if (request.nextUrl.pathname === ROUTES.LOGIN.url || request.nextUrl.pathname === ROUTES.SIGNUP.url) {
+    return session ? NextResponse.redirect(ROUTES.HOME.url) : NextResponse.next()
+  }
+
   if (session.accessToken) {
     request.headers.set('Authorization', `Bearer ${session.accessToken.token}`)
   }
-
-  console.log('middleware.ts: ', session)
-
   return NextResponse.next()
 }
 

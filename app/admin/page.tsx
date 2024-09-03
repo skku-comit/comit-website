@@ -7,8 +7,7 @@ import { fetchData } from '@/lib/fetch'
 import { Study } from '@/types'
 
 const Admin = async () => {
-  // TODO: Admin Dashboard 만을 위한 API Endpoint 필요 - 스터디 및 유저의 간략한 정보만 받아오기
-  const studyRes = await fetchData(API_ENDPOINTS.CLIENT.STUDY.LIST as ApiEndpoint)
+  const studyRes = await fetchData(API_ENDPOINTS.ADMIN.STUDY.LIST as ApiEndpoint)
   if (!studyRes.ok) {
     switch (studyRes.status) {
       default:
@@ -16,8 +15,17 @@ const Admin = async () => {
     }
   }
   const studyJSON = await studyRes.json()
-  console.log(studyJSON)
   const studyList: Study[] = studyJSON.data
+
+  const userRes = await fetchData(API_ENDPOINTS.ADMIN.USER.LIST as ApiEndpoint)
+  if (!userRes.ok) {
+    switch (userRes.status) {
+      default:
+      // redirect('/error')
+    }
+  }
+  const userJSON = await userRes.json()
+  const userList: Study[] = userJSON.data
 
   return (
     <div className="p-5">
@@ -41,14 +49,14 @@ const Admin = async () => {
             <p className="text-lg">
               열린 스터디:&nbsp;
               <Link href="" className="text-primary underline">
-                {studyList.length}
+                {studyList.filter((study) => study.isRecruiting).length}
               </Link>
               개
             </p>
             <p className="text-lg">
               종료된 스터디:&nbsp;
               <Link href="" className="text-primary underline">
-                {studyList.length}
+                {studyList.filter((study) => !study.isRecruiting).length}
               </Link>
               개
             </p>
@@ -65,28 +73,28 @@ const Admin = async () => {
             <p className="text-lg">
               전체:&nbsp;
               <Link href="" className="text-primary underline">
-                {studyList.length}
+                {userList.length}
               </Link>
               명
             </p>
             <p className="text-lg">
               관리자:&nbsp;
               <Link href="" className="text-primary underline">
-                {studyList.length}
+                {userList.length}
               </Link>
               명
             </p>
             <p className="text-lg">
               일반 부원:&nbsp;
               <Link href="" className="text-primary underline">
-                {studyList.length}
+                {userList.length}
               </Link>
               명
             </p>
             <p className="text-lg">
               승인 대기:&nbsp;
               <Link href="" className="text-primary underline">
-                {studyList.length}
+                {userList.length}
               </Link>
               명
             </p>
