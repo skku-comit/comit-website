@@ -88,7 +88,12 @@ export const columns: ColumnDef<Study>[] = [
     accessorKey: 'title',
     header: ({ column }) => <DataTableColumnHeader column={column} title="이름" />,
     cell: ({ row }) => (
-      <EditableCell submitApiEndpoint={API_ENDPOINTS.ADMIN.STUDY.UPDATE(row.original.id)} row={row} fieldName="title" />
+      <EditableCell
+        submitApiEndpoint={API_ENDPOINTS.ADMIN.STUDY.UPDATE(row.original.id)}
+        row={row}
+        fieldName="title"
+        readonly={true}
+      />
     )
   },
   {
@@ -99,6 +104,7 @@ export const columns: ColumnDef<Study>[] = [
         submitApiEndpoint={API_ENDPOINTS.ADMIN.STUDY.UPDATE(row.original.id)}
         row={row}
         fieldName="stacks"
+        readonly={true}
       />
     )
   },
@@ -106,7 +112,12 @@ export const columns: ColumnDef<Study>[] = [
     accessorKey: 'day',
     header: ({ column }) => <DataTableColumnHeader column={column} title="요일" />,
     cell: ({ row }) => (
-      <EditableCell submitApiEndpoint={API_ENDPOINTS.ADMIN.STUDY.UPDATE(row.original.id)} row={row} fieldName="day" />
+      <EditableCell
+        submitApiEndpoint={API_ENDPOINTS.ADMIN.STUDY.UPDATE(row.original.id)}
+        row={row}
+        fieldName="day"
+        readonly={true}
+      />
     )
   },
   {
@@ -117,6 +128,7 @@ export const columns: ColumnDef<Study>[] = [
         submitApiEndpoint={API_ENDPOINTS.ADMIN.STUDY.UPDATE(row.original.id)}
         row={row}
         fieldName="startTime"
+        readonly={true}
       />
     )
   },
@@ -128,6 +140,7 @@ export const columns: ColumnDef<Study>[] = [
         submitApiEndpoint={API_ENDPOINTS.ADMIN.STUDY.UPDATE(row.original.id)}
         row={row}
         fieldName="endTime"
+        readonly={true}
       />
     )
   },
@@ -135,7 +148,12 @@ export const columns: ColumnDef<Study>[] = [
     accessorKey: 'level',
     header: ({ column }) => <DataTableColumnHeader column={column} title="난이도" />,
     cell: ({ row }) => (
-      <EditableCell submitApiEndpoint={API_ENDPOINTS.ADMIN.STUDY.UPDATE(row.original.id)} row={row} fieldName="level" />
+      <EditableCell
+        submitApiEndpoint={API_ENDPOINTS.ADMIN.STUDY.UPDATE(row.original.id)}
+        row={row}
+        fieldName="level"
+        readonly={true}
+      />
     )
   },
   {
@@ -146,6 +164,7 @@ export const columns: ColumnDef<Study>[] = [
         submitApiEndpoint={API_ENDPOINTS.ADMIN.STUDY.UPDATE(row.original.id)}
         row={row}
         fieldName="campus"
+        readonly={true}
       />
     )
   },
@@ -157,6 +176,7 @@ export const columns: ColumnDef<Study>[] = [
         submitApiEndpoint={API_ENDPOINTS.ADMIN.STUDY.UPDATE(row.original.id)}
         row={row}
         fieldName="description"
+        readonly={true}
       />
     )
   },
@@ -168,6 +188,7 @@ export const columns: ColumnDef<Study>[] = [
         submitApiEndpoint={API_ENDPOINTS.ADMIN.STUDY.UPDATE(row.original.id)}
         row={row}
         fieldName="isRecruiting"
+        readonly={true}
       />
     )
   },
@@ -179,6 +200,7 @@ export const columns: ColumnDef<Study>[] = [
         submitApiEndpoint={API_ENDPOINTS.ADMIN.STUDY.UPDATE(row.original.id)}
         row={row}
         fieldName="imageSrc"
+        readonly={true}
       />
     )
   },
@@ -190,6 +212,7 @@ export const columns: ColumnDef<Study>[] = [
         submitApiEndpoint={API_ENDPOINTS.ADMIN.STUDY.UPDATE(row.original.id)}
         row={row}
         fieldName="mentor"
+        readonly={true}
       />
     )
   }
