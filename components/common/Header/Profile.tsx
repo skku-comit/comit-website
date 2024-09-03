@@ -10,7 +10,7 @@ import { HiOutlineUserGroup } from 'react-icons/hi2'
 import { IoIosLogOut } from 'react-icons/io'
 import { IoChevronDownOutline, IoPersonOutline } from 'react-icons/io5'
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -43,7 +43,6 @@ const MenuItem = ({ icon, href, children }: MenuItemProps) => {
 
 function Profile() {
   const { status, data: session } = useSession()
-  const RANDOM_PROFILE_IMAGE = 'https://picsum.photos/50/50'
 
   if (!session) {
     return (
@@ -51,8 +50,13 @@ function Profile() {
         {status === 'loading' ? (
           <CgSpinner className="animate-spin" size={30} />
         ) : (
-          <div className="flex justify-center gap-x-5 font-bold text-black">
-            <Link href={ROUTES.LOGIN.url}>로그인</Link>|<Link href={ROUTES.SIGNUP.url}>회원가입</Link>
+          <div className="hidden w-[270px] items-center justify-between gap-x-3 md:flex lg:w-[310px]">
+            <Button className="h-[36px] w-[120px] text-base lg:w-[140px]" asChild>
+              <Link href={ROUTES.SIGNUP.url}>Sign up</Link>
+            </Button>
+            <Button className="h-[36px] w-[120px] text-base lg:w-[140px]" variant="outline" asChild>
+              <Link href={ROUTES.LOGIN.url}>Log in</Link>
+            </Button>
           </div>
         )}
       </>
@@ -65,23 +69,16 @@ function Profile() {
     <DropdownMenu>
       <DropdownMenuTrigger className="max-md:hidden">
         <div className="flex items-center justify-center gap-x-3 text-primary">
-          <Avatar>
-            <AvatarImage src={session.user?.image ?? RANDOM_PROFILE_IMAGE} />
-            <AvatarFallback>A</AvatarFallback>
-          </Avatar>
           {session.user?.name}
           <IoChevronDownOutline className="ml-2" />
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="rounded-lg">
         <DropdownMenuLabel className="flex items-center gap-x-3 py-3">
-          <Avatar>
-            <AvatarImage src={session.user?.image ?? RANDOM_PROFILE_IMAGE} />
-            <AvatarFallback>A</AvatarFallback>
-          </Avatar>
           <div>
             <div>{session.user?.name}</div>
             <div className="font-normal">{session.user?.email}</div>
+            <div className="text-xs text-gray-500">{session.user?.email}</div>
           </div>
         </DropdownMenuLabel>
 
@@ -93,10 +90,14 @@ function Profile() {
           내 스터디
         </MenuItem>
 
-        <DropdownMenuSeparator />
-        <MenuItem icon={<CiSettings size={iconSize} />} href={ROUTES.ADMIN.DASHBOARD.url}>
-          관리자
-        </MenuItem>
+        {session.user?.role === 'ROLE_ADMIN' && (
+          <>
+            <DropdownMenuSeparator />
+            <MenuItem icon={<CiSettings size={iconSize} />} href={ROUTES.ADMIN.DASHBOARD.url}>
+              관리자
+            </MenuItem>
+          </>
+        )}
 
         <DropdownMenuSeparator />
         <DropdownMenuItem
