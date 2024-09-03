@@ -3,15 +3,15 @@ import './mystudy.css'
 import React from 'react'
 
 import MyStudyHeader from '@/components/mystudy/MyStudyHeader'
-import MyStudyLeftSide from '@/components/mystudy/MyStudyLeftSide'
+import MyStudyNavBar from '@/components/mystudy/MyStudyNavBar'
 
 const MyStudyLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
-      <main id="main" className="w-full">
+      <main className="w-full">
         <MyStudyHeader />
-        <section id="mystudy-body" className="mx-auto my-0 box-border flex max-w-7xl flex-row px-8">
-          <MyStudyLeftSide />
+        <section className="mx-auto flex max-w-7xl px-8 max-sm:flex-col">
+          <MyStudyNavBar />
           {children}
         </section>
       </main>

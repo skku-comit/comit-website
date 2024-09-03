@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { IoPersonOutline } from 'react-icons/io5'
+// import { IoPersonOutline } from 'react-icons/io5'
 
 interface StudyData {
   imageSrc: string
@@ -35,7 +35,6 @@ export default function MyStudy() {
       isRecruiting: true,
       position: '스터디장'
     },
-
     {
       imageSrc: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-original.svg',
       title: 'C언어 초급',
@@ -70,21 +69,21 @@ export default function MyStudy() {
 
   return (
     <>
-      <div id="mystudy-body__content" className="box-border flex max-w-full flex-1 flex-col pb-16 pt-8">
+      <div id="mystudy-body__content" className="flex max-w-full flex-1 flex-col pb-16 sm:pt-8">
         <div className="flex border-b border-[#dee2e6]">
           <button className="h-[45px] px-3 text-[16px] font-medium text-[#adb5bd]">스터디장</button>
         </div>
-        <div id="studylist-container" className="mb-10 box-border">
+        <div id="studylist-container" className="mb-10">
           {/* 받아온 JSON 데이터 중 스터디장인 것을 마이스터디 페이지 카드로 변환 */}
           {UserStudyList.map(
             (study, index) =>
               study.position === '스터디장' && (
                 <Link href="/mystudy/43" className="cursor-pointer" key={index}>
-                  <div className="border-b-solid box-border flex border-b border-b-[#dee2e6] px-4 py-[18px]">
-                    <div className="box-border flex-auto">
+                  <div className="border-b-solid  flex border-b border-b-[#dee2e6] px-4 py-[18px]">
+                    <div className=" flex-auto">
                       {/* //card 내의 첫번째 행: 개설 혹은 참여, 스터디 제목 display */}
-                      <div className="mb-1 box-border flex items-center">
-                        <div className="mr-2 box-border flex items-center">
+                      <div className="mb-1  flex items-center">
+                        <div className="mr-2  flex items-center">
                           <span className="inline-block whitespace-nowrap rounded-xl bg-purple-600 px-[8px] py-[4px] text-center align-baseline text-xs font-bold text-white">
                             {study.position}
                           </span>
@@ -98,24 +97,24 @@ export default function MyStudy() {
                         {study.description}
                       </div>
                       {/* //card 내의 세번째 행: 태그 버튼 목록 display */}
-                      <div className="mt-2 box-border flex flex-wrap">
+                      <div className="mt-2  flex flex-wrap">
                         <button className="m-0 mb-[5px] mr-2 flex h-[26px] w-fit items-center whitespace-nowrap rounded border-none bg-[#eff3fa] px-2 py-1 text-[13px] leading-[1.38rem]">
-                          <span className="box-border text-[#3e4042]">{study.campus}</span>
+                          <span className=" text-[#3e4042]">{study.campus}</span>
                         </button>
                         <button className="m-0 mb-[5px] mr-2 flex h-[26px] w-fit items-center whitespace-nowrap rounded border-none bg-[#eff3fa] px-2 py-1 text-[13px] leading-[1.38rem]">
-                          <span className="box-border text-[#3e4042]">{study.level}</span>
+                          <span className=" text-[#3e4042]">{study.level}</span>
                         </button>
                         {study.stack.map((stack, index) => (
                           <button
                             key={index}
                             className="m-0 mb-[5px] mr-2 flex h-[26px] w-fit items-center whitespace-nowrap rounded border-none bg-[#eff3fa] px-2 py-1 text-[13px] leading-[1.38rem]"
                           >
-                            <span className="box-border text-[#3e4042]">{stack}</span>
+                            <span className=" text-[#3e4042]">{stack}</span>
                           </button>
                         ))}
                       </div>
                       {/* //card 내의 네번째 행: 스터디장, 스터디 인원 보여주는 card별 footer */}
-                      <div className="mt-4 box-border flex justify-between overflow-auto text-ellipsis whitespace-nowrap text-sm font-normal text-[#868e96]">
+                      <div className="mt-4 flex justify-between overflow-auto text-ellipsis whitespace-nowrap text-sm font-normal text-[#868e96]">
                         <div className="max-w-lg flex-auto">
                           <span className="flex-shrink overflow-hidden text-ellipsis whitespace-nowrap"></span>
                           <span>{study.mentor}</span>
@@ -126,10 +125,10 @@ export default function MyStudy() {
                             {study.endTime}
                           </span>
                         </div>
-                        <div className="flex items-center gap-1">
+                        {/* <div className="flex items-center gap-1">
                           <IoPersonOutline />
                           <span className="text-sm font-bold">인원 미정</span>
-                        </div>
+                        </div> */}
                       </div>
                     </div>
                   </div>

@@ -5,14 +5,14 @@ import { usePathname } from 'next/navigation'
 
 import { cn } from '@/lib/utils'
 
-export default function MyStudyLeftSide() {
+export default function MyStudyNavBar() {
   const pathname = usePathname()
 
   return (
-    <div className="mr-10 mt-11 hidden w-40 sm:block">
+    <div className="mt-11 sm:w-40 lg:mr-10">
       <nav className="flex flex-col gap-4">
-        <h6 className="text-sm font-medium text-gray-400">함께 공부해요</h6>
-        <ul>
+        <h6 className="text-sm font-medium text-gray-400 max-sm:hidden">함께 공부해요</h6>
+        <ul className="max-sm:flex">
           <Link href="/mystudy" className="cursor-pointer">
             <li
               className={cn(
