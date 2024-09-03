@@ -2,6 +2,7 @@ import { Account, Profile, Session, User } from 'next-auth'
 import { JWT } from 'next-auth/jwt'
 
 import { AccessToken, RefreshToken } from '@/lib/auth/utils'
+import { Role } from '@/types'
 
 // 아래 커스텀 타입들은 next-auth의 타입을 확장한 것입니다.
 // next-auth의 타입을 확장하려면 아래와 같이 모듈 선언을 해야 합니다.
@@ -15,13 +16,12 @@ export interface CustomAccount extends Account {}
 
 export interface CustomProfile extends Profile {}
 
-export interface CustomSession extends Session {
-  cookies: string[]
-}
+export interface CustomSession extends Session {}
 
 export interface CustomUser extends User {
   id: string
   name: string
+  role: Role
   accessToken: AccessToken
   refreshToken: RefreshToken
 }
@@ -29,6 +29,7 @@ export interface CustomUser extends User {
 export interface CustomToken extends JWT {
   iat: number
   exp: number
+  role: Role
   accessToken: AccessToken
   refreshToken: RefreshToken
 }
