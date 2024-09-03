@@ -6,7 +6,7 @@ import { Database } from '@/database.types'
 import { constructServerResponse } from '@/lib/response'
 import { AlreadySignedup } from '@/lib/response/errors'
 import { InternalServerError } from '@/lib/response/errors'
-import { supabase, TEST_USER_ID } from '@/lib/supabase/client'
+import { supabase } from '@/lib/supabase/client'
 
 const POST = async (req: NextRequest) => {
   const data: StudySignupRequest = await req.json()
@@ -14,7 +14,7 @@ const POST = async (req: NextRequest) => {
   // TODO: user id는 헤더에서 받기
   const inputData: InsertType = {
     study_id: data.study_id,
-    profile_id: TEST_USER_ID,
+    profile_id: '1', // TODO: user id는 헤더에서 받기
     applicationMotiv: data.applicationMotiv
   }
 

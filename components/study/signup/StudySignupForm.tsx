@@ -76,14 +76,13 @@ const StudySignupForm = ({ study }: StudySignupFormProps) => {
   })
 
   const onValid = async (formData: IStudySignupForm) => {
-    const requestBody: StudySignupRequest = {
-      username: formData.username,
-      studentId: formData.studentId,
-      github: formData.github,
-      study_id: study.id,
-      applicationMotiv: formData.applicationMotiv
-    }
-
+    // const requestBody: StudySignupRequest = {
+    //   username: formData.username,
+    //   studentId: formData.studentId,
+    //   github: formData.github,
+    //   study_id: study.id,
+    //   applicationMotiv: formData.applicationMotiv
+    // }
     // TODO: 스터디 참여 신청 API 구현 후 연결
     // const res = await fetchData(API_ENDPOINTS.CLIENT.STUDY.SIGNUP(study.id) as ApiEndpoint, {
     //   headers: {
@@ -91,7 +90,6 @@ const StudySignupForm = ({ study }: StudySignupFormProps) => {
     //   },
     //   body: JSON.stringify(requestBody)
     // })
-
     // if (res.ok) {
     //   const data = await res.json()
     //   console.log(data)
@@ -99,7 +97,6 @@ const StudySignupForm = ({ study }: StudySignupFormProps) => {
     //   // TODO: 신청 성공 시 처리 로직 추가
     //   return
     // }
-
     // switch (res.status) {
     //   case HttpStatusCode.BadRequest:
     //     const json: CustomResponse = await res.json()
@@ -107,7 +104,6 @@ const StudySignupForm = ({ study }: StudySignupFormProps) => {
     //       case AlreadySignedup.errorType:
     //         alert('이미 신청 되었습니다.')
     //         break
-
     //       default:
     //         throw new Error('Uncaught Error!')
     //     }
@@ -156,7 +152,7 @@ const StudySignupForm = ({ study }: StudySignupFormProps) => {
                 <div className="overflow-auto">
                   <div className="flex justify-start gap-x-2">
                     <RiStackOverflowLine />
-                    {study.stack.map((s) => (
+                    {study.stacks.map((s) => (
                       <Badge key={s} variant="secondary" className="text-xs">
                         {s}
                       </Badge>

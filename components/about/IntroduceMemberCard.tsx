@@ -12,7 +12,7 @@ export default function IntroduceMemeberCard({ member }: IntroduceMemberCardProp
       <div className="relative h-[168px] w-[168px] transform overflow-hidden rounded-[40px] shadow-md transition-transform hover:scale-125">
         <Image
           src={member.profileImage!}
-          alt={member.name}
+          alt={member.username}
           width={168}
           height={168}
           unoptimized
@@ -22,7 +22,7 @@ export default function IntroduceMemeberCard({ member }: IntroduceMemberCardProp
       <div className="h-36 w-80 rounded-3xl border p-5 shadow-md sm:h-44 sm:w-96 sm:p-7">
         <div className="flex flex-col gap-1 sm:gap-2">
           <p className="text-xl font-semibold sm:text-2xl">
-            {member.name} / {member.position}
+            {member.username} / {member.position}
           </p>
           <p className="w-full text-base font-medium sm:text-lg">{member.bio}</p>
         </div>
