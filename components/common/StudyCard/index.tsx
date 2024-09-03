@@ -38,7 +38,7 @@ const WeekDayAndDuration = ({
 
 const BadgeList = ({ badges }: { badges: string[] }) => {
   return (
-    <div className="mt-2 flex w-40 flex-wrap justify-around gap-y-2 sm:w-48">
+    <div className="mt-2 flex w-40 justify-center gap-x-2 sm:w-48">
       {badges.map((badge, index: number) => (
         <Badge key={index} variant="secondary">
           {badge}
@@ -61,8 +61,7 @@ export default function StudyCard({ study, imageSize, showStatus, imageWrapperCl
   showStatus = showStatus ?? true
   imageWrapperClassName = imageWrapperClassName ?? 'mb-8 mt-4 h-24 w-24 overflow-hidden sm:h-36 sm:w-36'
 
-  const mainStack = study.stack?.length > 0 ? study.stack[0] : '기술 스택 미정'
-  const badges = [study.level, mainStack, study.campus]
+  const badges = study.stacks.length > 0 ? [study.level, study.stacks[0], study.campus] : [study.level, study.campus]
 
   return (
     <Card className="relative flex w-44 transform cursor-pointer flex-col items-center justify-center overflow-hidden px-2 py-4 shadow-md transition-transform hover:scale-105 hover:shadow-2xl sm:w-60 sm:px-4 sm:py-8">

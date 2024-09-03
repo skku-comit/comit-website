@@ -14,7 +14,7 @@ import { Study } from '@/types'
 
 const StudyList = async () => {
   const res = await fetchData(API_ENDPOINTS.CLIENT.STUDY.LIST as ApiEndpoint, {
-    cache: 'no-cache'
+    cache: 'no-store'
   })
   if (!res.ok) {
     switch (res.status) {
