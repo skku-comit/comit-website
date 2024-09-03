@@ -116,11 +116,11 @@ export default function OpenStudy() {
       return
     }
     file.commit()
-    router.push(ROUTES.STUDY.index.url)
     toast({
       title: '스터디 생성 완료',
       description: '스터디가 성공적으로 생성되었습니다.'
     })
+    router.push(ROUTES.STUDY.index.url)
   }
   const handleFileChange = (e: React.ChangeEvent) => {
     const targetFiles = (e.target as HTMLInputElement).files as FileList
