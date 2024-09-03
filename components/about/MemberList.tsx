@@ -5,10 +5,12 @@ import IntroduceMemeberCard from '@/components/about/IntroduceMemberCard'
 import { API_ENDPOINTS, ApiEndpoint } from '@/constants/apiEndpoint'
 import { fetchData } from '@/lib/fetch'
 import { CustomResponse } from '@/lib/response'
-import { User } from '@/types'
+import { UserProfile } from '@/types'
 
 const MemberList = async (): Promise<React.JSX.Element> => {
-  const res = await fetchData(API_ENDPOINTS.CLIENT.STAFF_LIST as ApiEndpoint)
+  const res = await fetchData(API_ENDPOINTS.CLIENT.STAFF_LIST as ApiEndpoint, {
+    cache: 'no-cache'
+  })
   if (!res.ok) {
     switch (res.status) {
       default:
@@ -16,11 +18,13 @@ const MemberList = async (): Promise<React.JSX.Element> => {
     }
   }
   const json: CustomResponse = await res.json()
-  const members: User[] = json.data
+  const members: UserProfile[] = json.data
 
   return (
     <div className="grid grid-cols-1 gap-x-[5vw] gap-y-12 xl:grid-cols-2">
-      {members.map((member) => member.isStaff && <IntroduceMemeberCard key={member.id} member={member} />)}
+      {members.map((member) => (
+        <IntroduceMemeberCard key={member.id} member={member} />
+      ))}
     </div>
   )
 }
