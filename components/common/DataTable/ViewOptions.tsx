@@ -3,6 +3,7 @@
 import { DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu'
 import { MixerHorizontalIcon } from '@radix-ui/react-icons'
 import { Table } from '@tanstack/react-table'
+import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
@@ -18,12 +19,15 @@ interface DataTableViewOptionsProps<TData> {
   table: Table<TData>
 }
 
-const defaultCheckedColumns = ['id', 'username', 'isStaff', 'phoneNumber', 'position', 'role', 'studentId']
+const userCheckedColumns = ['id', 'username', 'isStaff', 'phoneNumber', 'position', 'role', 'studentId']
+const studyCheckedColums = ['id', 'title', 'mentor', 'level', 'campus', 'semester']
 
 export function DataTableViewOptions<TData>({ table }: DataTableViewOptionsProps<TData>) {
-  const [visibleColumns, setVisibleColumns] = useState<string[]>(defaultCheckedColumns)
+  const pathname = usePathname()
+  const [visibleColumns, setVisibleColumns] = useState<string[]>([])
 
   useEffect(() => {
+    const defaultCheckedColumns = pathname.includes('users') ? userCheckedColumns : studyCheckedColums
     table.getAllColumns().forEach((column) => {
       if (defaultCheckedColumns.includes(column.id)) {
         column.toggleVisibility(true)

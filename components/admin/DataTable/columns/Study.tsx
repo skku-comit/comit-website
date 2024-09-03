@@ -207,11 +207,16 @@ export const columns: ColumnDef<Study>[] = [
   {
     accessorKey: 'mentor',
     header: ({ column }) => <DataTableColumnHeader column={column} title="스터디장" />,
+    cell: ({ row }) => row.original.mentor.username
+  },
+  {
+    accessorKey: 'semester',
+    header: ({ column }) => <DataTableColumnHeader column={column} title="학기" />,
     cell: ({ row }) => (
       <EditableCell
         submitApiEndpoint={API_ENDPOINTS.ADMIN.STUDY.UPDATE(row.original.id)}
         row={row}
-        fieldName="mentor"
+        fieldName="semester"
         readonly={true}
       />
     )
