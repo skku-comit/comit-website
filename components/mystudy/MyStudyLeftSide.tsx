@@ -15,15 +15,15 @@ export default function MyStudyLeftSide() {
       <nav id="mystudy-body__navigation" className="m-0 box-border p-0">
         <h6 className="mb-4 box-border h-5 text-[12px] font-medium text-[#adb5bd]">함께 공부해요</h6>
         <ul id="mystudy-aside" className=" m-0 box-border p-0 text-[17px]">
-          <Link href="/mystudies" className="cursor-pointer">
-            <li className="box-border px-3 py-[10px] font-normal" style={pathname === '/mystudies' ? activeStyle : {}}>
+          <Link href="/mystudy" className="cursor-pointer">
+            <li className="box-border px-3 py-[10px] font-normal" style={pathname === '/mystudy' ? activeStyle : {}}>
               나의 스터디
             </li>
           </Link>
-          <Link href="/mystudies/comit-github" className="cursor-pointer">
+          <Link href="/mystudy/feedback" className="cursor-pointer">
             <li
               className="box-border px-3 py-[10px] font-normal"
-              style={pathname === '/mystudies/comit-github' ? activeStyle : {}}
+              style={pathname === '/mystudy/feedback' ? activeStyle : {}}
             >
               스터디 피드백
             </li>
