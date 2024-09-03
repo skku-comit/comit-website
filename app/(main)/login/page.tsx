@@ -22,7 +22,7 @@ interface LoginForm {
 export default function Login() {
   const session = useSession()
   const router = useRouter()
-  if (session) {
+  if (session.status === 'authenticated') {
     router.push('/')
   }
 
