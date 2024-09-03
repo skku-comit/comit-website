@@ -30,6 +30,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Textarea } from '@/components/ui/textarea'
 import { formatDateToTime } from '@/components/ui/time-picker-utils'
 import { TimePicker } from '@/components/ui/timepicker'
+import { useToast } from '@/components/ui/use-toast'
 import { API_ENDPOINTS, ApiEndpoint } from '@/constants/apiEndpoint'
 import { ROUTES } from '@/constants/routes'
 import { fetchData } from '@/lib/fetch'
@@ -70,6 +71,7 @@ const levelOptions: Level[] = ['초급', '중급', '고급']
 export default function OpenStudy() {
   const session = useSession()
   const router = useRouter()
+  const { toast } = useToast()
 
   const {
     handleSubmit,
@@ -115,6 +117,10 @@ export default function OpenStudy() {
     }
     file.commit()
     router.push(ROUTES.STUDY.index.url)
+    toast({
+      title: '스터디 생성 완료',
+      description: '스터디가 성공적으로 생성되었습니다.'
+    })
   }
   const handleFileChange = (e: React.ChangeEvent) => {
     const targetFiles = (e.target as HTMLInputElement).files as FileList

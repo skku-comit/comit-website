@@ -1,6 +1,7 @@
 import { Inter } from 'next/font/google'
 
 import HeightPopulatedBody from '@/components/common/HeightPopulatedBody'
+import { Toaster } from '@/components/ui/toaster'
 import AuthProvider from '@/lib/auth/AuthProvider'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -12,7 +13,10 @@ export default function RootLayout({
 }>) {
   return (
     <HeightPopulatedBody headerHeight="5rem" footerHeight="5rem" className={inter.className}>
-      <AuthProvider>{children}</AuthProvider>
+      <AuthProvider>
+        {children}
+        <Toaster />
+      </AuthProvider>
     </HeightPopulatedBody>
   )
 }
