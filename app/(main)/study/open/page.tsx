@@ -86,7 +86,7 @@ export default function OpenStudy() {
     control,
     setError,
     clearErrors,
-    formState: { errors, isValid }
+    formState: { errors, isValid, isSubmitting }
   } = useForm<StudyForm>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -456,7 +456,7 @@ export default function OpenStudy() {
               {!isValid && <p className="text-sm text-destructive">모든 항목을 입력해주세요</p>}
               <AlertDialogFooter>
                 <AlertDialogCancel>취소</AlertDialogCancel>
-                <AlertDialogAction type="submit" onClick={handleSubmit(onSubmit)} disabled={!isValid}>
+                <AlertDialogAction type="submit" onClick={handleSubmit(onSubmit)} disabled={!isValid || isSubmitting}>
                   확인
                 </AlertDialogAction>
               </AlertDialogFooter>

@@ -29,7 +29,6 @@ export default function Signup() {
   const {
     register,
     handleSubmit,
-    setError,
     getValues,
     watch,
     formState: { errors, isSubmitting }
