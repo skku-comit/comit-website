@@ -65,7 +65,8 @@ const ProfileCards = ({ session, user }: ProfileProps) => {
     if (profileImage === user.profileImage && bio === user.bio) {
       toast({
         title: '프로필 수정 실패',
-        description: '변경된 정보가 없습니다!'
+        description: '변경된 정보가 없습니다!',
+        variant: 'destructive'
       })
       return
     }
