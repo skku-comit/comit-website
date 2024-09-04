@@ -46,6 +46,10 @@ export interface UseSupabaseFileOptions {
   }
    ```
  */
+const sanitizeFileName = (fileName: string): string => {
+  return fileName.replace(/[^a-zA-Z0-9._-]/g, '_')
+}
+
 export const useSupabaseFile = ({
   bucketName = process.env.NEXT_PUBLIC_SUPABASE_BUCKET_NAME,
   pathPrefix = 'uploads/',
@@ -55,7 +59,8 @@ export const useSupabaseFile = ({
 
   const upload = useCallback(
     async (file: File): Promise<SupabaseFile> => {
-      const fileName = `${Date.now()}-${file.name}`
+      const sanitizedFileName = sanitizeFileName(file.name)
+      const fileName = `${Date.now()}-${sanitizedFileName}`
       const fullPath = `${pathPrefix}${fileName}`
 
       const { data, error: uploadError } = await supabase.storage.from(bucketName).upload(fullPath, file, {

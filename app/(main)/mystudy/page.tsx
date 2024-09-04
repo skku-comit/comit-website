@@ -1,13 +1,11 @@
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 
-import { HttpStatusCode } from '@/app/api/utils/httpConsts'
 import { API_ENDPOINTS, ApiEndpoint } from '@/constants/apiEndpoint'
 import { ROUTES } from '@/constants/routes'
 import { auth } from '@/lib/auth/auth'
 import { fetchData } from '@/lib/fetch'
 import { CustomResponse } from '@/lib/response'
-import { UnAuthorized } from '@/lib/response/errors'
 import { Study } from '@/types'
 // import { IoPersonOutline } from 'react-icons/io5'
 
@@ -24,12 +22,7 @@ export default async function MyStudy() {
     }
   })
   if (!res.ok) {
-    switch (res.status) {
-      case HttpStatusCode.UnAuthorized:
-        UnAuthorized
-      default:
-        redirect('/error')
-    }
+    redirect('/error')
   }
   const json: CustomResponse = await res.json()
   const studyList: Study[] = json.data
