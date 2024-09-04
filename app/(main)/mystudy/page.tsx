@@ -7,7 +7,6 @@ import { auth } from '@/lib/auth/auth'
 import { fetchData } from '@/lib/fetch'
 import { CustomResponse } from '@/lib/response'
 import { Study } from '@/types'
-// import { IoPersonOutline } from 'react-icons/io5'
 
 export default async function MyStudy() {
   const session = await auth()
@@ -22,8 +21,9 @@ export default async function MyStudy() {
     }
   })
   if (!res.ok) {
-    redirect('/error')
+    throw new Error('스터디 정보를 불러오는 중 오류가 발생했습니다.')
   }
+
   const json: CustomResponse = await res.json()
   const studyList: Study[] = json.data
 
@@ -83,10 +83,6 @@ export default async function MyStudy() {
                         {study.endTime}
                       </span>
                     </div>
-                    {/* <div className="flex items-center gap-1">
-                          <IoPersonOutline />
-                          <span className="text-sm font-bold">인원 미정</span>
-                        </div> */}
                   </div>
                 </div>
               </div>

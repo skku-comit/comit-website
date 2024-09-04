@@ -23,8 +23,9 @@ const Profile = async () => {
     }
   })
   if (!res.ok) {
-    redirect('/error')
+    throw new Error('프로필 정보를 불러오는 중 오류가 발생했습니다.')
   }
+
   const json: CustomResponse = await res.json()
   const user: UserProfile = json.data
   return (

@@ -1,4 +1,3 @@
-import { redirect } from 'next/navigation'
 import { FaSchoolFlag } from 'react-icons/fa6'
 import { IoPersonSharp } from 'react-icons/io5'
 import { MdOutlineSignalCellularAlt } from 'react-icons/md'
@@ -6,7 +5,7 @@ import { RiStackOverflowLine } from 'react-icons/ri'
 
 import StudyCard from '@/components/common/StudyCard'
 import UserHoverCard from '@/components/common/User/HoverCard'
-import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { API_ENDPOINTS, ApiEndpoint } from '@/constants/apiEndpoint'
 import { fetchData } from '@/lib/fetch'
 import { CustomResponse } from '@/lib/response'
@@ -14,14 +13,13 @@ import { Study } from '@/types'
 
 const StudyList = async () => {
   const res = await fetchData(API_ENDPOINTS.CLIENT.STUDY.LIST as ApiEndpoint, {
-    cache: 'no-store'
+    cache: 'force-cache',
+    next: { revalidate: 180 }
   })
   if (!res.ok) {
-    switch (res.status) {
-      default:
-        redirect('/error')
-    }
+    throw new Error('스터디 목록을 불러오는 중 오류가 발생했습니다.')
   }
+
   const json: CustomResponse = await res.json()
   const studies: Study[] = json.data
 
@@ -71,18 +69,8 @@ const StudyList = async () => {
                     <RiStackOverflowLine />
                     {study.stacks.join(', ')}
                   </div>
-                  <div
-                    className="whitespace-pre-line break-keep"
-                    dangerouslySetInnerHTML={{ __html: study.description }}
-                  />
+                  <DialogDescription className="whitespace-pre-line break-keep">{study.description}</DialogDescription>
                 </div>
-
-                {/* 24-2 수강신청 기능 미사용으로 인한 주석 처리 */}
-                {/* <div className="flex justify-end">
-                  <Button asChild>
-                    <Link href={ROUTES.STUDY.SIGNUP(study.id).url}>신청하기</Link>
-                  </Button>
-                </div> */}
               </DialogContent>
             </Dialog>
           ))}

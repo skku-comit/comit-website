@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils'
 import Footer from './Footer'
 import Header from './Header'
 
-const HeightPopulatedBody = ({
+const HeightPopulatedDiv = ({
   headerHeight,
   footerHeight,
   children,
@@ -17,7 +17,7 @@ const HeightPopulatedBody = ({
   style?: object
 }) => {
   return (
-    <body className={cn(className, 'h-screen')} style={style}>
+    <div className={cn(className, 'h-screen')} style={style}>
       <Header height={headerHeight} />
       <div
         className="h-auto"
@@ -30,8 +30,8 @@ const HeightPopulatedBody = ({
         {children}
       </div>
       <Footer height={footerHeight} />
-    </body>
+    </div>
   )
 }
 
-export default HeightPopulatedBody
+export default HeightPopulatedDiv

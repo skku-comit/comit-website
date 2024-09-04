@@ -1,9 +1,11 @@
-import { notFound, redirect } from 'next/navigation'
+import { redirect } from 'next/navigation'
 
 import { HttpStatusCode } from '@/app/api/utils/httpConsts'
 import SectionBanner from '@/components/common/SectionBanner'
 import StudySignupForm from '@/components/study/signup/StudySignupForm'
 import { API_ENDPOINTS, ApiEndpoint } from '@/constants/apiEndpoint'
+import { ROUTES } from '@/constants/routes'
+import { auth } from '@/lib/auth/auth'
 import { fetchData } from '@/lib/fetch'
 import { CustomResponse } from '@/lib/response'
 import { Study } from '@/types'
@@ -15,17 +17,28 @@ interface StudySignupProps {
 }
 
 const StudySignup = async ({ params }: StudySignupProps) => {
+  const session = await auth()
+  if (!session) {
+    redirect(ROUTES.LOGIN.url)
+  }
+
   const { id } = params
 
-  const res = await fetchData(API_ENDPOINTS.CLIENT.STUDY.RETRIEVE(id) as ApiEndpoint)
+  const res = await fetchData(API_ENDPOINTS.CLIENT.STUDY.RETRIEVE(id) as ApiEndpoint, {
+    headers: {
+      Authorization: `Bearer ${session.accessToken.token}`
+    },
+    cache: 'no-cache'
+  })
   if (!res.ok) {
     switch (res.status) {
       case HttpStatusCode.NotFound:
-        notFound()
+        throw new Error(`존재하지 않는 스터디입니다. '${id}'`)
       default:
-        redirect('/error')
+        throw new Error('스터디 정보를 불러오는 중 오류가 발생했습니다.')
     }
   }
+
   const json: CustomResponse = await res.json()
   const study: Study = json.data
 
