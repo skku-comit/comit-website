@@ -52,7 +52,7 @@ const sanitizeFileName = (fileName: string): string => {
 
 export const useSupabaseFile = ({
   bucketName = process.env.NEXT_PUBLIC_SUPABASE_BUCKET_NAME,
-  pathPrefix = 'uploads/',
+  pathPrefix = `${process.env.NODE_ENV}/uploads/`,
   autoDeleteDelay = MINUTES_10
 }: UseSupabaseFileOptions) => {
   const [deleteTimer, setDeleteTimer] = useState<ReturnType<typeof setTimeout> | null>(null)
