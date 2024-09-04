@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Clock } from 'lucide-react'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
+import { redirect, useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import { SetStateAction, useRef, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
@@ -70,6 +70,8 @@ const levelOptions: Level[] = ['초급', '중급', '고급']
 
 export default function OpenStudy() {
   const session = useSession()
+  const canOpenStudy = session.data?.role ? ['ROLE_VERIFIED', 'ROLE_ADMIN'].includes(session.data?.role) : false
+
   const router = useRouter()
   const { toast } = useToast()
 
@@ -194,6 +196,9 @@ export default function OpenStudy() {
     }
   }
 
+  if (!canOpenStudy) {
+    redirect(ROUTES.STUDY.index.url)
+  }
   return (
     <div className="flex flex-col items-center">
       <SectionBanner title="Open Study" description="새로운 스터디 분반을 개설합니다!" />
