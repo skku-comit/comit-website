@@ -1,13 +1,11 @@
 import { redirect } from 'next/navigation'
 
-import { HttpStatusCode } from '@/app/api/utils/httpConsts'
 import SectionBanner from '@/components/common/SectionBanner'
 import { API_ENDPOINTS, ApiEndpoint } from '@/constants/apiEndpoint'
 import { ROUTES } from '@/constants/routes'
 import { auth } from '@/lib/auth/auth'
 import { fetchData } from '@/lib/fetch'
 import { CustomResponse } from '@/lib/response'
-import { UnAuthorized } from '@/lib/response/errors'
 import { UserProfile } from '@/types'
 
 import ProfileCards from './_components/ProfileCards'
@@ -25,12 +23,7 @@ const Profile = async () => {
     }
   })
   if (!res.ok) {
-    switch (res.status) {
-      case HttpStatusCode.UnAuthorized:
-        UnAuthorized
-      default:
-        redirect('/error')
-    }
+    redirect('/error')
   }
   const json: CustomResponse = await res.json()
   const user: UserProfile = json.data
