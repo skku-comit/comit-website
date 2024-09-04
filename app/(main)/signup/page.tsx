@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation'
 import { signIn, useSession } from 'next-auth/react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -198,11 +199,7 @@ export default function Signup() {
                         setViewPassword(!viewPassword)
                       }}
                     >
-                      {viewPassword ? (
-                        <Image src={Eye} alt="Welcome" className="h-max w-max" />
-                      ) : (
-                        <Image src={ClosedEye} alt="Welcome" className="h-3 w-3 sm:h-4 sm:w-4" />
-                      )}
+                      {viewPassword ? <FaRegEye /> : <FaRegEyeSlash />}
                     </button>
                   )}
 
