@@ -31,7 +31,7 @@ export default function Login() {
   const {
     handleSubmit,
     register,
-    formState: { errors }
+    formState: { errors, isSubmitting }
   } = useForm<LoginForm>({
     resolver: zodResolver(signInSchema)
   })
@@ -96,7 +96,9 @@ export default function Login() {
           </div>
           {errors.password && <p className="text-sm text-red-500">{errors.password.message}</p>}
         </div>
-        <Button className="my-4 h-12 w-full rounded-xl text-xl font-semibold sm:h-14">로그인</Button>
+        <Button className="my-4 h-12 w-full rounded-xl text-xl font-semibold sm:h-14" disabled={isSubmitting}>
+          로그인
+        </Button>
         <div className="flex items-center justify-between">
           <p>계정이 없으신가요?</p>
           <Button variant="link" className="text-base font-bold" asChild>

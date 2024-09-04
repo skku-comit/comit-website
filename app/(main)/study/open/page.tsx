@@ -28,6 +28,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Textarea } from '@/components/ui/textarea'
 import { formatDateToTime } from '@/components/ui/time-picker-utils'
 import { TimePicker } from '@/components/ui/timepicker'
@@ -86,7 +87,7 @@ export default function OpenStudy() {
     control,
     setError,
     clearErrors,
-    formState: { errors, isValid }
+    formState: { errors, isValid, isSubmitting }
   } = useForm<StudyForm>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -255,19 +256,15 @@ export default function OpenStudy() {
                 control={control}
                 name="day"
                 render={({ field: { onChange, value } }) => (
-                  <div className="flex gap-3 sm:gap-6">
-                    {dayOptions.map((day) => (
-                      <label key={day} className="flex gap-1 sm:gap-2">
-                        <input
-                          type="radio"
-                          onChange={() => onChange(day)}
-                          checked={value === day}
-                          className="accent-black"
-                        />
-                        {day}
-                      </label>
-                    ))}
-                  </div>
+                  <Tabs value={value} onValueChange={onChange}>
+                    <TabsList>
+                      {dayOptions.map((level) => (
+                        <TabsTrigger key={level} value={level}>
+                          {level}
+                        </TabsTrigger>
+                      ))}
+                    </TabsList>
+                  </Tabs>
                 )}
               />
               {errors.day && <p className="text-sm text-red-500">{errors.day.message}</p>}
@@ -282,19 +279,15 @@ export default function OpenStudy() {
               control={control}
               name="campus"
               render={({ field: { onChange, value } }) => (
-                <div className="flex gap-6">
-                  {campusOptions.map((campus) => (
-                    <label key={campus} className="flex gap-2">
-                      <input
-                        type="radio"
-                        onChange={() => onChange(campus)}
-                        checked={value === campus}
-                        className="accent-black"
-                      />
-                      {campus}
-                    </label>
-                  ))}
-                </div>
+                <Tabs value={value} onValueChange={onChange}>
+                  <TabsList>
+                    {campusOptions.map((campus) => (
+                      <TabsTrigger key={campus} value={campus}>
+                        {campus}
+                      </TabsTrigger>
+                    ))}
+                  </TabsList>
+                </Tabs>
               )}
             />
             {errors.campus && <p className="text-sm text-red-500">{errors.campus.message}</p>}
@@ -306,19 +299,15 @@ export default function OpenStudy() {
               control={control}
               name="level"
               render={({ field: { onChange, value } }) => (
-                <div className="flex gap-6">
-                  {levelOptions.map((level) => (
-                    <label key={level} className="flex gap-2">
-                      <input
-                        type="radio"
-                        onChange={() => onChange(level)}
-                        checked={value === level}
-                        className="accent-black"
-                      />
-                      {level}
-                    </label>
-                  ))}
-                </div>
+                <Tabs value={value} onValueChange={onChange}>
+                  <TabsList>
+                    {levelOptions.map((level) => (
+                      <TabsTrigger key={level} value={level}>
+                        {level}
+                      </TabsTrigger>
+                    ))}
+                  </TabsList>
+                </Tabs>
               )}
             />
             {errors.level && <p className="text-sm text-red-500">{errors.level.message}</p>}
@@ -456,7 +445,7 @@ export default function OpenStudy() {
               {!isValid && <p className="text-sm text-destructive">모든 항목을 입력해주세요</p>}
               <AlertDialogFooter>
                 <AlertDialogCancel>취소</AlertDialogCancel>
-                <AlertDialogAction type="submit" onClick={handleSubmit(onSubmit)} disabled={!isValid}>
+                <AlertDialogAction type="submit" onClick={handleSubmit(onSubmit)} disabled={!isValid || isSubmitting}>
                   확인
                 </AlertDialogAction>
               </AlertDialogFooter>
