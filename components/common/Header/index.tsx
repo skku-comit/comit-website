@@ -24,7 +24,7 @@ const DrawerItem = ({ route, icon }: { route: Route; icon: React.ReactNode }) =>
     <DrawerClose asChild>
       <Link className="flex items-center gap-4 text-3xl font-medium" href={route.url}>
         {icon}
-        <p className="flex items-center text-xl">{route.name}</p>
+        <p className="flex items-center text-xl font-bold">{route.name}</p>
       </Link>
     </DrawerClose>
   )

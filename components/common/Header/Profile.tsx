@@ -51,10 +51,10 @@ function Profile() {
           <CgSpinner className="animate-spin" size={30} />
         ) : (
           <div className="hidden w-[270px] items-center justify-between gap-x-3 md:flex lg:w-[310px]">
-            <Button className="h-[36px] w-[120px] text-base lg:w-[140px]" asChild>
+            <Button className="h-[36px] w-[120px] text-base font-bold lg:w-[140px]" asChild>
               <Link href={ROUTES.SIGNUP.url}>회원가입</Link>
             </Button>
-            <Button className="h-[36px] w-[120px] text-base lg:w-[140px]" variant="outline" asChild>
+            <Button className="h-[36px] w-[120px] text-base font-bold lg:w-[140px]" variant="outline" asChild>
               <Link href={ROUTES.LOGIN.url}>로그인</Link>
             </Button>
           </div>
