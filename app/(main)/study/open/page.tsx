@@ -12,6 +12,7 @@ import { z } from 'zod'
 
 import ScrollToTopButton from '@/components/common/ScrollToTopButton'
 import SectionBanner from '@/components/common/SectionBanner'
+import StudyCard from '@/components/common/StudyCard'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -94,7 +95,6 @@ export default function OpenStudy() {
   })
   const fileHandler = useSupabaseFile({ pathPrefix: 'image/study' })
 
-  // TODO: study API 연결
   const onSubmit = async (data: StudyForm) => {
     document.getElementById('closeDialog')?.click()
 
@@ -206,7 +206,9 @@ export default function OpenStudy() {
         <div className="flex gap-8 max-md:flex-col max-md:gap-4">
           <div className="flex flex-col gap-1">
             <p className="text-xl font-semibold">이미지</p>
-            <div
+            <Button
+              type="button"
+              variant="outline"
               onClick={handleClick}
               className="flex h-52 w-52 items-center justify-center overflow-hidden rounded-lg border border-slate-300"
             >
@@ -215,7 +217,7 @@ export default function OpenStudy() {
               ) : (
                 <Image src={image} width={208} height={208} alt={image} className="h-full w-full object-cover" />
               )}
-            </div>
+            </Button>
             <Input className="hidden" accept="image/*" type="file" ref={fileRef} onChange={handleFileChange} />
             {errors.imageSrc && <p className="text-sm text-red-500">{errors.imageSrc.message}</p>}
           </div>
@@ -402,6 +404,7 @@ export default function OpenStudy() {
               <Button
                 type="button"
                 className="px-8 font-extrabold"
+                disabled={!isValid}
                 onClick={() => {
                   trigger()
                   isValid && setStackError('')
@@ -410,33 +413,47 @@ export default function OpenStudy() {
                 제출하기
               </Button>
             </AlertDialogTrigger>
-            <AlertDialogContent className="flex flex-col p-8 sm:max-w-[425px]">
+            <AlertDialogContent className="flex flex-col p-3 sm:max-w-[425px] lg:p-8">
               <AlertDialogHeader>
                 <AlertDialogTitle>제출하시겠습니까?</AlertDialogTitle>
                 <AlertDialogDescription>
-                  스터디 개설이 승인되기 전까지 내용 수정 및 삭제가 불가하며, 반드시 내용을 수정하거나 삭제해야 하는
-                  경우 관리자에게 문의해주세요.
+                  스터디 개설이 되는 즉시 스터디가 모집 중으로 변경됩니다. 한 번 개설된 스터디는 삭제할 수 없습니다.
                 </AlertDialogDescription>
               </AlertDialogHeader>
-              {/* TODO: study dialog 추가 */}
+
+              {/* 미리보기 카드 */}
               <div className="flex justify-center">
-                {/* TODO: study open에 맞게 StudyCard 수정 */}
-                {/* <StudyCard
-                  campus={getValues('campus') || ''}
-                  day={getValues('day') || ''}
-                  imageSrc={
-                    getValues('imageSrc') ||
-                    // TODO: 다른 이미지 저장으로 대체
-                    'https://github.com/skku-comit/comit-website/assets/97675977/5ac14e32-87e6-40c0-9572-33cab7822abd'
-                  }
-                  endTime={getValues('endTime') || ''}
-                  level={getValues('level') || ''}
-                  stacks={getValues('stacks') || ''}
-                  startTime={getValues('startTime') || ''}
-                  title={getValues('title') || ''}
-                /> */}
+                <StudyCard
+                  study={{
+                    id: 0,
+                    campus: getValues('campus') || '공통',
+                    day: getValues('day') || '월',
+                    description: getValues('description') || '',
+                    endTime: getValues('endTime') || '00:00',
+                    imageSrc: getValues('imageSrc') || '',
+                    isRecruiting: true,
+                    level: getValues('level') || '초급',
+                    mentor: {
+                      bio: '',
+                      email: '',
+                      github: '',
+                      id: 0,
+                      phoneNumber: '',
+                      position: '',
+                      profileImage: '',
+                      role: 'ROLE_MEMBER',
+                      studentId: '',
+                      isStaff: false,
+                      username: ''
+                    },
+                    semester: '1',
+                    stacks: getValues('stacks') || [],
+                    startTime: getValues('startTime') || '00:00',
+                    title: getValues('title') || ''
+                  }}
+                />
               </div>
-              {!isValid && <p className="text-sm text-red-500">모든 항목을 입력해주세요</p>}
+              {!isValid && <p className="text-sm text-destructive">모든 항목을 입력해주세요</p>}
               <AlertDialogFooter>
                 <AlertDialogCancel>취소</AlertDialogCancel>
                 <AlertDialogAction type="submit" onClick={handleSubmit(onSubmit)} disabled={!isValid}>
