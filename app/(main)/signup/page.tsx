@@ -12,6 +12,7 @@ import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { useToast } from '@/components/ui/use-toast'
 import { extendedSignUpSchema } from '@/constants/zodSchema/signup'
 import { cn } from '@/lib/utils'
 import Welcome from '@/public/welcome.svg'
@@ -44,6 +45,8 @@ export default function Signup() {
     router.push('/')
   }
 
+  const { toast } = useToast()
+
   const [watchPassword, watchConfirmPassword] = watch(['password', 'confirmPassword'])
   const [isConfirmPasswordBlurred, setIsConfirmPasswordBlurred] = useState(false)
   const [viewPassword, setViewPassword] = useState(false)
@@ -61,14 +64,18 @@ export default function Signup() {
         email: data.email,
         password: data.password
       })
-
-      if (res) {
-        console.log(res)
+      if (res?.error) {
+        toast({
+          title: '회원가입 실패',
+          description: '이미 가입된 회원 정보입니다.',
+          variant: 'destructive'
+        })
       }
     } catch (error) {
-      setError('root', {
-        type: 'manual',
-        message: '로그인 중 오류 발생'
+      toast({
+        title: '회원가입 실패',
+        description: '회원가입 중 오류가 발생했습니다.',
+        variant: 'destructive'
       })
     }
   }
