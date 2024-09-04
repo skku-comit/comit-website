@@ -23,6 +23,10 @@ const JSP_ENDPOINTS = {
         url: `${baseURL}/${API_PREFIX}/admin/users/${id}/isStaff`,
         method: 'PATCH' as HttpMethod
       }),
+      POSITION_UPDATE: (id: number) => ({
+        url: `${baseURL}/${API_PREFIX}/admin/users/${id}/position`,
+        method: 'PATCH' as HttpMethod
+      }),
       DELETE: (id: number) => ({ url: `${baseURL}/${API_PREFIX}/admin/users/${id}`, method: 'DELETE' as HttpMethod })
     },
     STUDY: {

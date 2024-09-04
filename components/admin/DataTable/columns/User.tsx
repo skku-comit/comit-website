@@ -66,7 +66,13 @@ export const columns: ColumnDef<User>[] = [
   {
     accessorKey: 'position',
     header: () => <div className="ml-8 min-w-24 text-left text-base">직책</div>,
-    cell: ({ row }) => <p className="ml-8 text-base">{row.original.position}</p>
+    cell: ({ row }) => (
+      <EditableCell
+        submitApiEndpoint={API_ENDPOINTS.ADMIN.USER.POSITION_UPDATE(row.original.id)}
+        row={row}
+        fieldName="position"
+      />
+    )
   },
   {
     accessorKey: 'profileImage',
