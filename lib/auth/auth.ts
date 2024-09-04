@@ -9,6 +9,7 @@ import signUpSchema from '@/constants/zodSchema/signup'
 import { CustomToken } from '@/lib/auth/callbackFunctions/parameters'
 import { AccessToken, RefreshToken } from '@/lib/auth/utils'
 import { fetchData } from '@/lib/fetch'
+import { Role } from '@/types'
 
 export const BASE_AUTH_PATH = '/api/auth'
 
@@ -39,32 +40,34 @@ const authOptions: NextAuthConfig = {
     jwt: async ({ token, user }): Promise<CustomToken | null> => {
       // 토큰 없는 상태(로그인 X)에서 로그인 시도
       if (user !== undefined) {
+        token.role = user.role
         token.accessToken = user.accessToken
         token.refreshToken = user.refreshToken
         return token
       }
+
+      // AT, RT 변환
       token.accessToken = new AccessToken(token.accessToken.token)
       token.refreshToken = new RefreshToken(token.refreshToken.token)
 
       if (!token.accessToken.isExpired) {
-        console.log(
-          `액세스 토큰이 만료되지 않았으므로 그대로 반환합니다. (남은 시간: ${token.accessToken.expiresIn}초)`
-        )
         return token
       }
 
       // 액세스 토큰이 만료된 경우, 리프레시 토큰을 사용하여 새로운 액세스 토큰 발급
-      const refreshedToken = await refreshAccessToken(token.refreshToken)
-      if (!refreshedToken) {
-        console.log('리프레시 토큰이 만료되어 로그아웃합니다.')
+      const refreshedTokenOrNull = await refreshAccessToken(token.refreshToken)
+      if (!refreshedTokenOrNull) {
         return null
       }
 
-      token.accessToken = refreshedToken.accessToken
-      token.refreshToken = refreshedToken.refreshToken
+      const { role, accessToken, refreshToken } = refreshedTokenOrNull
+      token.role = role
+      token.accessToken = accessToken
+      token.refreshToken = refreshToken
       return token
     },
     session: async ({ session, token }) => {
+      session.role = token.role
       session.accessToken = token.accessToken
       session.refreshToken = token.refreshToken
       return session
@@ -76,7 +79,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth(authOptions)
 
 async function refreshAccessToken(
   refreshToken: RefreshToken
-): Promise<{ accessToken: AccessToken; refreshToken: RefreshToken } | null> {
+): Promise<{ role: Role; accessToken: AccessToken; refreshToken: RefreshToken } | null> {
   const res = await fetchData(API_ENDPOINTS.AUTH.REISSUE as ApiEndpoint, {
     headers: {
       Cookie: `refresh=${refreshToken.token}`
@@ -97,6 +100,7 @@ async function refreshAccessToken(
   }
 
   return {
+    role: data.role,
     accessToken: new AccessToken(newAccessToken),
     refreshToken: new RefreshToken(newRefreshToken)
   }
@@ -122,6 +126,7 @@ async function _signIn(type: 'signup' | 'login', body: z.infer<typeof signUpSche
 
   return {
     name: data.username,
+    role: data.role,
     accessToken: new AccessToken(accessToken),
     refreshToken: new RefreshToken(refreshToken)
   }
