@@ -1,5 +1,3 @@
-import './mystudy.css'
-
 import React from 'react'
 
 import MyStudyHeader from '@/components/mystudy/MyStudyHeader'
