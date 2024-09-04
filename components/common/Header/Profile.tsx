@@ -90,7 +90,7 @@ function Profile() {
           내 스터디
         </MenuItem>
 
-        {session.user?.role === 'ROLE_ADMIN' && (
+        {session.role === 'ROLE_ADMIN' && (
           <>
             <DropdownMenuSeparator />
             <MenuItem icon={<CiSettings size={iconSize} />} href={ROUTES.ADMIN.DASHBOARD.url}>
