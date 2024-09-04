@@ -25,7 +25,7 @@ const aboutData: { description: string; number: number }[] = [
   },
   {
     description: '평균 신규 지원',
-    number: 15
+    number: 80
   },
   {
     description: '평균 스터디 개설',
