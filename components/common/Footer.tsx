@@ -1,6 +1,8 @@
 import { FaGithub, FaInstagram, FaRegCopyright } from 'react-icons/fa'
 import { RiKakaoTalkFill } from 'react-icons/ri'
 
+import { GITHUB_LINK, INSTAGRAM_LINK, KAKAO_OPEN_CHAT_LINK } from '@/constants/social'
+
 interface FooterProp {
   height: string
 }
@@ -14,13 +16,13 @@ export default function Footer({ height }: FooterProp) {
           <p> 2024 COMIT All rights reserved.</p>
         </div>
         <div className="flex items-center justify-center gap-4">
-          <a rel="noreferrer noopener" target="_blank" href="https://github.com/skku-comit">
+          <a rel="noreferrer noopener" target="_blank" href={GITHUB_LINK}>
             <FaGithub className="text-xl text-white" />
           </a>
-          <a rel="noreferrer noopener" target="_blank" href="https://open.kakao.com/o/g8OGIihg">
+          <a rel="noreferrer noopener" target="_blank" href={KAKAO_OPEN_CHAT_LINK}>
             <RiKakaoTalkFill className="text-xl text-white" />
           </a>
-          <a rel="noreferrer noopener" target="_blank" href="https://www.instagram.com/skku_comit/">
+          <a rel="noreferrer noopener" target="_blank" href={INSTAGRAM_LINK}>
             <FaInstagram className="text-xl text-white" />
           </a>
         </div>

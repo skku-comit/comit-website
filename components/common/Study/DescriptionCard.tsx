@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { FaCheck } from 'react-icons/fa6'
 import { MdOutlineDangerous } from 'react-icons/md'
+import { RiKakaoTalkFill } from 'react-icons/ri'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -12,6 +13,7 @@ import {
   DialogTrigger
 } from '@/components/ui/dialog'
 import { ROUTES } from '@/constants/routes'
+import { KAKAO_OPEN_CHAT_LINK } from '@/constants/social'
 import { auth } from '@/lib/auth/auth'
 
 type Description = {
@@ -36,7 +38,20 @@ const StudyOpenRejectDialog = () => {
             권한 없음
           </DialogTitle>
         </DialogHeader>
-        <DialogDescription>관리자 인증이 필요합니다.</DialogDescription>
+        <DialogDescription asChild>
+          <div>
+            관리자 인증이 필요합니다.{<br />}
+            스터디 개설을 희망하시면 임원진에게 카카오톡으로 권한을 요청해주세요.
+            <div className="flex items-center justify-end">
+              <Button asChild className="mt-3 self-center font-semibold">
+                <Link href={KAKAO_OPEN_CHAT_LINK} target="_blank">
+                  <RiKakaoTalkFill size={24} className="me-1" />
+                  카카오톡으로 요청
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </DialogDescription>
       </DialogContent>
     </Dialog>
   )
