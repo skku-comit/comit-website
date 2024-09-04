@@ -202,6 +202,7 @@ export default function StudyDetailPage({ params }: StudyDetailProps) {
             disabled={!editing}
             autoFocus={editing}
             value={study.description}
+            onChange={(e) => setStudy((prev: any) => ({ ...prev, description: e.target.value }))}
           />
         )}
         {!editing ? (
