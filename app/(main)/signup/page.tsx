@@ -12,7 +12,7 @@ import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import signUpSchema from '@/constants/zodSchema/signup'
+import { extendedSignUpSchema } from '@/constants/zodSchema/signup'
 import { cn } from '@/lib/utils'
 import Welcome from '@/public/welcome.svg'
 
@@ -36,7 +36,7 @@ export default function Signup() {
     formState: { errors, isSubmitting }
   } = useForm<FormData>({
     mode: 'onBlur',
-    resolver: zodResolver(signUpSchema)
+    resolver: zodResolver(extendedSignUpSchema)
   })
   const session = useSession()
   const router = useRouter()
