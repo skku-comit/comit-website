@@ -14,8 +14,6 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import signUpSchema from '@/constants/zodSchema/signup'
 import { cn } from '@/lib/utils'
-import ClosedEye from '@/public/closedEye.svg'
-import Eye from '@/public/openEye.svg'
 import Welcome from '@/public/welcome.svg'
 
 export interface FormData {
@@ -236,11 +234,7 @@ export default function Signup() {
                         setViewRetypePassword(!viewRetypePassword)
                       }}
                     >
-                      {viewRetypePassword ? (
-                        <Image src={Eye} alt="Welcome" className="h-max w-max" />
-                      ) : (
-                        <Image src={ClosedEye} alt="Welcome" className="h-3 w-3 sm:h-4 sm:w-4" />
-                      )}
+                      {viewRetypePassword ? <FaRegEye /> : <FaRegEyeSlash />}
                     </button>
                   )}
                   {errors.confirmPassword && watchConfirmPassword == '' && (
