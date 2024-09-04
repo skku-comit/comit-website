@@ -10,54 +10,54 @@ export interface Route {
 
 export const ROUTES = {
   HOME: {
-    name: 'Home',
+    name: '홈',
     url: '/'
   },
   ABOUT: {
-    name: 'About',
+    name: '소개',
     url: '/about'
   },
   STUDY: {
     index: {
-      name: 'Study',
+      name: '스터디',
       url: '/study'
     },
     SIGNUP: (id: string) => ({
-      name: 'Study Signup',
+      name: '스터디 참여',
       url: `/study/${id}/signup`
     })
   },
   CLUBROOM: {
-    name: 'Clubroom',
+    name: '동아리방',
     url: '/clubroom'
   },
   LOGIN: {
-    name: 'Log in',
+    name: '로그인',
     url: '/login'
   },
   SIGNUP: {
-    name: 'Sign up',
+    name: '회원가입',
     url: '/signup'
   },
   MYSTUDY: {
-    name: 'My Study',
+    name: '마이스터디',
     url: '/mystudy'
   },
   PROFILE: {
-    name: 'My Profile',
+    name: '프로필',
     url: '/profile'
   },
   ADMIN: {
     DASHBOARD: {
-      name: 'Dashboard',
+      name: '대시보드',
       url: '/admin'
     },
     STUDY: {
-      name: 'Study Management',
+      name: '스터디 관리',
       url: '/admin/studies'
     },
     USER: {
-      name: 'User Management',
+      name: '유저 관리',
       url: '/admin/users'
     }
   }
