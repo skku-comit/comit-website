@@ -13,7 +13,7 @@ const NavLink = ({ href, text }: { href: string; text: string }) => {
 
   return (
     <Link href={href} className={cn('flex items-center text-xl hover:text-primary', textColorClass)}>
-      <p className="font-medium capitalize">{text}</p>
+      <p className="font-bold capitalize">{text}</p>
     </Link>
   )
 }
