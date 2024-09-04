@@ -17,6 +17,10 @@ export interface UseSupabaseFileOptions {
   autoDeleteDelay?: number
 }
 
+const sanitizeFileName = (fileName: string): string => {
+  return fileName.replace(/[^a-zA-Z0-9._-]/g, '_')
+}
+
 /**
  * Supabase Storage에 파일을 업로드하고, 업로드된 파일의 정보를 반환하는 Hook   
  * 만약 `commit`이 호출되지 않을 경우 `autoDeleteDelay`(기본 10분) 시간이 지나면   
@@ -45,11 +49,7 @@ export interface UseSupabaseFileOptions {
     file.commit()
   }
    ```
- */
-const sanitizeFileName = (fileName: string): string => {
-  return fileName.replace(/[^a-zA-Z0-9._-]/g, '_')
-}
-
+*/
 export const useSupabaseFile = ({
   bucketName = process.env.NEXT_PUBLIC_SUPABASE_BUCKET_NAME,
   pathPrefix = `${process.env.NODE_ENV}/uploads/`,

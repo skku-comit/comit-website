@@ -14,6 +14,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import { API_ENDPOINTS } from '@/constants/apiEndpoint'
 import { ROUTES } from '@/constants/routes'
 import { fetchData } from '@/lib/fetch'
+import { useSupabaseFile } from '@/lib/supabase/hooks'
 import { Study } from '@/types'
 
 interface StudyDetailProps {
@@ -33,9 +34,14 @@ export default function StudyDetailPage({ params }: StudyDetailProps) {
   const [study, setStudy] = useState<Study>()
 
   const { id } = params
+  const fileHandler = useSupabaseFile({ pathPrefix: `image/study/${id}` })
 
-  async function handleSave(id: number, field: string, value: string) {
+  async function handleSave(id: number, field: string, value: any) {
+    let file: any
     const body = { [field]: value }
+    if (field === 'imageSrc') {
+      file = fileHandler.upload(value)
+    }
     const res = await fetchData(API_ENDPOINTS.CLIENT.STUDY.UPDATE(id), {
       body: JSON.stringify(body),
       headers: {
@@ -44,15 +50,20 @@ export default function StudyDetailPage({ params }: StudyDetailProps) {
       }
     })
     if (!res.ok) {
+      if (file) {
+        file.delete()
+      }
       throw new Error('스터디 정보를 수정하는 중 오류가 발생했습니다.')
     }
 
     const data = (await res.json()).data
-    setStudy((prev) => ({ ...prev, ...data }))
+    setStudy(data)
   }
 
   useEffect(() => {
-    fetchData(API_ENDPOINTS.CLIENT.STUDY.RETRIEVE(id)).then((res) => {
+    fetchData(API_ENDPOINTS.CLIENT.STUDY.RETRIEVE(id), {
+      cache: 'no-cache'
+    }).then((res) => {
       if (!res.ok) {
         switch (res.status) {
           case HttpStatusCode.NotFound:
@@ -68,7 +79,7 @@ export default function StudyDetailPage({ params }: StudyDetailProps) {
   }, [id])
 
   if (!study) {
-    return <div>loading</div>
+    return <div></div>
   }
   return (
     <div className="flex w-full flex-col gap-6 py-12">
