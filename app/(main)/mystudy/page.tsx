@@ -18,7 +18,8 @@ export default async function MyStudy() {
   const res = await fetchData(API_ENDPOINTS.CLIENT.PROFILE.CREATED_STUDY as ApiEndpoint, {
     headers: {
       Authorization: `Bearer ${accessToken.token}`
-    }
+    },
+    cache: 'no-cache'
   })
   if (!res.ok) {
     throw new Error('스터디 정보를 불러오는 중 오류가 발생했습니다.')

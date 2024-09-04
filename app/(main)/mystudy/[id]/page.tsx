@@ -1,6 +1,8 @@
 'use client'
 
+import Image from 'next/image'
 import { notFound, redirect } from 'next/navigation'
+import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 import EasyEdit, { Types } from 'react-easy-edit'
 import { BsQuestionCircle } from 'react-icons/bs'
@@ -10,6 +12,7 @@ import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { API_ENDPOINTS } from '@/constants/apiEndpoint'
+import { ROUTES } from '@/constants/routes'
 import { fetchData } from '@/lib/fetch'
 import { Study } from '@/types'
 
@@ -20,10 +23,33 @@ interface StudyDetailProps {
 }
 
 export default function StudyDetailPage({ params }: StudyDetailProps) {
+  const session = useSession()
+  const accessToken = session.data?.accessToken.token
+  if (!accessToken) {
+    redirect(ROUTES.LOGIN.url)
+  }
+
   const [editing, setEditing] = useState<boolean>(false)
   const [study, setStudy] = useState<Study>()
 
   const { id } = params
+
+  async function handleSave(id: number, field: string, value: string) {
+    const body = { [field]: value }
+    const res = await fetchData(API_ENDPOINTS.CLIENT.STUDY.UPDATE(id), {
+      body: JSON.stringify(body),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`
+      }
+    })
+    if (!res.ok) {
+      throw new Error('스터디 정보를 수정하는 중 오류가 발생했습니다.')
+    }
+
+    const data = (await res.json()).data
+    setStudy((prev) => ({ ...prev, ...data }))
+  }
 
   useEffect(() => {
     fetchData(API_ENDPOINTS.CLIENT.STUDY.RETRIEVE(id)).then((res) => {
@@ -32,33 +58,36 @@ export default function StudyDetailPage({ params }: StudyDetailProps) {
           case HttpStatusCode.NotFound:
             notFound()
           default:
-            redirect('/error')
+            throw new Error('스터디 정보를 불러오는 중 오류가 발생했습니다.')
         }
       }
       return res.json().then((json) => {
         setStudy(json.data)
       })
     })
-  }, [])
+  }, [id])
 
+  if (!study) {
+    return <div>loading</div>
+  }
   return (
     <div className="flex w-full flex-col gap-6 py-12">
       <div className="relative flex items-start gap-8 max-md:flex-col">
         <div className="flex max-sm:w-full max-sm:justify-center">
-          <img src={study?.imageSrc} alt={study?.imageSrc} className="h-52 w-52 border object-cover" />
+          <Image src={study.imageSrc} alt={study.imageSrc} className="border object-cover" width={208} height={208} />
         </div>
         <span className="rounded-xl bg-purple-600 px-3 py-1 text-sm font-bold text-white sm:absolute sm:right-2">
           스터디장
         </span>
-        <div className="flex flex-col gap-3 text-[17px] font-medium sm:my-4">
+        <div className="flex w-full flex-col gap-3 text-[17px] font-medium sm:my-4">
           <h3 className="flex items-center gap-2">
             <span className="font-semibold">제목:</span>
             <EasyEdit
               type={Types.TEXT}
-              value={study?.title}
-              onSave={(val) => console.log(val)}
+              value={study.title}
+              onSave={(val) => handleSave(id, 'title', val)}
               saveButtonLabel={<span className="text-green-500">수정</span>}
-              cancelButtonLabel={<span className="text-red-500">취소</span>}
+              cancelButtonLabel={<span className="text-destructive">취소</span>}
             />
           </h3>
 
@@ -72,10 +101,10 @@ export default function StudyDetailPage({ params }: StudyDetailProps) {
                   { label: '율전', value: '율전' },
                   { label: '명륜', value: '명륜' }
                 ]}
-                onSave={(val) => console.log(val)}
-                placeholder={study?.campus}
+                onSave={(val) => handleSave(id, 'campus', val)}
+                placeholder={study.campus}
                 saveButtonLabel={<span className="text-green-500">수정</span>}
-                cancelButtonLabel={<span className="text-red-500">취소</span>}
+                cancelButtonLabel={<span className="text-destructive">취소</span>}
               />
             }
           </h3>
@@ -87,12 +116,12 @@ export default function StudyDetailPage({ params }: StudyDetailProps) {
                 options={[
                   { label: '초급', value: '초급' },
                   { label: '중급', value: '중급' },
-                  { label: '상급', value: '상급' }
+                  { label: '고급', value: '고급' }
                 ]}
-                onSave={(val) => console.log(val)}
-                placeholder={study?.level}
+                onSave={(val) => handleSave(id, 'level', val)}
+                placeholder={study.level}
                 saveButtonLabel={<span className="text-green-500">수정</span>}
-                cancelButtonLabel={<span className="text-red-500">취소</span>}
+                cancelButtonLabel={<span className="text-destructive">취소</span>}
               />
             }
           </h3>
@@ -116,10 +145,10 @@ export default function StudyDetailPage({ params }: StudyDetailProps) {
             </span>
             <EasyEdit
               type={Types.TEXT}
-              value={study?.stacks.join(', ')}
-              onSave={(val) => console.log(val)}
+              value={study.stacks.join(', ')}
+              onSave={(val) => handleSave(id, 'stacks', val)}
               saveButtonLabel={<span className="text-green-500">수정</span>}
-              cancelButtonLabel={<span className="text-red-500">취소</span>}
+              cancelButtonLabel={<span className="text-destructive">취소</span>}
             />
           </h3>
           <h3 className="flex items-center">
@@ -136,25 +165,25 @@ export default function StudyDetailPage({ params }: StudyDetailProps) {
                   { label: '토요일', value: '토요일' },
                   { label: '일요일', value: '일요일' }
                 ]}
-                onSave={(val) => console.log(val)}
-                placeholder={`${study?.day}요일`}
+                onSave={(val) => handleSave(id, 'day', val)}
+                placeholder={`${study.day}요일`}
                 saveButtonLabel={<span className="text-green-500">수정</span>}
-                cancelButtonLabel={<span className="text-red-500">취소</span>}
+                cancelButtonLabel={<span className="text-destructive">취소</span>}
               />
               <EasyEdit
                 type={Types.TIME}
-                value={study?.startTime}
-                onSave={(val) => console.log(val)}
+                value={study.startTime}
+                onSave={(val) => handleSave(id, 'startTime', val)}
                 placeholder="Select time"
                 saveButtonLabel={<span className="text-green-500">수정</span>}
-                cancelButtonLabel={<span className="text-red-500">취소</span>}
+                cancelButtonLabel={<span className="text-destructive">취소</span>}
               />
               <EasyEdit
                 type={Types.TIME}
-                value={study?.endTime}
-                onSave={(val) => console.log(val)}
+                value={study.endTime}
+                onSave={(val) => handleSave(id, 'endTime', val)}
                 saveButtonLabel={<span className="text-green-500">수정</span>}
-                cancelButtonLabel={<span className="text-red-500">취소</span>}
+                cancelButtonLabel={<span className="text-destructive">취소</span>}
                 placeholder="Select time"
               />
             </div>
@@ -165,16 +194,15 @@ export default function StudyDetailPage({ params }: StudyDetailProps) {
       </div>
       <div className="flex w-full flex-col gap-3">
         <span className="text-[18px] font-bold">스터디 설명</span>
-        {study?.description && (
+        {study.description && (
           <Textarea
             name="study-description"
             id="description"
             className="h-12 w-full px-2 py-1"
             disabled={!editing}
             autoFocus={editing}
-          >
-            {study?.description}
-          </Textarea>
+            value={study.description}
+          />
         )}
         {!editing ? (
           <div>
@@ -193,6 +221,7 @@ export default function StudyDetailPage({ params }: StudyDetailProps) {
               className="px-3 py-1 text-sm"
               onClick={() => {
                 setEditing(false)
+                handleSave(id, 'description', study.description)
               }}
             >
               제출
