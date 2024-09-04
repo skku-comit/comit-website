@@ -22,6 +22,10 @@ export const ROUTES = {
       name: '스터디',
       url: '/study'
     },
+    OPEN: {
+      name: '스터디 개설',
+      url: '/study/open'
+    },
     SIGNUP: (id: string) => ({
       name: '스터디 참여',
       url: `/study/${id}/signup`
