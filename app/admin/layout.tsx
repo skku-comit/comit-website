@@ -17,7 +17,7 @@ export default function RootLayout({
   const footerHeight = '5rem'
 
   return (
-    <body className={cn(inter.className, 'h-screen')}>
+    <div className={cn(inter.className, 'h-screen')}>
       <AuthProvider>
         <Header height={headerHeight} />
         <div
@@ -33,6 +33,6 @@ export default function RootLayout({
         </div>
         <Footer height={footerHeight} />
       </AuthProvider>
-    </body>
+    </div>
   )
 }

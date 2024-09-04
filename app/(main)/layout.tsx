@@ -1,6 +1,6 @@
 import { Inter } from 'next/font/google'
 
-import HeightPopulatedBody from '@/components/common/HeightPopulatedBody'
+import HeightPopulatedDiv from '@/components/common/HeightPopulatedBody'
 import { Toaster } from '@/components/ui/toaster'
 import AuthProvider from '@/lib/auth/AuthProvider'
 
@@ -13,10 +13,10 @@ export default function RootLayout({
 }>) {
   return (
     <AuthProvider>
-      <HeightPopulatedBody headerHeight="5rem" footerHeight="5rem" className={inter.className}>
+      <HeightPopulatedDiv headerHeight="5rem" footerHeight="5rem" className={inter.className}>
         {children}
         <Toaster />
-      </HeightPopulatedBody>
+      </HeightPopulatedDiv>
     </AuthProvider>
   )
 }
