@@ -5,13 +5,13 @@ import Image from 'next/image'
 import { Session } from 'next-auth'
 import { useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { useToast } from '@/components/ui/use-toast'
 import { API_ENDPOINTS, ApiEndpoint } from '@/constants/apiEndpoint'
+import { profileUpdateSchema } from '@/constants/zodSchema/profileUpdate'
 import { fetchData } from '@/lib/fetch'
 import { useSupabaseFile } from '@/lib/supabase/hooks'
 import { UserProfile } from '@/types'
@@ -20,11 +20,6 @@ type ProfileForm = {
   profileImage: string | null
   bio: string | null
 }
-
-const schema = z.object({
-  profileImage: z.string().nullish(),
-  bio: z.string().nullish()
-})
 
 type ProfileProps = {
   session: Session
@@ -35,7 +30,7 @@ const ProfileCards = ({ session, user }: ProfileProps) => {
   const { toast } = useToast()
 
   const { handleSubmit, register, setValue } = useForm<ProfileForm>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(profileUpdateSchema),
     defaultValues: {
       profileImage: user.profileImage,
       bio: user.bio
