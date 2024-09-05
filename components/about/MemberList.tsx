@@ -9,7 +9,8 @@ import { UserProfile } from '@/types'
 
 const MemberList = async (): Promise<React.JSX.Element> => {
   const res = await fetchData(API_ENDPOINTS.CLIENT.STAFF_LIST as ApiEndpoint, {
-    cache: 'no-cache'
+    cache: 'force-cache',
+    next: { revalidate: 86400 }
   })
   if (!res.ok) {
     switch (res.status) {
