@@ -1,4 +1,4 @@
-import NextAuth, { AuthError, NextAuthConfig, User } from 'next-auth'
+import NextAuth, { NextAuthConfig, User } from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
 import { z } from 'zod'
 
@@ -8,7 +8,6 @@ import signInSchema from '@/constants/zodSchema/signin'
 import { signUpSchema } from '@/constants/zodSchema/signup'
 import { isAccessTokenExpired } from '@/lib/auth/utils'
 import { fetchData } from '@/lib/fetch'
-import { AuthData } from '@/types/auth'
 
 export const BASE_AUTH_PATH = '/api/auth'
 
@@ -38,41 +37,41 @@ const authOptions: NextAuthConfig = {
   callbacks: {
     jwt: async ({ token, user }) => {
       // 토큰 없는 상태(로그인 X)에서 로그인 시도
-      if (user && user.username) {
+      if (user && user.data?.username) {
         return {
-          username: user.username,
-          image: user.image,
-          email: user.email,
-          role: user.role,
-          accessToken: user.accessToken,
-          refreshToken: user.refreshToken
+          data: {
+            username: user.data.username,
+            image: user.data.image,
+            email: user.data.email,
+            role: user.data.role,
+            accessToken: user.data.accessToken,
+            refreshToken: user.data.refreshToken
+          },
+          error: null
         }
       }
 
-      if (!isAccessTokenExpired(token.accessToken)) return token
+      // 토큰에 데이터가 없음(토큰 손상됨) -> 로그아웃
+      if (!token.data) return null
+
+      if (!isAccessTokenExpired(token.data.accessToken)) {
+        return token
+      }
 
       // 액세스 토큰이 만료된 경우, 리프레시 토큰을 사용하여 새로운 액세스 토큰 발급
-      const refreshedTokenOrNull = await refreshAccessToken(token.refreshToken)
+      const refreshedTokenOrNull = await refreshAccessToken(token.data.refreshToken)
       if (!refreshedTokenOrNull) return null // 리프레시 토큰이 만료된 경우
-      return { ...refreshedTokenOrNull } // 새로운 액세스 토큰 반환
+      return refreshedTokenOrNull // 새로운 액세스 토큰 반환
     },
     session: async ({ session, token }) => {
-      return {
-        ...session,
-        username: token.username,
-        image: token.image,
-        email: token.email,
-        role: token.role,
-        accessToken: token.accessToken,
-        refreshToken: token.refreshToken
-      }
+      return { ...session, ...token }
     }
   }
 }
 
 export const { handlers, signIn, signOut, auth } = NextAuth(authOptions)
 
-async function refreshAccessToken(refreshToken: string): Promise<AuthData | null> {
+async function refreshAccessToken(refreshToken: string) {
   const res = await fetchData(API_ENDPOINTS.AUTH.REISSUE as ApiEndpoint, {
     headers: {
       Cookie: `refresh=${refreshToken}`
@@ -87,28 +86,39 @@ async function refreshAccessToken(refreshToken: string): Promise<AuthData | null
       case HttpStatusCode.UnAuthorized:
         return null
       default:
-        throw new AuthError('액세스 토큰 갱신 중 에러가 발생했습니다.', {
-          errorType: 'RefreshAccessToken/InternalServerError',
-          detail: '액세스 토큰 갱신 중 에러가 발생했습니다.'
-        })
+        return {
+          error: {
+            errorType: 'RefreshAccessToken/InternalServerError',
+            status: HttpStatusCode.InternalServerError,
+            detail: '액세스 토큰 갱신 중 에러가 발생했습니다.'
+          },
+          data: null
+        }
     }
   }
   const newAccessToken = res.headers.get('access')
   const newRefreshToken = res.headers.get('Set-Cookie')
   if (!newAccessToken || !newRefreshToken) {
-    throw new AuthError('서버에서 액세스 토큰 또는 리프레시 토큰을 반환하지 않았습니다.', {
-      errorType: 'RefreshAccessToken/InternalServerError',
-      detail: '서버에서 액세스 토큰 또는 리프레시 토큰을 반환하지 않았습니다.'
-    })
+    return {
+      error: {
+        errorType: 'Signin/InternalServerError',
+        status: HttpStatusCode.InternalServerError,
+        detail: '서버에서 액세스 토큰 또는 리프레시 토큰을 반환하지 않았습니다.'
+      },
+      data: null
+    }
   }
 
   return {
-    username: data.username,
-    image: data.image,
-    email: data.email,
-    role: data.role,
-    accessToken: newAccessToken,
-    refreshToken: newRefreshToken
+    data: {
+      username: data.username,
+      image: data.image,
+      email: data.email,
+      role: data.role,
+      accessToken: newAccessToken,
+      refreshToken: newRefreshToken
+    },
+    error: null
   }
 }
 
@@ -128,33 +138,53 @@ async function _signIn(
     if (type === 'signup') {
       switch (res.status) {
         case HttpStatusCode.BadRequest:
-          throw new AuthError('회원가입 정보가 올바르지 않습니다.', {
-            errorType: 'Signin/BadRequest',
-            detail: '회원가입 정보가 올바르지 않습니다.'
-          })
+          return {
+            error: {
+              errorType: 'Signin/BadRequest',
+              status: HttpStatusCode.BadRequest,
+              detail: '회원가입 정보가 올바르지 않습니다.'
+            },
+            data: null
+          }
         case HttpStatusCode.Conflict:
-          throw new AuthError('이미 존재하는 회원 정보입니다.', {
-            errorType: 'Signin/Conflict',
-            detail: '이미 존재하는 회원 정보입니다.'
-          })
+          return {
+            error: {
+              errorType: 'Signin/Conflict',
+              status: HttpStatusCode.Conflict,
+              detail: '이미 존재하는 회원 정보입니다.'
+            },
+            data: null
+          }
         default:
-          throw new AuthError('회원가입 중 에러가 발생했습니다.', {
-            errorType: 'Signin/InternalServerError',
-            detail: '회원가입 중 에러가 발생했습니다.'
-          })
+          return {
+            error: {
+              errorType: 'Signin/InternalServer',
+              status: HttpStatusCode.InternalServerError,
+              detail: '회원가입 중 에러가 발생했습니다.'
+            },
+            data: null
+          }
       }
     } else {
       switch (res.status) {
         case HttpStatusCode.UnAuthorized:
-          throw new AuthError('아이디 또는 비밀번호가 올바르지 않습니다.', {
-            errorType: 'Signin/Unauthorized',
-            detail: '아이디 또는 비밀번호가 올바르지 않습니다.'
-          })
+          return {
+            error: {
+              errorType: 'Signin/Unauthorized',
+              status: HttpStatusCode.UnAuthorized,
+              detail: '아이디 또는 비밀번호가 올바르지 않습니다.'
+            },
+            data: null
+          }
         default:
-          throw new AuthError('로그인 중 에러가 발생했습니다. 다시 시도해주세요.', {
-            errorType: 'Signin/InternalServerError',
-            detail: '로그인 중 에러가 발생했습니다. 다시 시도해주세요.'
-          })
+          return {
+            error: {
+              errorType: 'Signin/InternalServerError',
+              status: HttpStatusCode.InternalServerError,
+              detail: '로그인 중 에러가 발생했습니다.'
+            },
+            data: null
+          }
       }
     }
   }
@@ -163,21 +193,28 @@ async function _signIn(
   const accessToken = res.headers.get('access')
   const refreshToken = res.headers.get('Set-Cookie')
   if (!accessToken || !refreshToken) {
-    throw new AuthError('서버에서 액세스 토큰 또는 리프레시 토큰을 반환하지 않았습니다.', {
-      errorType: 'Signin/InternalServerError',
-      detail: '서버에서 액세스 토큰 또는 리프레시 토큰을 반환하지 않았습니다.'
-    })
+    return {
+      error: {
+        errorType: 'Signin/InternalServerError',
+        status: HttpStatusCode.InternalServerError,
+        detail: '서버에서 액세스 토큰 또는 리프레시 토큰을 반환하지 않았습니다.'
+      },
+      data: null
+    }
   }
 
   // 결과 반환
   const data = (await res.json()).data
 
   return {
-    username: data.username,
-    image: data.image,
-    email: data.email,
-    role: data.role,
-    accessToken: accessToken,
-    refreshToken: refreshToken
+    error: null,
+    data: {
+      username: data.username,
+      image: data.image,
+      email: data.email,
+      role: data.role,
+      accessToken: accessToken,
+      refreshToken: refreshToken
+    }
   }
 }
