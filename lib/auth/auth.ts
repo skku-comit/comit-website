@@ -6,6 +6,12 @@ import { HttpStatusCode } from '@/app/api/utils/httpConsts'
 import { API_ENDPOINTS, ApiEndpoint } from '@/constants/apiEndpoint'
 import signInSchema from '@/constants/zodSchema/signin'
 import { signUpSchema } from '@/constants/zodSchema/signup'
+import {
+  DuplicatedCredentialsError,
+  InternalServerError,
+  InvalidSigninError,
+  InvalidSignupCredentialsError
+} from '@/lib/auth/errors'
 import { isAccessTokenExpired } from '@/lib/auth/utils'
 import { fetchData } from '@/lib/fetch'
 
@@ -62,9 +68,6 @@ const authOptions: NextAuthConfig = {
       const refreshedTokenOrNull = await refreshAccessToken(token.data.refreshToken)
       if (!refreshedTokenOrNull) return null // 리프레시 토큰이 만료된 경우
       return refreshedTokenOrNull // 새로운 액세스 토큰 반환
-    },
-    session: async ({ session, token }) => {
-      return { ...session, ...token }
     }
   }
 }
@@ -86,14 +89,7 @@ async function refreshAccessToken(refreshToken: string) {
       case HttpStatusCode.UnAuthorized:
         return null
       default:
-        return {
-          error: {
-            errorType: 'RefreshAccessToken/InternalServerError',
-            status: HttpStatusCode.InternalServerError,
-            detail: '액세스 토큰 갱신 중 에러가 발생했습니다.'
-          },
-          data: null
-        }
+        throw new InternalServerError()
     }
   }
   const newAccessToken = res.headers.get('access')
@@ -138,53 +134,18 @@ async function _signIn(
     if (type === 'signup') {
       switch (res.status) {
         case HttpStatusCode.BadRequest:
-          return {
-            error: {
-              errorType: 'Signin/BadRequest',
-              status: HttpStatusCode.BadRequest,
-              detail: '회원가입 정보가 올바르지 않습니다.'
-            },
-            data: null
-          }
+          throw new InvalidSignupCredentialsError()
         case HttpStatusCode.Conflict:
-          return {
-            error: {
-              errorType: 'Signin/Conflict',
-              status: HttpStatusCode.Conflict,
-              detail: '이미 존재하는 회원 정보입니다.'
-            },
-            data: null
-          }
+          throw new DuplicatedCredentialsError()
         default:
-          return {
-            error: {
-              errorType: 'Signin/InternalServer',
-              status: HttpStatusCode.InternalServerError,
-              detail: '회원가입 중 에러가 발생했습니다.'
-            },
-            data: null
-          }
+          throw new InternalServerError()
       }
     } else {
       switch (res.status) {
         case HttpStatusCode.UnAuthorized:
-          return {
-            error: {
-              errorType: 'Signin/Unauthorized',
-              status: HttpStatusCode.UnAuthorized,
-              detail: '아이디 또는 비밀번호가 올바르지 않습니다.'
-            },
-            data: null
-          }
+          throw new InvalidSigninError()
         default:
-          return {
-            error: {
-              errorType: 'Signin/InternalServerError',
-              status: HttpStatusCode.InternalServerError,
-              detail: '로그인 중 에러가 발생했습니다.'
-            },
-            data: null
-          }
+          throw new InternalServerError()
       }
     }
   }
@@ -193,14 +154,7 @@ async function _signIn(
   const accessToken = res.headers.get('access')
   const refreshToken = res.headers.get('Set-Cookie')
   if (!accessToken || !refreshToken) {
-    return {
-      error: {
-        errorType: 'Signin/InternalServerError',
-        status: HttpStatusCode.InternalServerError,
-        detail: '서버에서 액세스 토큰 또는 리프레시 토큰을 반환하지 않았습니다.'
-      },
-      data: null
-    }
+    throw new InternalServerError()
   }
 
   // 결과 반환
