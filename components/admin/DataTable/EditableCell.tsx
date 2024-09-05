@@ -7,6 +7,7 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { useToast } from '@/components/ui/use-toast'
 import { ApiEndpoint } from '@/constants/apiEndpoint'
 import { ROUTES } from '@/constants/routes'
 import { fetchData } from '@/lib/fetch'
@@ -29,6 +30,7 @@ const EditableCell: React.FC<EditableCellProps> = ({ fieldName, row, readonly, s
     redirect(ROUTES.LOGIN.url)
   }
 
+  const { toast } = useToast()
   const initialValue = row.original[fieldName]
   const [open, setOpen] = useState<boolean>(false)
   const [value, setValue] = useState<any>(initialValue ?? '')
@@ -53,9 +55,18 @@ const EditableCell: React.FC<EditableCellProps> = ({ fieldName, row, readonly, s
     })
 
     if (!res.ok) {
+      toast({
+        title: '수정 실패',
+        description: '수정 중 서버 에러 발생, 로그를 확인해주세요!',
+        variant: 'destructive'
+      })
       console.error('Failed to update', fieldName, id, inputValue)
       return
     }
+    toast({
+      title: '수정 완료',
+      description: '성공적으로 수정되었습니다!'
+    })
     const data: CustomResponseDTO = await res.json()
     const updatedFieldResult = data.data[fieldName]
     setValue(updatedFieldResult) // 실제 업데이트

@@ -24,6 +24,8 @@ import { ROUTES } from '@/constants/routes'
 import { fetchData } from '@/lib/fetch'
 import { Study } from '@/types'
 
+import DeleteButton from '../../DeleteButton'
+
 export const columns: ColumnDef<Study>[] = [
   {
     id: 'actions',
@@ -72,6 +74,11 @@ export const columns: ColumnDef<Study>[] = [
     }
   },
   rowSelect as ColumnDef<Study>,
+  {
+    id: 'delete',
+    header: '삭제',
+    cell: ({ row }) => <DeleteButton id={row.original.id} type="study" />
+  },
   {
     accessorKey: 'id',
     header: ({ column }) => <DataTableColumnHeader column={column} title="ID" />,

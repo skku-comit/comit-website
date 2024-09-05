@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import Header from '@/components/admin/Header'
 import SideBar from '@/components/admin/Sidebar'
 import Footer from '@/components/common/Footer'
+import { Toaster } from '@/components/ui/toaster'
 import AuthProvider from '@/lib/auth/AuthProvider'
 import { cn } from '@/lib/utils'
 
@@ -32,6 +33,7 @@ export default function RootLayout({
           <div className="w-4/5">{children}</div>
         </div>
         <Footer height={footerHeight} />
+        <Toaster />
       </AuthProvider>
     </div>
   )

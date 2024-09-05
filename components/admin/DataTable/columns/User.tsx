@@ -6,7 +6,14 @@ import EditableCell from '@/components/admin/DataTable/EditableCell'
 import { API_ENDPOINTS } from '@/constants/apiEndpoint'
 import { User } from '@/types'
 
+import DeleteButton from '../../DeleteButton'
+
 export const columns: ColumnDef<User>[] = [
+  {
+    id: 'delete',
+    header: '삭제',
+    cell: ({ row }) => <DeleteButton id={row.original.id} type="user" />
+  },
   {
     accessorKey: 'id',
     header: () => <div className="ml-8 min-w-24 text-left text-base">ID</div>,

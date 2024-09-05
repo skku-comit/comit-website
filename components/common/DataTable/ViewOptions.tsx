@@ -19,8 +19,8 @@ interface DataTableViewOptionsProps<TData> {
   table: Table<TData>
 }
 
-const userCheckedColumns = ['id', 'username', 'isStaff', 'phoneNumber', 'position', 'role', 'studentId']
-const studyCheckedColums = ['id', 'title', 'mentor', 'level', 'campus', 'semester', 'isRecruiting']
+const userCheckedColumns = ['delete', 'id', 'username', 'isStaff', 'phoneNumber', 'position', 'role', 'studentId']
+const studyCheckedColums = ['delete', 'id', 'title', 'mentor', 'level', 'campus', 'semester', 'isRecruiting']
 
 export function DataTableViewOptions<TData>({ table }: DataTableViewOptionsProps<TData>) {
   const pathname = usePathname()
