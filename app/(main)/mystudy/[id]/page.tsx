@@ -2,7 +2,6 @@
 
 import Image from 'next/image'
 import { notFound, redirect } from 'next/navigation'
-import { useSession } from 'next-auth/react'
 import { useEffect, useRef, useState } from 'react'
 import EasyEdit, { Types } from 'react-easy-edit'
 
@@ -13,6 +12,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { useToast } from '@/components/ui/use-toast'
 import { API_ENDPOINTS } from '@/constants/apiEndpoint'
 import { ROUTES } from '@/constants/routes'
+import { useSession } from '@/lib/auth/SessionProvider'
 import { fetchData } from '@/lib/fetch'
 import { useSupabaseFile } from '@/lib/supabase/hooks'
 import { cn } from '@/lib/utils'
@@ -26,11 +26,14 @@ interface StudyDetailProps {
 
 export default function StudyDetailPage({ params }: StudyDetailProps) {
   const session = useSession()
-  const accessToken = session.data?.accessToken.token
-  if (!accessToken) {
+  if (!session) {
+    redirect(ROUTES.LOGIN.url)
+  }
+  if (session.error) {
     redirect(ROUTES.LOGIN.url)
   }
 
+  const { id } = params
   const { toast } = useToast()
 
   const [editing, setEditing] = useState<boolean>(false)
@@ -41,70 +44,6 @@ export default function StudyDetailPage({ params }: StudyDetailProps) {
   const fileRef = useRef<HTMLInputElement>(null)
   const handleClick = () => {
     fileRef?.current?.click()
-  }
-
-  const { id } = params
-  const fileHandler = useSupabaseFile({ pathPrefix: `image/study/${id}` })
-
-  const handleFileChange = (e: React.ChangeEvent) => {
-    const targetFiles = (e.target as HTMLInputElement).files as FileList
-    // 예외 Case: 파일 입력 후 다시 닫을때
-    if (targetFiles.length) {
-      const selectedFile = URL.createObjectURL(targetFiles[0])
-      setImage(selectedFile)
-      setImageFile(targetFiles[0])
-    }
-  }
-
-  async function handleSave(id: number, field: string, value: any) {
-    const body = { [field]: value }
-    const res = await fetchData(API_ENDPOINTS.CLIENT.STUDY.UPDATE(id), {
-      body: JSON.stringify(body),
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`
-      },
-      credentials: 'include'
-    })
-    if (!res.ok) {
-      throw new Error('스터디 정보를 수정하는 중 오류가 발생했습니다.')
-    }
-    const data = (await res.json()).data
-    setStudy(data)
-    toast({
-      title: '스터디 수정 완료',
-      description: '스터디 내용이 성공적으로 수정되었습니다!'
-    })
-  }
-
-  async function handleImageSave() {
-    if (!imageFile) {
-      return
-    }
-    const file = await fileHandler.upload(imageFile)
-    const fileUrl = file.supabaseFileData.url
-    const res = await fetchData(API_ENDPOINTS.CLIENT.STUDY.UPDATE(id), {
-      body: JSON.stringify({ imageSrc: fileUrl }),
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`
-      },
-      credentials: 'include'
-    })
-    if (!res.ok) {
-      await file.delete()
-      toast({
-        title: '이미지 수정 실패',
-        description: '이미지 수정 하는 도중 오류가 발생했습니다.',
-        variant: 'destructive'
-      })
-    }
-    const data = (await res.json()).data
-    setStudy(data)
-    toast({
-      title: '스터디 이미지 수정 완료',
-      description: '스터디 이미지가 성공적으로 수정되었습니다!'
-    })
   }
 
   useEffect(() => {
@@ -132,7 +71,70 @@ export default function StudyDetailPage({ params }: StudyDetailProps) {
           variant: 'destructive'
         })
       })
-  }, [id])
+  }, [id, toast])
+
+  const fileHandler = useSupabaseFile({ pathPrefix: `image/study/${id}` })
+
+  const handleFileChange = (e: React.ChangeEvent) => {
+    const targetFiles = (e.target as HTMLInputElement).files as FileList
+    // 예외 Case: 파일 입력 후 다시 닫을때
+    if (targetFiles.length) {
+      const selectedFile = URL.createObjectURL(targetFiles[0])
+      setImage(selectedFile)
+      setImageFile(targetFiles[0])
+    }
+  }
+
+  async function handleSave(id: number, field: string, value: any) {
+    const body = { [field]: value }
+    const res = await fetchData(API_ENDPOINTS.CLIENT.STUDY.UPDATE(id), {
+      body: JSON.stringify(body),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${session!.data!.accessToken}`
+      },
+      credentials: 'include'
+    })
+    if (!res.ok) {
+      throw new Error('스터디 정보를 수정하는 중 오류가 발생했습니다.')
+    }
+    const data = (await res.json()).data
+    setStudy(data)
+    toast({
+      title: '스터디 수정 완료',
+      description: '스터디 내용이 성공적으로 수정되었습니다!'
+    })
+  }
+
+  async function handleImageSave() {
+    if (!imageFile) {
+      return
+    }
+    const file = await fileHandler.upload(imageFile)
+    const fileUrl = file.supabaseFileData.url
+    const res = await fetchData(API_ENDPOINTS.CLIENT.STUDY.UPDATE(id), {
+      body: JSON.stringify({ imageSrc: fileUrl }),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${session!.data!.accessToken}`
+      },
+      credentials: 'include'
+    })
+    if (!res.ok) {
+      await file.delete()
+      toast({
+        title: '이미지 수정 실패',
+        description: '이미지 수정 하는 도중 오류가 발생했습니다.',
+        variant: 'destructive'
+      })
+    }
+    const data = (await res.json()).data
+    setStudy(data)
+    toast({
+      title: '스터디 이미지 수정 완료',
+      description: '스터디 이미지가 성공적으로 수정되었습니다!'
+    })
+  }
 
   if (!study) {
     return <div></div>

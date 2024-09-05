@@ -8,12 +8,8 @@ export async function middleware(request: NextRequest) {
   const session = await auth()
 
   // 세션이 없는 경우 로그인 페이지로 리디렉션
-  if (!session || session.message) {
+  if (!session || session.data === null) {
     return NextResponse.redirect(new URL(ROUTES.LOGIN.url, request.url))
-  }
-
-  if (request.nextUrl.pathname === ROUTES.LOGIN.url || request.nextUrl.pathname === ROUTES.SIGNUP.url) {
-    return session ? NextResponse.redirect(ROUTES.HOME.url) : NextResponse.next()
   }
   return NextResponse.next()
 }

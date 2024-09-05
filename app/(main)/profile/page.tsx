@@ -15,11 +15,13 @@ const Profile = async () => {
   if (!session) {
     redirect(ROUTES.LOGIN.url)
   }
-  const { accessToken } = session
+  if (session.error) {
+    redirect(ROUTES.LOGIN.url)
+  }
 
   const res = await fetchData(API_ENDPOINTS.CLIENT.PROFILE.RETRIEVE as ApiEndpoint, {
     headers: {
-      Authorization: `Bearer ${accessToken.token}`
+      Authorization: `Bearer ${session.data?.accessToken}`
     },
     credentials: 'include'
   })

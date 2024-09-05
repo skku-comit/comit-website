@@ -68,6 +68,9 @@ const authOptions: NextAuthConfig = {
       const refreshedTokenOrNull = await refreshAccessToken(token.data.refreshToken)
       if (!refreshedTokenOrNull) return null // 리프레시 토큰이 만료된 경우
       return refreshedTokenOrNull // 새로운 액세스 토큰 반환
+    },
+    session: async ({ session, token }) => {
+      return { ...session, ...token }
     }
   }
 }

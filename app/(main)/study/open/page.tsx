@@ -4,7 +4,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Clock } from 'lucide-react'
 import Image from 'next/image'
 import { redirect, useRouter } from 'next/navigation'
-import { useSession } from 'next-auth/react'
 import { SetStateAction, useRef, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { MdHelpOutline } from 'react-icons/md'
@@ -35,11 +34,12 @@ import { TimePicker } from '@/components/ui/timepicker'
 import { useToast } from '@/components/ui/use-toast'
 import { API_ENDPOINTS, ApiEndpoint } from '@/constants/apiEndpoint'
 import { ROUTES } from '@/constants/routes'
+import { useSession } from '@/lib/auth/SessionProvider'
 import { fetchData } from '@/lib/fetch'
 import { useSupabaseFile } from '@/lib/supabase/hooks'
 import { Campus, Day, Level, Study } from '@/types'
 
-// TODO: 백엔드와 논의 후 schema 수정
+// TODO: constants로 추출
 const schema = z.object({
   imageSrc: z.string({
     required_error: '이미지를 업로드해주세요'
@@ -72,7 +72,13 @@ const levelOptions: Level[] = ['초급', '중급', '고급']
 
 export default function OpenStudy() {
   const session = useSession()
-  const canOpenStudy = session.data?.role ? ['ROLE_VERIFIED', 'ROLE_ADMIN'].includes(session.data?.role) : false
+  if (!session) {
+    redirect(ROUTES.LOGIN.url)
+  }
+  if (session.error) {
+    redirect(ROUTES.LOGIN.url)
+  }
+  const canOpenStudy = session.data.role ? ['ROLE_VERIFIED', 'ROLE_ADMIN'].includes(session.data.role) : false
 
   const router = useRouter()
   const { toast } = useToast()
@@ -111,7 +117,7 @@ export default function OpenStudy() {
       }),
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${session.data?.accessToken.token}`
+        Authorization: `Bearer ${session.data.accessToken}`
       },
       credentials: 'include'
     })

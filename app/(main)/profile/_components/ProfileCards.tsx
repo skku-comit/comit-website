@@ -83,7 +83,7 @@ const ProfileCards = ({ session, user }: ProfileProps) => {
         }),
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${session.accessToken.token}`
+          Authorization: `Bearer ${session.data?.accessToken}`
         },
         credentials: 'include'
       })
@@ -101,7 +101,7 @@ const ProfileCards = ({ session, user }: ProfileProps) => {
         }),
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${session.accessToken.token}`
+          Authorization: `Bearer ${session.data?.accessToken}`
         },
         credentials: 'include'
       })
