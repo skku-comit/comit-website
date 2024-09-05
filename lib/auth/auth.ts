@@ -37,56 +37,38 @@ const authOptions: NextAuthConfig = {
   ],
   callbacks: {
     jwt: async ({ token, user }) => {
-      if (user === undefined) {
-        return token
-      }
-      if (token.error) {
-        return token
-      }
-
       // 토큰 없는 상태(로그인 X)에서 로그인 시도
-      if (user.data?.username) {
-        token.data = {
-          username: user.data.username,
-          role: user.data.role,
-          accessToken: user.data.accessToken,
-          refreshToken: user.data.refreshToken
-        }
-        return token
-      }
-
-      // 유저 에러 발생 시
-      if (user.error || token.data === null) {
-        token.error = user.error
+      if (user.username) {
+        ;(token.username = user.username),
+          (token.image = user.image),
+          (token.email = user.email),
+          (token.role = user.role),
+          (token.accessToken = user.accessToken),
+          (token.refreshToken = user.refreshToken)
         return token
       }
 
       // AT, RT 변환
-      token.data.accessToken = new AccessToken(token.data.accessToken.token)
-      token.data.refreshToken = new RefreshToken(token.data.refreshToken.token)
+      token.accessToken = new AccessToken(token.accessToken.token)
+      token.refreshToken = new RefreshToken(token.refreshToken.token)
 
-      if (!token.data.accessToken.isExpired) return token
+      if (!token.accessToken.isExpired) return token
 
       // 액세스 토큰이 만료된 경우, 리프레시 토큰을 사용하여 새로운 액세스 토큰 발급
-      const refreshedTokenOrNull = await refreshAccessToken(token.data.refreshToken)
-      if (!refreshedTokenOrNull) return null
-      if (refreshedTokenOrNull.data === null) return null
-
-      const { data } = refreshedTokenOrNull
-      token.data = { ...data }
-      return token
+      const refreshedTokenOrNull = await refreshAccessToken(token.refreshToken)
+      if (!refreshedTokenOrNull) return null // 리프레시 토큰이 만료된 경우
+      return { ...refreshedTokenOrNull } // 새로운 액세스 토큰 반환
     },
     session: async ({ session, token }) => {
-      if (token.error) {
-        session.error = token.error
-        return session
+      return {
+        ...session,
+        username: token.username,
+        image: token.image,
+        email: token.email,
+        role: token.role,
+        accessToken: token.accessToken,
+        refreshToken: token.refreshToken
       }
-      if (token.data === null || session.data === null) {
-        return session
-      }
-
-      session.data = { ...token.data }
-      return session
     }
   }
 }
@@ -124,13 +106,12 @@ async function refreshAccessToken(refreshToken: RefreshToken): Promise<AuthData 
   }
 
   return {
-    error: null,
-    data: {
-      username: data.username,
-      role: data.role,
-      accessToken: new AccessToken(newAccessToken),
-      refreshToken: new RefreshToken(newRefreshToken)
-    }
+    username: data.username,
+    image: data.image,
+    email: data.email,
+    role: data.role,
+    accessToken: new AccessToken(newAccessToken),
+    refreshToken: new RefreshToken(newRefreshToken)
   }
 }
 
@@ -195,12 +176,11 @@ async function _signIn(
   const data = (await res.json()).data
 
   return {
-    error: null,
-    data: {
-      username: data.username,
-      role: data.role,
-      accessToken: new AccessToken(accessToken),
-      refreshToken: new RefreshToken(refreshToken)
-    }
+    username: data.username,
+    image: data.image,
+    email: data.email,
+    role: data.role,
+    accessToken: new AccessToken(accessToken),
+    refreshToken: new RefreshToken(refreshToken)
   }
 }

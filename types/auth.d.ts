@@ -1,15 +1,13 @@
 import { AccessToken, RefreshToken } from '@/lib/auth/utils'
-import { CustomErrorDTO } from '@/lib/response'
 import { Role } from '@/types'
 
 interface AuthData {
-  error: CustomErrorDTO | null
-  data: {
-    username: string
-    role: Role
-    accessToken: AccessToken
-    refreshToken: RefreshToken
-  } | null
+  username: string
+  image?: string | null // 아직 백엔드에서 반영 안됨
+  email?: string | null // 아직 백엔드에서 반영 안됨
+  role: Role
+  accessToken: AccessToken
+  refreshToken: RefreshToken
 }
 
 export declare module 'next-auth' {
