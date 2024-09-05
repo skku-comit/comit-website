@@ -1,6 +1,16 @@
 import './globals.css'
 
 import type { Metadata } from 'next'
+import localFont from 'next/font/local'
+
+import { cn } from '@/lib/utils'
+
+const pretendard = localFont({
+  src: '../public/fonts/PretendardVariable.woff2',
+  display: 'swap',
+  weight: '45 920',
+  variable: '--font-pretendard'
+})
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://skku-comit.dev'),
@@ -35,7 +45,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body>{children}</body>
+      <body className={cn(pretendard.variable, 'font-pretendard')}>{children}</body>
     </html>
   )
 }
