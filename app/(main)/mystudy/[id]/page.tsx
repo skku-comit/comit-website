@@ -3,18 +3,19 @@
 import Image from 'next/image'
 import { notFound, redirect } from 'next/navigation'
 import { useSession } from 'next-auth/react'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import EasyEdit, { Types } from 'react-easy-edit'
-import { BsQuestionCircle } from 'react-icons/bs'
 
 import { HttpStatusCode } from '@/app/api/utils/httpConsts'
 import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
+import { useToast } from '@/components/ui/use-toast'
 import { API_ENDPOINTS } from '@/constants/apiEndpoint'
 import { ROUTES } from '@/constants/routes'
 import { fetchData } from '@/lib/fetch'
 import { useSupabaseFile } from '@/lib/supabase/hooks'
+import { cn } from '@/lib/utils'
 import { Study } from '@/types'
 
 interface StudyDetailProps {
@@ -30,18 +31,33 @@ export default function StudyDetailPage({ params }: StudyDetailProps) {
     redirect(ROUTES.LOGIN.url)
   }
 
+  const { toast } = useToast()
+
   const [editing, setEditing] = useState<boolean>(false)
   const [study, setStudy] = useState<Study>()
+  const [imageFile, setImageFile] = useState<File | null>(null)
+  const [image, setImage] = useState<string>('')
+
+  const fileRef = useRef<HTMLInputElement>(null)
+  const handleClick = () => {
+    fileRef?.current?.click()
+  }
 
   const { id } = params
   const fileHandler = useSupabaseFile({ pathPrefix: `image/study/${id}` })
 
-  async function handleSave(id: number, field: string, value: any) {
-    let file: any
-    const body = { [field]: value }
-    if (field === 'imageSrc') {
-      file = fileHandler.upload(value)
+  const handleFileChange = (e: React.ChangeEvent) => {
+    const targetFiles = (e.target as HTMLInputElement).files as FileList
+    // 예외 Case: 파일 입력 후 다시 닫을때
+    if (targetFiles.length) {
+      const selectedFile = URL.createObjectURL(targetFiles[0])
+      setImage(selectedFile)
+      setImageFile(targetFiles[0])
     }
+  }
+
+  async function handleSave(id: number, field: string, value: any) {
+    const body = { [field]: value }
     const res = await fetchData(API_ENDPOINTS.CLIENT.STUDY.UPDATE(id), {
       body: JSON.stringify(body),
       headers: {
@@ -50,14 +66,39 @@ export default function StudyDetailPage({ params }: StudyDetailProps) {
       }
     })
     if (!res.ok) {
-      if (file) {
-        file.delete()
-      }
       throw new Error('스터디 정보를 수정하는 중 오류가 발생했습니다.')
     }
-
     const data = (await res.json()).data
     setStudy(data)
+    toast({
+      title: '스터디 수정 완료',
+      description: '스터디 내용이 성공적으로 수정되었습니다!'
+    })
+  }
+
+  async function handleImageSave() {
+    if (!imageFile) {
+      return
+    }
+    const file = await fileHandler.upload(imageFile)
+    const fileUrl = file.supabaseFileData.url
+    const res = await fetchData(API_ENDPOINTS.CLIENT.STUDY.UPDATE(id), {
+      body: JSON.stringify({ imageSrc: fileUrl }),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`
+      }
+    })
+    if (!res.ok) {
+      await file.delete()
+      throw new Error('스터디 이미지를 수정하는 중 오류가 발생했습니다.')
+    }
+    const data = (await res.json()).data
+    setStudy(data)
+    toast({
+      title: '스터디 이미지 수정 완료',
+      description: '스터디 이미지가 성공적으로 수정되었습니다!'
+    })
   }
 
   useEffect(() => {
@@ -74,6 +115,7 @@ export default function StudyDetailPage({ params }: StudyDetailProps) {
       }
       return res.json().then((json) => {
         setStudy(json.data)
+        setImage(json.data.imageSrc)
       })
     })
   }, [id])
@@ -83,14 +125,31 @@ export default function StudyDetailPage({ params }: StudyDetailProps) {
   }
   return (
     <div className="flex w-full flex-col gap-6 py-12">
-      <div className="relative flex items-start gap-8 max-md:flex-col">
-        <div className="flex max-sm:w-full max-sm:justify-center">
-          <Image src={study.imageSrc} alt={study.imageSrc} className="border object-cover" width={208} height={208} />
+      <div className="relative flex w-full items-start gap-8 max-md:flex-col">
+        <div className="flex flex-col gap-2 max-sm:w-full max-sm:items-center">
+          <div className="flex flex-col items-center gap-1">
+            <Button
+              type="button"
+              variant={'outline'}
+              onClick={handleClick}
+              className="flex h-52 w-52 items-center justify-center overflow-hidden rounded-lg border border-slate-300"
+            >
+              {!image ? (
+                <p className="text-5xl font-light text-slate-300">+</p>
+              ) : (
+                <Image src={image} width={128} height={128} alt={image} className="h-full w-full object-cover" />
+              )}
+            </Button>
+            <Input className="hidden" accept="image/*" type="file" ref={fileRef} onChange={handleFileChange} />
+          </div>
+          <Button onClick={handleImageSave} className={cn('w-52', !imageFile && 'hidden')}>
+            이미지 수정
+          </Button>
         </div>
         <span className="rounded-xl bg-purple-600 px-3 py-1 text-sm font-bold text-white sm:absolute sm:right-2">
           스터디장
         </span>
-        <div className="flex w-full flex-col gap-3 text-[17px] font-medium sm:my-4">
+        <div className="flex w-full flex-col gap-3 text-[17px] font-medium sm:my-2">
           <h3 className="flex items-center gap-2">
             <span className="font-semibold">제목:</span>
             <EasyEdit
@@ -137,31 +196,23 @@ export default function StudyDetailPage({ params }: StudyDetailProps) {
             }
           </h3>
 
-          <h3 className="flex items-center gap-2">
-            <span className="flex items-center gap-2 font-semibold">
-              관련 스택
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <button>
-                      <BsQuestionCircle className="hover:text-primary" size={15} />
-                    </button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>스택 간에는 쉼표(,)를 사용해 구분해 주세요.</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-              :
-            </span>
-            <EasyEdit
-              type={Types.TEXT}
-              value={study.stacks.join(', ')}
-              onSave={(val) => handleSave(id, 'stacks', val)}
-              saveButtonLabel={<span className="text-green-500">수정</span>}
-              cancelButtonLabel={<span className="text-destructive">취소</span>}
-            />
-          </h3>
+          <div>
+            <h3 className="flex items-center gap-2">
+              <span className="flex items-center gap-2 font-semibold">관련 스택:</span>
+              <EasyEdit
+                type={Types.TEXT}
+                value={study.stacks.join(', ')}
+                onSave={(val) => {
+                  const stacks = val.split(',').map((stack: string) => stack.trim())
+                  handleSave(id, 'stacks', stacks)
+                }}
+                saveButtonLabel={<span className="text-green-500">수정</span>}
+                cancelButtonLabel={<span className="text-destructive">취소</span>}
+              />
+            </h3>
+            <p className="text-sm text-gray-400">스택 간에는 쉼표(,)를 사용해 구분해 주세요.</p>
+          </div>
+
           <h3 className="flex items-center">
             <span className="mr-2 font-semibold">요일 / 시간:</span>
             <div className="flex gap-2">
@@ -224,7 +275,7 @@ export default function StudyDetailPage({ params }: StudyDetailProps) {
                 setEditing(true)
               }}
             >
-              수정
+              스터디 설명 수정
             </Button>
           </div>
         ) : (

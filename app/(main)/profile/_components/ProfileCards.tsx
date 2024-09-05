@@ -126,7 +126,9 @@ const ProfileCards = ({ session, user }: ProfileProps) => {
           <p className="text-sm text-gray-400">임원진의 프로필만 타인에게 노출됩니다</p>
         </div>
         <div className="flex flex-col gap-1">
-          <div
+          <Button
+            type="button"
+            variant={'outline'}
             onClick={handleClick}
             className="flex h-32 w-32 items-center justify-center overflow-hidden rounded-lg border border-slate-300"
           >
@@ -135,7 +137,7 @@ const ProfileCards = ({ session, user }: ProfileProps) => {
             ) : (
               <Image src={image} width={208} height={208} alt={image} className="h-full w-full object-cover" />
             )}
-          </div>
+          </Button>
           <Input className="hidden" accept="image/*" type="file" ref={fileRef} onChange={handleFileChange} />
         </div>
         <div>
