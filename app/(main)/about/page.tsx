@@ -19,7 +19,7 @@ const sectionCardData: SectionCardProps[] = [
   {
     id: 2,
     title: '세미나 행사',
-    description: '외부 인사들을 초청하거나 COMIT 선배님들을 모시고 세미나를 진행합니다',
+    description: '외부 인사들 혹은 COMIT 선배님들을 초청하여 개발 세미나를 진행합니다',
     image: seminarImg,
     backgroundColor: 'bg-[#6DD7B9]'
   },
