@@ -33,7 +33,10 @@ const JSP_ENDPOINTS = {
       CREATE: { url: `${baseURL}/${API_PREFIX}/admin/studies`, method: 'POST' as HttpMethod },
       RETRIEVE: (id: number) => ({ url: `${baseURL}/${API_PREFIX}/admin/studies/${id}`, method: 'GET' as HttpMethod }),
       LIST: { url: `${baseURL}/${API_PREFIX}/admin/studies`, method: 'GET' as HttpMethod },
-      UPDATE: (id: number) => ({ url: `${baseURL}/${API_PREFIX}/admin/studies/${id}`, method: 'PUT' as HttpMethod }),
+      UPDATE_ISRECRUITING: (id: number) => ({
+        url: `${baseURL}/${API_PREFIX}/admin/studies/${id}`,
+        method: 'PATCH' as HttpMethod
+      }),
       DELETE: (id: number) => ({ url: `${baseURL}/${API_PREFIX}/admin/studies/${id}`, method: 'DELETE' as HttpMethod })
     }
   },
