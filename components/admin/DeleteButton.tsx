@@ -54,7 +54,8 @@ const DeleteButton = ({ id, type }: DeleteButtonProps) => {
       headers: {
         Authorization: `Bearer ${accessToken.token}`,
         'Content-Type': 'application/json'
-      }
+      },
+      credentials: 'include'
     })
 
     if (!res.ok) {

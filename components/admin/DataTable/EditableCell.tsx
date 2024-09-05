@@ -51,7 +51,8 @@ const EditableCell: React.FC<EditableCellProps> = ({ fieldName, row, readonly, s
       headers: {
         Authorization: `Bearer ${accessToken.token}`,
         'Content-Type': 'application/json'
-      }
+      },
+      credentials: 'include'
     })
 
     if (!res.ok) {

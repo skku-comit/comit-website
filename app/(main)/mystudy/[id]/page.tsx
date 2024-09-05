@@ -63,7 +63,8 @@ export default function StudyDetailPage({ params }: StudyDetailProps) {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${accessToken}`
-      }
+      },
+      credentials: 'include'
     })
     if (!res.ok) {
       throw new Error('스터디 정보를 수정하는 중 오류가 발생했습니다.')
@@ -87,7 +88,8 @@ export default function StudyDetailPage({ params }: StudyDetailProps) {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${accessToken}`
-      }
+      },
+      credentials: 'include'
     })
     if (!res.ok) {
       await file.delete()

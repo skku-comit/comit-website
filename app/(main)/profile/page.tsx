@@ -20,7 +20,8 @@ const Profile = async () => {
   const res = await fetchData(API_ENDPOINTS.CLIENT.PROFILE.RETRIEVE as ApiEndpoint, {
     headers: {
       Authorization: `Bearer ${accessToken.token}`
-    }
+    },
+    credentials: 'include'
   })
   if (!res.ok) {
     throw new Error('프로필 정보를 불러오는 중 오류가 발생했습니다.')

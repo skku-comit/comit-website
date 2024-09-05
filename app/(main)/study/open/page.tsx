@@ -112,7 +112,8 @@ export default function OpenStudy() {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${session.data?.accessToken.token}`
-      }
+      },
+      credentials: 'include'
     })
     if (!res.ok) {
       await file.delete()

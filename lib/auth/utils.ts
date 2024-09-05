@@ -11,7 +11,8 @@ export async function getAccessTokenWithRefreshToken(refreshToken: string): Prom
     headers: {
       'Content-Type': 'application/json',
       Cookie: `refresh=${refreshToken}`
-    }
+    },
+    credentials: 'include'
   })
 
   const data = await res.json()

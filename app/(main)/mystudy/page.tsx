@@ -19,6 +19,7 @@ export default async function MyStudy() {
     headers: {
       Authorization: `Bearer ${accessToken.token}`
     },
+    credentials: 'include',
     cache: 'no-cache'
   })
   if (!res.ok) {

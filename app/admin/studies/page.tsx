@@ -18,7 +18,8 @@ const StudyManagePage = async () => {
   const res = await fetchData(API_ENDPOINTS.ADMIN.STUDY.LIST as ApiEndpoint, {
     headers: {
       Authorization: `Bearer ${accessToken.token}`
-    }
+    },
+    credentials: 'include'
   })
   const studies = (await res.json()).data as Study[]
 

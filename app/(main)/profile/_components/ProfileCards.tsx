@@ -84,7 +84,8 @@ const ProfileCards = ({ session, user }: ProfileProps) => {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${session.accessToken.token}`
-        }
+        },
+        credentials: 'include'
       })
       if (!res.ok) {
         await file.delete()
@@ -101,7 +102,8 @@ const ProfileCards = ({ session, user }: ProfileProps) => {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${session.accessToken.token}`
-        }
+        },
+        credentials: 'include'
       })
       if (!res.ok) {
         setIsSubmitting(false)

@@ -28,6 +28,7 @@ const StudySignup = async ({ params }: StudySignupProps) => {
     headers: {
       Authorization: `Bearer ${session.accessToken.token}`
     },
+    credentials: 'include',
     cache: 'no-cache'
   })
   if (!res.ok) {

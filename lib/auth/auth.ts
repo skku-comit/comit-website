@@ -84,6 +84,7 @@ async function refreshAccessToken(
     headers: {
       Cookie: `refresh=${refreshToken.token}`
     },
+    credentials: 'include',
     cache: 'no-store'
   })
   const data = await res.json()

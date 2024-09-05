@@ -18,7 +18,8 @@ const UserManagePage = async () => {
   const res = await fetchData(API_ENDPOINTS.ADMIN.USER.LIST as ApiEndpoint, {
     headers: {
       Authorization: `Bearer ${accessToken.token}`
-    }
+    },
+    credentials: 'include'
   })
   const users = (await res.json()).data as User[]
 

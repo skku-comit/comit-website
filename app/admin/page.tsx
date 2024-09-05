@@ -18,7 +18,8 @@ const Admin = async () => {
   const studyRes = await fetchData(API_ENDPOINTS.ADMIN.STUDY.LIST as ApiEndpoint, {
     headers: {
       Authorization: `Bearer ${accessToken.token}`
-    }
+    },
+    credentials: 'include'
   })
   if (!studyRes.ok) {
     switch (studyRes.status) {
@@ -32,7 +33,8 @@ const Admin = async () => {
   const userRes = await fetchData(API_ENDPOINTS.ADMIN.USER.LIST as ApiEndpoint, {
     headers: {
       Authorization: `Bearer ${accessToken.token}`
-    }
+    },
+    credentials: 'include'
   })
   if (!userRes.ok) {
     switch (userRes.status) {
