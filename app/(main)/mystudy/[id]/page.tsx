@@ -91,7 +91,11 @@ export default function StudyDetailPage({ params }: StudyDetailProps) {
     })
     if (!res.ok) {
       await file.delete()
-      throw new Error('스터디 이미지를 수정하는 중 오류가 발생했습니다.')
+      toast({
+        title: '이미지 수정 실패',
+        description: '이미지 수정 하는 도중 오류가 발생했습니다.',
+        variant: 'destructive'
+      })
     }
     const data = (await res.json()).data
     setStudy(data)
@@ -104,20 +108,28 @@ export default function StudyDetailPage({ params }: StudyDetailProps) {
   useEffect(() => {
     fetchData(API_ENDPOINTS.CLIENT.STUDY.RETRIEVE(id), {
       cache: 'no-cache'
-    }).then((res) => {
-      if (!res.ok) {
-        switch (res.status) {
-          case HttpStatusCode.NotFound:
-            notFound()
-          default:
-            throw new Error('스터디 정보를 불러오는 중 오류가 발생했습니다.')
-        }
-      }
-      return res.json().then((json) => {
-        setStudy(json.data)
-        setImage(json.data.imageSrc)
-      })
     })
+      .then((res) => {
+        if (!res.ok) {
+          switch (res.status) {
+            case HttpStatusCode.NotFound:
+              notFound()
+            default:
+              throw new Error('스터디 정보를 불러오는 중 오류가 발생했습니다.')
+          }
+        }
+        return res.json().then((json) => {
+          setStudy(json.data)
+          setImage(json.data.imageSrc)
+        })
+      })
+      .catch(() => {
+        toast({
+          title: '스터디 정보 불러오기 실패',
+          description: '스터디 정보를 불러오는 중 오류가 발생했습니다.',
+          variant: 'destructive'
+        })
+      })
   }, [id])
 
   if (!study) {
@@ -149,7 +161,7 @@ export default function StudyDetailPage({ params }: StudyDetailProps) {
         <span className="rounded-xl bg-purple-600 px-3 py-1 text-sm font-bold text-white sm:absolute sm:right-2">
           스터디장
         </span>
-        <div className="flex w-full flex-col gap-3 text-[17px] font-medium sm:my-2">
+        <div className="flex w-full flex-col gap-2 text-[17px] font-medium">
           <h3 className="flex items-center gap-2">
             <span className="font-semibold">제목:</span>
             <EasyEdit
@@ -247,6 +259,23 @@ export default function StudyDetailPage({ params }: StudyDetailProps) {
                 saveButtonLabel={<span className="text-green-500">수정</span>}
                 cancelButtonLabel={<span className="text-destructive">취소</span>}
                 placeholder="Select time"
+              />
+            </div>
+          </h3>
+
+          <h3 className="flex items-center">
+            <span className="mr-2 font-semibold">모집 여부:</span>
+            <div className="flex gap-2">
+              <EasyEdit
+                type="select"
+                options={[
+                  { label: '모집 중', value: '모집 중' },
+                  { label: '모집 마감', value: '모집 마감' }
+                ]}
+                onSave={(val) => handleSave(id, 'isRecruiting', val === '모집 중')}
+                placeholder={study.isRecruiting ? '모집 중' : '모집 마감'}
+                saveButtonLabel={<span className="text-green-500">수정</span>}
+                cancelButtonLabel={<span className="text-destructive">취소</span>}
               />
             </div>
           </h3>
