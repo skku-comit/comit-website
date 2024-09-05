@@ -1,25 +1,22 @@
 import { AccessToken, RefreshToken } from '@/lib/auth/utils'
+import { CustomErrorDTO } from '@/lib/response'
 import { Role } from '@/types'
 
-export declare module 'next-auth' {
-  interface User {
+interface AuthData {
+  error: CustomErrorDTO | null
+  data: {
+    username: string
     role: Role
     accessToken: AccessToken
     refreshToken: RefreshToken
-  }
-  interface Session {
-    message: string
-    role: Role
-    accessToken: AccessToken
-    refreshToken: RefreshToken
-  }
+  } | null
 }
+
+export declare module 'next-auth' {
+  interface User extends AuthData {}
+  interface Session extends AuthData {}
+}
+
 export declare module '@auth/core/jwt' {
-  interface JWT {
-    iat: number
-    exp: number
-    role: Role
-    accessToken: AccessToken
-    refreshToken: RefreshToken
-  }
+  interface JWT extends AuthData {}
 }
