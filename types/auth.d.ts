@@ -1,4 +1,3 @@
-import { AccessToken, RefreshToken } from '@/lib/auth/utils'
 import { Role } from '@/types'
 
 interface AuthData {
@@ -6,8 +5,8 @@ interface AuthData {
   image?: string | null // 아직 백엔드에서 반영 안됨
   email?: string | null // 아직 백엔드에서 반영 안됨
   role: Role
-  accessToken: AccessToken
-  refreshToken: RefreshToken
+  accessToken: string
+  refreshToken: string
 }
 
 export declare module 'next-auth' {

@@ -6,7 +6,7 @@ import { HttpStatusCode } from '@/app/api/utils/httpConsts'
 import { API_ENDPOINTS, ApiEndpoint } from '@/constants/apiEndpoint'
 import signInSchema from '@/constants/zodSchema/signin'
 import { signUpSchema } from '@/constants/zodSchema/signup'
-import { AccessToken, RefreshToken } from '@/lib/auth/utils'
+import { isAccessTokenExpired } from '@/lib/auth/utils'
 import { fetchData } from '@/lib/fetch'
 import { AuthData } from '@/types/auth'
 
@@ -38,21 +38,18 @@ const authOptions: NextAuthConfig = {
   callbacks: {
     jwt: async ({ token, user }) => {
       // 토큰 없는 상태(로그인 X)에서 로그인 시도
-      if (user.username) {
-        ;(token.username = user.username),
-          (token.image = user.image),
-          (token.email = user.email),
-          (token.role = user.role),
-          (token.accessToken = user.accessToken),
-          (token.refreshToken = user.refreshToken)
-        return token
+      if (user && user.username) {
+        return {
+          username: user.username,
+          image: user.image,
+          email: user.email,
+          role: user.role,
+          accessToken: user.accessToken,
+          refreshToken: user.refreshToken
+        }
       }
 
-      // AT, RT 변환
-      token.accessToken = new AccessToken(token.accessToken.token)
-      token.refreshToken = new RefreshToken(token.refreshToken.token)
-
-      if (!token.accessToken.isExpired) return token
+      if (!isAccessTokenExpired(token.accessToken)) return token
 
       // 액세스 토큰이 만료된 경우, 리프레시 토큰을 사용하여 새로운 액세스 토큰 발급
       const refreshedTokenOrNull = await refreshAccessToken(token.refreshToken)
@@ -75,10 +72,10 @@ const authOptions: NextAuthConfig = {
 
 export const { handlers, signIn, signOut, auth } = NextAuth(authOptions)
 
-async function refreshAccessToken(refreshToken: RefreshToken): Promise<AuthData | null> {
+async function refreshAccessToken(refreshToken: string): Promise<AuthData | null> {
   const res = await fetchData(API_ENDPOINTS.AUTH.REISSUE as ApiEndpoint, {
     headers: {
-      Cookie: `refresh=${refreshToken.token}`
+      Cookie: `refresh=${refreshToken}`
     },
     credentials: 'include',
     cache: 'no-store'
@@ -110,8 +107,8 @@ async function refreshAccessToken(refreshToken: RefreshToken): Promise<AuthData 
     image: data.image,
     email: data.email,
     role: data.role,
-    accessToken: new AccessToken(newAccessToken),
-    refreshToken: new RefreshToken(newRefreshToken)
+    accessToken: newAccessToken,
+    refreshToken: newRefreshToken
   }
 }
 
@@ -180,7 +177,7 @@ async function _signIn(
     image: data.image,
     email: data.email,
     role: data.role,
-    accessToken: new AccessToken(accessToken),
-    refreshToken: new RefreshToken(refreshToken)
+    accessToken: accessToken,
+    refreshToken: refreshToken
   }
 }
