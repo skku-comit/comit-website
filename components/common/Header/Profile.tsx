@@ -70,17 +70,13 @@ function Profile() {
     <DropdownMenu>
       <DropdownMenuTrigger className="max-md:hidden">
         <div className="flex items-center justify-center gap-x-3 text-primary">
-          {session.user?.name}
+          {session.data?.username}
           <IoChevronDownOutline className="ml-2" />
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="rounded-lg">
         <DropdownMenuLabel className="flex items-center gap-x-3 py-3">
-          <div>
-            <div>{session.user?.name}</div>
-            <div className="font-normal">{session.user?.email}</div>
-            <div className="text-xs text-gray-500">{session.user?.email}</div>
-          </div>
+          <div>{session.data?.username}</div>
         </DropdownMenuLabel>
 
         <DropdownMenuSeparator />
@@ -91,7 +87,7 @@ function Profile() {
           나의 스터디
         </MenuItem>
 
-        {session.role === 'ROLE_ADMIN' && (
+        {session.data?.role === 'ROLE_ADMIN' && (
           <>
             <DropdownMenuSeparator />
             <MenuItem icon={<CiSettings size={iconSize} />} href={ROUTES.ADMIN.DASHBOARD.url}>
