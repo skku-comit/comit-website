@@ -13,8 +13,7 @@ import { Study } from '@/types'
 
 const StudyList = async () => {
   const res = await fetchData(API_ENDPOINTS.CLIENT.STUDY.LIST as ApiEndpoint, {
-    cache: 'force-cache',
-    next: { revalidate: 180 }
+    next: { revalidate: 60 }
   })
   if (!res.ok) {
     throw new Error('스터디 목록을 불러오는 중 오류가 발생했습니다.')

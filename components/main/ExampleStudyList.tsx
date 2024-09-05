@@ -8,7 +8,9 @@ import { CustomResponse } from '@/lib/response'
 import { Study } from '@/types'
 
 export const ExampleStudyList = async (): Promise<React.JSX.Element> => {
-  const res = await fetchData(API_ENDPOINTS.CLIENT.STUDY.LIST as ApiEndpoint)
+  const res = await fetchData(API_ENDPOINTS.CLIENT.STUDY.LIST as ApiEndpoint, {
+    next: { revalidate: 1800 }
+  })
   if (!res.ok) {
     switch (res.status) {
       default:
