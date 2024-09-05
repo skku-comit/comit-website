@@ -6,9 +6,10 @@ import { signOut, useSession } from 'next-auth/react'
 import React from 'react'
 import { CgSpinner } from 'react-icons/cg'
 import { CiSettings } from 'react-icons/ci'
-import { HiOutlineUserGroup } from 'react-icons/hi2'
+import { HiOutlineUserCircle } from 'react-icons/hi2'
 import { IoIosLogOut } from 'react-icons/io'
-import { IoChevronDownOutline, IoPersonOutline } from 'react-icons/io5'
+import { IoChevronDownOutline } from 'react-icons/io5'
+import { PiBooksLight } from 'react-icons/pi'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -83,11 +84,11 @@ function Profile() {
         </DropdownMenuLabel>
 
         <DropdownMenuSeparator />
-        <MenuItem icon={<IoPersonOutline size={iconSize} />} href={ROUTES.PROFILE.url}>
-          내 프로필
+        <MenuItem icon={<HiOutlineUserCircle size={iconSize} />} href={ROUTES.PROFILE.url}>
+          나의 프로필
         </MenuItem>
-        <MenuItem icon={<HiOutlineUserGroup size={iconSize} />} href={ROUTES.MYSTUDY.url}>
-          내 스터디
+        <MenuItem icon={<PiBooksLight size={iconSize} />} href={ROUTES.MYSTUDY.url}>
+          나의 스터디
         </MenuItem>
 
         {session.role === 'ROLE_ADMIN' && (

@@ -21,7 +21,7 @@ const subIntroduceTextSecondLine: Array<string> = ['성균관대학교 ', '중�
 const aboutData: { description: string; number: number }[] = [
   {
     description: '누적 스터디 개설',
-    number: 50
+    number: 70
   },
   {
     description: '평균 신규 지원',
@@ -29,7 +29,7 @@ const aboutData: { description: string; number: number }[] = [
   },
   {
     description: '평균 스터디 개설',
-    number: 15
+    number: 10
   }
 ]
 

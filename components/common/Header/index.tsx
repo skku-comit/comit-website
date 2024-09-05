@@ -2,13 +2,13 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import { BsDoorOpen } from 'react-icons/bs'
-import { CgProfile } from 'react-icons/cg'
-import { FaBook } from 'react-icons/fa'
 import { FaRegPenToSquare } from 'react-icons/fa6'
 import { GiHamburgerMenu } from 'react-icons/gi'
+import { HiOutlineUserCircle } from 'react-icons/hi2'
 import { IoMdInformationCircleOutline } from 'react-icons/io'
 import { IoHomeOutline, IoLaptopOutline } from 'react-icons/io5'
 import { MdLogin, MdLogout } from 'react-icons/md'
+import { PiBooksLight } from 'react-icons/pi'
 
 import Profile from '@/components/common/Header/Profile'
 import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from '@/components/ui/drawer'
@@ -43,8 +43,8 @@ const LOGGED_OUT_DRAWER_ITEMS = [
   { route: ROUTES.SIGNUP, icon: <FaRegPenToSquare size={24} /> }
 ]
 const LOGGED_IN_DRAWER_ITEMS = [
-  { route: ROUTES.MYSTUDY, icon: <FaBook /> },
-  { route: ROUTES.PROFILE, icon: <CgProfile /> }
+  { route: ROUTES.MYSTUDY, icon: <PiBooksLight size={28} /> },
+  { route: ROUTES.PROFILE, icon: <HiOutlineUserCircle /> }
 ]
 const Header = async ({ height }: { height: string }) => {
   const session = await auth()
@@ -90,7 +90,7 @@ const Header = async ({ height }: { height: string }) => {
           {session && (
             <SignOutButton className="flex items-center gap-4 text-3xl font-medium">
               <MdLogout />
-              <p className="flex items-center text-xl">Log Out</p>
+              <p className="flex items-center text-xl font-bold">로그아웃</p>
             </SignOutButton>
           )}
         </DrawerContent>

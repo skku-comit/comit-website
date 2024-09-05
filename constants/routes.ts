@@ -44,7 +44,7 @@ export const ROUTES = {
     url: '/signup'
   },
   MYSTUDY: {
-    name: '마이스터디',
+    name: '나의 스터디',
     url: '/mystudy'
   },
   PROFILE: {
