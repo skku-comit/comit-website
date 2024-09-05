@@ -1,7 +1,6 @@
 'use client'
 
 import { redirect, useRouter } from 'next/navigation'
-import { useSession } from 'next-auth/react'
 import { GoTrash } from 'react-icons/go'
 
 import {
@@ -18,6 +17,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { API_ENDPOINTS, ApiEndpoint } from '@/constants/apiEndpoint'
 import { ROUTES } from '@/constants/routes'
+import { useSession } from '@/lib/auth/SessionProvider'
 import { fetchData } from '@/lib/fetch'
 
 import { useToast } from '../ui/use-toast'
@@ -29,6 +29,12 @@ interface DeleteButtonProps {
 
 const DeleteButton = ({ id, type }: DeleteButtonProps) => {
   const session = useSession()
+  if (!session) {
+    redirect(ROUTES.LOGIN.url)
+  }
+  if (session.error) {
+    redirect(ROUTES.LOGIN.url)
+  }
   const accessToken = session.data?.accessToken
   const { toast } = useToast()
 
@@ -52,7 +58,7 @@ const DeleteButton = ({ id, type }: DeleteButtonProps) => {
     const res = await fetchData(apiEndpoint, {
       cache: 'no-cache',
       headers: {
-        Authorization: `Bearer ${accessToken.token}`,
+        Authorization: `Bearer ${accessToken}`,
         'Content-Type': 'application/json'
       },
       credentials: 'include'
