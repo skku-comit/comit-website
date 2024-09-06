@@ -9,7 +9,7 @@ import { UserProfile } from '@/types'
 
 const MemberList = async (): Promise<React.JSX.Element> => {
   const res = await fetchData(API_ENDPOINTS.CLIENT.STAFF_LIST as ApiEndpoint, {
-    next: { revalidate: 86400 }
+    next: { revalidate: 60 }
   })
   if (!res.ok) {
     switch (res.status) {
