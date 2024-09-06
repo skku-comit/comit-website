@@ -13,11 +13,14 @@ const UserManagePage = async () => {
   if (!session) {
     redirect(ROUTES.LOGIN.url)
   }
-  const { accessToken } = session
+  if (session.error) {
+    redirect(ROUTES.LOGIN.url)
+  }
+  const accessToken = session.data?.accessToken
 
   const res = await fetchData(API_ENDPOINTS.ADMIN.USER.LIST as ApiEndpoint, {
     headers: {
-      Authorization: `Bearer ${accessToken.token}`
+      Authorization: `Bearer ${accessToken}`
     },
     credentials: 'include'
   })

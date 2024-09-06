@@ -2,9 +2,8 @@
 
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { signOut, useSession } from 'next-auth/react'
+import { signOut } from 'next-auth/react'
 import React from 'react'
-import { CgSpinner } from 'react-icons/cg'
 import { CiSettings } from 'react-icons/ci'
 import { HiOutlineUserCircle } from 'react-icons/hi2'
 import { IoIosLogOut } from 'react-icons/io'
@@ -21,6 +20,7 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
 import { ROUTES } from '@/constants/routes'
+import { useSession } from '@/lib/auth/SessionProvider'
 
 interface MenuItemProps {
   icon: React.ReactNode
@@ -43,44 +43,33 @@ const MenuItem = ({ icon, href, children }: MenuItemProps) => {
 }
 
 function Profile() {
-  const { status, data: session } = useSession()
+  const session = useSession()
 
-  if (!session) {
+  if (!session || session.error) {
     return (
-      <>
-        {status === 'loading' ? (
-          <CgSpinner className="animate-spin" size={30} />
-        ) : (
-          <div className="hidden w-[270px] items-center justify-between gap-x-3 md:flex lg:w-[310px]">
-            <Button className="h-[36px] w-[120px] text-base font-bold lg:w-[140px]" asChild>
-              <Link href={ROUTES.SIGNUP.url}>회원가입</Link>
-            </Button>
-            <Button className="h-[36px] w-[120px] text-base font-bold lg:w-[140px]" variant="outline" asChild>
-              <Link href={ROUTES.LOGIN.url}>로그인</Link>
-            </Button>
-          </div>
-        )}
-      </>
+      <div className="hidden w-[270px] items-center justify-between gap-x-3 md:flex lg:w-[310px]">
+        <Button className="h-[36px] w-[120px] text-base font-bold lg:w-[140px]" asChild>
+          <Link href={ROUTES.SIGNUP.url}>회원가입</Link>
+        </Button>
+        <Button className="h-[36px] w-[120px] text-base font-bold lg:w-[140px]" variant="outline" asChild>
+          <Link href={ROUTES.LOGIN.url}>로그인</Link>
+        </Button>
+      </div>
     )
   }
-
   const iconSize = 20
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="max-md:hidden">
         <div className="flex items-center justify-center gap-x-3 text-primary">
-          {session.user?.name}
+          {session.data.username}
           <IoChevronDownOutline className="ml-2" />
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="rounded-lg">
         <DropdownMenuLabel className="flex items-center gap-x-3 py-3">
-          <div>
-            <div>{session.user?.name}</div>
-            <div className="font-normal">{session.user?.email}</div>
-            <div className="text-xs text-gray-500">{session.user?.email}</div>
-          </div>
+          <div>{session.data.username}</div>
         </DropdownMenuLabel>
 
         <DropdownMenuSeparator />
@@ -91,7 +80,7 @@ function Profile() {
           나의 스터디
         </MenuItem>
 
-        {session.role === 'ROLE_ADMIN' && (
+        {session.data.role === 'ROLE_ADMIN' && (
           <>
             <DropdownMenuSeparator />
             <MenuItem icon={<CiSettings size={iconSize} />} href={ROUTES.ADMIN.DASHBOARD.url}>

@@ -13,11 +13,13 @@ const Admin = async () => {
   if (!session) {
     redirect(ROUTES.LOGIN.url)
   }
-  const { accessToken } = session
+  if (session.error) {
+    redirect(ROUTES.LOGIN.url)
+  }
 
   const studyRes = await fetchData(API_ENDPOINTS.ADMIN.STUDY.LIST as ApiEndpoint, {
     headers: {
-      Authorization: `Bearer ${accessToken.token}`
+      Authorization: `Bearer ${session.data?.accessToken}`
     },
     credentials: 'include'
   })
@@ -32,7 +34,7 @@ const Admin = async () => {
 
   const userRes = await fetchData(API_ENDPOINTS.ADMIN.USER.LIST as ApiEndpoint, {
     headers: {
-      Authorization: `Bearer ${accessToken.token}`
+      Authorization: `Bearer ${session.data?.accessToken}`
     },
     credentials: 'include'
   })

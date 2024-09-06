@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { signIn, useSession } from 'next-auth/react'
+import { signIn } from 'next-auth/react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa'
@@ -11,7 +11,9 @@ import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useToast } from '@/components/ui/use-toast'
+import { ROUTES } from '@/constants/routes'
 import { extendedSignUpSchema } from '@/constants/zodSchema/signup'
+import { DuplicatedCredentialsErrorCode, InvalidSignupCredentialsErrorCode } from '@/lib/auth/errors'
 import { cn } from '@/lib/utils'
 import Welcome from '@/public/welcome.svg'
 
@@ -30,17 +32,14 @@ export default function Signup() {
     register,
     handleSubmit,
     getValues,
+    setError,
     watch,
     formState: { errors, isSubmitting }
   } = useForm<FormData>({
     mode: 'onBlur',
     resolver: zodResolver(extendedSignUpSchema)
   })
-  const session = useSession()
   const router = useRouter()
-  if (session.status === 'authenticated') {
-    router.push('/')
-  }
 
   const { toast } = useToast()
 
@@ -53,28 +52,45 @@ export default function Signup() {
   const [toggle, setToggle] = useState(false)
 
   const onSubmit = async (data: FormData) => {
-    try {
-      const res = await signIn('credentials', {
-        username: data.username,
-        phoneNumber: data.phoneNumber,
-        studentId: data.studentId,
-        email: data.email,
-        password: data.password
-      })
-      if (res?.error) {
-        toast({
-          title: '회원가입 실패',
-          description: '이미 가입된 회원 정보입니다.',
-          variant: 'destructive'
+    const res = await signIn('credentials', {
+      username: data.username,
+      phoneNumber: data.phoneNumber,
+      studentId: data.studentId,
+      email: data.email,
+      password: data.password,
+      redirect: false
+    })
+
+    if (res?.code === DuplicatedCredentialsErrorCode) {
+      ;['username', 'phoneNumber', 'studentId', 'email'].forEach((key) => {
+        setError(key as keyof FormData, {
+          type: 'manual',
+          message: '이미 가입된 회원 정보입니다.'
         })
-      }
-    } catch (error) {
+      })
       toast({
         title: '회원가입 실패',
-        description: '회원가입 중 오류가 발생했습니다.',
+        description: '이미 가입된 회원 정보입니다.',
         variant: 'destructive'
       })
+      return
     }
+    if (res?.code === InvalidSignupCredentialsErrorCode) {
+      ;['username', 'phoneNumber', 'studentId', 'email', 'password', 'confirmPassword'].forEach((key) => {
+        setError(key as keyof FormData, {
+          type: 'manual',
+          message: '회원가입 정보가 올바르지 않습니다.'
+        })
+      })
+      toast({
+        title: '회원가입 실패',
+        description: '회원가입 정보가 올바르지 않습니다.',
+        variant: 'destructive'
+      })
+      return
+    }
+
+    router.push(ROUTES.HOME.url)
   }
 
   return (

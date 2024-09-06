@@ -21,12 +21,15 @@ const StudySignup = async ({ params }: StudySignupProps) => {
   if (!session) {
     redirect(ROUTES.LOGIN.url)
   }
+  if (session.error) {
+    redirect(ROUTES.LOGIN.url)
+  }
 
   const { id } = params
 
   const res = await fetchData(API_ENDPOINTS.CLIENT.STUDY.RETRIEVE(id) as ApiEndpoint, {
     headers: {
-      Authorization: `Bearer ${session.accessToken.token}`
+      Authorization: `Bearer ${session.data?.accessToken}`
     },
     credentials: 'include',
     cache: 'no-cache'

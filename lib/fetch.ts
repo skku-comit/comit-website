@@ -7,6 +7,7 @@ export async function fetchData(route: ApiEndpoint, init?: RequestInit) {
       ...(init?.headers || {})
     },
     method: route.method,
+    mode: route.method === 'GET' || route.method === 'POST' ? 'no-cors' : undefined,
     ...init
   }
 

@@ -4,14 +4,16 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { signIn, useSession } from 'next-auth/react'
+import { signIn } from 'next-auth/react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { BsEye, BsEyeSlash } from 'react-icons/bs'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { ROUTES } from '@/constants/routes'
 import signInSchema from '@/constants/zodSchema/signin'
+import { InvalidSigninErrorCode } from '@/lib/auth/errors'
 import ComitOwl from '@/public/comitOwl.png'
 
 interface LoginForm {
@@ -20,17 +22,13 @@ interface LoginForm {
 }
 
 export default function Login() {
-  const session = useSession()
   const router = useRouter()
-  if (session.status === 'authenticated') {
-    router.push('/')
-  }
-
   const [showPassword, setShowPassword] = useState(false)
 
   const {
     handleSubmit,
     register,
+    setError,
     formState: { errors, isSubmitting }
   } = useForm<LoginForm>({
     resolver: zodResolver(signInSchema)
@@ -38,19 +36,25 @@ export default function Login() {
 
   // TODO: 에러 핸들링 코드 작성
   const onSubmit = async (data: LoginForm) => {
-    try {
-      const res = await signIn('credentials', {
-        email: data.email,
-        password: data.password
-      })
+    const res = await signIn('credentials', {
+      email: data.email,
+      password: data.password,
+      redirect: false
+    })
 
-      if (res?.error) {
-        // 에러 처리
-        console.error(res.error)
-      }
-    } catch (error) {
-      console.error('로그인 중 오류 발생:', error)
+    if (res?.code === InvalidSigninErrorCode) {
+      setError('email', {
+        type: 'manual',
+        message: '이메일 또는 비밀번호가 일치하지 않습니다.'
+      })
+      setError('password', {
+        type: 'manual',
+        message: '이메일 또는 비밀번호가 일치하지 않습니다.'
+      })
+      return
     }
+
+    router.push(ROUTES.HOME.url)
   }
 
   return (

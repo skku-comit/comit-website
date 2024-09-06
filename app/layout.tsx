@@ -3,6 +3,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 
+import { SessionProvider } from '@/lib/auth/SessionProvider'
 import { cn } from '@/lib/utils'
 
 const pretendard = localFont({
@@ -45,7 +46,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className={cn(pretendard.variable, 'font-pretendard')}>{children}</body>
+      <body className={cn(pretendard.variable, 'font-pretendard')}>
+        <SessionProvider>{children}</SessionProvider>
+      </body>
     </html>
   )
 }

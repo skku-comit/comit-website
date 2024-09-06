@@ -64,7 +64,8 @@ export interface DescriptionCardProps {
 
 export default async function DescriptionCard({ description, hasButton }: DescriptionCardProps) {
   const session = await auth()
-  const canOpenStudy = session?.role ? ['ROLE_VERIFIED', 'ROLE_ADMIN'].includes(session?.role) : false
+  const role = session?.data?.role
+  const canOpenStudy = role ? ['ROLE_VERIFIED', 'ROLE_ADMIN'].includes(role) : false
 
   return (
     <div className="relative flex w-full max-w-[550px]  flex-col items-start justify-start gap-2 rounded-3xl bg-[#F4F7FA] px-4 py-6 shadow-md sm:gap-4 sm:px-6 lg:w-[45%] xl:p-10">
