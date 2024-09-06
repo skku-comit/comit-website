@@ -1,3 +1,5 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
@@ -13,7 +15,7 @@ import { PiBooksLight } from 'react-icons/pi'
 import Profile from '@/components/common/Header/Profile'
 import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from '@/components/ui/drawer'
 import { Route, ROUTES } from '@/constants/routes'
-import { auth } from '@/lib/auth/auth'
+import { useSession } from '@/lib/auth/SessionProvider'
 import ComitLogo from '@/public/comit.png'
 
 import { SignOutButton } from './ClientAuthButton'
@@ -46,8 +48,8 @@ const LOGGED_IN_DRAWER_ITEMS = [
   { route: ROUTES.MYSTUDY, icon: <PiBooksLight size={28} /> },
   { route: ROUTES.PROFILE, icon: <HiOutlineUserCircle /> }
 ]
-const Header = async ({ height }: { height: string }) => {
-  const session = await auth()
+const Header = ({ height }: { height: string }) => {
+  const session = useSession()
 
   const DRAWER_ITEMS = session
     ? [...DEFAULT_DRAWER_ITEMS, ...LOGGED_IN_DRAWER_ITEMS]

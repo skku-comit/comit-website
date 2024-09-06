@@ -16,6 +16,9 @@ const Admin = async () => {
   if (session.error) {
     redirect(ROUTES.LOGIN.url)
   }
+  if (session.data?.role !== 'ROLE_ADMIN') {
+    redirect(ROUTES.HOME.url)
+  }
 
   const studyRes = await fetchData(API_ENDPOINTS.ADMIN.STUDY.LIST as ApiEndpoint, {
     headers: {
