@@ -1,5 +1,7 @@
 'use client'
 
+import './style.css'
+
 import Image from 'next/image'
 import { notFound, redirect } from 'next/navigation'
 import { useSession } from 'next-auth/react'
@@ -16,6 +18,8 @@ import { ROUTES } from '@/constants/routes'
 import { fetchData } from '@/lib/fetch'
 import { useSupabaseFile } from '@/lib/supabase/hooks'
 import { cn } from '@/lib/utils'
+import Save from '@/public/save.svg'
+import Upload from '@/public/upload.svg'
 import { Study } from '@/types'
 
 interface StudyDetailProps {
@@ -39,7 +43,7 @@ export default function StudyDetailPage({ params }: StudyDetailProps) {
   const [image, setImage] = useState<string>('')
 
   const fileRef = useRef<HTMLInputElement>(null)
-  const handleClick = () => {
+  async function handleClick() {
     fileRef?.current?.click()
   }
 
@@ -136,15 +140,15 @@ export default function StudyDetailPage({ params }: StudyDetailProps) {
     return <div></div>
   }
   return (
-    <div className="flex w-full flex-col gap-6 py-12">
-      <div className="relative flex w-full items-start gap-8 max-md:flex-col">
-        <div className="flex flex-col gap-2 max-sm:w-full max-sm:items-center">
+    <div className="flex w-full flex-col gap-6 py-2 sm:py-12">
+      <div className="relative flex w-full items-start gap-3 max-md:flex-col sm:gap-8">
+        <div className="mx-auto mb-3 flex flex-row items-center gap-2 sm:mb-0 sm:flex-col">
           <div className="flex flex-col items-center gap-1">
             <Button
               type="button"
               variant={'outline'}
               onClick={handleClick}
-              className="flex h-52 w-52 items-center justify-center overflow-hidden rounded-lg border border-slate-300"
+              className="flex h-52 w-52 items-center justify-center overflow-hidden rounded-lg border border-slate-300 sm:h-72 sm:w-72"
             >
               {!image ? (
                 <p className="text-5xl font-light text-slate-300">+</p>
@@ -154,26 +158,36 @@ export default function StudyDetailPage({ params }: StudyDetailProps) {
             </Button>
             <Input className="hidden" accept="image/*" type="file" ref={fileRef} onChange={handleFileChange} />
           </div>
-          <Button onClick={handleImageSave} className={cn('w-52', !imageFile && 'hidden')}>
-            이미지 수정
-          </Button>
+          <div className="flex-col items-center pl-3 font-normal sm:mt-2">
+            <div onClick={handleClick} className="flex cursor-pointer items-center hover:opacity-70 sm:inline-flex">
+              <Image src={Upload} alt="upload" className={cn('mr-2 inline h-4 w-4')}></Image>
+              <span className="">재업로드</span>
+            </div>
+            <div
+              onClick={handleImageSave}
+              className="mt-2 flex cursor-pointer items-center hover:opacity-70 sm:ml-5 sm:mt-0 sm:inline-flex"
+            >
+              <Image src={Save} alt="upload" className={cn('mr-2 inline h-4 w-4')}></Image>
+              <span>이미지 저장</span>
+            </div>
+          </div>
         </div>
         <span className="rounded-xl bg-purple-600 px-3 py-1 text-sm font-bold text-white sm:absolute sm:right-2">
           스터디장
         </span>
-        <div className="flex w-full flex-col gap-2 text-[17px] font-medium">
-          <h3 className="flex items-center gap-2">
+        <div className="mx-3 flex w-full flex-col gap-2 text-[17px] font-medium sm:mx-0 sm:mt-8">
+          <h3 className="flex items-start gap-2">
             <span className="font-semibold">제목:</span>
             <EasyEdit
               type={Types.TEXT}
               value={study.title}
               onSave={(val) => handleSave(id, 'title', val)}
-              saveButtonLabel={<span className="text-green-500">수정</span>}
-              cancelButtonLabel={<span className="text-destructive">취소</span>}
+              saveButtonLabel={<span className="text-green-500 hover:opacity-70">수정</span>}
+              cancelButtonLabel={<span className="text-destructive hover:opacity-70">취소</span>}
             />
           </h3>
 
-          <h3 className="flex items-center gap-2">
+          <h3 className="flex items-start gap-2">
             <span className="font-semibold">캠퍼스:</span>
             {
               <EasyEdit
@@ -185,12 +199,12 @@ export default function StudyDetailPage({ params }: StudyDetailProps) {
                 ]}
                 onSave={(val) => handleSave(id, 'campus', val)}
                 placeholder={study.campus}
-                saveButtonLabel={<span className="text-green-500">수정</span>}
-                cancelButtonLabel={<span className="text-destructive">취소</span>}
+                saveButtonLabel={<span className="text-green-500 hover:opacity-70">수정</span>}
+                cancelButtonLabel={<span className="text-destructive hover:opacity-70">취소</span>}
               />
             }
           </h3>
-          <h3 className="flex items-center gap-2">
+          <h3 className="flex items-start gap-2">
             <span className="font-semibold">난이도:</span>
             {
               <EasyEdit
@@ -202,15 +216,15 @@ export default function StudyDetailPage({ params }: StudyDetailProps) {
                 ]}
                 onSave={(val) => handleSave(id, 'level', val)}
                 placeholder={study.level}
-                saveButtonLabel={<span className="text-green-500">수정</span>}
-                cancelButtonLabel={<span className="text-destructive">취소</span>}
+                saveButtonLabel={<span className="text-green-500 hover:opacity-70">수정</span>}
+                cancelButtonLabel={<span className="text-destructive hover:opacity-70">취소</span>}
               />
             }
           </h3>
 
           <div>
-            <h3 className="flex items-center gap-2">
-              <span className="flex items-center gap-2 font-semibold">관련 스택:</span>
+            <h3 className="flex items-start gap-2">
+              <span className="flex font-semibold">관련 스택:</span>
               <EasyEdit
                 type={Types.TEXT}
                 value={study.stacks.join(', ')}
@@ -218,14 +232,14 @@ export default function StudyDetailPage({ params }: StudyDetailProps) {
                   const stacks = val.split(',').map((stack: string) => stack.trim())
                   handleSave(id, 'stacks', stacks)
                 }}
-                saveButtonLabel={<span className="text-green-500">수정</span>}
-                cancelButtonLabel={<span className="text-destructive">취소</span>}
+                saveButtonLabel={<span className="text-green-500 hover:opacity-70">수정</span>}
+                cancelButtonLabel={<span className="text-destructive hover:opacity-70">취소</span>}
+                instructions={<p className="text-sm text-gray-400">스택 간에는 쉼표(,)를 사용해 구분해 주세요.</p>}
               />
             </h3>
-            <p className="text-sm text-gray-400">스택 간에는 쉼표(,)를 사용해 구분해 주세요.</p>
           </div>
 
-          <h3 className="flex items-center">
+          <h3 className="flex items-start">
             <span className="mr-2 font-semibold">요일 / 시간:</span>
             <div className="flex gap-2">
               <EasyEdit
@@ -241,29 +255,30 @@ export default function StudyDetailPage({ params }: StudyDetailProps) {
                 ]}
                 onSave={(val) => handleSave(id, 'day', val)}
                 placeholder={`${study.day}요일`}
-                saveButtonLabel={<span className="text-green-500">수정</span>}
-                cancelButtonLabel={<span className="text-destructive">취소</span>}
+                saveButtonLabel={<span className="text-green-500 hover:opacity-70">수정</span>}
+                cancelButtonLabel={<span className="text-destructive hover:opacity-70">취소</span>}
               />
               <EasyEdit
                 type={Types.TIME}
                 value={study.startTime}
                 onSave={(val) => handleSave(id, 'startTime', val)}
                 placeholder="Select time"
-                saveButtonLabel={<span className="text-green-500">수정</span>}
-                cancelButtonLabel={<span className="text-destructive">취소</span>}
+                saveButtonLabel={<span className="text-green-500 hover:opacity-70">수정</span>}
+                cancelButtonLabel={<span className="text-destructive hover:opacity-70">취소</span>}
               />
+              <span>~</span>
               <EasyEdit
                 type={Types.TIME}
                 value={study.endTime}
                 onSave={(val) => handleSave(id, 'endTime', val)}
-                saveButtonLabel={<span className="text-green-500">수정</span>}
-                cancelButtonLabel={<span className="text-destructive">취소</span>}
+                saveButtonLabel={<span className="text-green-500 hover:opacity-70">수정</span>}
+                cancelButtonLabel={<span className="text-destructive hover:opacity-70">취소</span>}
                 placeholder="Select time"
               />
             </div>
           </h3>
 
-          <h3 className="flex items-center">
+          <h3 className="flex items-start">
             <span className="mr-2 font-semibold">모집 여부:</span>
             <div className="flex gap-2">
               <EasyEdit
@@ -274,22 +289,22 @@ export default function StudyDetailPage({ params }: StudyDetailProps) {
                 ]}
                 onSave={(val) => handleSave(id, 'isRecruiting', val === '모집 중')}
                 placeholder={study.isRecruiting ? '모집 중' : '모집 마감'}
-                saveButtonLabel={<span className="text-green-500">수정</span>}
-                cancelButtonLabel={<span className="text-destructive">취소</span>}
+                saveButtonLabel={<span className="text-green-500 hover:opacity-70">수정</span>}
+                cancelButtonLabel={<span className="text-destructive hover:opacity-70">취소</span>}
               />
             </div>
           </h3>
 
-          {/* You can add more study details here */}
+          <h3 className="flex items-start opacity-55">(클릭하여 세부 정보 수정 가능)</h3>
         </div>
       </div>
       <div className="flex w-full flex-col gap-3">
-        <span className="text-[18px] font-bold">스터디 설명</span>
+        <span className="mx-3 text-[18px] font-bold sm:mx-0">스터디 설명</span>
         {study.description && (
           <Textarea
             name="study-description"
             id="description"
-            className="h-12 w-full px-2 py-1"
+            className="h-12 w-full px-2 py-1 text-[14px] sm:h-32 sm:text-[16px]"
             disabled={!editing}
             autoFocus={editing}
             value={study.description}
@@ -299,7 +314,7 @@ export default function StudyDetailPage({ params }: StudyDetailProps) {
         {!editing ? (
           <div>
             <Button
-              className="px-3 py-1 text-sm"
+              className="mt-2 px-2 py-[2px] text-sm font-bold sm:mt-3"
               onClick={() => {
                 setEditing(true)
               }}
@@ -308,9 +323,9 @@ export default function StudyDetailPage({ params }: StudyDetailProps) {
             </Button>
           </div>
         ) : (
-          <div className="flex gap-2">
+          <div className="mt-2 flex gap-2 sm:mt-3">
             <Button
-              className="px-3 py-1 text-sm"
+              className="px-2 py-[2px] text-sm font-bold"
               onClick={() => {
                 setEditing(false)
                 handleSave(id, 'description', study.description)
@@ -319,7 +334,7 @@ export default function StudyDetailPage({ params }: StudyDetailProps) {
               제출
             </Button>
             <Button
-              className="bg-slate-400 px-3 py-1 text-sm hover:bg-slate-400/80"
+              className="bg-slate-400 px-2 py-[2px] text-sm font-bold hover:bg-slate-400/80"
               onClick={() => {
                 setEditing(false)
               }}

@@ -9,7 +9,7 @@ export default function MyStudyNavBar() {
   const pathname = usePathname()
 
   return (
-    <div className="mt-11 sm:w-40 lg:mr-10">
+    <div className="mt-0 sm:mt-11 sm:w-40 lg:mr-10">
       <nav className="flex flex-col gap-4">
         <h6 className="text-sm font-medium text-gray-400 max-sm:hidden">함께 공부해요</h6>
         <ul className="max-sm:flex">
