@@ -7,6 +7,8 @@ import { notFound, redirect } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import { useEffect, useRef, useState } from 'react'
 import EasyEdit, { Types } from 'react-easy-edit'
+import { LuSave } from 'react-icons/lu'
+import { MdOutlineFileUpload } from 'react-icons/md'
 
 import { HttpStatusCode } from '@/app/api/utils/httpConsts'
 import { Button } from '@/components/ui/button'
@@ -17,9 +19,6 @@ import { API_ENDPOINTS } from '@/constants/apiEndpoint'
 import { ROUTES } from '@/constants/routes'
 import { fetchData } from '@/lib/fetch'
 import { useSupabaseFile } from '@/lib/supabase/hooks'
-import { cn } from '@/lib/utils'
-import Save from '@/public/save.svg'
-import Upload from '@/public/upload.svg'
 import { Study } from '@/types'
 
 interface StudyDetailProps {
@@ -160,19 +159,19 @@ export default function StudyDetailPage({ params }: StudyDetailProps) {
           </div>
           <div className="flex-col items-center pl-3 font-normal sm:mt-2">
             <div onClick={handleClick} className="flex cursor-pointer items-center hover:opacity-70 sm:inline-flex">
-              <Image src={Upload} alt="upload" className={cn('mr-2 inline h-4 w-4')}></Image>
+              <MdOutlineFileUpload className="mr-1 inline h-5 w-5" />
               <span className="">재업로드</span>
             </div>
             <div
               onClick={handleImageSave}
               className="mt-2 flex cursor-pointer items-center hover:opacity-70 sm:ml-5 sm:mt-0 sm:inline-flex"
             >
-              <Image src={Save} alt="upload" className={cn('mr-2 inline h-4 w-4')}></Image>
+              <LuSave className="mr-1 inline h-5 w-5" />
               <span>이미지 저장</span>
             </div>
           </div>
         </div>
-        <span className="rounded-xl bg-purple-600 px-3 py-1 text-sm font-bold text-white sm:absolute sm:right-2">
+        <span className="mx-2 rounded-xl bg-purple-600 px-3 py-1 text-sm font-bold text-white sm:absolute sm:right-2 sm:mx-0 sm:mt-8">
           스터디장
         </span>
         <div className="mx-3 flex w-full flex-col gap-2 text-[17px] font-medium sm:mx-0 sm:mt-8">
@@ -182,8 +181,14 @@ export default function StudyDetailPage({ params }: StudyDetailProps) {
               type={Types.TEXT}
               value={study.title}
               onSave={(val) => handleSave(id, 'title', val)}
-              saveButtonLabel={<span className="text-green-500 hover:opacity-70">수정</span>}
-              cancelButtonLabel={<span className="text-destructive hover:opacity-70">취소</span>}
+              saveButtonLabel={
+                <span className="rounded-xl border-2 px-2 py-1 text-[15px] text-green-500 hover:opacity-70">수정</span>
+              }
+              cancelButtonLabel={
+                <span className="rounded-xl border-2 px-2 py-1 text-[15px] text-destructive hover:opacity-70">
+                  취소
+                </span>
+              }
             />
           </h3>
 
@@ -199,8 +204,16 @@ export default function StudyDetailPage({ params }: StudyDetailProps) {
                 ]}
                 onSave={(val) => handleSave(id, 'campus', val)}
                 placeholder={study.campus}
-                saveButtonLabel={<span className="text-green-500 hover:opacity-70">수정</span>}
-                cancelButtonLabel={<span className="text-destructive hover:opacity-70">취소</span>}
+                saveButtonLabel={
+                  <span className="rounded-xl border-2 px-2 py-1 text-[15px] text-green-500 hover:opacity-70">
+                    수정
+                  </span>
+                }
+                cancelButtonLabel={
+                  <span className="rounded-xl border-2 px-2 py-1 text-[15px] text-destructive hover:opacity-70">
+                    취소
+                  </span>
+                }
               />
             }
           </h3>
@@ -216,8 +229,16 @@ export default function StudyDetailPage({ params }: StudyDetailProps) {
                 ]}
                 onSave={(val) => handleSave(id, 'level', val)}
                 placeholder={study.level}
-                saveButtonLabel={<span className="text-green-500 hover:opacity-70">수정</span>}
-                cancelButtonLabel={<span className="text-destructive hover:opacity-70">취소</span>}
+                saveButtonLabel={
+                  <span className="rounded-xl border-2 px-2 py-1 text-[15px] text-green-500 hover:opacity-70">
+                    수정
+                  </span>
+                }
+                cancelButtonLabel={
+                  <span className="rounded-xl border-2 px-2 py-1 text-[15px] text-destructive hover:opacity-70">
+                    취소
+                  </span>
+                }
               />
             }
           </h3>
@@ -232,8 +253,16 @@ export default function StudyDetailPage({ params }: StudyDetailProps) {
                   const stacks = val.split(',').map((stack: string) => stack.trim())
                   handleSave(id, 'stacks', stacks)
                 }}
-                saveButtonLabel={<span className="text-green-500 hover:opacity-70">수정</span>}
-                cancelButtonLabel={<span className="text-destructive hover:opacity-70">취소</span>}
+                saveButtonLabel={
+                  <span className="rounded-xl border-2 px-2 py-1 text-[15px] text-green-500 hover:opacity-70">
+                    수정
+                  </span>
+                }
+                cancelButtonLabel={
+                  <span className="rounded-xl border-2 px-2 py-1 text-[15px] text-destructive hover:opacity-70">
+                    취소
+                  </span>
+                }
                 instructions={<p className="text-sm text-gray-400">스택 간에는 쉼표(,)를 사용해 구분해 주세요.</p>}
               />
             </h3>
@@ -255,24 +284,48 @@ export default function StudyDetailPage({ params }: StudyDetailProps) {
                 ]}
                 onSave={(val) => handleSave(id, 'day', val)}
                 placeholder={`${study.day}요일`}
-                saveButtonLabel={<span className="text-green-500 hover:opacity-70">수정</span>}
-                cancelButtonLabel={<span className="text-destructive hover:opacity-70">취소</span>}
+                saveButtonLabel={
+                  <span className="rounded-xl border-2 px-2 py-1 text-[15px] text-green-500 hover:opacity-70">
+                    수정
+                  </span>
+                }
+                cancelButtonLabel={
+                  <span className="rounded-xl border-2 px-2 py-1 text-[15px] text-destructive hover:opacity-70">
+                    취소
+                  </span>
+                }
               />
               <EasyEdit
                 type={Types.TIME}
                 value={study.startTime}
                 onSave={(val) => handleSave(id, 'startTime', val)}
                 placeholder="Select time"
-                saveButtonLabel={<span className="text-green-500 hover:opacity-70">수정</span>}
-                cancelButtonLabel={<span className="text-destructive hover:opacity-70">취소</span>}
+                saveButtonLabel={
+                  <span className="rounded-xl border-2 px-2 py-1 text-[15px] text-green-500 hover:opacity-70">
+                    수정
+                  </span>
+                }
+                cancelButtonLabel={
+                  <span className="rounded-xl border-2 px-2 py-1 text-[15px] text-destructive hover:opacity-70">
+                    취소
+                  </span>
+                }
               />
               <span>~</span>
               <EasyEdit
                 type={Types.TIME}
                 value={study.endTime}
                 onSave={(val) => handleSave(id, 'endTime', val)}
-                saveButtonLabel={<span className="text-green-500 hover:opacity-70">수정</span>}
-                cancelButtonLabel={<span className="text-destructive hover:opacity-70">취소</span>}
+                saveButtonLabel={
+                  <span className="rounded-xl border-2 px-2 py-1 text-[15px] text-green-500 hover:opacity-70">
+                    수정
+                  </span>
+                }
+                cancelButtonLabel={
+                  <span className="rounded-xl border-2 px-2 py-1 text-[15px] text-destructive hover:opacity-70">
+                    취소
+                  </span>
+                }
                 placeholder="Select time"
               />
             </div>
@@ -289,8 +342,16 @@ export default function StudyDetailPage({ params }: StudyDetailProps) {
                 ]}
                 onSave={(val) => handleSave(id, 'isRecruiting', val === '모집 중')}
                 placeholder={study.isRecruiting ? '모집 중' : '모집 마감'}
-                saveButtonLabel={<span className="text-green-500 hover:opacity-70">수정</span>}
-                cancelButtonLabel={<span className="text-destructive hover:opacity-70">취소</span>}
+                saveButtonLabel={
+                  <span className="rounded-xl border-2 px-2 py-1 text-[15px] text-green-500 hover:opacity-70">
+                    수정
+                  </span>
+                }
+                cancelButtonLabel={
+                  <span className="rounded-xl border-2 px-2 py-1 text-[15px] text-destructive hover:opacity-70">
+                    취소
+                  </span>
+                }
               />
             </div>
           </h3>
@@ -304,7 +365,7 @@ export default function StudyDetailPage({ params }: StudyDetailProps) {
           <Textarea
             name="study-description"
             id="description"
-            className="h-12 w-full px-2 py-1 text-[14px] sm:h-32 sm:text-[16px]"
+            className="h-12 w-full px-2 py-1 text-[16px] sm:h-32"
             disabled={!editing}
             autoFocus={editing}
             value={study.description}
@@ -312,20 +373,20 @@ export default function StudyDetailPage({ params }: StudyDetailProps) {
           />
         )}
         {!editing ? (
-          <div>
+          <div className="mx-auto">
             <Button
-              className="mt-2 px-2 py-[2px] text-sm font-bold sm:mt-3"
+              className="mt-2 px-2 py-[1px] text-[15px] font-semibold sm:mt-3 sm:text-[16px]"
               onClick={() => {
                 setEditing(true)
               }}
             >
-              스터디 설명 수정
+              설명 수정하기
             </Button>
           </div>
         ) : (
-          <div className="mt-2 flex gap-2 sm:mt-3">
+          <div className="mx-auto mt-2 flex gap-2 sm:mt-3">
             <Button
-              className="px-2 py-[2px] text-sm font-bold"
+              className="rounded-lg px-4 py-[1px] text-[15px] font-semibold sm:text-[16px]"
               onClick={() => {
                 setEditing(false)
                 handleSave(id, 'description', study.description)
@@ -334,7 +395,7 @@ export default function StudyDetailPage({ params }: StudyDetailProps) {
               제출
             </Button>
             <Button
-              className="bg-slate-400 px-2 py-[2px] text-sm font-bold hover:bg-slate-400/80"
+              className="rounded-lg bg-slate-400 px-4 py-[1px] text-[15px] font-semibold hover:opacity-55 sm:text-[16px]"
               onClick={() => {
                 setEditing(false)
               }}

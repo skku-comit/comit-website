@@ -4,3 +4,11 @@ div.easy-edit-component-wrapper {
   justify-content: flex-start !important;
   align-items: center !important;
 }
+
+/* div.easy-edit-button-wrapper {
+  margin-top: 0.2rem !important;
+} */
+
+button.easy-edit-button {
+  padding: 0px !important;
+}

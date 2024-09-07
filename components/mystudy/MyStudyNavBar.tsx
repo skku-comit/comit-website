@@ -17,7 +17,9 @@ export default function MyStudyNavBar() {
             <li
               className={cn(
                 'px-3 py-2 font-normal',
-                pathname === '/mystudy' ? 'font-bold text-purple-600' : 'text-gray-600'
+                pathname.startsWith('/mystudy') && pathname !== '/mystudy/feedback'
+                  ? 'font-bold text-purple-600'
+                  : 'text-gray-600'
               )}
             >
               나의 스터디
