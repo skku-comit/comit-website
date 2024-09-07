@@ -61,7 +61,10 @@ const schema = z.object({
     required_error: '난이도를 선택해주세요'
   }),
   stacks: z.array(z.string()).min(1, { message: '스택을 입력해주세요' }),
-  description: z.string().min(1, { message: '설명을 입력해주세요' })
+  description: z
+    .string()
+    .min(1, { message: '설명을 입력해주세요' })
+    .max(500, { message: '설명은 500자 이내로 입력해주세요' })
 })
 
 // Iterators
@@ -400,7 +403,6 @@ export default function OpenStudy() {
               <Button
                 type="button"
                 className="px-8 font-extrabold"
-                disabled={!isValid}
                 onClick={() => {
                   trigger()
                   isValid && setStackError('')
@@ -449,7 +451,7 @@ export default function OpenStudy() {
                   }}
                 />
               </div>
-              {!isValid && <p className="text-sm text-destructive">모든 항목을 입력해주세요</p>}
+              {!isValid && <p className="text-sm text-destructive">모든 항목이 제대로 입력되었는지 확인해주세요!</p>}
               <AlertDialogFooter>
                 <AlertDialogCancel>취소</AlertDialogCancel>
                 <AlertDialogAction type="submit" onClick={handleSubmit(onSubmit)} disabled={!isValid || isSubmitting}>
