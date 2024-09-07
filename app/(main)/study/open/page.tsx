@@ -64,7 +64,7 @@ const schema = z.object({
   description: z
     .string()
     .min(1, { message: '설명을 입력해주세요' })
-    .max(500, { message: '설명은 500자 이내로 입력해주세요' })
+    .max(800, { message: '설명은 800자 이내로 입력해주세요' })
 })
 
 // Iterators
@@ -394,6 +394,9 @@ export default function OpenStudy() {
             id="description"
             {...register('description')}
             className="h-48 w-full"
+            onInput={() => {
+              trigger('description')
+            }}
           />
           {errors.description && <p className="text-sm text-red-500">{errors.description.message}</p>}
         </div>
