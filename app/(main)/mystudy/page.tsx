@@ -36,22 +36,25 @@ export default async function MyStudy() {
     <>
       <div id="mystudy-body__content" className="flex max-w-full flex-1 flex-col pb-16 sm:pt-8">
         <div className="flex border-b border-[#dee2e6]">
-          <button className="h-[45px] px-3 text-[16px] font-medium text-[#adb5bd]">스터디장</button>
+          <button className="h-[45px] border-b border-[#1b1c1d] px-3 text-[16px] font-bold text-[#1b1c1d]">
+            스터디장
+          </button>
         </div>
         <div id="studylist-container" className="mb-10">
           {/* 받아온 JSON 데이터 중 스터디장인 것을 마이스터디 페이지 카드로 변환 */}
           {studyList.map((study, index) => (
             <Link href={`/mystudy/${study.id}`} className="cursor-pointer" key={index}>
-              <div className="border-b-solid  flex border-b border-b-[#dee2e6] px-4 py-[18px]">
+              <div className="border-b-solid  flex border-b border-b-[#dee2e6] px-0 py-[18px] sm:px-4">
                 <div className=" flex-auto">
                   {/* //card 내의 첫번째 행: 개설 혹은 참여, 스터디 제목 display */}
-                  <div className="mb-1  flex items-center">
-                    <div className="mr-2  flex items-center">
-                      <span className="inline-block whitespace-nowrap rounded-xl bg-purple-600 px-[8px] py-[4px] text-center align-baseline text-xs font-bold text-white">
+                  <div className="mb-1 flex-col items-center sm:flex sm:flex-row">
+                    <div className="mb-2 mr-2 flex items-center sm:mb-0">
+                      <span className="inline-block whitespace-nowrap rounded-xl bg-purple-600 px-[7.8px] py-[4.2px] text-center align-baseline text-xs font-bold leading-none text-white sm:px-2 sm:py-1">
                         스터디장
                       </span>
                     </div>
-                    <h3 className="flex-1 overflow-hidden whitespace-nowrap text-[18px] font-bold text-[#212529]">
+
+                    <h3 className="flex-1 overflow-hidden whitespace-nowrap text-[16px]/[25px] font-bold text-[#212529] sm:text-[18px]">
                       {study.title}
                     </h3>
                   </div>

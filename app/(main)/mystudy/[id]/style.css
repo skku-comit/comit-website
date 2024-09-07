@@ -1,0 +1,14 @@
+div.easy-edit-component-wrapper {
+  /* width: fit-content !important; Force the width to auto */
+  display: flex !important; /* Ensure flex is applied */
+  justify-content: flex-start !important;
+  align-items: center !important;
+}
+
+/* div.easy-edit-button-wrapper {
+  margin-top: 0.2rem !important;
+} */
+
+button.easy-edit-button {
+  padding: 0px !important;
+}
