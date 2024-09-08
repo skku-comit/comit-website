@@ -6,12 +6,28 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useToast } from '@/components/ui/use-toast'
 import { ApiEndpoint } from '@/constants/apiEndpoint'
 import { ROUTES } from '@/constants/routes'
 import { useSession } from '@/lib/auth/SessionProvider'
 import { fetchData } from '@/lib/fetch'
 import { CustomResponseDTO } from '@/lib/response'
+
+const roleOptions = [
+  {
+    value: 'ROLE_MEMBER',
+    label: '회원'
+  },
+  {
+    value: 'ROLE_VERIFIED',
+    label: '부원'
+  },
+  {
+    value: 'ROLE_ADMIN',
+    label: '관리자'
+  }
+]
 
 interface EditableCellProps {
   fieldName: any
@@ -96,6 +112,22 @@ const EditableCell: React.FC<EditableCellProps> = ({ fieldName, row, readonly, s
               className={inputClass}
               disabled={readonly}
             />
+          ) : fieldName === 'role' ? (
+            <Tabs
+              value={value}
+              onValueChange={(e) => {
+                setInputValue(e)
+                setValue(e)
+              }}
+            >
+              <TabsList>
+                {roleOptions.map((role) => (
+                  <TabsTrigger key={role.value} value={role.value}>
+                    {role.label}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+            </Tabs>
           ) : (
             <Input value={inputValue} onChange={(e) => setInputValue(e.target.value)} className={inputClass} />
           )}
