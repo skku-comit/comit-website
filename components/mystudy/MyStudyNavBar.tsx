@@ -12,14 +12,14 @@ export default function MyStudyNavBar() {
     <div className="mt-0 sm:mt-11 sm:w-40 lg:mr-10">
       <nav className="flex flex-col gap-4">
         <h6 className="text-sm font-medium text-gray-400 max-sm:hidden">함께 공부해요</h6>
-        <ul className="max-sm:flex">
+        <ul className="font-normal text-gray-600 max-sm:flex">
           <Link href="/mystudy" className="cursor-pointer">
             <li
               className={cn(
-                'px-3 py-2 font-normal',
-                pathname.startsWith('/mystudy') && pathname !== '/mystudy/feedback'
-                  ? 'font-bold text-purple-600'
-                  : 'text-gray-600'
+                'px-3 py-2 hover:text-gray-600/70',
+                pathname.startsWith('/mystudy') &&
+                  pathname !== '/mystudy/feedback' &&
+                  'text-purple-600 hover:text-purple-600/70'
               )}
             >
               나의 스터디
@@ -28,22 +28,19 @@ export default function MyStudyNavBar() {
           <Link href="/mystudy/feedback" className="cursor-pointer">
             <li
               className={cn(
-                'px-3 py-2 font-normal',
-                pathname === '/mystudy/feedback' ? 'font-bold text-purple-600' : 'text-gray-600'
+                'px-3 py-2 hover:text-gray-600/70',
+                pathname === '/mystudy/feedback' && 'text-purple-600 hover:text-purple-600/70'
               )}
             >
               스터디 피드백
             </li>
           </Link>
-          {/* TODO: 코밋 스터디 가이드 추가 */}
-          {/* <Link
-            href="https://alluring-raccoon-85b.notion.site/1-0-a73896153c484a38a1749dfd76f46094"
+          <Link
+            href="https://flannel-captain-bca.notion.site/1-0-3ebecc3cf59c43f9b28d664795d38e9a"
             className="cursor-pointer"
           >
-            <li className="px-3 py-[10px] font-normal" style={pathname === '노션링크' ? activeStyle : {}}>
-              스터디 가이드
-            </li>
-          </Link> */}
+            <li className="px-3 py-2 hover:text-gray-600/70">스터디 가이드</li>
+          </Link>
         </ul>
       </nav>
     </div>
