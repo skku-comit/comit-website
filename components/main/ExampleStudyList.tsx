@@ -19,7 +19,7 @@ export const ExampleStudyList = async (): Promise<React.JSX.Element> => {
   }
   const json: CustomResponse = await res.json()
   const studyList: Study[] = json.data
-  const exampleStudies = studyList ? studyList.slice(0, 4) : []
+  const exampleStudies = studyList ? studyList.slice(7).slice(0, 4) : []
 
   return (
     <div className="mt-8 grid grid-cols-2 gap-4 sm:gap-12 xl:mb-32 xl:grid-cols-4">
